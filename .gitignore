@@ -14,12 +14,6 @@ local.properties
 .loadpath
 .recommenders
 
-.classpath
-.project
-build/
-
-Servers/
-
 # External tool builders
 .externalToolBuilders/
 
