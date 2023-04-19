@@ -1,4 +1,0 @@
-INDEX VERSION 1.131+D:\KH_SEMI\KickKick\.metadata\.plugins\org.eclipse.jdt.core
-1865797976.index
-3885491662.index
-3954891801.index

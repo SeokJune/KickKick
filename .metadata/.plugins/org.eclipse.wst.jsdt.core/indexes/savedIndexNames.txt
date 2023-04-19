@@ -1,3 +1,0 @@
-INDEX VERSION 1.4+D:\KH_SEMI\KickKick\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-3885491662.index
-3207967013.index

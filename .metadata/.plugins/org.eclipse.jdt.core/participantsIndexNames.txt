@@ -1,3 +1,0 @@
-INDEX VERSION 1.131
-D:\KH_SEMI\KickKick\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3207967013.index
-\KickKick\src\main\java
