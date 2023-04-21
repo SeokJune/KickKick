@@ -16,7 +16,10 @@ BEGIN
                     MOD_DATE TIMESTAMP DEFAULT SYSDATE,
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT JOIN_KIND_PK PRIMARY KEY (CODE)
-                    )'),
+                    )'
+                    ,'(JOIN_KIND_CODE_SEQ.NEXTVAL, ''KickKick'', DEFAULT, NULL, NULL)'
+                    ,'(JOIN_KIND_CODE_SEQ.NEXTVAL, ''KAKAO'', DEFAULT, NULL, NULL)'
+                    ,'(JOIN_KIND_CODE_SEQ.NEXTVAL, ''NAVER'', DEFAULT, NULL, NULL)'),
         -- 권한 등급 정보 관리하는 테이블
         TABLE_INFO_S('AUTHORITY_GRADE', '4', '(
                     CODE NUMBER,
@@ -25,16 +28,62 @@ BEGIN
                     MOD_DATE TIMESTAMP DEFAULT SYSDATE,
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT AUTHORITY_GRADE_PK PRIMARY KEY (CODE)
-                    )'),
+                    )'
+                    ,'(AUTHORITY_GRADE_CODE_SEQ.NEXTVAL, ''회원'', DEFAULT, NULL, NULL)'
+                    ,'(AUTHORITY_GRADE_CODE_SEQ.NEXTVAL, ''관리자1'', DEFAULT, NULL, NULL)'
+                    ,'(AUTHORITY_GRADE_CODE_SEQ.NEXTVAL, ''관리자2'', DEFAULT, NULL, NULL)'
+                    ,'(AUTHORITY_GRADE_CODE_SEQ.NEXTVAL, ''관리자3'', DEFAULT, NULL, NULL)'),
         -- 연고지 정보 관리 테이블
-        TABLE_INFO_S('HOMETOWN', '4', '(
+        TABLE_INFO_S('HOMETOWN', 'N', '(
                     CODE NUMBER,
                     NAME VARCHAR2(60) NOT NULL,
                     REG_DATE TIMESTAMP DEFAULT SYSDATE NOT NULL,
                     MOD_DATE TIMESTAMP DEFAULT SYSDATE,
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT HOMETOWN_PK PRIMARY KEY (CODE)
-                    )'),
+                    )'
+                    ,'(1100, ''서울'', DEFAULT, NULL, NULL)'
+                    ,'(1101, ''강남구'', DEFAULT, NULL, NULL)'
+                    ,'(1102, ''강동구'', DEFAULT, NULL, NULL)'
+                    ,'(1103, ''강북구'', DEFAULT, NULL, NULL)'
+                    ,'(1104, ''강서구'', DEFAULT, NULL, NULL)'
+                    ,'(1105, ''관악구'', DEFAULT, NULL, NULL)'
+                    ,'(1106, ''광진구'', DEFAULT, NULL, NULL)'
+                    ,'(1107, ''구로구'', DEFAULT, NULL, NULL)'
+                    ,'(1108, ''금천구'', DEFAULT, NULL, NULL)'
+                    ,'(1109, ''노원구'', DEFAULT, NULL, NULL)'
+                    ,'(1110, ''도봉구'', DEFAULT, NULL, NULL)'
+                    ,'(1111, ''동대문구'', DEFAULT, NULL, NULL)'
+                    ,'(1112, ''동작구'', DEFAULT, NULL, NULL)'
+                    ,'(1113, ''마포구'', DEFAULT, NULL, NULL)'
+                    ,'(1114, ''서대문구'', DEFAULT, NULL, NULL)'
+                    ,'(1115, ''서초구'', DEFAULT, NULL, NULL)'
+                    ,'(1116, ''성동구'', DEFAULT, NULL, NULL)'
+                    ,'(1117, ''성북구'', DEFAULT, NULL, NULL)'
+                    ,'(1118, ''송파구'', DEFAULT, NULL, NULL)'
+                    ,'(1119, ''양천구'', DEFAULT, NULL, NULL)'
+                    ,'(1120, ''영등포구'', DEFAULT, NULL, NULL)'
+                    ,'(1121, ''용산구'', DEFAULT, NULL, NULL)'
+                    ,'(1122, ''은평구'', DEFAULT, NULL, NULL)'
+                    ,'(1123, ''종로구'', DEFAULT, NULL, NULL)'
+                    ,'(1124, ''중구'', DEFAULT, NULL, NULL)'
+                    ,'(1125, ''중량구'', DEFAULT, NULL, NULL)'
+                    ,'(1200, ''부산'', DEFAULT, NULL, NULL)'
+                    ,'(1300, ''대구'', DEFAULT, NULL, NULL)'
+                    ,'(1400, ''인천'', DEFAULT, NULL, NULL)'
+                    ,'(1500, ''대전'', DEFAULT, NULL, NULL)'
+                    ,'(1600, ''광주'', DEFAULT, NULL, NULL)'
+                    ,'(1700, ''울산'', DEFAULT, NULL, NULL)'
+                    ,'(1800, ''세종'', DEFAULT, NULL, NULL)'
+                    ,'(1900, ''제주도'', DEFAULT, NULL, NULL)'
+                    ,'(2000, ''경기도'', DEFAULT, NULL, NULL)'
+                    ,'(3000, ''강원도'', DEFAULT, NULL, NULL)'
+                    ,'(4000, ''충청북도'', DEFAULT, NULL, NULL)'
+                    ,'(5000, ''충청남도'', DEFAULT, NULL, NULL)'
+                    ,'(6000, ''전라북도'', DEFAULT, NULL, NULL)'
+                    ,'(7000, ''전라남도'', DEFAULT, NULL, NULL)'
+                    ,'(8000, ''경상북도'', DEFAULT, NULL, NULL)'
+                    ,'(9000, ''경상남도'', DEFAULT, NULL, NULL)'),
         -- 로고 경로 정보 관리 테이블
         TABLE_INFO_S('LOGO_PATH', '4', '(
                     CODE NUMBER,
@@ -55,16 +104,34 @@ BEGIN
                     CONSTRAINT TEAM_MEMBER_GRADE_PK PRIMARY KEY (CODE)
                     )'),
         -- 상태 정보 관리 테이블
-        TABLE_INFO_S('STATUS', '4', '(
+        TABLE_INFO_S('STATUS', 'N', '(
                     CODE NUMBER,
                     NAME VARCHAR2(60) NOT NULL,
                     REG_DATE TIMESTAMP DEFAULT SYSDATE NOT NULL,
                     MOD_DATE TIMESTAMP DEFAULT SYSDATE,
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT STATUS_PK PRIMARY KEY (CODE)
-                    )'),
+                    )'
+                    ,'(1101, ''경기 등록 중'', DEFAULT, NULL, NULL)'
+                    ,'(1102, ''경기 등록 완료'', DEFAULT, NULL, NULL)'
+                    ,'(1201, ''경기 신청 중'', DEFAULT, NULL, NULL)'
+                    ,'(1202, ''경기 신청 승인'', DEFAULT, NULL, NULL)'
+                    ,'(1203, ''경기 신청 거절'', DEFAULT, NULL, NULL)'
+                    ,'(1301, ''경기 진행 중'', DEFAULT, NULL, NULL)'
+                    ,'(1302, ''경기 진행 완료'', DEFAULT, NULL, NULL)'
+                    ,'(2101, ''용병 구함 등록 중'', DEFAULT, NULL, NULL)'
+                    ,'(2102, ''용병 구함 완료'', DEFAULT, NULL, NULL)'
+                    ,'(2201, ''용병 구함 신청 중'', DEFAULT, NULL, NULL)'
+                    ,'(2202, ''용병 구함 신청 승인'', DEFAULT, NULL, NULL)'
+                    ,'(2203, ''용병 구함 신청 거절'', DEFAULT, NULL, NULL)'
+                    ,'(9101, ''신고 접수'', DEFAULT, NULL, NULL)'
+                    ,'(9102, ''신고 처리 중'', DEFAULT, NULL, NULL)'
+                    ,'(9103, ''신고 처리 완료'', DEFAULT, NULL, NULL)'
+                    ,'(9201, ''문의 접수'', DEFAULT, NULL, NULL)'
+                    ,'(9202, ''문의 처리 중'', DEFAULT, NULL, NULL)'
+                    ,'(9203, ''문의 처리 완료'', DEFAULT, NULL, NULL)'),
         -- 경기 종류 및 인원 정보 관리 테이블
-        TABLE_INFO_S('COMPETITION_KIND', '4', '(
+        TABLE_INFO_S('COMPETITION_KIND', 'N', '(
                     CODE NUMBER,
                     NAME VARCHAR2(60) NOT NULL,
                     HEADCOUNT NUMBER NOT NULL,
@@ -72,7 +139,13 @@ BEGIN
                     MOD_DATE TIMESTAMP DEFAULT SYSDATE,
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT COMPETITION_KIND_PK PRIMARY KEY (CODE)
-                    )'),
+                    )'
+                    ,'(1001, ''축구'', 12, DEFAULT, NULL, NULL)'
+                    ,'(1002, ''축구'', 11, DEFAULT, NULL, NULL)'
+                    ,'(1003, ''축구'', 10, DEFAULT, NULL, NULL)'
+                    ,'(2001, ''풋살'', 6, DEFAULT, NULL, NULL)'
+                    ,'(2002, ''풋살'', 5, DEFAULT, NULL, NULL)'
+                    ,'(2003, ''풋살'', 4, DEFAULT, NULL, NULL)'),
         -- 실력 정보 관리 테이블
         TABLE_INFO_S('ABILITY', '4', '(
                     CODE NUMBER,
@@ -81,7 +154,10 @@ BEGIN
                     MOD_DATE TIMESTAMP DEFAULT SYSDATE,
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT ABILITY_PK PRIMARY KEY (CODE)
-                    )'),
+                    )'
+                    ,'(ABILITY_CODE_SEQ.NEXTVAL, ''상'', DEFAULT, NULL, NULL)'
+                    ,'(ABILITY_CODE_SEQ.NEXTVAL, ''중'', DEFAULT, NULL, NULL)'
+                    ,'(ABILITY_CODE_SEQ.NEXTVAL, ''하'', DEFAULT, NULL, NULL)'),
         -- 게시판 종류 정보 관리 테이블
         TABLE_INFO_S('BOARD_KIND', '4', '(
                     CODE NUMBER,
@@ -90,7 +166,11 @@ BEGIN
                     MOD_DATE TIMESTAMP DEFAULT SYSDATE,
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT BOARD_KIND_PK PRIMARY KEY (CODE)
-                    )'),
+                    )'
+                    ,'(BOARD_KIND_CODE_SEQ.NEXTVAL, ''팀'', DEFAULT, NULL, NULL)'
+                    ,'(BOARD_KIND_CODE_SEQ.NEXTVAL, ''전체 공지'', DEFAULT, NULL, NULL)'
+                    ,'(BOARD_KIND_CODE_SEQ.NEXTVAL, ''자유'', DEFAULT, NULL, NULL)'
+                    ,'(BOARD_KIND_CODE_SEQ.NEXTVAL, ''홍보'', DEFAULT, NULL, NULL)'),
         -- 게시판 말머리 정보 관리 테이블
         TABLE_INFO_S('BOARD_HEADLINE', '4', '(
                     CODE NUMBER,
@@ -99,7 +179,12 @@ BEGIN
                     MOD_DATE TIMESTAMP DEFAULT SYSDATE,
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT BOARD_HEADLINE_PK PRIMARY KEY (CODE)
-                    )'),
+                    )'
+                    ,'(BOARD_HEADLINE_CODE_SEQ.NEXTVAL, ''AAAAA'', DEFAULT, NULL, NULL)'
+                    ,'(BOARD_HEADLINE_CODE_SEQ.NEXTVAL, ''BBBBB'', DEFAULT, NULL, NULL)'
+                    ,'(BOARD_HEADLINE_CODE_SEQ.NEXTVAL, ''CCCCC'', DEFAULT, NULL, NULL)'
+                    ,'(BOARD_HEADLINE_CODE_SEQ.NEXTVAL, ''DDDDD'', DEFAULT, NULL, NULL)'
+                    ,'(BOARD_HEADLINE_CODE_SEQ.NEXTVAL, ''EEEEE'', DEFAULT, NULL, NULL)'),
         -- 신고 종류 정보 관리 테이블
         TABLE_INFO_S('REPORT_KIND', '4', '(
                     CODE NUMBER,
@@ -108,7 +193,12 @@ BEGIN
                     MOD_DATE TIMESTAMP DEFAULT SYSDATE,
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT REPORT_KIND_PK PRIMARY KEY (CODE)
-                    )'),
+                    )'
+                    ,'(REPORT_KIND_CODE_SEQ.NEXTVAL, ''AAAAA'', DEFAULT, NULL, NULL)'
+                    ,'(REPORT_KIND_CODE_SEQ.NEXTVAL, ''BBBBB'', DEFAULT, NULL, NULL)'
+                    ,'(REPORT_KIND_CODE_SEQ.NEXTVAL, ''CCCCC'', DEFAULT, NULL, NULL)'
+                    ,'(REPORT_KIND_CODE_SEQ.NEXTVAL, ''DDDDD'', DEFAULT, NULL, NULL)'
+                    ,'(REPORT_KIND_CODE_SEQ.NEXTVAL, ''EEEEE'', DEFAULT, NULL, NULL)'),
         -- 문의 종류 정보 관리 테이블
         TABLE_INFO_S('INQUIRE_KIND', '4', '(
                     CODE NUMBER,
@@ -117,7 +207,12 @@ BEGIN
                     MOD_DATE TIMESTAMP DEFAULT SYSDATE,
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT INQUIRE_KIND_PK PRIMARY KEY (CODE)
-                    )'),
+                    )'
+                    ,'(INQUIRE_KIND_CODE_SEQ.NEXTVAL, ''AAAAA'', DEFAULT, NULL, NULL)'
+                    ,'(INQUIRE_KIND_CODE_SEQ.NEXTVAL, ''BBBBB'', DEFAULT, NULL, NULL)'
+                    ,'(INQUIRE_KIND_CODE_SEQ.NEXTVAL, ''CCCCC'', DEFAULT, NULL, NULL)'
+                    ,'(INQUIRE_KIND_CODE_SEQ.NEXTVAL, ''DDDDD'', DEFAULT, NULL, NULL)'
+                    ,'(INQUIRE_KIND_CODE_SEQ.NEXTVAL, ''EEEEE'', DEFAULT, NULL, NULL)'),
         
         -- 회원 정보 관리 테이블
         TABLE_INFO_S('MEMBER', '8', '(
@@ -492,15 +587,23 @@ BEGIN
     -- 테이블 및 시퀀스 생성
     FOR i IN 1..T_I.COUNT LOOP
         BEGIN
-            -- 테이블 생성
-            EXECUTE IMMEDIATE 'CREATE TABLE '||T_I(i)(1)||T_I(i)(3);
             -- 시퀀스 생성
             IF T_I(i)(2) = '4' THEN
-                EXECUTE IMMEDIATE 'CREATE SEQUENCE '||T_I(i)(1)||'_SEQ START WITH 1001 INCREMENT BY 1 MAXVALUE 9999 NOCACHE NOCYCLE';
+                EXECUTE IMMEDIATE 'CREATE SEQUENCE '||T_I(i)(1)||'_CODE_SEQ START WITH 1001 INCREMENT BY 1 MAXVALUE 9999 NOCACHE NOCYCLE';
             ELSIF T_I(i)(2) = '8' THEN
-                EXECUTE IMMEDIATE 'CREATE SEQUENCE '||T_I(i)(1)||'_SEQ START WITH 10000001 INCREMENT BY 1 MAXVALUE 99999999 NOCACHE NOCYCLE';
+                EXECUTE IMMEDIATE 'CREATE SEQUENCE '||T_I(i)(1)||'_CODE_SEQ START WITH 10000001 INCREMENT BY 1 MAXVALUE 99999999 NOCACHE NOCYCLE';
             ELSIF T_I(i)(2) = 'M' THEN
-                EXECUTE IMMEDIATE 'CREATE SEQUENCE '||T_I(i)(1)||'_SEQ START WITH 1 INCREMENT BY 1 NOMAXVALUE NOCACHE';
+                EXECUTE IMMEDIATE 'CREATE SEQUENCE '||T_I(i)(1)||'_CODE_SEQ START WITH 1 INCREMENT BY 1 NOMAXVALUE NOCACHE';
+            END IF;
+            -- 테이블 생성
+            EXECUTE IMMEDIATE 'CREATE TABLE '||T_I(i)(1)||T_I(i)(3);
+            -- 테이블 데이터 입력
+            IF T_I(i).COUNT > 3 THEN
+                FOR j IN 4..T_I(i).COUNT LOOP
+                    BEGIN
+                        EXECUTE IMMEDIATE 'INSERT INTO '||T_I(i)(1)||' VALUES '||T_I(i)(j);
+                    END;
+                END LOOP;
             END IF;
         END;
     END LOOP;
