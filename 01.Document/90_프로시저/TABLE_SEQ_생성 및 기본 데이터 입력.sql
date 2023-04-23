@@ -17,9 +17,9 @@ BEGIN
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT JOIN_KIND_PK PRIMARY KEY (CODE)
                     )'
-                    ,'(JOIN_KIND_CODE_SEQ.NEXTVAL, ''KickKick'', DEFAULT, NULL, NULL)'
-                    ,'(JOIN_KIND_CODE_SEQ.NEXTVAL, ''KAKAO'', DEFAULT, NULL, NULL)'
-                    ,'(JOIN_KIND_CODE_SEQ.NEXTVAL, ''NAVER'', DEFAULT, NULL, NULL)'),
+                    ,'(JOIN_KIND_CODE.NEXTVAL, ''KickKick'', DEFAULT, NULL, NULL)'
+                    ,'(JOIN_KIND_CODE.NEXTVAL, ''KAKAO'', DEFAULT, NULL, NULL)'
+                    ,'(JOIN_KIND_CODE.NEXTVAL, ''NAVER'', DEFAULT, NULL, NULL)'),
         -- 권한 등급 정보 관리하는 테이블
         TABLE_INFO_S('AUTHORITY_GRADE', '4', '(
                     CODE NUMBER,
@@ -29,10 +29,10 @@ BEGIN
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT AUTHORITY_GRADE_PK PRIMARY KEY (CODE)
                     )'
-                    ,'(AUTHORITY_GRADE_CODE_SEQ.NEXTVAL, ''회원'', DEFAULT, NULL, NULL)'
-                    ,'(AUTHORITY_GRADE_CODE_SEQ.NEXTVAL, ''관리자1'', DEFAULT, NULL, NULL)'
-                    ,'(AUTHORITY_GRADE_CODE_SEQ.NEXTVAL, ''관리자2'', DEFAULT, NULL, NULL)'
-                    ,'(AUTHORITY_GRADE_CODE_SEQ.NEXTVAL, ''관리자3'', DEFAULT, NULL, NULL)'),
+                    ,'(AUTHORITY_GRADE_CODE.NEXTVAL, ''회원'', DEFAULT, NULL, NULL)'
+                    ,'(AUTHORITY_GRADE_CODE.NEXTVAL, ''관리자1'', DEFAULT, NULL, NULL)'
+                    ,'(AUTHORITY_GRADE_CODE.NEXTVAL, ''관리자2'', DEFAULT, NULL, NULL)'
+                    ,'(AUTHORITY_GRADE_CODE.NEXTVAL, ''관리자3'', DEFAULT, NULL, NULL)'),
         -- 연고지 정보 관리 테이블
         TABLE_INFO_S('HOMETOWN', 'N', '(
                     CODE NUMBER,
@@ -155,9 +155,9 @@ BEGIN
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT ABILITY_PK PRIMARY KEY (CODE)
                     )'
-                    ,'(ABILITY_CODE_SEQ.NEXTVAL, ''상'', DEFAULT, NULL, NULL)'
-                    ,'(ABILITY_CODE_SEQ.NEXTVAL, ''중'', DEFAULT, NULL, NULL)'
-                    ,'(ABILITY_CODE_SEQ.NEXTVAL, ''하'', DEFAULT, NULL, NULL)'),
+                    ,'(ABILITY_CODE.NEXTVAL, ''상'', DEFAULT, NULL, NULL)'
+                    ,'(ABILITY_CODE.NEXTVAL, ''중'', DEFAULT, NULL, NULL)'
+                    ,'(ABILITY_CODE.NEXTVAL, ''하'', DEFAULT, NULL, NULL)'),
         -- 게시판 종류 정보 관리 테이블
         TABLE_INFO_S('BOARD_KIND', '4', '(
                     CODE NUMBER,
@@ -167,10 +167,10 @@ BEGIN
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT BOARD_KIND_PK PRIMARY KEY (CODE)
                     )'
-                    ,'(BOARD_KIND_CODE_SEQ.NEXTVAL, ''팀'', DEFAULT, NULL, NULL)'
-                    ,'(BOARD_KIND_CODE_SEQ.NEXTVAL, ''전체 공지'', DEFAULT, NULL, NULL)'
-                    ,'(BOARD_KIND_CODE_SEQ.NEXTVAL, ''자유'', DEFAULT, NULL, NULL)'
-                    ,'(BOARD_KIND_CODE_SEQ.NEXTVAL, ''홍보'', DEFAULT, NULL, NULL)'),
+                    ,'(BOARD_KIND_CODE.NEXTVAL, ''팀'', DEFAULT, NULL, NULL)'
+                    ,'(BOARD_KIND_CODE.NEXTVAL, ''전체 공지'', DEFAULT, NULL, NULL)'
+                    ,'(BOARD_KIND_CODE.NEXTVAL, ''자유'', DEFAULT, NULL, NULL)'
+                    ,'(BOARD_KIND_CODE.NEXTVAL, ''홍보'', DEFAULT, NULL, NULL)'),
         -- 게시판 말머리 정보 관리 테이블
         TABLE_INFO_S('BOARD_HEADLINE', '4', '(
                     CODE NUMBER,
@@ -180,11 +180,11 @@ BEGIN
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT BOARD_HEADLINE_PK PRIMARY KEY (CODE)
                     )'
-                    ,'(BOARD_HEADLINE_CODE_SEQ.NEXTVAL, ''AAAAA'', DEFAULT, NULL, NULL)'
-                    ,'(BOARD_HEADLINE_CODE_SEQ.NEXTVAL, ''BBBBB'', DEFAULT, NULL, NULL)'
-                    ,'(BOARD_HEADLINE_CODE_SEQ.NEXTVAL, ''CCCCC'', DEFAULT, NULL, NULL)'
-                    ,'(BOARD_HEADLINE_CODE_SEQ.NEXTVAL, ''DDDDD'', DEFAULT, NULL, NULL)'
-                    ,'(BOARD_HEADLINE_CODE_SEQ.NEXTVAL, ''EEEEE'', DEFAULT, NULL, NULL)'),
+                    ,'(BOARD_HEADLINE_CODE.NEXTVAL, ''AAAAA'', DEFAULT, NULL, NULL)'
+                    ,'(BOARD_HEADLINE_CODE.NEXTVAL, ''BBBBB'', DEFAULT, NULL, NULL)'
+                    ,'(BOARD_HEADLINE_CODE.NEXTVAL, ''CCCCC'', DEFAULT, NULL, NULL)'
+                    ,'(BOARD_HEADLINE_CODE.NEXTVAL, ''DDDDD'', DEFAULT, NULL, NULL)'
+                    ,'(BOARD_HEADLINE_CODE.NEXTVAL, ''EEEEE'', DEFAULT, NULL, NULL)'),
         -- 신고 종류 정보 관리 테이블
         TABLE_INFO_S('REPORT_KIND', '4', '(
                     CODE NUMBER,
@@ -194,11 +194,11 @@ BEGIN
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT REPORT_KIND_PK PRIMARY KEY (CODE)
                     )'
-                    ,'(REPORT_KIND_CODE_SEQ.NEXTVAL, ''AAAAA'', DEFAULT, NULL, NULL)'
-                    ,'(REPORT_KIND_CODE_SEQ.NEXTVAL, ''BBBBB'', DEFAULT, NULL, NULL)'
-                    ,'(REPORT_KIND_CODE_SEQ.NEXTVAL, ''CCCCC'', DEFAULT, NULL, NULL)'
-                    ,'(REPORT_KIND_CODE_SEQ.NEXTVAL, ''DDDDD'', DEFAULT, NULL, NULL)'
-                    ,'(REPORT_KIND_CODE_SEQ.NEXTVAL, ''EEEEE'', DEFAULT, NULL, NULL)'),
+                    ,'(REPORT_KIND_CODE.NEXTVAL, ''AAAAA'', DEFAULT, NULL, NULL)'
+                    ,'(REPORT_KIND_CODE.NEXTVAL, ''BBBBB'', DEFAULT, NULL, NULL)'
+                    ,'(REPORT_KIND_CODE.NEXTVAL, ''CCCCC'', DEFAULT, NULL, NULL)'
+                    ,'(REPORT_KIND_CODE.NEXTVAL, ''DDDDD'', DEFAULT, NULL, NULL)'
+                    ,'(REPORT_KIND_CODE.NEXTVAL, ''EEEEE'', DEFAULT, NULL, NULL)'),
         -- 문의 종류 정보 관리 테이블
         TABLE_INFO_S('INQUIRE_KIND', '4', '(
                     CODE NUMBER,
@@ -208,11 +208,11 @@ BEGIN
                     DEL_DATE TIMESTAMP DEFAULT SYSDATE,
                     CONSTRAINT INQUIRE_KIND_PK PRIMARY KEY (CODE)
                     )'
-                    ,'(INQUIRE_KIND_CODE_SEQ.NEXTVAL, ''AAAAA'', DEFAULT, NULL, NULL)'
-                    ,'(INQUIRE_KIND_CODE_SEQ.NEXTVAL, ''BBBBB'', DEFAULT, NULL, NULL)'
-                    ,'(INQUIRE_KIND_CODE_SEQ.NEXTVAL, ''CCCCC'', DEFAULT, NULL, NULL)'
-                    ,'(INQUIRE_KIND_CODE_SEQ.NEXTVAL, ''DDDDD'', DEFAULT, NULL, NULL)'
-                    ,'(INQUIRE_KIND_CODE_SEQ.NEXTVAL, ''EEEEE'', DEFAULT, NULL, NULL)'),
+                    ,'(INQUIRE_KIND_CODE.NEXTVAL, ''AAAAA'', DEFAULT, NULL, NULL)'
+                    ,'(INQUIRE_KIND_CODE.NEXTVAL, ''BBBBB'', DEFAULT, NULL, NULL)'
+                    ,'(INQUIRE_KIND_CODE.NEXTVAL, ''CCCCC'', DEFAULT, NULL, NULL)'
+                    ,'(INQUIRE_KIND_CODE.NEXTVAL, ''DDDDD'', DEFAULT, NULL, NULL)'
+                    ,'(INQUIRE_KIND_CODE.NEXTVAL, ''EEEEE'', DEFAULT, NULL, NULL)'),
         
         -- 회원 정보 관리 테이블
         TABLE_INFO_S('MEMBER', '8', '(
@@ -589,11 +589,11 @@ BEGIN
         BEGIN
             -- 시퀀스 생성
             IF T_I(i)(2) = '4' THEN
-                EXECUTE IMMEDIATE 'CREATE SEQUENCE '||T_I(i)(1)||'_CODE_SEQ START WITH 1001 INCREMENT BY 1 MAXVALUE 9999 NOCACHE NOCYCLE';
+                EXECUTE IMMEDIATE 'CREATE SEQUENCE '||T_I(i)(1)||'_CODE START WITH 1001 INCREMENT BY 1 MAXVALUE 9999 NOCACHE NOCYCLE';
             ELSIF T_I(i)(2) = '8' THEN
-                EXECUTE IMMEDIATE 'CREATE SEQUENCE '||T_I(i)(1)||'_CODE_SEQ START WITH 10000001 INCREMENT BY 1 MAXVALUE 99999999 NOCACHE NOCYCLE';
+                EXECUTE IMMEDIATE 'CREATE SEQUENCE '||T_I(i)(1)||'_CODE START WITH 10000001 INCREMENT BY 1 MAXVALUE 99999999 NOCACHE NOCYCLE';
             ELSIF T_I(i)(2) = 'M' THEN
-                EXECUTE IMMEDIATE 'CREATE SEQUENCE '||T_I(i)(1)||'_CODE_SEQ START WITH 1 INCREMENT BY 1 NOMAXVALUE NOCACHE';
+                EXECUTE IMMEDIATE 'CREATE SEQUENCE '||T_I(i)(1)||'_CODE START WITH 1 INCREMENT BY 1 NOMAXVALUE NOCACHE';
             END IF;
             -- 테이블 생성
             EXECUTE IMMEDIATE 'CREATE TABLE '||T_I(i)(1)||T_I(i)(3);
