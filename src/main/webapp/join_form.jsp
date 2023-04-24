@@ -37,7 +37,7 @@
 				<table align="center">
 
 					<tr>
-						<td colspan="4">
+						<td colspan="3">
 							<div class="form-floating mb-3">
 								<input type="text" class="form-control" 
 								id="member_id" name="member_id"
@@ -47,7 +47,7 @@
 								<label for="member_id">아이디 (필수)</label>
 							</div>
 						</td>
-						<td colspan="2">
+						<td colspan="1">
 							<a href="">
 							<button class="btn btn-primary" id="id_over_check" type="button">중복확인</button>
 							</a>
@@ -55,7 +55,7 @@
 					</tr>
 
 					<tr>
-						<td  colspan="4">
+						<td  colspan="3">
 							<div class="form-floating">
 								<input type="password" class="form-control" 
 								id="member_pw" name="member_pw"
@@ -65,14 +65,14 @@
 								<label for="member_pw">비밀번호 (필수)</label>
 							</div>
 						</td>
-						<td colspan="2">
-							<button class="btn btn-secondary" id="view_pw" type="button">보기</button>
+						<td colspan="1">
+							<button class="btn btn-light" id="view_pw" type="button">보기</button>
 						</td>
 					</tr>
 
 
 					<tr>
-						<td colspan="4">
+						<td colspan="3">
 							<div class="form-floating mb-3">
 								<input type="text"  class="form-control" 
 								id="member_name" name="member_name"
@@ -86,33 +86,26 @@
 
 					<tr>
 						<div class="form-floating">	
-											
 							<td>
 								<input type="text"  class="form-control" 
 								id="member_phone1" name="member_phone1" 
 								pattern="^0+\d{1,2}$" 
 								minlength="2" maxlength="3" required 
-								style="width: 50px;">
-							</td>
-							<td>
-								 -
+								style="width:100px;">
 							</td>
 							<td>
 								<input type="text"  class="form-control" 
 								id="member_phone2" name="member_phone2"
 								pattern="^\d{3,4}$" 
 								minlength="3" maxlength="4" required
-								style="width: 50px;"> 
+								style="width:100px;"> 
 							</td>
-							<td>
-								-
-							</td>
-							<td colspan="2"> 
+							<td> 
 								<input type="text" class="form-control" 
 								id="member_phone3" name="member_phone3" 
 								pattern="^\d{4}$"
 								minlength="4" maxlength="4" required 
-								style="width: 50px;">
+								style="width: 100px;">
 							</td>
 							</div>
 						
@@ -122,7 +115,7 @@
 					</tr>
 
 					<tr>
-						<td colspan="4">
+						<td colspan="3">
 							<div class="form-floating">	
 								<input type="text" class="form-control" 
 								id="member_pin" name="member_pin" required>
@@ -140,20 +133,19 @@
 								<select class="form-select" id="member_birth_year" name="member_birth_year" style="width:100px;"></select>
 							</td>
 							<td>
-								<select class="form-select" id="member_birth_month" name="member_birth_month" style="width:80px;"></select>
+								<select class="form-select" id="member_birth_month" name="member_birth_month" style="width:100px;"></select>
 							</td>
 							<td>
 								<input type="text" class="form-control"
 								id="member_birth_day" name="member_birth_day"
 								pattern="^(0[1-9]|[12][0-9]|3[01])$" title="두자리로 입력"
-								minlength="2" maxlength="2" required style="width: 80px;">
+								minlength="2" maxlength="2" required style="width: 100px;">
 							</td>
 						</div>
 					</tr>
 
 					<tr>
-						<td></td>
-						<td>
+						<td colspan="3">
 							<div class="form-floating">
 								<input type="email" class="form-control"
 									id="member_email" name="member_email"
@@ -165,8 +157,7 @@
 					</tr>
 
 					<tr>
-						<td></td>
-						<td>
+						<td colspan="3">
 							<div class="form-floating">	
 								<input type="text"  class="form-control"
 									id="member_nickname" name="member_nickname" 
@@ -186,8 +177,8 @@
 
 					<tr>
 						<td colspan="3" align="center">
-							<button id="join">가입하기</button> <a href=""><button
-									type="button" id="back">뒤로가기</button></a>
+							<button class="btn btn-secondary" id="join">가입하기</button> <a href="">
+							<button class="btn btn-secondary" type="button" id="back">뒤로가기</button></a>
 						</td>
 					</tr>
 
