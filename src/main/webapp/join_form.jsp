@@ -5,14 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>KickKick - 회원가입</title>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- 부트스트랩 CSS -->
-<link rel="stylesheet" href="/bootstrap_resources/css/bootstrap.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <!-- 부트스트랩 JQ , JS -->
-<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-<script type="text/javascript"
-	src="/bootstrap_resources/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 #container {
 	border: 1px solid black;
@@ -193,6 +190,15 @@
 
 
 	<script>
+	
+	
+	$("#id_over_check").on("click",function(){
+		if($("#member_id").val().trim() == ""){
+			
+		}		
+		window.open("/id_over_check.members?member_id="+$("#member_id").val(),"","width=350px,height=250px");
+		
+	})
 
 //입력 형식 안내 메세지
 		const validityMessage = {
