@@ -22,20 +22,6 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-	<button type="button" link="/login/login_view.jsp" onclick="link(this);">1</button>
-	<button type="button" link="/aaa.aaa2" onclick="link(this);">2</button>
-	<button type="button" link="/aaa.aaa3" onclick="link(this);">3</button>
-	<button type="button" link="/aaa.aaa4" onclick="link(this);">4</button>
-	<button type="button" link="/aaa.aaa5" onclick="link(this);">5</button>
-	<button type="button" link="/aaa.aaa6" onclick="link(this);">6</button>
-	<button type="button" link="/aaa.aaa7" onclick="link(this);">7</button>
-	<script type="text/javascript">
-	function link(evt) {
-		location.href = evt.getAttribute('link');
-	}
-	</script>
-=======
 	<nav class="navbar bg-body-tertiary fixed-top">
 		<div class="container-fluid">
 			<button class="navbar-toggler" type="button"
@@ -87,7 +73,6 @@
 			</div>
 		</div>
 	</nav>
->>>>>>> bed7230c5eb9257d0591c98721abf32088e41b9f
 </body>
 
 </html>
