@@ -218,8 +218,8 @@ BEGIN
         TABLE_INFO_S('MEMBER', '8', '(
                     CODE NUMBER,
                     JOIN_KIND_CODE NUMBER NOT NULL,
-                    ID VARCHAR2(20) UNIQUE NOT NULL,
-                    PW VARCHAR2(20) NOT NULL,
+                    ID VARCHAR2(100) UNIQUE NOT NULL,
+                    PW VARCHAR2(512) NOT NULL,
                     NAME VARCHAR2(15) NOT NULL,
                     NICKNAME VARCHAR2(30) NOT NULL,
                     BIRTHDATE VARCHAR2(8) NOT NULL,
