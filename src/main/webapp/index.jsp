@@ -29,7 +29,7 @@
 				aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<a class="navbar-brand" href="#">Login</a>
+			<a class="navbar-brand" href="/member/login_view.jsp">Login</a>
 			<div class="offcanvas offcanvas-start" tabindex="-1"
 				id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 				<div class="offcanvas-header">
