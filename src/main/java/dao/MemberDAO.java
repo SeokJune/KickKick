@@ -32,4 +32,16 @@ public class MemberDAO {
 
 		return ds.getConnection();
 	}
+	
+	//아이디 중복 체크: 비동기로 수정 예정
+		public boolean id_over_check(String member_id) throws Exception{
+			String sql = "select * from members where id = ?";
+			try( Connection con = this.getConnection();
+					PreparedStatement pstat = con.prepareStatement(sql);){
+				pstat.setString(1,member_id);
+				try(ResultSet rs = pstat.executeQuery();){
+					return rs.next();
+				}
+			}
+		}
 }

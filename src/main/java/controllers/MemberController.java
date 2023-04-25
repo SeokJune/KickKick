@@ -7,34 +7,39 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class member_controller
- */
-@WebServlet("/member_controller")
+@WebServlet("*.member")
 public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public MemberController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("utf8");
+		response.setContentType("text/html; charset=utf8;");
+
+		String cmd = request.getRequestURI();
+		System.out.println(cmd);
+
+		try {
+			if(cmd.equals("/id_over_check.member")) {
+				String member_id = request.getParameter("member_id");
+				boolean result = MemberDAO.getInstance().id_over_check(member_id);
+				request.setAttribute("over_check", result);
+				request.getRequestDispatcher("/member/id_over_check_view.jsp").forward(request, response);
+
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			response.sendRedirect("error.html");
+		}
+
+	
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
