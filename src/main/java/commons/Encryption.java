@@ -7,7 +7,7 @@ import java.security.MessageDigest;
  * @author LSJ
  * @version 1.0.0
  */
-public class EncryptionUtils {
+public class Encryption {
 	
 	/**
 	 * <h1>SHA-256 암호화</h1>
