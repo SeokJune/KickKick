@@ -25,23 +25,37 @@ public class MemberDAO {
 		}
 		return instance;
 	}
-	
+
 	private Connection getConnection() throws Exception {
 		Context iCtx = new InitialContext();
 		DataSource ds = (DataSource) iCtx.lookup("java:/comp/env/jdbc/ora");
 
 		return ds.getConnection();
 	}
-	
-	//아이디 중복 체크: 비동기로 수정 예정
-		public boolean id_over_check(String member_id) throws Exception{
-			String sql = "select * from members where id = ?";
-			try( Connection con = this.getConnection();
-					PreparedStatement pstat = con.prepareStatement(sql);){
-				pstat.setString(1,member_id);
-				try(ResultSet rs = pstat.executeQuery();){
-					return rs.next();
-				}
+
+
+	public boolean is_member(String id, String pw) throws Exception {
+		String sql = "select * from member where id=? and pw=?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, id);
+			pstat.setString(2, pw);
+
+			try (ResultSet rs = pstat.executeQuery();) {
+				return rs.next();
 			}
 		}
+	} // is_member
+
+	//아이디 중복 체크: 비동기로 수정 예정
+	public boolean id_over_check(String member_id) throws Exception {
+		String sql = "select * from members where id = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, member_id);
+			try (ResultSet rs = pstat.executeQuery();) {
+				return rs.next();
+			}
+		}
+	}//id_over_check
+
+
 }

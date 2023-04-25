@@ -64,13 +64,13 @@
 		<div class="row gate_header" style="text-align: center; font-size: 13px">
 				<div class="col-md-1 col-xl-1"></div>
 				<div class="col-md-2 col-xl-1">이미지</div>
-				<div class="col-xl-1 d-none d-xl-flex">no</div>
+				<div class="col-xl-1 d-none d-xl-block">no</div>
 				<div class="col-md-2 col-xl-1">팀명</div>
 				<div class="col-md-4 col-xl-2">간략 소개글</div>
 				<div class="col-md-1 col-xl-1">랭킹</div>
 				<div class="col-md-1 col-xl-1">작성자</div>
-				<div class="col-xl-2 d-none d-xl-flex">작성일</div>
-				<div class="col-xl-1 d-none d-xl-flex">조회수</div>
+				<div class="col-xl-2 d-none d-xl-block">작성일</div>
+				<div class="col-xl-1 d-none d-xl-block">조회수</div>
 				<div class="col-md-1 col-xl-1"></div>
 		</div>
 
