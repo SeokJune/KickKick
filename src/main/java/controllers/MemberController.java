@@ -39,9 +39,9 @@ public class MemberController extends HttpServlet {
 			} else if (cmd.equals("/id_over_check.member")) {
 				String member_id = request.getParameter("member_id");
 				boolean result = MemberDAO.getInstance().id_over_check(member_id);
-				request.setAttribute("over_check", result);
-				request.getRequestDispatcher("/member/id_over_check_view.jsp").forward(request, response);
-				
+				Gson g = new Gson();
+				String resp = g.toJson(result);
+				response.getWriter().append(resp);
 				
 				
 				
