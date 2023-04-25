@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.MercenaryDAO;
-import dto.TeamCheckDTO;
 import dto.TeamInfoDTO;
 
 @WebServlet("*.mercenary")
@@ -21,32 +20,32 @@ public class MercenaryController extends HttpServlet {
 		response.setContentType("text/html; charset=utf8");
 		
 		String cmd = request.getRequestURI();
+		System.out.println(cmd);
 		
 		try {
 			if(cmd.equals("/toRegisterForm.mercenary")) {
-				response.sendRedirect("/mercenary/mercenaryRegisterForm.jsp");
+				List<TeamInfoDTO> teamList = MercenaryDAO.getInstance().selectTeamInfo();
 				
-			}else if(cmd.equals("/toRegisterFormWithInfo.mercenary")) {
-				int search_team_code = Integer.parseInt(request.getParameter("team_code"));
-				
-				TeamInfoDTO teamInfodto = MercenaryDAO.getInstance().selectTeamInfo(search_team_code);
-
-				request.setAttribute("teamInfodto", teamInfodto);
-				response.sendRedirect("/mercenary/mercenaryRegisterForm.jsp");
+				request.setAttribute("teamList", teamList);
+				response.sendRedirect("/mercenary/register_form.jsp");
 				
 			}else if(cmd.equals("/toRegisterList.mercenary")) {
-				response.sendRedirect("/mercenary/mercenaryRegisterList.jsp");
+				response.sendRedirect("/mercenary/register_list.jsp");
 			}else if(cmd.equals("/toApplyForm.mercenary")) {
-				response.sendRedirect("/mercenary/mercenaryApplyForm.jsp");
+				response.sendRedirect("/mercenary/apply_form.jsp");
 			}else if(cmd.equals("/toApplyList.mercenary")) {
-				response.sendRedirect("/mercenary/mercenaryApplyList.jsp");
+				response.sendRedirect("/mercenary/apply_list.jsp");
 			}else if(cmd.equals("/teamCheck.mercenary")) {
+				//  세션에서 로그인 아이디 받아올 수 있도록 수정
 				String loginID = "agji";
-				List<TeamCheckDTO> teamList = MercenaryDAO.getInstance().teamSelect(loginID);
+				List<TeamInfoDTO> teamSelectList = MercenaryDAO.getInstance().teamSelectById(loginID);
 				
 				request.getSession().setAttribute("loginID", loginID);
-				request.setAttribute("teamList", teamList);
-				request.getRequestDispatcher("/mercenary/teamCheckView.jsp").forward(request, response);
+				request.setAttribute("teamSelectList", teamSelectList);
+				request.getRequestDispatcher("/mercenary/team_check_view.jsp").forward(request, response);
+				
+			}else if(cmd.equals("/matchCheck.mercenary")) {
+				
 			}
 				
 			
