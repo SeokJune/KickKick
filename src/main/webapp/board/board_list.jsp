@@ -92,7 +92,7 @@ div {
 			</form>
 		</div>
 		<div class="col-12 d-grid justify-content-end">
-			<a class="btn btn-primary" href="/board/board_write.jsp"
+			<a class="btn btn-primary" href="/to_write_form.board"
 				role="button">글쓰기</a>
 		</div>
 	</div>
