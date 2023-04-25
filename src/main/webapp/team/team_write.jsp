@@ -58,23 +58,23 @@
 
 					<div class="row">
 						<div class="col-12 col-md-8" style="margin: auto;">
-							<input type="text" placeholder="팀장명" class="w-100"
+							<input type="text" placeholder="팀장명(readonly)" class="w-100"
 								name="captain_name">
 						</div>
 					</div>
 
 					<div class="row">
 						<div class="col-12 col-md-8" style="margin: auto;">
-							<input type="text" placeholder="팀장 연락처" class="w-100"
+							<input type="text" placeholder="팀장 연락처(readonly)" class="w-100"
 								name="captain_phone">
 						</div>
 					</div>
 
 					<div class="row">
 						<div class="col-12 col-md-8" style="margin: auto;">
-							<select name="hometown_name">
+							<select name="hometown_code">
 								<c:forEach var="item" items="${arr}">
-									<option value="${item.name}">${item.name}</option>
+									<option value="${item.code}">${item.name}</option>
 								</c:forEach>
 							</select>
 						</div>
