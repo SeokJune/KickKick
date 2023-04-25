@@ -219,7 +219,7 @@ BEGIN
                     CODE NUMBER,
                     JOIN_KIND_CODE NUMBER NOT NULL,
                     ID VARCHAR2(100) UNIQUE NOT NULL,
-                    PW VARCHAR2(512) NOT NULL,
+                    PW VARCHAR2(128) NOT NULL,
                     NAME VARCHAR2(15) NOT NULL,
                     NICKNAME VARCHAR2(30) NOT NULL,
                     BIRTHDATE VARCHAR2(8) NOT NULL,
