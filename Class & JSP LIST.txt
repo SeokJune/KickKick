@@ -8,10 +8,12 @@ src/main/java
 		- MercenaryController : 용병 - 김은지
 		
 	dao
+		- MemberDAO : 팀 - 김승우
 		- MercenaryDAO : 용병 - 김은지
 		
 	dto
-		- TramCheckDTO : XX - 김은지
+		- MemberDTO : 팀 - 김승우
+		- TeamCheckDTO : XX - 김은지
 		- TeamInfoDTO : XX - 김은지		
 src/main/webapp
 	image
@@ -20,8 +22,14 @@ src/main/webapp
 		- board_list : 게시판 리스트
 		- board_view : 게시글
 	member
-		- join
-	mercenary
+		- member_join : 회원가입 - 최은지
+		- member_login : 로그인 - 이가은 
+	mercenary : 김은지
+		- register_write : 등록
+		- register_list : 등록 리스트
+		- apply_write : 신청
+		- apply_list : 신청 리스트
+		- team_check_list : 
 	team
 		- team_write : 팀 생성
 		- team_list : 팀 리스트
