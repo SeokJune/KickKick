@@ -11,12 +11,26 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
-#container {
+html {
+	background-color: #76b852;
+}
+body {
+	background-color: #76b852;
+}
+.container {
 	border: 1px solid black;
-	width: 700px;
+	width: 600px;
 	height: 800px;
+	padding: 32px;
 	position: relative;
-	left: 25%;
+	background-color: whitesmoke;
+	border-radius: 1rem;
+	box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0
+		rgba(0, 0, 0, 0.19);
+}
+.wrapper{
+
+
 }
 
 tr{
@@ -28,164 +42,127 @@ tr{
 }
 td{
 width:100px;}
+.btn{
+border: none;
+}
+
 </style>
 </head>
 <body>
 
-	<div id="container">
+	<div class="container join_container">
 
-		<div>회원가입</div>
+		<div class="wrapper" id="join_form">
+			<form action="/insert.member" method="post">
+				
 
-		<hr>
-
-
-		<div id="join_form">
-			<form action="/insert.members" method="post">
-				<table align="center">
-
-
-
-					<tr>
-						<td colspan="3">
-							<div class="form-floating mb-3">
-								<input type="text" class="form-control" 
-								id="member_id" name="member_id"
-								pattern="^[a-z]{1}[a-z0-9]{5,20}$"
-								title="5자 이상 20자 이내로 영소문자,숫자 필수 포함" 
-								minlength="5" maxlength="20" required> 
-								<label for="member_id">아이디(필수)</label>
-							</div>
-						</td>
-						<td colspan="1">
-							<button type="button" class="btn btn-primary btn-sm" id="id_over_check">중복확인</button>
-						</td>
-					</tr>
 					
-					
-					
-					
-					
-					
-					
-					<tr>
-						<td  colspan="3">
-							<div class="form-floating">
-								<input type="password" class="form-control" 
-								id="member_pw" name="member_pw"
-								pattern="^(?=.*[a-zA-Z])(?=.*[~.!@#$%^&*()_+={}>;<:,.?/\-\[\]\\\|])(?=.*[0-9]).{8,20}$"
-								title="영대소문자,숫자,특수문자를 모두 포함한 8~20자" 
-								minlength="8" maxlength="20" required>
-								<label for="member_pw">비밀번호(필수)</label>
-							</div>
-						</td>
-						<td colspan="1">
-							<button class="btn btn-light btn-sm" id="view_pw" type="button">보기</button>
-						</td>
-					</tr>
-
-
-
-
-
-
-
-					<tr>
-						<td colspan="3">
-							<div class="form-floating mb-3">
-								<input type="text"  class="form-control" 
-								id="member_name" name="member_name"
-								pattern="^[가-힣]{2,5}$" 
-								title="2자 이상 5자 이내의 한글" 
-								minlength="2" maxlength="5" required>
-								<label for="member_name">이름(필수)</label>
-							</div>
-						</td>
-					</tr>
-
-
-
-
-
-
-					<tr>
-							<td>
-						<div class="form-floating">	
-								<input type="text"  class="form-control" 
-								id="member_phone1" name="member_phone1" 
-								pattern="^0+\d{1,2}$" 
-								minlength="2" maxlength="3" required 
-								style="width:140px;">
-								<label for="member_phone1">전화번호(필수)</label>
-							</div>
-							</td>
-							<td>
-							<div clasㄹs="form-floating">	
-								<input type="text"  class="form-control" 
-								id="member_phone2" name="member_phone2"
-								pattern="^\d{3,4}$" 
-								minlength="3" maxlength="4" required
-								style="width:100px;"> 
-								<label for="member_phone2"></label>
-							</div>
-							</td>
-							<td> 
-							<div claㄹss="form-floating">	
-								<input type="text" class="form-control" 
-								id="member_phone3" name="member_phone3" 
-								pattern="^\d{4}$"
-								minlength="4" maxlength="4" required 
-								style="width: 100px;">
-								<label for="member_phone3"></label>
-							</div>
-							</td>
+<!--아이디 입력창 -->			
+				<div class="form-floating mb-3">
+					<input type="text" class="form-control" 
+						id="member_id" name="member_id"
+						pattern="^[a-z]{1}[a-z0-9]{5,20}$"
+						title="5자 이상 20자 이내로 영소문자,숫자 필수 포함" 
+						minlength="5" maxlength="20" required> 
+					<label for="member_id">아이디(필수)</label>
+				</div>
+<!-- 중복 확인 버튼 : 비동기로 수정 예정 -->				
+				<button type="button" class="btn btn-primary btn-sm" id="id_over_check">중복확인</button>
 						
-						<td>
-							<button type="button" class="btn btn-primary btn-sm">인증번호 발송</button>
-						</td>
-					</tr>
+				
+					
+					
+					
+<!-- 비밀번호 입력창 -->					
+				<div class="form-floating">
+					<input type="password" class="form-control" 
+						id="member_pw" name="member_pw"
+						pattern="^(?=.*[a-zA-Z])(?=.*[~.!@#$%^&*()_+={}>;<:,.?/\-\[\]\\\|])(?=.*[0-9]).{8,20}$"
+						title="영대소문자,숫자,특수문자를 모두 포함한 8~20자" 
+						minlength="8" maxlength="20" required>
+					<label for="member_pw">비밀번호(필수)</label>
+				</div>
+<!-- 비밀번호 보기&숨기기 버튼 -->				
+				<button class="btn btn-light btn-sm" id="view_pw" type="button">보기</button>
 
 
 
 
 
-					<tr>
-						<td colspan="3">
-							<div class="form-floating">	
-								<input type="text" class="form-control" 
-								id="member_pin" name="member_pin" required>
-								<label for="member_pin">인증번호 (필수)</label>
-							</div>
-						</td>
-						<td colspan="2">
-							<button  type="button" class="btn btn-primary btn-sm">인증완료</button>
-						</td>
-					</tr>
+<!-- 이름 입력창 -->
+				<div class="form-floating mb-3">
+					<input type="text"  class="form-control" 
+						id="member_name" name="member_name"
+						pattern="^[가-힣]{2,5}$" 
+						title="2자 이상 5자 이내의 한글" 
+						minlength="2" maxlength="5" required>
+					<label for="member_name">이름(필수)</label>
+				</div>
 
 
 
 
-					<tr>
+
+<!-- 전화번호1,2,3 입력창 -->
+				<div class="form-floating">	
+					<input type="text"  class="form-control" 
+						id="member_phone1" name="member_phone1" 
+						pattern="^0+\d{1,2}$" 
+						minlength="2" maxlength="3" required 
+						style="width:140px;">
+					<label for="member_phone1">전화번호(필수)</label>
+				</div>
+				<div class="form-floating">	
+					<input type="text"  class="form-control" 
+						id="member_phone2" name="member_phone2"
+						pattern="^\d{3,4}$" 
+						minlength="3" maxlength="4" required
+						style="width:100px;"> 
+					<label for="member_phone2"></label>
+				</div>
+				<div class="form-floating">	
+					<input type="text" class="form-control" 
+						id="member_phone3" name="member_phone3" 
+						pattern="^\d{4}$"
+						minlength="4" maxlength="4" required 
+						style="width: 100px;">
+					<label for="member_phone3"></label>
+				</div>
+<!-- 인증번호 전송 버튼 -->				
+				<button type="button" class="btn btn-primary btn-sm">인증번호 발송</button>
+
+
+
+
+
+<!-- 인증번호 입력창 -->
+				<div class="form-floating">	
+					<input type="text" class="form-control" 
+						id="member_pin" name="member_pin" required>
+					<label for="member_pin">인증번호 (필수)</label>
+				</div>
+<!-- 인증완료 버튼 -->				
+				<button  type="button" class="btn btn-primary btn-sm">인증완료</button>
+
+
+
+
+
+<!-- 생년월일 입력창 -->
 						<div class="form-floating">
-							<td style="width:100px;">
 								<select class="form-select" id="member_birth_year" name="member_birth_year" style="width:100px;"></select>
-							</td>
-							<td  width="100px">
 								<select class="form-select" id="member_birth_month" name="member_birth_month" style="width:100px;"></select>
-							</td>
-							<td  width="100px">
 								<input type="text" class="form-control"
 								id="member_birth_day" name="member_birth_day"
 								pattern="^(0[1-9]|[12][0-9]|3[01])$" title="두자리로 입력"
 								minlength="2" maxlength="2" required style="width: 100px;">
-							</td>
 						</div>
-					</tr>
 
 
 
 
-					<tr>
-						<td colspan="3">
+
+<!-- 이메일 입력칭 -->
 							<div class="form-floating">
 								<input type="email" class="form-control"
 									id="member_email" name="member_email"
@@ -193,14 +170,12 @@ width:100px;}
 									title="abc@abc.com 형식으로 입력">
 								 <label for="member_email">E-mail</label>	
 							</div>	
-						 </td>
-					</tr>
 
 
 
 
-					<tr>
-						<td colspan="3">
+
+<!-- 닉네임 입력창 -->
 							<div class="form-floating">	
 								<input type="text"  class="form-control"
 									id="member_nickname" name="member_nickname" 
@@ -209,40 +184,31 @@ width:100px;}
 									minlength="2" maxlength="10">
 								<label for="member_nickname">닉네임</label>	
 							</div>		
-						</td>
-					</tr>
 
 
 
 
 
-					<tr>
+<!-- 가입동의 체크 -->
 						<div class="form-check">
-							<td colspan="4">
 								<label class="form-check-label" for="member_agree">
         							가입에 동의하시겠습니까?
 								</label>
 								<input class="form-check-input" type="checkbox" id="member_agree" required>
-							</td>
-					</tr>
-
-
-
-
-
-					<tr>
-						<td colspan="4" align="center">
-							<button class="btn btn-secondary" id="join">가입하기</button> 
-							<a href="">
-							<button class="btn btn-secondary" type="button" id="back">뒤로가기</button></a>
-						</td>
 						</div>
-					</tr>
 
 
 
 
-				</table>
+
+<!-- 가입버튼 & 돌아가기 버튼 -->
+							<button class="btn btn-secondary" id="join" style="background-color:#76b852;">가입하기</button> 
+							<a href="">
+							<button class="btn btn-secondary" type="button" id="back" style="background-color:#76b852;">뒤로가기</button></a>
+
+
+
+
 			</form>
 
 		</div>
@@ -287,7 +253,7 @@ width:100px;}
 			alert("ID를 입력해주세요.");
 			return;
 		}		
-		window.open("/id_over_check.members?member_id="+$("#member_id").val(),"","width=350px,height=250px");
+		window.open("/id_over_check.member?member_id="+$("#member_id").val(),"","width=350px,height=250px");
 		
 	})
 	
@@ -307,8 +273,7 @@ width:100px;}
 			
 		})
 		
-		
-//PW 일치 확인
+//비밀번호 일치 확인 : 현재 사용X
 		$("#member_repw,#member_pw").on("keyup", function() {
 
 			if ($("#member_pw").val() != "" || $("#member_repw").val() != "") {

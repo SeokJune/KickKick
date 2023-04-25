@@ -12,7 +12,7 @@ body{
 background-color:#88B6F2;
 }
 
-#container{
+.container{
 background-color:white;
 text-align: center;
 width:200px;
@@ -27,7 +27,7 @@ left: 70px;
 
 	<c:choose>
 		<c:when test="${over_check}">
-			<div id="container">
+			<div class="container">
 				<p>이미 사용중인 ID 입니다.</p>
 				<p>다시 입력해주세요.</p>
 			</div>
@@ -42,7 +42,7 @@ left: 70px;
 		</c:when>
 
 		<c:otherwise>
-			<div id="container">
+			<div class="container">
 				<p>사용 가능한 ID입니다.</p>
 				<p>사용하시겠습니까?</p>
 			</div>
