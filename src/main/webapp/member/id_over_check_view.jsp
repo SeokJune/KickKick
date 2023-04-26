@@ -24,7 +24,7 @@ left: 70px;
 </head>
 <body>
 
-
+<!-- 아이디 중복확인 비동기로 수정하면 삭제할 예정인 jsp -->
 	<c:choose>
 		<c:when test="${over_check}">
 			<div id="container">
