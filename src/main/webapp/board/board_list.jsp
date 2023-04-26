@@ -74,7 +74,7 @@ div {
 			</div>
 		</div>
 		<div class="row footer">
-			<form action="/search.board" method="get">
+			<form class="d-flex" action="/search.board" method="get">
 				<div class="col-3">
 					<select class="form-select" aria-label=".form-select-sm example">
 						<option value="1" selected>제목</option>

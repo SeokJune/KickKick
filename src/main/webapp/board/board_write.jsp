@@ -44,10 +44,9 @@
             <div class="col-12 col-md-8" style="padding-top:0">
                 <select class="form-select" aria-label="Default select example" name="board" id="board" onchange="boardKindChange(this)">
                     <option value="default" selected>게시판 선택</option> 
-                     <option value="공지사항">공지사항</option>
-                    <option value="자유게시판">자유게시판</option>
-                     <option value="홍보게시판">홍보게시판</option> 
-                    <option value="문의하기">문의하기</option>
+                     <c:forEach var="board" items="${board_list}">
+                     	<option value="${board}">${board}</option>
+                     </c:forEach>                    
                 </select>
             </div>
             <div class="col-12 col-md-4" style="padding-top:0">
@@ -75,18 +74,23 @@
 
     <script>
     function boardKindChange(e){
-        var announcement = ["공지"];
-        var free = ["축구","일상","정보"];
-        var promotion = ["홍보"];
-        var inquire = ["문의","건의","버그제보"];
+    	<c:forEach var="board" items="${board_list}">
+    		var ${board} = [];
+    			<c:forEach var="head" items="${headline_list}">
+    				<c:if test="${head.board_name==board}">
+    					${board}.push("${head.name}");
+    				</c:if>
+    			</c:forEach>
+    	</c:forEach>
+
         var target = document.getElementById("headline");
 
         $("#headline").attr("disabled",false);
         if(e.value=="default") {$("#headline").attr("disabled",true);var d=["카테고리 선택"]}
-        else if(e.value=="공지사항") var d = announcement;
-        else if(e.value=="자유게시판") var d = free;
-        else if(e.value=="홍보게시판") var d = promotion;
-        else if(e.value=="문의하기") var d = inquire;
+        <c:forEach var="board" items="${board_list}">
+        else if(e.value=="${board}") var d = ${board};
+        </c:forEach>
+
 
         target.options.length = 0;
 
