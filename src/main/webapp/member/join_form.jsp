@@ -59,7 +59,7 @@ label {
 }
 
 .member_agree{
-	margin-left:30%;
+	margin-left:25%;
 	margin-top:3%;
 }
 #member_agree{
@@ -87,7 +87,7 @@ label {
 	<div class="container join_form_container">
 
 		<div class="wrapper join_form" id="join_form">
-			<form action="/insert.member" method="post">
+			<form action="/insert_new_member.member" method="post">
 
 
 <!--아이디 입력창 -->
@@ -99,13 +99,13 @@ label {
 				<div class="row input">
 					<div class="col md-9">
 						<input type="text" class="form-control" id="member_id"
-							name="member_id" pattern="^[a-z]{1}[a-z0-9]{5,20}$"
+							name="member_id" pattern="^[a-z](?=.*[0-9])[0-9a-z]{4,19}$"
 							title="5자 이상 20자 이내로 영소문자,숫자 필수 포함" minlength="5" maxlength="20"
 							required>
 					</div>
 <!-- 아이디 중복확인 메세지 -->
 					<div class="col md-3">
-						<h9 id="checking"></h9>
+						<h9 id="id_checking"></h9>
 					</div>
 				</div>
 
@@ -173,6 +173,9 @@ label {
 <!-- 인증번호 전송 버튼 -->
 					<div class="col">
 						<button type="button" class="btn btn-primary btn-sm">인증번호 발송</button>
+					</div>
+					<div class="col md-3">
+						<h9 id="phone_checking"></h9>
 					</div>
 				</div>
 
@@ -262,11 +265,9 @@ label {
 				<div class="row input member_agree">
 					<div class="col">
 							<span> 가입에 동의하시겠습니까? </span> 
-							<input class="form-check-input" type="checkbox" id="member_agree" style="height:25px;width:25px;"  required >
+							<input class="form-check-input" type="checkbox" id="member_agree" name="member_agree" value="Y" style="height:25px;width:25px;"  required >
 					</div>
 				</div>
-
-
 
 <!-- 가입버튼 & 돌아가기 버튼 -->
 				<div class="row">
@@ -303,7 +304,7 @@ label {
 			stepMismatch : "[커스텀 메세지] 간격에 맞게 입력하세요",
 			tooLong : "[커스텀 메세지] 최대 글자 미만으로 입력하세요",
 			tooShort : "[커스텀 메세지] 최소 글자 미만으로 입력하세요",
-			typeMismatch : "형식에 맞게 입력하세요",
+			typeMismatch : "형식에 맞게 입력하세요!",
 			valueMissing : "필수로 입력해주세요.",
 		}
 		function getMessage(validity) {
@@ -326,36 +327,41 @@ label {
 		
 		
 		//아이디 중복 체크
-		let id_valid_flag = false;
+		let id_valid = false;
+		let regex_id = /^[a-z](?=.*[0-9])[0-9a-z]{4,19}$/;
+		
 		$("#member_id").on("keyup",function() {
 	    	let id = $("#member_id").val();
-	    	if(id == "" || id.length < 5){
-	    		$("#checking").html("영소문자와 숫자 포함 5자 이상 20자 이하").css("color", "red").css("font-size","x-small");
+	    	console.log(id);
+	    	if(!regex_id.exec(id)){
+	    		$("#id_checking").html("영소문자와 숫자 포함 5자 이상 20자 이하").css("color", "red").css("font-size","x-small");
+	    		id_valid = false;
 	    	}else{
 			$.ajax({
 				url:"/id_over_check.member",
 				type:"post",
-				data:{
-					member_id: $("#member_id").val()
+				data:{ member_id: $("#member_id").val()},
+				error: function(){
+					alert("서버 요청 실패");
 				}
+				
 			}).done(function(resp){
 				resp = JSON.parse(resp);
 				console.log(resp);
 				
 				if(resp){
-					$("#checking").html("중복된 ID").css({"color":"red"})
-					id_valid_flag = false;
+					$("#id_checking").html("중복된 ID").css({"color":"red"}).css("font-size","x-small");
+					id_valid = false;
 				}else{
-					$("#checking").html("사용가능한 ID").css({"color":"dodgerblue"})
-					id_valid_flag = true;
+					$("#id_checking").html("사용가능한 ID").css({"color":"dodgerblue"}).css("font-size","x-small");
+					id_valid = true;
 				}
 				
 			})
 	    	}
 		})
 
-				
-				
+		
 				
 				
 		//비밀번호 보기 
@@ -395,6 +401,53 @@ label {
 			}
 
 		})
+		
+		
+//전화번호 중복 체크
+		let phone_valid = false;
+		let regex_phone = /^[0-9]{10,11}$/;
+		
+		$("#member_phone1,#member_phone2,#member_phone3").on("keyup",function() {
+	    	let phone = $("#member_phone1").val()+$("#member_phone2").val()+$("#member_phone3").val();
+	    	console.log(phone);
+			$.ajax({
+				url:"/phone_over_check.member",
+				type:"post",
+				data:{ member_phone: $("#member_phone1").val()+$("#member_phone2").val()+$("#member_phone3").val()},
+				error: function(){
+					alert("서버 요청 실패");
+				}
+				
+			}).done(function(resp){
+				resp = JSON.parse(resp);
+				console.log(resp);
+				if(resp){ //true면 중복인거
+					$("#phone_checking").html("중복된 전화번호").css({"color":"red"}).css("font-size","x-small");
+					phone_valid =  false;
+				}else{
+					$("#phone_checking").html("");
+					phone_valid = true;
+				}
+				
+			})
+		})
+
+
+//submit전 아이디,전화번호 중복 검사
+		$("#join").on("click",function(){
+			
+			if(!id_valid){
+				alert("아이디 중복 여부를 확인하세요.");
+				return false;
+			}
+			
+			if(!phone_valid){
+				alert("전화번호 중복 여부를 확인하세요.");
+				return false;
+			}
+			
+		})			
+		
 
 		//생년월 select option 
 		$(document)
