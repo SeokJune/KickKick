@@ -33,12 +33,12 @@ div {
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="i" items="${teamList}">
+			<c:forEach var="i" items="${team_select_list}">
 				<tr>
 					<th scope="row"></th>
 					<td>${i.team_code}</td>
 					<td>${i.team_name}</td>
-					<td><button id="use" item="${i.team_name}">선택</button></td>
+					<td><a href="javascript:set_team('${i.team_code}','${i.team_logo}','${i.team_name}','${i.name}','${i.phone}')"><button id="use">선택</button></a></td>
 				</tr>
 
 			</c:forEach>
@@ -50,14 +50,12 @@ div {
 		</tbody>
 	</table>
 	<script>
+		function set_team(tc,tl,tn,n,p){
+			opener.set_team_info(tc,tl,tn,n,p);
+			window.close();
+		}
 		$("#close").on("click", function() {
 			window.close(); // 팝업창을 닫음
-		})
-		$(document).ready(function() {
-			$(document).on('click', '#use', function() {
-				opener.document.getElementById("name").value = this.${i.team_name};
-				window.close();
-			})
 		})
 		
 	</script>
