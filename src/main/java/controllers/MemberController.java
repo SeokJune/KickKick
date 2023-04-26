@@ -26,14 +26,15 @@ public class MemberController extends HttpServlet {
 		try {
 			if (cmd.equals("/login.member")) {
 				String id = request.getParameter("id");
-				String pw = Encryption.sha512(request.getParameter("pw"));
+				String pw = request.getParameter("pw"); //테스트용 입니다 회원가입기능 완료시 삭제
+//				String pw = Encryption.sha512(request.getParameter("pw"));
 
 				boolean result = dao.is_member(id, pw);
 
 				response.sendRedirect("/index.jsp");// main 화면, 별명은 세션에 저장 예정
 
 				System.out.println("로그인 성공여부 : " + result);
-			} else if (cmd.equals("/findMember.member")) {
+			} else if (cmd.equals("/find_member.member")) {
 
 				
 			} else if (cmd.equals("/id_over_check.member")) {
