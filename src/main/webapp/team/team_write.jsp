@@ -159,19 +159,21 @@
 
 		// 생성하기 눌렀을 시
 		$("#frm").on("submit", function() {
-			if (team_name_regex.test(val) == false) {
+			console.log($("#outline").val())
+			console.log($("#edi").val())
+			if (team_name_regex.test(team_name.val()) == false) {
 				alert("팀명을 다시 입력하세요.");
 				return false;
 			} 
-			else if(team_name_ValidFlag = false) {
+			else if(team_name_ValidFlag == false) {
 				alert("중복도 검사를 다시 하세요.")
 				return false;
 			}
-			else if ($("#outline").val() == null) {
+			else if ($("#outline").val().trim() == "" ) {
 				alert("간략소개글을 입력하세요.");
 				return false;
 			}
-			else if ($("#edi").val() == null) {
+			else if ($("#edi").html().trim() == "") {
 				alert("게시글을 입력하세요.");
 				return false;
 			}

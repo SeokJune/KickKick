@@ -34,6 +34,7 @@ public class CreateTeamDAO {
 		return ds.getConnection();
 	}
 
+	 
 	public List<HometownDTO> select() throws Exception {
 		String sql = "select * from hometown";
 		try(Connection con = this.getConnection();
@@ -96,8 +97,19 @@ public class CreateTeamDAO {
 		}
 	}
 	
+//	public List<MemberDTO> selectMember() throws Exception {
+//		String sql = "select * from member";
+//		try(Connection con = this.getConnection();
+//					PreparedStatement pstat = con.prepareStatement(sql);
+//					ResultSet rs = pstat.executeQuery();) {
+//			
+//			List<MemberDTO> arr = new ArrayList();
+//		}
+//		return arr;
+//	}
+	
 	public List<CreateTeamDTO> selectTeam() throws Exception {
-		String sql = "select * from T"; 
+		String sql = "select * from team"; 
 			try(Connection con = this.getConnection();
 					PreparedStatement pstat = con.prepareStatement(sql);
 					ResultSet rs = pstat.executeQuery();) {
