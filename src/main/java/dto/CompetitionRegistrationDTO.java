@@ -2,7 +2,7 @@ package dto;
 
 import java.sql.Timestamp;
 
-public class CompetitionRegistration {
+public class CompetitionRegistrationDTO {
 	private int code;
 	private int team_code;
 	private int competition_kind_code;
@@ -16,9 +16,9 @@ public class CompetitionRegistration {
 	private Timestamp mod_date;
 	private Timestamp del_date;
 	
-	public CompetitionRegistration() {}
+	public CompetitionRegistrationDTO() {}
 
-	public CompetitionRegistration(int code, int team_code, int competition_kind_code, int latirude, int longitude,
+	public CompetitionRegistrationDTO(int code, int team_code, int competition_kind_code, int latirude, int longitude,
 			Timestamp competition_date, int ability_code, String content, int status_code, Timestamp reg_date,
 			Timestamp mod_date, Timestamp del_date) {
 		super();

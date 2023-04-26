@@ -47,8 +47,8 @@
 						<a href="#" class="list-group-item list-group-item-action">시설 검색</a>
 						<a href="#" class="list-group-item list-group-item-action">용병 등록하기</a>
 						<a href="#" class="list-group-item list-group-item-action">용병 목록보기</a>
-						<a href="#" class="list-group-item list-group-item-action">매칭 등록하기</a>
-						<a href="#" class="list-group-item list-group-item-action">매칭 목록보기</a>
+						<a href="/registration.competition" class="list-group-item list-group-item-action">매칭 등록하기</a>
+						<a href="/list.competition" class="list-group-item list-group-item-action">매칭 목록보기</a>
 						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">운영진에게</a>
 						<a href="#" class="list-group-item list-group-item-action">문의하기</a>
 					</div>

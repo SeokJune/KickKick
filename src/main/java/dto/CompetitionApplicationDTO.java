@@ -2,7 +2,7 @@ package dto;
 
 import java.sql.Timestamp;
 
-public class CompetitionApplication {
+public class CompetitionApplicationDTO {
 private int code;
 private int competition_registration_code ;
 private int team_code;
@@ -13,9 +13,9 @@ private Timestamp reg_date;
 private Timestamp mod_date;
 private Timestamp del_date;
 
-public CompetitionApplication() {} ;
+public CompetitionApplicationDTO() {} ;
 
-public CompetitionApplication(int code, int competition_registration_code, int team_code, int ability_code,
+public CompetitionApplicationDTO(int code, int competition_registration_code, int team_code, int ability_code,
 		String content, int status_code, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
 	super();
 	this.code = code;

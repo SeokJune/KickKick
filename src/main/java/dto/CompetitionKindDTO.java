@@ -2,7 +2,7 @@ package dto;
 
 import java.sql.Timestamp;
 
-public class CompetitionKind {
+public class CompetitionKindDTO {
 	private int code;
 	private String name;
 	private int headcount;
@@ -10,8 +10,8 @@ public class CompetitionKind {
 	private Timestamp mod_date;
 	private Timestamp del_date;
 	
-	public CompetitionKind() {} ;
-	public CompetitionKind(int code, String name, int headcount, Timestamp reg_date, Timestamp mod_date,
+	public CompetitionKindDTO() {} ;
+	public CompetitionKindDTO(int code, String name, int headcount, Timestamp reg_date, Timestamp mod_date,
 			Timestamp del_date) {
 		super();
 		this.code = code;
