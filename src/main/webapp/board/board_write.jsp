@@ -6,11 +6,105 @@
 <head>
 <meta charset="UTF-8">
 <title>Post Writing</title>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<style>
+        div {
+            /* border: 1px solid black; */
+            padding: 10px;
+        }
+    </style>
+    <script>
+        tinymce.init({
+            language: "ko_KR", //한글판으로 변경
+            selector: '#editor',
+            height: 500,
+            // menubar: false,
+        });
+
+    </script>
 </head>
 <body>
+    <div class="container">
+    	<form class="row g-3" action="/insert.board" method="post">
+        <div class="row header">
+            <div class="col-12">
+                <h2>글쓰기</h2>
+            </div>
+<!--        <div class="col-12" style="text-align: right; padding-bottom: 0;">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    비밀글 쓰기
+                </label>
+            </div> -->
+        </div>
+        <div class="row body">
+            <div class="col-12 col-md-8" style="padding-top:0">
+                <select class="form-select" aria-label="Default select example" name="board" id="board" onchange="boardKindChange(this)">
+                    <option value="default" selected>게시판 선택</option> 
+                     <c:forEach var="board" items="${board_list}">
+                     	<option value="${board}">${board}</option>
+                     </c:forEach>                    
+                </select>
+            </div>
+            <div class="col-12 col-md-4" style="padding-top:0">
+                <select class="form-select" aria-label="Default select example" name="headline" id="headline" disabled>
+                     <option value="headline" selected>카테고리 선택</option> 
+                </select>
+            </div>
+            <div class="col-12">
+                <input type="text" placeholder="제목" style="width:100%" name="title">
+            </div>
+            <div class="col-12">
+                <textarea id="editor" name="content"></textarea>
+            </div>
+        </div>
+        <div class="row footer">
+            <div class="col-6 d-grid">
+                <button type="submit" class="btn btn-primary" id="post">등록</button>
+            </div>
+            <div class="col-6 d-grid">
+                <button type="button" class="btn btn-secondary" id="cancel">취소</button>
+            </div>
+        </div>
+        </form>
+    </div>
 
+    <script>
+    function boardKindChange(e){
+    	<c:forEach var="board" items="${board_list}">
+    		var ${board} = [];
+    			<c:forEach var="head" items="${headline_list}">
+    				<c:if test="${head.board_name==board}">
+    					${board}.push("${head.name}");
+    				</c:if>
+    			</c:forEach>
+    	</c:forEach>
+
+        var target = document.getElementById("headline");
+
+        $("#headline").attr("disabled",false);
+        if(e.value=="default") {$("#headline").attr("disabled",true);var d=["카테고리 선택"]}
+        <c:forEach var="board" items="${board_list}">
+        else if(e.value=="${board}") var d = ${board};
+        </c:forEach>
+
+
+        target.options.length = 0;
+
+        for(x in d){
+            var opt = document.createElement("option");
+            opt.value = d[x];
+            opt.innerHTML = d[x];
+            target.appendChild(opt);
+        }
+    };
+    
+    $("#cancel").on("click",function(){
+    	history.back();
+    });
+      </script>
 </body>
 </html>
