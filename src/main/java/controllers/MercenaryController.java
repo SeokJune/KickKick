@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.MercenaryDAO;
 import dto.MatchInfoDTO;
+import dto.RegisterInfoDTO;
 import dto.TeamInfoDTO;
 
 @WebServlet("*.mercenary")
@@ -30,6 +32,7 @@ public class MercenaryController extends HttpServlet {
 				
 			}else if(cmd.equals("/to_register_list.mercenary")) {
 				// 등록된 용병 보는 리스트로
+				
 				response.sendRedirect("/mercenary/register_list.jsp");
 				
 			}else if(cmd.equals("/to_apply_form.mercenary")) {
@@ -54,14 +57,29 @@ public class MercenaryController extends HttpServlet {
 				// 본인 팀이름에 맞는 경기 선택할 수 있도록
 				String team_name = request.getParameter("team_name");
 				List<MatchInfoDTO> match_select_list = MercenaryDAO.getInstance().select_match_by_name(team_name);
-
+				
 				request.setAttribute("match_select_list", match_select_list);
 				request.getRequestDispatcher("/mercenary/match_check_view.jsp").forward(request, response);
 				
-			}else if(cmd.equals("/to_mercenary_register")) {
+			}else if(cmd.equals("/to_mercenary_register.mercenary")) {
 				// DB에 용병 등록하기
+				String match_place = request.getParameter("match_place");
+				String match_date = request.getParameter("match_date");
+				String team_name = request.getParameter("team_name");
+				int ability_code = Integer.parseInt(request.getParameter("ability")); 
+				int people_count = Integer.parseInt(request.getParameter("people_count"));
 				
 				
+//				RegisterInfoDTO r = new RegisterInfoDTO(0,0,team_code,ability_code,people_count,0);
+//				
+//				int result = MercenaryDAO.getInstance().register_mercenary(r);
+//				if(result>0) {
+//					response.setContentType("text/html; charset=UTF-8");
+//					PrintWriter pwriter = response.getWriter();
+//					pwriter.println("<script>alert('용병 등록 완료!'); location.href='/index.jsp';</script>"); 
+//					pwriter.close();
+//				}
+//				
 			}
 				
 			
