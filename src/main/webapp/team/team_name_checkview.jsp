@@ -47,7 +47,7 @@
 				</tr>
 				<script>
 					$("#use").on("click", function() {
-						opener.idValidFlag = true;
+						opener.team_name_ValidFlag = true;
 						window.close();
 					})
 					$("#cancel").on("click", function() {
