@@ -30,9 +30,9 @@ public class MemberController extends HttpServlet {
 
 				boolean result = dao.is_member(id, pw);
 
-				response.sendRedirect("/index.jsp"); // main È­¸é, º°¸íÀº ¼¼¼Ç¿¡ ÀúÀå ¿¹Á¤
+				response.sendRedirect("/index.jsp");// main í™”ë©´, ë³„ëª…ì€ ì„¸ì…˜ì— ì €ì¥ ì˜ˆì •
 
-				System.out.println("·Î±×ÀÎ ¼º°ø¿©ºÎ : " + result);
+				System.out.println("ë¡œê·¸ì¸ ì„±ê³µì—¬ë¶€ : " + result);
 			} else if (cmd.equals("/findMember.member")) {
 
 				

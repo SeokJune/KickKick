@@ -46,7 +46,7 @@ public class MemberDAO {
 		}
 	} // is_member
 
-	//¾ÆÀÌµğ Áßº¹ Ã¼Å©: ºñµ¿±â·Î ¼öÁ¤ ¿¹Á¤
+	//ì•„ì´ë”” ì¤‘ë³µ ì²´í¬: ë¹„ë™ê¸°
 	public boolean id_over_check(String member_id) throws Exception {
 		String sql = "select * from members where id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
