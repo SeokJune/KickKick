@@ -8,9 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+<<<<<<< HEAD
 import com.google.gson.Gson;
 
 import commons.Encryption;
+=======
+import commons.EncryptionUtils;
+>>>>>>> fb36072c02d88f3777f32c2fb70c1da6a8e6a823
 import dao.MemberDAO;
 
 @WebServlet("*.member")
@@ -40,6 +44,9 @@ public class MemberController extends HttpServlet {
 			} else if (cmd.equals("/find_member.member")) {
 
 				
+			} else if (cmd.equals("/phone_Certification.member")) {
+	            //sens API 사용
+	            
 			} else if (cmd.equals("/id_over_check.member")) {
 				String member_id = request.getParameter("member_id");
 				boolean result = MemberDAO.getInstance().id_over_check(member_id);
@@ -48,6 +55,45 @@ public class MemberController extends HttpServlet {
 				response.getWriter().append(resp);
 				
 				
+				
+			} else if (cmd.equals("/phone_over_check.member")) {
+				String member_phone = request.getParameter("member_phone");
+				System.out.println(member_phone);
+				boolean result = MemberDAO.getInstance().phone_over_check(member_phone);
+				Gson g = new Gson();
+				String resp = g.toJson(result);
+				response.getWriter().append(resp);
+				
+				
+			} else if(cmd.equals("/insert_new_member.member")) {
+				String member_id = request.getParameter("member_id");
+				String member_pw = Encryption.sha512(request.getParameter("member_pw"));
+				String member_name = request.getParameter("member_name");
+				String member_nickname = request.getParameter("member_nickname");
+				String member_birth_date = request.getParameter("member_birth_year")
+											+ request.getParameter("member_birth_month")
+											+ request.getParameter("member_birth_day");
+				String member_phone = request.getParameter("member_phone1")
+						+ request.getParameter("member_phone2") 
+						+ request.getParameter("member_phone3");
+				String member_email = request.getParameter("member_email");
+				String member_agree = request.getParameter("member_agree");
+				
+				System.out.println(member_id);
+				System.out.println(member_pw);
+				System.out.println(member_name);
+				System.out.println(member_nickname);
+				System.out.println(member_birth_date);
+				System.out.println(member_phone);
+				System.out.println(member_email);
+				System.out.println(member_agree);
+				MemberDTO dto = new MemberDTO(0,0,member_id,member_pw,member_name,member_nickname,member_birth_date,member_phone,member_email,member_agree,0,null,null,null);
+				int result = MemberDAO.getInstance().insert_new_member(dto);
+				if(result>0) {
+					
+				}else {
+					response.sendRedirect("/error.html");
+				}
 				
 			}
 

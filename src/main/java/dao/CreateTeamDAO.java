@@ -34,6 +34,7 @@ public class CreateTeamDAO {
 		return ds.getConnection();
 	}
 
+	 
 	public List<HometownDTO> select() throws Exception {
 		String sql = "select * from hometown";
 		try(Connection con = this.getConnection();
@@ -53,7 +54,7 @@ public class CreateTeamDAO {
 	}
 	
 	public int insertTeam(CreateTeamDTO dto) throws Exception {
-		String sql = "insert into team values(?,?,?,?,?,?,?,?,sysdate,null,null)"; 
+		String sql = "insert into team values(?,?,?,?,?,?,?,?,sysdate,?,?)"; 
 			try(Connection con = this.getConnection();
 					PreparedStatement pstat = con.prepareStatement(sql);) {
 
@@ -66,9 +67,16 @@ public class CreateTeamDAO {
 				pstat.setInt(6, dto.getHometown_code());
 				pstat.setString(7, dto.getOutline());
 				pstat.setString(8, dto.getContect());
+				System.out.println("여기1");
+				pstat.setTimestamp(9, dto.getMod_date());
+				System.out.println("여기2");
+				pstat.setTimestamp(10, dto.getDel_date());
+				System.out.println("여기3");
 				
 				int result = pstat.executeUpdate();
+				System.out.println("여기4");
 				con.commit();
+				System.out.println("여기5");
 
 				return result;
 
@@ -76,8 +84,32 @@ public class CreateTeamDAO {
 		
 	}
 	
+	public boolean team_name_exist(String team_name) throws Exception {
+		String sql = "select * from team where name=?";
+
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)) {
+			
+			pstat.setString(1, team_name);
+			try(ResultSet rs = pstat.executeQuery()) {
+				return rs.next();
+			}
+		}
+	}
+	
+//	public List<MemberDTO> selectMember() throws Exception {
+//		String sql = "select * from member";
+//		try(Connection con = this.getConnection();
+//					PreparedStatement pstat = con.prepareStatement(sql);
+//					ResultSet rs = pstat.executeQuery();) {
+//			
+//			List<MemberDTO> arr = new ArrayList();
+//		}
+//		return arr;
+//	}
+	
 	public List<CreateTeamDTO> selectTeam() throws Exception {
-		String sql = "select * from T"; 
+		String sql = "select * from team"; 
 			try(Connection con = this.getConnection();
 					PreparedStatement pstat = con.prepareStatement(sql);
 					ResultSet rs = pstat.executeQuery();) {
