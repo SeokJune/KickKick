@@ -33,6 +33,7 @@ public class MemberDAO {
 		return ds.getConnection();
 	}
 
+
 	public boolean is_member(String id, String pw) throws Exception {
 		String sql = "select * from member where id=? and pw=?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -45,7 +46,7 @@ public class MemberDAO {
 		}
 	} // is_member
 
-	//아이디 중복 체크: 비동기로 수정 예정
+	//아이디 중복 체크: 비동기
 	public boolean id_over_check(String member_id) throws Exception {
 		String sql = "select * from members where id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -55,5 +56,6 @@ public class MemberDAO {
 			}
 		}
 	}//id_over_check
+
 
 }

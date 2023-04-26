@@ -1,5 +1,6 @@
 package dto;
 
+<<<<<<< HEAD
 import java.sql.Timestamp;
 
 public class HometownDTO {
@@ -50,4 +51,33 @@ public void setDel_date(Timestamp del_date) {
 }
 
 
+=======
+public class HometownDTO {
+	private int code;
+	private String name;
+	
+	
+	public HometownDTO() {
+
+	}
+	public HometownDTO(int code, String name) {
+		this.code = code;
+		this.name = name;
+	}
+	
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+>>>>>>> be0343a9fa8ad166aed9f577b8c0bf89d3666d0c
 }
