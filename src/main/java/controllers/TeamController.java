@@ -28,6 +28,13 @@ public class TeamController extends HttpServlet {
 				request.setAttribute("arr", arr);
 				request.getRequestDispatcher("/team/team_write.jsp").forward(request, response);
 			}
+			else if(cmd.equals("/team_name_check.team")) {
+				String team_name = request.getParameter("team_name");
+				CreateTeamDAO dao = CreateTeamDAO.getInstance();
+				boolean result = dao.team_name_exist(team_name);
+				request.setAttribute("result", result);
+				request.getRequestDispatcher("/team/team_name_checkview.jsp").forward(request, response);
+			}
 			else if(cmd.equals("/create.team")) {
 				String team_name = request.getParameter("team_name");
 				String captain_name = request.getParameter("captain_name");
@@ -38,10 +45,7 @@ public class TeamController extends HttpServlet {
 				CreateTeamDTO dto = new CreateTeamDTO(0, 0, "logo", team_name, 0, hometown_code, outline, content, null, null, null);
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
 				dao.insertTeam(dto);
-//				System.out.println("메롱1");
 				response.sendRedirect("/list.team");
-//				System.out.println("메롱2");
-
 				
 			}
 			else if(cmd.equals("/list.team")) {
@@ -55,7 +59,8 @@ public class TeamController extends HttpServlet {
 //			}
 		}
 		catch(Exception e) {
-
+			e.printStackTrace();
+			response.sendRedirect("/error.jsp");
 		}
 	}
 
