@@ -103,24 +103,24 @@ body {
 						<h1 class="mb-4">⚽KickKick</h1>
 						<h3>킥킥에 돌아오신걸 환영해요!</h3>
 					</div>
+					<form action="/login.member" method="post">
 					<div class="form-group mb-4">
 						<label class="control-label font-weight-bold font-size-7pt">아이디</label>
 						<span>*</span> <input type="text" class="form-control" id="id"
 							name="id" value="" />
 					</div>
-
 					<div class="form-group">
 						<label class="control-label font-weight-bold font-size-7pt">비밀번호</label>
 						<span>*</span> <input type="pw" class="form-control m-0" id="pw"
 							name="pw" value="" />
 					</div>
-
 					<div class="form-group mb-4">
-						<a href="#" class="btnForgetPwd">아이디 / 비밀번호를 잊으셨나요?</a>
+						<a href="/findMember.member" class="btnForgetPwd">아이디 / 비밀번호를 잊으셨나요?</a>
 					</div>
 					<div class="form-group mb-4">
 						<input type="submit" class="site_login form-control" value="Login" />
 					</div>
+					</form>
 					<div
 						class="form-group d-block d-md-none d-flex justify-content-center mb-4 login_button">
 						<button class="btnSubmit kakao_login">

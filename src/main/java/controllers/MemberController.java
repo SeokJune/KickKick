@@ -7,34 +7,49 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class member_controller
- */
-@WebServlet("/member_controller")
-public class MemberController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MemberController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+import commons.Encryption;
+import dao.MemberDAO;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+@WebServlet("*.member")
+public class MemberController extends HttpServlet {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
+
+		String cmd = request.getRequestURI();
+		System.out.println(cmd);
+
+		MemberDAO dao = MemberDAO.getInstance();
+		try {
+			if (cmd.equals("/login.member")) {
+				String id = request.getParameter("id");
+				String pw = Encryption.sha512(request.getParameter("pw"));
+
+				boolean result = dao.is_member(id, pw);
+
+				response.sendRedirect("/index.jsp"); // main 화면, 별명은 세션에 저장 예정
+
+				System.out.println("로그인 성공여부 : " + result);
+			} else if (cmd.equals("/findMember.member")) {
+
+			} else if (cmd.equals("/id_over_check.member")) {
+				String member_id = request.getParameter("member_id");
+				boolean result = MemberDAO.getInstance().id_over_check(member_id);
+				request.setAttribute("over_check", result);
+				request.getRequestDispatcher("/member/id_over_check_view.jsp").forward(request, response);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.sendRedirect("error.html");
+		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 
