@@ -6,243 +6,284 @@
 <meta charset="UTF-8">
 <title>KickKick - 회원가입</title>
 <!-- 부트스트랩 CSS CDN -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
 <!-- 부트스트랩 JQ , JS CDN -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
-#container {
-	border: 1px solid black;
-	width: 700px;
-	height: 800px;
-	position: relative;
-	left: 25%;
+html {
+	background-color: #76b852;
 }
 
-tr{
-	width: 450px;
-	height: 70px;
+body {
+	background-color: #76b852;
 }
-.form-floating{
-	height:50px;
+
+.container {
+	border: 1px solid black;
+	width: 600px;
+	height: 680px;
+	padding: 32px;
+	margin-top: 5%;
+	margin-bottom: 5%;
+	position: relative;
+	background-color: whitesmoke;
+	border-radius: 1rem;
+	box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0
+		rgba(0, 0, 0, 0.19);
 }
-td{
-width:100px;}
+
+.wrapper{
+position: relative;
+left:10px;
+}
+
+.row input {
+	height: 40px;
+}
+
+label {
+	font-size: small
+}
+
+.essential {
+	font-size: small;
+	color: red;
+}
+
+.member_agree{
+	margin-left:30%;
+	margin-top:3%;
+}
+#member_agree{
+	position:relative;
+	bottom: 15%;
+}
+
+.btn {
+	border: none;
+}
+
+#join{
+	position:relative;
+	left:160px;
+	top:15px;
+}
+#back{
+	position:relative;
+	top:15px;
+}
 </style>
 </head>
 <body>
 
-	<div id="container">
+	<div class="container join_form_container">
 
-		<div>회원가입</div>
-
-		<hr>
-
-
-		<div id="join_form">
-			<form action="/insert.members" method="post">
-				<table align="center">
+		<div class="wrapper join_form" id="join_form">
+			<form action="/insert.member" method="post">
 
 
-
-					<tr>
-						<td colspan="3">
-							<div class="form-floating mb-3">
-								<input type="text" class="form-control" 
-								id="member_id" name="member_id"
-								pattern="^[a-z]{1}[a-z0-9]{5,20}$"
-								title="5자 이상 20자 이내로 영소문자,숫자 필수 포함" 
-								minlength="5" maxlength="20" required> 
-								<label for="member_id">아이디(필수)</label>
-							</div>
-						</td>
-						<td colspan="1">
-							<button type="button" class="btn btn-primary btn-sm" id="id_over_check">중복확인</button>
-						</td>
-					</tr>
-					
-					
-					
-					
-					
-					
-					
-					<tr>
-						<td  colspan="3">
-							<div class="form-floating">
-								<input type="password" class="form-control" 
-								id="member_pw" name="member_pw"
-								pattern="^(?=.*[a-zA-Z])(?=.*[~.!@#$%^&*()_+={}>;<:,.?/\-\[\]\\\|])(?=.*[0-9]).{8,20}$"
-								title="영대소문자,숫자,특수문자를 모두 포함한 8~20자" 
-								minlength="8" maxlength="20" required>
-								<label for="member_pw">비밀번호(필수)</label>
-							</div>
-						</td>
-						<td colspan="1">
-							<button class="btn btn-light btn-sm" id="view_pw" type="button">보기</button>
-						</td>
-					</tr>
+<!--아이디 입력창 -->
+				<div class="row">
+					<div class="col md-9">
+						<span class="essential">* </span><label for="member_id">아이디</label>
+					</div>
+				</div>
+				<div class="row input">
+					<div class="col md-9">
+						<input type="text" class="form-control" id="member_id"
+							name="member_id" pattern="^[a-z]{1}[a-z0-9]{5,20}$"
+							title="5자 이상 20자 이내로 영소문자,숫자 필수 포함" minlength="5" maxlength="20"
+							required>
+					</div>
+<!-- 아이디 중복확인 메세지 -->
+					<div class="col md-3">
+						<h9 id="checking"></h9>
+					</div>
+				</div>
 
 
 
+<!-- 비밀번호 입력창 -->
+				<div class="row">
+					<div class="col md-9">
+						<span class="essential">* </span><label for="member_pw">비밀번호</label>
+					</div>
+				</div>
+				<div class="row input">
+					<div class="col md-9">
+						<input type="password" class="form-control" id="member_pw"
+							name="member_pw"
+							pattern="^(?=.*[a-zA-Z])(?=.*[~.!@#$%^&*()_+={}>;<:,.?/\-\[\]\\\|])(?=.*[0-9]).{8,20}$"
+							title="영대소문자,숫자,특수문자를 모두 포함한 8~20자" minlength="8" maxlength="20"
+							required>
+					</div>
+<!-- 비밀번호 보기&숨기기 버튼 -->
+					<div class="col md-3">
+						<button class="btn btn-light btn-sm" id="view_pw" type="button">보기</button>
+					</div>
+				</div>
 
 
 
-
-					<tr>
-						<td colspan="3">
-							<div class="form-floating mb-3">
-								<input type="text"  class="form-control" 
-								id="member_name" name="member_name"
-								pattern="^[가-힣]{2,5}$" 
-								title="2자 이상 5자 이내의 한글" 
-								minlength="2" maxlength="5" required>
-								<label for="member_name">이름(필수)</label>
-							</div>
-						</td>
-					</tr>
-
-
+<!-- 이름 입력창 -->
+				<div class="row">
+					<div class="col">
+						<span class="essential">* </span> <label for="member_name">이름</label>
+					</div>
+				</div>
+				<div class="row input">
+					<div class="col md-9">
+						<input type="text" class="form-control" id="member_name"
+							name="member_name" pattern="^[가-힣]{2,5}$" title="2자 이상 5자 이내의 한글"
+							minlength="2" maxlength="5" required>
+					</div>
+				</div>
 
 
-
-
-					<tr>
-							<td>
-						<div class="form-floating">	
-								<input type="text"  class="form-control" 
-								id="member_phone1" name="member_phone1" 
-								pattern="^0+\d{1,2}$" 
-								minlength="2" maxlength="3" required 
-								style="width:140px;">
-								<label for="member_phone1">전화번호(필수)</label>
-							</div>
-							</td>
-							<td>
-							<div clasㄹs="form-floating">	
-								<input type="text"  class="form-control" 
-								id="member_phone2" name="member_phone2"
-								pattern="^\d{3,4}$" 
-								minlength="3" maxlength="4" required
-								style="width:100px;"> 
-								<label for="member_phone2"></label>
-							</div>
-							</td>
-							<td> 
-							<div claㄹss="form-floating">	
-								<input type="text" class="form-control" 
-								id="member_phone3" name="member_phone3" 
-								pattern="^\d{4}$"
-								minlength="4" maxlength="4" required 
-								style="width: 100px;">
-								<label for="member_phone3"></label>
-							</div>
-							</td>
-						
-						<td>
-							<button type="button" class="btn btn-primary btn-sm">인증번호 발송</button>
-						</td>
-					</tr>
+<!-- 전화번호1,2,3 입력창 -->
+				<div class="row">
+					<div class="col md-9">
+						<span class="essential">* </span><label for="member__phone">전화번호</label>
+					</div>
+				</div>
+				<div class="row input">
+					<div class="col">
+						<input type="text" class="form-control" id="member_phone1"
+							name="member_phone1" pattern="^0+\d{1,2}$" minlength="2"
+							maxlength="3" required style="width: 100px;">
+					</div>
+					<div class="col">
+						<input type="text" class="form-control" id="member_phone2"
+							name="member_phone2" pattern="^\d{3,4}$" minlength="3"
+							maxlength="4" required style="width: 100px;">
+					</div>
+					<div class="col">
+						<input type="text" class="form-control" id="member_phone3"
+							name="member_phone3" pattern="^\d{4}$" minlength="4"
+							maxlength="4" required style="width: 100px;">
+					</div>
+<!-- 인증번호 전송 버튼 -->
+					<div class="col">
+						<button type="button" class="btn btn-primary btn-sm">인증번호 발송</button>
+					</div>
+				</div>
 
 
 
-
-
-					<tr>
-						<td colspan="3">
-							<div class="form-floating">	
-								<input type="text" class="form-control" 
-								id="member_pin" name="member_pin" required>
-								<label for="member_pin">인증번호 (필수)</label>
-							</div>
-						</td>
-						<td colspan="2">
-							<button  type="button" class="btn btn-primary btn-sm">인증완료</button>
-						</td>
-					</tr>
-
-
-
-
-					<tr>
-						<div class="form-floating">
-							<td style="width:100px;">
-								<select class="form-select" id="member_birth_year" name="member_birth_year" style="width:100px;"></select>
-							</td>
-							<td  width="100px">
-								<select class="form-select" id="member_birth_month" name="member_birth_month" style="width:100px;"></select>
-							</td>
-							<td  width="100px">
-								<input type="text" class="form-control"
-								id="member_birth_day" name="member_birth_day"
-								pattern="^(0[1-9]|[12][0-9]|3[01])$" title="두자리로 입력"
-								minlength="2" maxlength="2" required style="width: 100px;">
-							</td>
-						</div>
-					</tr>
+<!-- 인증번호 입력창 -->
+				<div class="row">
+					<div class="col">
+						<span class="essential">* </span><label for="member_pin">인증번호</label>
+					</div>
+				</div>
+				<div class="row input">
+					<div class="col md-9">
+						<input type="text" class="form-control" id="member_pin"
+							name="member_pin" required>
+					</div>
+<!-- 인증완료 버튼 -->
+					<div class="col">
+						<button type="button" class="btn btn-primary btn-sm">인증완료</button>
+					</div>
+				</div>
 
 
 
+<!-- 생년월일 입력창 -->
+				<div class="row">
+					<div class="col">
+						<span class="essential">* </span><label for="member_birth">생년월일</label>
+					</div>
+				</div>
+				<div class="row input">
+					<div class="col md-9">
+						<select class="form-select" id="member_birth_year"
+							name="member_birth_year" style="width: 100px;"></select>
+					</div>
 
-					<tr>
-						<td colspan="3">
-							<div class="form-floating">
-								<input type="email" class="form-control"
-									id="member_email" name="member_email"
-									pattern="^([a-z]{1}[a-z0-9_+.-]+@)([a-zA-Z0-9]+\.)([a-z0-9]{2,4})$"
-									title="abc@abc.com 형식으로 입력">
-								 <label for="member_email">E-mail</label>	
-							</div>	
-						 </td>
-					</tr>
+					<div class="col">
+						<select class="form-select" id="member_birth_month"
+							name="member_birth_month" style="width: 100px;"></select>
+					</div>
+					<div class="col">
+						<input type="text" class="form-control" id="member_birth_day"
+							name="member_birth_day" pattern="^(0[1-9]|[12][0-9]|3[01])$"
+							title="두자리로 입력" minlength="2" maxlength="2" required
+							style="width: 100px;">
+					</div>
+				</div>
 
 
 
+<!-- 이메일 입력창 -->
+				<div class="row">
+					<div class="col">
+						<label for="member_email"> E-mail</label>
+					</div>
+				</div>
+				<div class="row input">
+					<div class="col md-9">
+						<input type="email" class="form-control" id="member_email"
+							name="member_email"
+							pattern="^([a-z]{1}[a-z0-9_+.-]+@)([a-zA-Z0-9]+\.)([a-z0-9]{2,4})$"
+							title="abc@abc.com 형식으로 입력">
+					</div>
+				</div>
 
-					<tr>
-						<td colspan="3">
-							<div class="form-floating">	
-								<input type="text"  class="form-control"
-									id="member_nickname" name="member_nickname" 
-									pattern="^[가-힣a-zA-Z0-9]{2,10}$"
-									title="2자 이상 10자 이내로 한글, 영대소문자, 숫자 중 1개 이상 포함 " 
-									minlength="2" maxlength="10">
-								<label for="member_nickname">닉네임</label>	
-							</div>		
-						</td>
-					</tr>
+
+
+<!-- 닉네임 입력창 -->
+				<div class="row">
+					<div class="col">
+						<label for="member_nickname"> 닉네임</label>
+					</div>
+				</div>	
+				<div class="row input">
+					<div class="col md-9">
+						<input type="text" class="form-control" id="member_nickname"
+							name="member_nickname" pattern="^[가-힣a-zA-Z0-9]{2,10}$"
+							title="2자 이상 10자 이내로 한글, 영대소문자, 숫자 중 1개 이상 포함 " minlength="2"
+							maxlength="10" style="width:255px;">
+					</div>
+				</div>
 
 
 
 
-
-					<tr>
-						<div class="form-check">
-							<td colspan="4">
-								<label class="form-check-label" for="member_agree">
-        							가입에 동의하시겠습니까?
-								</label>
-								<input class="form-check-input" type="checkbox" id="member_agree" required>
-							</td>
-					</tr>
+<!-- 가입동의 체크 -->
+				<div class="row input member_agree">
+					<div class="col">
+							<span> 가입에 동의하시겠습니까? </span> 
+							<input class="form-check-input" type="checkbox" id="member_agree" style="height:25px;width:25px;"  required >
+					</div>
+				</div>
 
 
 
+<!-- 가입버튼 & 돌아가기 버튼 -->
+				<div class="row">
+					<div class="col-md-6">
+						<button class="btn btn-secondary" id="join"
+							style="background-color: #76b852;">가입하기</button>
+					</div>		
+					<div class="col-md-6">
+						<a href="">
+							<button class="btn btn-secondary" type="button" id="back"
+								style="background-color: #76b852;">뒤로가기</button>
+						</a>
+					</div>
+				</div>
 
 
-					<tr>
-						<td colspan="4" align="center">
-							<button class="btn btn-secondary" id="join">가입하기</button> 
-							<a href="">
-							<button class="btn btn-secondary" type="button" id="back">뒤로가기</button></a>
-						</td>
-						</div>
-					</tr>
 
-
-
-
-				</table>
 			</form>
 
 		</div>
@@ -253,8 +294,7 @@ width:100px;}
 
 
 	<script>
-
-//입력 형식 안내 메세지
+		//입력 형식 안내 메세지
 		const validityMessage = {
 			badInput : "잘못된 입력입니다.",
 			patternMismatch : "형식에 맞게 입력하세요",
@@ -280,35 +320,61 @@ width:100px;}
 			showError(this);
 		});
 
-//아이디 중복 체크
-	let id_valid_flag = false;
-	$("#id_over_check").on("click",function(){
-		if($("#member_id").val().trim() == ""){
-			alert("ID를 입력해주세요.");
-			return;
-		}		
-		window.open("/id_over_check.members?member_id="+$("#member_id").val(),"","width=350px,height=250px");
 		
-	})
-	
-//비밀번호 보기 
-		$("#view_pw").on("click",function(){
+		
+		
+		
+		
+		//아이디 중복 체크
+		let id_valid_flag = false;
+		$("#member_id").on("keyup",function() {
+	    	let id = $("#member_id").val();
+	    	if(id == "" || id.length < 5){
+	    		$("#checking").html("영소문자와 숫자 포함 5자 이상 20자 이하").css("color", "red").css("font-size","x-small");
+	    	}else{
+			$.ajax({
+				url:"/id_over_check.member",
+				type:"post",
+				data:{
+					member_id: $("#member_id").val()
+				}
+			}).done(function(resp){
+				resp = JSON.parse(resp);
+				console.log(resp);
+				
+				if(resp){
+					$("#checking").html("중복된 ID").css({"color":"red"})
+					id_valid_flag = false;
+				}else{
+					$("#checking").html("사용가능한 ID").css({"color":"dodgerblue"})
+					id_valid_flag = true;
+				}
+				
+			})
+	    	}
+		})
+
+				
+				
+				
+				
+		//비밀번호 보기 
+		$("#view_pw").on("click", function() {
 			let password_field = $("#member_pw");
 			let password_field_type = password_field.attr("type");
 			console.log("click");
-			
-			if(password_field_type =="password"){
-				password_field.attr("type","text");
+
+			if (password_field_type == "password") {
+				password_field.attr("type", "text");
 				$("#view_pw").html("숨기기");
-			}else{
-				password_field.attr("type","password");
+			} else {
+				password_field.attr("type", "password");
 				$("#view_pw").html("보기");
 			}
-			
+
 		})
-		
-		
-//PW 일치 확인
+
+		//비밀번호 일치 확인 : 현재 사용X
 		$("#member_repw,#member_pw").on("keyup", function() {
 
 			if ($("#member_pw").val() != "" || $("#member_repw").val() != "") {
@@ -330,12 +396,10 @@ width:100px;}
 
 		})
 
-		
-		
-		
-
-//생년월 select option 
-		$(document).ready(function() {
+		//생년월 select option 
+		$(document)
+				.ready(
+						function() {
 							var now = new Date();
 							var year = now.getFullYear();
 							var mon = (now.getMonth() + 1) > 9 ? ''
@@ -344,18 +408,27 @@ width:100px;}
 
 							//년도 selectbox만들기               
 							for (var i = 1900; i <= year; i++) {
-								$('#member_birth_year').append('<option value="' + i + '">' + i + '</option>');
+								$('#member_birth_year').append(
+										'<option value="' + i + '">' + i
+												+ '</option>');
 							}
 							// 월별 selectbox 만들기            
 							for (var i = 1; i <= 12; i++) {
 								var mm = i > 9 ? i : "0" + i;
-								$('#member_birth_month').append('<option value="' + mm + '">' + mm + '</option>');
+								$('#member_birth_month').append(
+										'<option value="' + mm + '">' + mm
+												+ '</option>');
 							}
 
-							$("#member_birth_year  > option[value="+ year + "]").attr("selected","true");
-							$("#member_birth_month  > option[value="+ mon + "]").attr("selected","true");
+							$(
+									"#member_birth_year  > option[value="
+											+ year + "]").attr("selected",
+									"true");
+							$(
+									"#member_birth_month  > option[value="
+											+ mon + "]").attr("selected",
+									"true");
 						})
-
 	</script>
 
 </body>
