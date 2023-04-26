@@ -20,6 +20,9 @@
 div {
 	border: 1px solid black;
 }
+.btn{
+	border:none;
+}
 </style>
 </head>
 <body>
@@ -42,13 +45,14 @@ div {
 					<td>${i.match_person_count}</td>
 					<td>${i.match_place}</td>
 					<td>${i.match_date}</td>
-					<td><a href="javascript:set_match('${i.match_place}','${i.match_date}','${i.match_kind_code}','${i.match_person_count}','${i.match_ability}')"><button id="use">선택</button></a></td>
+					<td><a href="javascript:set_match('${i.match_place}','${i.match_date}','${i.match_kind_code}','${i.match_person_count}','${i.match_ability}')">
+					<button id="use" class="btn btn-primary btn-sm">선택</button></a></td>
 				</tr>
 
 			</c:forEach>
 			<tr>
 				<td colspan=6 align=center>
-					<button id="close">취소</button>
+					<button id="close" class="btn btn-primary btn-sm">취소</button>
 				</td>
 			</tr>
 		</tbody>

@@ -20,6 +20,9 @@
 div {
 	border: 1px solid black;
 }
+.btn{
+	border:none;
+}
 </style>
 </head>
 <body>
@@ -38,13 +41,14 @@ div {
 					<th scope="row"></th>
 					<td>${i.team_code}</td>
 					<td>${i.team_name}</td>
-					<td><a href="javascript:set_team('${i.team_code}','${i.team_logo}','${i.team_name}','${i.name}','${i.phone}')"><button id="use">선택</button></a></td>
+					<td><a href="javascript:set_team('${i.team_code}','${i.team_logo}','${i.team_name}','${i.name}','${i.phone}')">
+					<button id="use" class="btn btn-primary btn-sm">선택</button></a></td>
 				</tr>
 
 			</c:forEach>
 			<tr>
 				<td colspan=4 align=center>
-					<button id="close">취소</button>
+					<button id="close" class="btn btn-primary btn-sm">취소</button>
 				</td>
 			</tr>
 		</tbody>

@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import dto.MatchInfoDTO;
+import dto.RegisterInfoDTO;
 import dto.TeamInfoDTO;
 
 
@@ -81,6 +82,22 @@ public class MercenaryDAO {
 		}
 	}
 	
+	public int register_mercenary(RegisterInfoDTO r) throws Exception {
+		String sql = "insert into mercenary_registration values(MERCENARY_REGISTRATION_CODE.nextval,?,?,?,?,?)";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1,r.getCompetition_result_code());
+			pstat.setInt(2,r.getTeam_code());
+			pstat.setInt(3,r.getAbility_code());
+			pstat.setInt(4,r.getHeadcount());
+			pstat.setInt(5,r.getStatus_code());
+			
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
 	
 	
 	
