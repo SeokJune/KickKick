@@ -58,15 +58,26 @@ public class MemberDAO {
 	}//id_over_check
 
 	//전화번호 중복 체크: 비동기
-			public boolean phone_over_check(String member_phone) throws Exception {
-				String sql = "select * from member where phone = ?";
-				try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-					pstat.setString(1, member_phone);
-					try (ResultSet rs = pstat.executeQuery();) {
-						return rs.next();
-					}
+		public boolean phone_over_check(String member_phone) throws Exception {
+			String sql = "select * from member where phone = ?";
+			try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+				pstat.setString(1, member_phone);
+				try (ResultSet rs = pstat.executeQuery();) {
+					return rs.next();
 				}
-			}//phone_over_check
+			}
+		}//phone_over_check
+			
+			//이메일 중복 체크: 비동기
+		public boolean email_over_check(String member_email) throws Exception {
+			String sql = "select * from member where email = ?";
+			try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+				pstat.setString(1, member_email);
+				try (ResultSet rs = pstat.executeQuery();) {
+					return rs.next();
+				}
+			}
+		}//email_over_check		
 
 			
 		//회원가입 

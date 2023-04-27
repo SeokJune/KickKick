@@ -34,19 +34,22 @@ public class MemberController extends HttpServlet {
 				response.sendRedirect("/index.jsp");// main 화면, 별명은 세션에 저장 예정
 
 				System.out.println("로그인 성공여부 : " + result);
+				
+				
 			} else if (cmd.equals("/find_member.member")) {
 
+				
 				
 			} else if (cmd.equals("/phone_Certification.member")) {
 	            //sens API 사용
 	            
+				
 			} else if (cmd.equals("/id_over_check.member")) {
 				String member_id = request.getParameter("member_id");
 				boolean result = MemberDAO.getInstance().id_over_check(member_id);
 				Gson g = new Gson();
 				String resp = g.toJson(result);
 				response.getWriter().append(resp);
-				
 				
 				
 			} else if (cmd.equals("/phone_over_check.member")) {
@@ -56,6 +59,15 @@ public class MemberController extends HttpServlet {
 				Gson g = new Gson();
 				String resp = g.toJson(result);
 				response.getWriter().append(resp);
+			
+				
+			} else if (cmd.equals("/email_over_check.member")) {
+				String member_email = request.getParameter("member_email");
+				System.out.println(member_email);
+				boolean result = MemberDAO.getInstance().email_over_check(member_email);
+				Gson g = new Gson();
+				String resp = g.toJson(result);
+				response.getWriter().append(resp);	
 				
 				
 			} else if(cmd.equals("/insert_new_member.member")) {
