@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import commons.EncryptionUtils;
+import commons.Naver_Sens_V2;
 import dao.MemberDAO;
 import dto.MemberDTO;
 
@@ -40,12 +41,34 @@ public class MemberController extends HttpServlet {
 				System.out.println("로그인 성공여부 : " + result);
 				
 				
-			} else if (cmd.equals("/find_member.member")) {
+			} else if (cmd.equals("/phone_auth.member")) {
 
+				String phone = request.getParameter("phone");
 				
+				// 이미 가입된 전화번호가 있으면 -> member table에 전화번호 있으면 -> MemberDAO에 class OK
+				boolean result = dao.phone_over_check(phone);
+				if (!result) {
+					// PR할때 이부분 주석해서 올리기***
+					String code;
+					try {
+						code = Naver_Sens_V2.send_random_message(phone);
+						request.getSession().setAttribute("rand", code);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 				
-			} else if (cmd.equals("/phone_Certification.member")) {
-	            //sens API 사용
+			} else if (cmd.equals("/phone_auth_ok.member")) {
+				String rand = (String) request.getSession().getAttribute("rand");
+				String code = (String) request.getParameter("code");
+
+				System.out.println(rand + " : " + code);
+				
+				if (rand.equals(code)) {
+					request.getSession().removeAttribute("rand");
+				}
+				
+				// 아이디는 우리가 출력되게해주고 비밀번호만 다시 재설정하기로 짜야함!
 	            
 				
 			} else if (cmd.equals("/id_over_check.member")) {
@@ -99,7 +122,8 @@ public class MemberController extends HttpServlet {
 				MemberDTO dto = new MemberDTO(0,0,member_id,member_pw,member_name,member_nickname,member_birth_date,member_phone,member_email,member_agree,0,null,null,null);
 				int result = MemberDAO.getInstance().insert_new_member(dto);
 				if(result>0) {
-					
+					request.setAttribute("member_name", member_name);
+					request.getRequestDispatcher("/member/join_form.jsp?status=complete").forward(request, response);
 				}else {
 					response.sendRedirect("/error.html");
 				}

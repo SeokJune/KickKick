@@ -1,6 +1,7 @@
 package dto;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class TeamDTO {
 	private int code;
@@ -140,4 +141,8 @@ public class TeamDTO {
 		this.del_date = del_date;
 	}
 
+	public String getFormedDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 E요일");
+		return sdf.format(this.reg_date);
+	}
 }
