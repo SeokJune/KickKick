@@ -82,7 +82,8 @@ label {
 						<div class="row input">
 							<div class="col md-9">
 								<input type="text" class="form-control" id="member_id"
-									name="member_id" value="엥" readonly>
+									value="${profile.id}"
+									name="member_id" readonly>
 							</div>
 						</div>
 					</div>
@@ -146,6 +147,7 @@ label {
 						<div class="row input">
 							<div class="col md-9">
 								<input type="text" class="form-control" id="member_name"
+									value="${profile.name}"
 									name="member_name" readonly>
 							</div>
 						</div>
@@ -265,6 +267,7 @@ label {
 						<div class="row input">
 							<div class="col md-9">
 								<input type="email" class="form-control" id="member_email"
+									value="${profile.email}"
 									name="member_email"
 									pattern="^([a-z]{1}[a-z0-9_+.-]+@)([a-zA-Z0-9]+\.)([a-z0-9]{2,4})$"
 									required readonly>
@@ -295,6 +298,7 @@ label {
 						<div class="row input">
 							<div class="col md-9">
 								<input type="text" class="form-control" id="member_nickname"
+									value="${profile.nick_name}"
 									name="member_nickname" pattern="^[가-힣a-zA-Z0-9]{2,10}$"
 									minlength="2" maxlength="10" required readonly
 									style="width: 255px;">
