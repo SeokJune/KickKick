@@ -159,7 +159,16 @@ public class BoardDAO {
 	//한 페이지에 띄워야 할 게시물 리스트 반환
 	public List<BoardDTO> select_bound(String board_table_name, int start, int end, String search_option, String search_word) throws Exception{
 //		String sql = "select * from (select "+board_table_name+".*, row_number() over(order by reg_date desc) rn from "+board_table_name+" where "+search_option+" like ?) where rn between ? and ?";
-		String sql = "select * from (select t.*, row_number() over(order by reg_date desc) rnk from (select b.code, b.board_kind_code, h.name \"headline_name\", b.title, b.content, m.code \"member_code\", m.nickname \"member_nickname\", b.view_count, b.like_count, r.*, b.reg_date, b.mod_date from board_"+board_table_name+" b join (select board_"+board_table_name+"_code,count(code) \"reply_count\" from reply_"+board_table_name+" group by board_"+board_table_name+"_code) r on b.code=r.board_"+board_table_name+"_code join (select code, id, nickname from member) m on b.member_code=m.code join (select code, name from board_headline) h on b.board_headline_code=h.code) t where title like ?) t where rnk between ? and ?";
+		//수정한 쿼리.. 좀 심각하게 길어요
+		String sql = "select * from (select t.*, row_number() over(order by reg_date desc) rnk from "
+				+ "(select b.code, b.board_kind_code, h.name \"headline_name\", b.title, b.content, "
+				+ "m.code \"member_code\", m.nickname \"member_nickname\", b.view_count, b.like_count,"
+				+ " r.*, b.reg_date, b.mod_date from board_"+board_table_name+" b join (select board_"
+				+board_table_name+"_code,count(code) \"reply_count\" from reply_"+board_table_name
+				+" group by board_"+board_table_name+"_code) r on b.code=r.board_"+board_table_name
+				+"_code join (select code, id, nickname from member) m on b.member_code=m.code "
+				+ "join (select code, name from board_headline) h on b.board_headline_code=h.code) t "
+				+ "where title like ?) t where rnk between ? and ?";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setString(1, "%"+search_word+"%");
