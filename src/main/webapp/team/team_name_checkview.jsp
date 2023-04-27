@@ -21,7 +21,7 @@
 					<td>이미 시용중인 팀명 입니다.</td>
 				</tr>
 				<tr>
-					<td><button id="close">닫기</button></td>
+					<td  align="center"><button id="close">닫기</button></td>
 				</tr>
 				<script>
 					$("#close").on("click", function() {

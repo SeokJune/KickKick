@@ -27,55 +27,101 @@ div {
 .box>div {
 	float: left;
 }
+
+.btn {
+	border: none;
+}
 </style>
 </head>
 <body>
 	<div class="container fluid">
 
-        <div class="row header">
-            <div class="col-xs-12 col-md-4 col-xl-4 text-center">
-                <div>logo.img</div>
-            </div>
-            <div class="col-xs-12 col-md-8 col-xl-8">
-                <div>팀명 <input type="text" placeholder="팀명"></div>
-                <div class="box">
-                    <div class="col-12 col-md-6 col-xl-6">팀장 <input type="text" placeholder="팀장명"></div>
-                    <div class="col-12 col-md-6 col-xl-6">연락처 <input type="text" placeholder="연락처"></div>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="row body1">
-            <div class="col-12 col-md-12 col-xl-12">상대팀 <input type="text" placeholder="상대팀"></div>
-            <div class="box">
-                <div class="col-12 col-md-6 col-xl-4">날짜 <input type="text" placeholder="날짜"></div>
-                <div class="col-12 col-md-6 col-xl-6">시간 <input type="text" placeholder="시간"></div>
-            </div>
-        </div>
-        <br>
-        <div class="row body2">
-            <div class="col-12 col-md-12 col-xl-12">
-                실력 <select class="form-select" aria-label="Default select example" name="ability">
-                    <option value="" selected>-- 선택해주세요 --</option>
-                    <option value="good">상</option>
-                    <option value="fair">중</option>
-                    <option value="poor">하</option>
-            </select>
-            </div>
-        </div>
-        <br>
-        <div class="row body3">
-            <div class="col-12 col-md-12 col-xl-12">
-                <textarea class="form-control" name="contents" id="contents" placeholder="간단한 소개를 적어주세요."></textarea>
-            </div>
-        </div>
-        <br>
-        <div class="footer">
-            <div class="col-xl-12 col-md-12 col-xs-12 text-center">
-                <a><input type="button" value="신청"></a>
-                <a href="용병 등록 리스트로"><input type="button" value="취소"></a>
-            </div>
-        </div>
-    </div>
+		<div class="row header">
+			<div class="col-xs-12 col-md-4 col-xl-4 text-center">
+				<div id="team_logo">${team_info.team_logo}</div>
+			</div>
+			<div class="col-xs-12 col-md-8 col-xl-8">
+				<input type="hidden" id="team_code" name="team_code" value="${team_info.team_code}" readonly>
+				<div class="input-group mb-3">
+					<span class="input-group-text">팀명</span> <input type="text"
+						class="form-control" id="team_name" name="team_name" value="${team_info.team_name}" readonly>
+				</div>
+				<div class="box">
+					<div class="col-12 col-md-6 col-xl-6">
+						<div class="input-group mb-3">
+							<span class="input-group-text">팀장</span> <input type="text"
+								class="form-control" id="name" value="${team_info.name}" readonly>
+						</div>
+					</div>
+					<div class="col-12 col-md-6 col-xl-6">
+						<div class="input-group mb-3">
+							<span class="input-group-text">연락처</span> <input type="text"
+								class="form-control" id="phone" value="${team_info.phone}" readonly>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="row body1">
+			<div class="box">
+				<div class="col-12 col-md-12 col-xl-12">
+					<div class="input-group mb-3">
+						<span class="input-group-text">상대 팀명</span> <input type="text"
+							class="form-control" id="" name="" readonly>
+					</div>
+				</div>
+			</div>
+			<div class="box">
+				<div class="col-12 col-md-6 col-xl-6">
+					<div class="input-group mb-3">
+						<span class="input-group-text">장소</span> <input type="text"
+							class="form-control" id="match_place" name="match_place" readonly>
+					</div>
+				</div>
+				<div class="col-12 col-md-6 col-xl-6">
+					<div class="input-group mb-3">
+						<span class="input-group-text">일시</span> <input type="text"
+							class="form-control" id="match_date" name="match_date" readonly>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--
+		<br>
+		<div class="row body2">
+			<div class="box">
+				<div class="col-12 col-md-6 col-xl-6 text-center">
+					실력 <select class="form-select" name="ability">
+						<option value="" selected>-- 선택해주세요 --</option>
+						<option value="1">상</option>
+						<option value="2">중</option>
+						<option value="3">하</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		  -->
+		<br>
+		<div class="row body3">
+			<div class="col-12 col-md-12 col-xl-12">
+				<div class="input-group">
+					<span class="input-group-text">소개글</span>
+					<textarea class="form-control" name="contents" id="contents"
+					placeholder="간단한 소개를 적어주세요."></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="col-xl-12 col-md-12 col-xs-12 text-center">
+				<a><input type="submit" value="신청" class="btn btn-primary"></a>
+				<a href="/to_register_list.mercenary"><input type="button"
+					value="취소" class="btn btn-primary"></a>
+			</div>
+		</div>
+
+
+
+	</div>
 </body>
 </html>
