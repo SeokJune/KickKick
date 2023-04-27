@@ -39,7 +39,7 @@ public class TeamDTO {
 		this.member_phone = member_phone;
 	}
 
-	public TeamDTO(int code, int logo_path_code, String logo, String name, int member_code, int hometown_code, String outline, String contect, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
+	public TeamDTO(int code, int logo_path_code, String logo, String name, int member_code, int hometown_code, String outline, String content, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
 		this.code = code;
 		this.logo_path_code = logo_path_code;
 		this.logo = logo;
@@ -47,7 +47,7 @@ public class TeamDTO {
 		this.member_code = member_code;
 		this.hometown_code = hometown_code;
 		this.outline = outline;
-		this.content = contect;
+		this.content = content;
 		this.reg_date = reg_date;
 		this.mod_date = mod_date;
 		this.del_date = del_date;
