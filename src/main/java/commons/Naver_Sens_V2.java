@@ -19,7 +19,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class Naver_Sens_V2 {
-	@SuppressWarnings("unchecked")
 	public void send_msg(String tel, String rand) {
         // 호스트 URL
         String hostNameUrl = "https://sens.apigw.ntruss.com";

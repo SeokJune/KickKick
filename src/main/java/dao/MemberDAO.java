@@ -98,4 +98,31 @@ public class MemberDAO {
 		}
 	}// insert_new_member
 
+	public String get_id_by_phone(String phone) throws Exception {
+		String sql = "select id from member where phone = ?";
+		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setString(1, phone);
+			String result="";
+			try(ResultSet rs = pstat.executeQuery()){
+				while(rs.next()) {
+					result = rs.getString("id");
+				}
+			}
+			return result;
+		}
+	}
+	
+	public int update_pw(String pw,String id) throws Exception {
+		String sql = "update member set pw =? where id=?";
+		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setString(1, pw);
+			pstat.setString(2, id);
+			
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
+	
+	
 }
