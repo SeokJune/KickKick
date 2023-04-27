@@ -39,9 +39,9 @@ div {
 			<c:forEach var="i" items="${team_select_list}">
 				<tr>
 					<th scope="row"></th>
-					<td>${i.team_code}</td>
-					<td>${i.team_name}</td>
-					<td><a href="javascript:set_team('${i.team_code}','${i.team_logo}','${i.team_name}','${i.name}','${i.phone}')">
+					<td>${i.code}</td>
+					<td>${i.name}</td>
+					<td><a href="javascript:set_team('${i.code}','${i.logo_path}','${i.logo}','${i.name}','${i.member_name}','${i.member_phone}')">
 					<button id="use" class="btn btn-primary btn-sm">선택</button></a></td>
 				</tr>
 
@@ -54,8 +54,8 @@ div {
 		</tbody>
 	</table>
 	<script>
-		function set_team(tc,tl,tn,n,p){
-			opener.set_team_info(tc,tl,tn,n,p);
+		function set_team(c,lp,l,n,mn,mp){
+			opener.set_team_info(c,lp,l,n,mn,mp);
 			window.close();
 		}
 		$("#close").on("click", function() {

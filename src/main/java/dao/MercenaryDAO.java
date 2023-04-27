@@ -11,13 +11,12 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import dto.MatchInfoDTO;
+import dto.CompetitionDTO;
 import dto.RegisterInfoDTO;
-import dto.TeamInfoDTO;
+import dto.TeamDTO;
 
 
 public class MercenaryDAO {
-	TeamInfoDTO tdto = new TeamInfoDTO();
 	
 	private static MercenaryDAO instance = null;
 	public synchronized static MercenaryDAO getInstance() {
@@ -35,55 +34,61 @@ public class MercenaryDAO {
 		return ds.getConnection();
 	}
 	
-	public List<TeamInfoDTO> select_team_by_id(String login_id) throws Exception{
-		String sql = "select t.team_code,t.team_logo,t.team_name,m.name,m.phone from team_member tm join member m on tm.member_code = m.member_code join team t on tm.team_code = t.team_code "
-				+ "join team_member_grade tmg on tm.member_grade_code = tmg.grade_code where m.id=? and tmg.grade_name='팀장'";
-		List<TeamInfoDTO> team_select_list = new ArrayList<>();
+	public List<TeamDTO> select_team_by_id(String login_id) throws Exception{
+		String sql = "select code,logo_path,logo,name,member_name,member_phone from team_view "
+				+ "where code in (select team_code from team_member "
+				+ "where team_view.member_code = team_member.member_code "
+				+ "and team_member.team_member_grade_code = '1001') "
+				+ "and team_view.member_code = (select code from member where id=?)";
+		List<TeamDTO> list = new ArrayList<>();
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);){
 			pstat.setString(1, login_id);
 			try(ResultSet rs = pstat.executeQuery();){
 				while(rs.next()) {
-					int team_code = rs.getInt("team_code");
-					String team_logo = rs.getString("team_logo");
-					String team_name = rs.getString("team_name");
+					int team_code = rs.getInt("code");
+					String logo_path = rs.getString("logo_path");
+					String logo = rs.getString("logo");
 					String name = rs.getString("name");
-					String phone = rs.getString("phone");
+					String member_name = rs.getString("member_name");
+					String member_phone = rs.getString("member_phone");
 					
-					team_select_list.add(new TeamInfoDTO(team_code,team_logo,team_name,name,phone));
+					list.add(new TeamDTO(team_code,logo_path,logo,name,member_name,member_phone));
 				}
-				return team_select_list;
+				return list;
 			}
 		}
 	}
 	
-	public List<MatchInfoDTO> select_match_by_name(String team_name) throws Exception {
-		String sql = "select mr.match_place, mr.match_date, mr.match_kind_code, mr.match_person_count, mr.match_ability "
-				+ "from match_register mr join team t on mr.register_team_code = t.team_code where t.team_name=?";
+	public List<CompetitionDTO> select_match_by_name(int code) throws Exception {
+		String sql = "select competition_kind_code,latirude,longitude,competition_date,competition_kind_headcount "
+				+ "from competition_view "
+				+ "where (registration_team_code=? or application_team_code=?) and status_code=1202;";
 		
-		List<MatchInfoDTO> matchList = new ArrayList<>();
+		List<CompetitionDTO> list = new ArrayList<>();
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);){
-			pstat.setString(1, team_name);
+			pstat.setInt(1, code);
+			pstat.setInt(2, code);
 			try(ResultSet rs = pstat.executeQuery();){
 				while(rs.next()) {
-					String match_place = rs.getString("match_place");
-					Timestamp match_date = rs.getTimestamp("match_date");
-					int match_kind_code = rs.getInt("match_kind_code");
-					int match_person_count = rs.getInt("match_person_count");
-					String match_ability = rs.getString("match_ability");
+					int competition_kind_code = rs.getInt("competition_kind_code");
+					int competition_kind_headcount = rs.getInt("competition_kind_headcount");
+					int latirude = rs.getInt("latirude");
+					int longitude = rs.getInt("longitude");
+					Timestamp competition_date = rs.getTimestamp("competition_date");
 					
-					matchList.add(new MatchInfoDTO(match_place,match_date,match_kind_code,match_person_count,match_ability));
+					list.add(new CompetitionDTO(competition_kind_code,competition_kind_headcount,latirude,longitude,competition_date));
 				}
-				return matchList;
+				return list;
 			}
 		}
 	}
 	
-	public int register_mercenary(RegisterInfoDTO r) throws Exception {
-		String sql = "insert into mercenary_registration values(MERCENARY_REGISTRATION_CODE.nextval,?,?,?,?,?)";
+	public int insert_register_mercenary(RegisterInfoDTO r) throws Exception {
+		String sql = "insert into mercenary_registration values(MERCENARY_REGISTRATION_CODE.nextval,?,?,?,?,?,sysdate,null,null)";
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);){
@@ -99,6 +104,75 @@ public class MercenaryDAO {
 		}
 	}
 	
+	public List<RegisterInfoDTO> select_register_list() throws Exception {
+		String sql = "select mre.code, mre.competition_result_code, mre.team_code, mre.ability_code, mre.headcount,"
+				+ "mre.status_code, t.name, cr.latirude, cr.longitude, cr.competition_date "
+				+ "from MERCENARY_REGISTRATION mre "
+				+ "join team t on mre.team_code = t.code "
+				+ "join competition_registration cr on cr.team_code = t.code";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();){
+			List<RegisterInfoDTO> list = new ArrayList<>();
+			while(rs.next()) {
+				int code = rs.getInt("code");
+				int competition_result_code = rs.getInt("competition_result_code");
+				int team_code = rs.getInt("team_code");
+				int ability_code = rs.getInt("ability_code");
+				int headcount = rs.getInt("headcount");
+				int status_code = rs.getInt("status_code");
+				String name = rs.getString("name");
+				int latirude = rs.getInt("latirude");
+				int longitude = rs.getInt("longitude");;
+				Timestamp competition_date = rs.getTimestamp("competition_date");
+				
+				list.add(new RegisterInfoDTO(code,competition_result_code,team_code,ability_code,headcount,status_code,name,latirude,longitude,competition_date));
+			}
+			return list;
+		}
+	}
+	
+	
+	/*
+	public TeamInfoDTO select_team_info(int sc_team_code, int sc_competition_result_code) throws Exception {
+		String sql = "select t.team_code,t.team_logo,t.team_name,m.name,m.phone, mr.competition_result_code "
+				+ "from member m join team_member tm on m.member_code=tm.member_code "
+				+ "join team t on t.team_code=tm.team_code "
+				+ "join team_member_grade tmg on tm.member_grade_code = tmg.grade_code "
+				+ "join mercenary_registration mr on t.team_code = mr.team_code "
+				+ "where tm.member_grade_code=2 and t.team_code=? and mr.competition_result_code=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1, sc_team_code);
+			pstat.setInt(2, sc_competition_result_code);
+			try(ResultSet rs = pstat.executeQuery();){
+				rs.next();
+				int team_code = rs.getInt("team_code");
+				String team_logo = rs.getString("team_logo");
+				String team_name = rs.getString("team_name");
+				String name = rs.getString("name");
+				String phone = rs.getString("phone");
+				
+				return new TeamInfoDTO(team_code,team_logo,team_name,name,phone);
+			}
+		}
+	}
+	*/
+//	public ? select_match_info(int sc_team_code, int sc_competition_result_code) throws Exception {
+//		String sql = "";
+//		try(
+//				Connection con = this.getConnection();
+//				PreparedStatement pstat = con.prepareStatement(sql);){
+//			pstat.setInt(1, sc_team_code);
+//			pstat.setInt(2, sc_competition_result_code);
+//			try(ResultSet rs = pstat.executeQuery();){
+//				
+//				
+//			}
+//		}
+//	}
 	
 	
 	
