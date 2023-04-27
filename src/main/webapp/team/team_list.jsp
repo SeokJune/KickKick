@@ -82,19 +82,23 @@
 					<div class="col-md-1 col-xl-1"></div>
 				</div>
 
-				<!-- <c:choose>
+				<c:choose>
 					<c:when test="${teamlist_arr.size() != 0}">
 						<c:forEach var="i" items="${teamlist_arr}">
-							<div class="row gate">
+							<div class="row">
 								<div class="col-md-1 col-xl-1"></div>
-								<div class="col-md-2 col-xl-1">${i.logo}</div>
-								<div class="col-xl-1 d-none d-xl-block">${i.code}</div>
-								<div class="col-md-2 col-xl-1">${i.name}</div>
-								<div class="col-md-4 col-xl-2">${i.outline}</div>
-								<div class="col-md-1 col-xl-1">랭킹</div>
-								<div class="col-md-1 col-xl-1">${i.member_code}</div>
-								<div class="col-xl-2 d-none d-xl-block">${i.formedDate}</div>
-								<div class="col-xl-1 d-none d-xl-block">조회수</div>
+								<div class="col-12 col-md-10 col-xl-10">
+									<div class="row gate">
+										<div class="col-4 col-md-2 col-xl-1">${i.logo}</div>
+										<div class="col-xl-1 d-none d-xl-block">${i.code}</div>
+										<div class="col-4 col-md-2 col-xl-1">${i.name}</div>
+										<div class="col-4 col-md-4 col-xl-3">${i.outline}</div>
+										<div class="col-md-2 col-xl-1 d-none d-md-block">랭킹</div>
+										<div class="col-md-2 col-xl-2 d-none d-md-block">${i.member_name}</div>
+										<div class="col-xl-2 d-none d-xl-block">${i.formedDate}</div>
+										<div class="col-xl-1 d-none d-xl-block">조회수</div>
+									</div>
+								</div>
 								<div class="col-md-1 col-xl-1"></div>
 							</div>
 						</c:forEach>
@@ -106,7 +110,7 @@
 							<div class="col-md-1 col-xl-1"></div>
 						</div>
 					</c:otherwise>
-				</c:choose> -->
+				</c:choose>
 
 			</div>
 		</body>

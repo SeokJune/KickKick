@@ -28,9 +28,18 @@ div {
 	<div class="container">
 		<div class="row header">
 			<div class="col-12">
-				<h2>공지사항</h2>
+				<h2>${board_kind_name}</h2>
 			</div>
-			<div class="col-12">전체 공지사항 게시판입니다</div>
+			<div class="col-12">
+				<c:choose>
+					<c:when test="${board_kind_name=='공지사항'}">
+						전체 공지사항 게시판 입니다
+					</c:when>
+					<c:otherwise>
+						게시판 설명글을 적어주세요
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
 		<div class="row body">
 			<div class="list-group" style="border-radius: 0;">
@@ -44,7 +53,20 @@ div {
 							아이디 작성일 조회수 <span class="badge rounded-pill text-bg-success">👍🏻추천수</span>
 						</div>
 					</div>
-				</a> <a href="#" class="list-group-item list-group-item-action">
+				</a> 
+				<c:forEach var="post" items="${list}">
+					<a href="/board_view.jsp" class="list-group-item list-group-item-action">
+						<div class="col-12">
+							<div class="col">
+								[말머리] 제목 <span class="badge rounded-pill text-bg-light">💬댓글수</span>
+							</div>
+							<div class="col" style="font-size: small;">
+								아이디 작성일 조회수 <span class="badge rounded-pill text-bg-success">👍🏻추천수</span>
+							</div>
+						</div>
+					</a>					
+				</c:forEach>
+				<a href="#" class="list-group-item list-group-item-action">
 					<div class="col-12">
 						<div class="col">
 							[말머리] 제목 <span class="badge rounded-pill text-bg-light">💬댓글수</span>
@@ -58,17 +80,7 @@ div {
 			<div class="col-12">
 				<nav aria-label="Page navigation example">
 					<ul class="pagination pagination-sm justify-content-center">
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-						</a></li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#">4</a></li>
-						<li class="page-item"><a class="page-link" href="#">5</a></li>
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-						</a></li>
+						${navi}
 					</ul>
 				</nav>
 			</div>
@@ -76,7 +88,7 @@ div {
 		<div class="row footer">
 			<form class="d-flex" action="/search.board" method="get">
 				<div class="col-3">
-					<select class="form-select" aria-label=".form-select-sm example">
+					<select class="form-select" aria-label=".form-select-sm example" name="search_option">
 						<option value="1" selected>제목</option>
 						<option value="2">내용</option>
 						<option value="3">작성자</option>

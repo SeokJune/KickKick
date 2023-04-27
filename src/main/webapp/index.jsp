@@ -35,9 +35,9 @@
 						<a href="#" class="list-group-item list-group-item-action">내 팀 보기</a>
 						<a href="#" class="list-group-item list-group-item-action">내 활동 관리</a>
 						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">전체 게시판</a>
-						<a href="/list.board?cpage=1" class="list-group-item list-group-item-action">공지사항</a>
-						<a href="#" class="list-group-item list-group-item-action">자유게시판</a>
-						<a href="#" class="list-group-item list-group-item-action">홍보게시판</a>
+						<a href="/list.board?b_c=1002&cpage=1" class="list-group-item list-group-item-action">공지사항</a>
+						<a href="/list.board?b_c=1003&cpage=1" class="list-group-item list-group-item-action">자유게시판</a>
+						<a href="/list.board?b_c=1004&cpage=1" class="list-group-item list-group-item-action">홍보게시판</a>
 						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">팀 카테고리</a>
 						<a href="#" class="list-group-item list-group-item-action">팀 랭킹보기</a>
 						<a href="#" class="list-group-item list-group-item-action">팀 생성하기</a>
@@ -50,7 +50,7 @@
 						<a href="/registration.competition" class="list-group-item list-group-item-action">매칭 등록하기</a>
 						<a href="/list.competition" class="list-group-item list-group-item-action">매칭 목록보기</a>
 						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">운영진에게</a>
-						<a href="#" class="list-group-item list-group-item-action">문의하기</a>
+						<a href="/list.board?b_c=1005&cpage=1" class="list-group-item list-group-item-action">문의하기</a>
 					</div>
 				</div>
 			</div>
