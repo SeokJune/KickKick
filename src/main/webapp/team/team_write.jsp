@@ -46,10 +46,15 @@
 	<form action="/create.team" id="frm">
 		<div class="container-fluid">
 			<div class="row body">
-				<div class="col-12 col-md-3"></div>
+				<div class="col-12 col-md-2"></div>
 
-				<div class="col-12 col-md-1" id="logo">
-					<img src="/image/세터.png" id="logo_img">
+				<div class="col-12 col-md-2" id="logo">
+					<div class="row">
+						<img src="/image/competition_img/team_logo.png">
+					</div>
+					<div class="row">
+						<div class="col-12 "><input type=file name=file  accept="image/jpeg,image/png"></div>
+					</div>
 				</div>
 
 				<div class="col-12 col-md-4" id="team_info">
