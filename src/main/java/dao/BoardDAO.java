@@ -83,7 +83,7 @@ public class BoardDAO {
 	
 	//검색옵션에 따라 출력되어야 할 게시물 개수 세기
 	private int get_record_count(String board_table_name, String search_option, String search_word) throws Exception{
-		String sql = "select count(*) from "+board_table_name+" where "+search_option+" like ?";
+		String sql = "select count(*) from board_"+board_table_name+" where "+search_option+" like ?";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setString(1, "%"+search_word+"%");
@@ -158,7 +158,8 @@ public class BoardDAO {
 	
 	//한 페이지에 띄워야 할 게시물 리스트 반환
 	public List<BoardDTO> select_bound(String board_table_name, int start, int end, String search_option, String search_word) throws Exception{
-		String sql = "select * from (select "+board_table_name+".*, row_number() over(order by reg_date desc) rn from "+board_table_name+" where "+search_option+" like ?) where rn between ? and ?";
+//		String sql = "select * from (select "+board_table_name+".*, row_number() over(order by reg_date desc) rn from "+board_table_name+" where "+search_option+" like ?) where rn between ? and ?";
+		String sql = "select * from (select t.*, row_number() over(order by reg_date desc) rnk from (select b.code, b.board_kind_code, h.name \"headline_name\", b.title, b.content, m.code \"member_code\", m.nickname \"member_nickname\", b.view_count, b.like_count, r.*, b.reg_date, b.mod_date from board_"+board_table_name+" b join (select board_"+board_table_name+"_code,count(code) \"reply_count\" from reply_"+board_table_name+" group by board_"+board_table_name+"_code) r on b.code=r.board_"+board_table_name+"_code join (select code, id, nickname from member) m on b.member_code=m.code join (select code, name from board_headline) h on b.board_headline_code=h.code) t where title like ?) t where rnk between ? and ?";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setString(1, "%"+search_word+"%");
@@ -170,16 +171,16 @@ public class BoardDAO {
 				while(rs.next()) {
 					int code = rs.getInt("code");
 					int board_kind_code = rs.getInt("board_kind_code");
-					int board_headline_code = rs.getInt("board_headline_code");
-					int member_code = rs.getInt("member_code");
+					String board_headline_name = rs.getString("headline_name");
 					String title = rs.getString("title");
 					String content = rs.getString("content");
+					String member_nickname = rs.getString("member_nickname");
 					int view_count = rs.getInt("view_count");
 					int like_count = rs.getInt("like_count");
+					int reply_count = rs.getInt("reply_count");
 					Timestamp reg_date = rs.getTimestamp("reg_date");
 					Timestamp mod_date = rs.getTimestamp("mod_date");
-					Timestamp del_date = rs.getTimestamp("del_date");
-					result.add(new BoardDTO(code,board_kind_code,board_headline_code,member_code,title,content,view_count,like_count,reg_date,mod_date,del_date));
+					result.add(new BoardDTO(code,board_kind_code,board_headline_name,title,content,member_nickname,view_count,like_count,reply_count,reg_date,mod_date));
 				}
 				return result;
 			}

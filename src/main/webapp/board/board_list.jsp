@@ -22,6 +22,9 @@ div {
 	padding: 10px;
 	box-sizing: border-box;
 }
+.list-group{
+	padding:10px;
+}
 </style>
 </head>
 <body>
@@ -47,10 +50,10 @@ div {
 					class="list-group-item list-group-item-action list-group-item-primary">
 					<div class="col-12">
 						<div class="col">
-							[말머리] 필독 공지사항 <span class="badge rounded-pill text-bg-light">💬댓글수</span>
+							<b>[말머리]</b> 필독 공지사항 <span class="badge rounded-pill text-bg-light">💬댓글수</span>
 						</div>
 						<div class="col" style="font-size: small;">
-							아이디 작성일 조회수 <span class="badge rounded-pill text-bg-success">👍🏻추천수</span>
+							운영자 · 작성일 · 조회수 · <span class="badge rounded-pill text-bg-success">👍🏻추천수</span>
 						</div>
 					</div>
 				</a> 
@@ -58,10 +61,10 @@ div {
 					<a href="/board_view.jsp" class="list-group-item list-group-item-action">
 						<div class="col-12">
 							<div class="col">
-								[말머리] 제목 <span class="badge rounded-pill text-bg-light">💬댓글수</span>
+								<b>[${post.board_headline_name}]</b> ${post.title} <span class="badge rounded-pill text-bg-light">💬${post.reply_count}</span>
 							</div>
 							<div class="col" style="font-size: small;">
-								아이디 작성일 조회수 <span class="badge rounded-pill text-bg-success">👍🏻추천수</span>
+								${post.member_nickname} · ${post.calculated_date} · 👀 ${post.view_count} · <span class="badge rounded-pill text-bg-success">👍🏻${post.like_count}</span>
 							</div>
 						</div>
 					</a>					
@@ -69,10 +72,10 @@ div {
 				<a href="#" class="list-group-item list-group-item-action">
 					<div class="col-12">
 						<div class="col">
-							[말머리] 제목 <span class="badge rounded-pill text-bg-light">💬댓글수</span>
+							<b>[말머리]</b> 제목 <span class="badge rounded-pill text-bg-light">💬댓글수</span>
 						</div>
 						<div class="col" style="font-size: small;">
-							아이디 작성일 조회수 <span class="badge rounded-pill text-bg-success">👍🏻추천수</span>
+							닉네임 · 작성일 · 조회수 · <span class="badge rounded-pill text-bg-success">👍🏻추천수</span>
 						</div>
 					</div>
 				</a>
@@ -86,8 +89,10 @@ div {
 			</div>
 		</div>
 		<div class="row footer">
-			<form class="d-flex" action="/search.board" method="get">
+			<form class="d-flex" action="/list.board" method="get">
 				<div class="col-3">
+				<input type="hidden" name="cpage" value="1">
+				<input type="hidden" name="b_c" value="${b_c}">
 					<select class="form-select" aria-label=".form-select-sm example" name="search_option">
 						<option value="1" selected>제목</option>
 						<option value="2">내용</option>
@@ -96,15 +101,15 @@ div {
 				</div>
 				<div class="col-7">
 					<input type="text" class="form-control" placeholder=""
-						aria-label="Username" aria-describedby="basic-addon1">
+						aria-label="Username" aria-describedby="basic-addon1" name="search_word">
 				</div>
 				<div class="col-2 d-grid">
-					<button type="button" class="btn btn-secondary">검색</button>
+					<button type="submit" class="btn btn-secondary">검색</button>
 				</div>
 			</form>
 		</div>
 		<div class="col-12 d-grid justify-content-end">
-			<a class="btn btn-primary" href="/to_write_form.board"
+			<a class="btn btn-primary" href="/to_write_form.board?b_n=${board_kind_name}"
 				role="button">글쓰기</a>
 		</div>
 	</div>
