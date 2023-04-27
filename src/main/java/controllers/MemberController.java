@@ -1,20 +1,13 @@
 package controllers;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-<<<<<<< HEAD
-import com.google.gson.Gson;
-
-import commons.Encryption;
-=======
 import commons.EncryptionUtils;
->>>>>>> fb36072c02d88f3777f32c2fb70c1da6a8e6a823
 import dao.MemberDAO;
 
 @WebServlet("*.member")
