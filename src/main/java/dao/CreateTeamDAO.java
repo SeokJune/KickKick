@@ -11,7 +11,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import dto.CreateTeamDTO;
+import dto.TeamDTO;
 import dto.HometownDTO;
 import dto.MemberDTO;
 
@@ -57,7 +57,7 @@ public class CreateTeamDAO {
 		}
 	}
 
-	public int insertTeam(CreateTeamDTO dto) throws Exception {
+	public int insertTeam(TeamDTO dto) throws Exception {
 		String sql = "insert into team values(team_code.nextval,?,?,?,?,?,?,?,sysdate,null,null)"; 
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -127,13 +127,13 @@ public class CreateTeamDAO {
 		
 	}
 
-	public List<CreateTeamDTO> selectTeam() throws Exception {
+	public List<TeamDTO> selectTeam() throws Exception {
 		String sql = "select * from team"; 
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();) {
 
-			List<CreateTeamDTO> arr = new ArrayList();
+			List<TeamDTO> arr = new ArrayList();
 
 			while(rs.next()) {
 				int code = rs.getInt("code");
@@ -149,7 +149,7 @@ public class CreateTeamDAO {
 				Timestamp del_date = rs.getTimestamp("del_date");
 
 
-				CreateTeamDTO dto = new CreateTeamDTO(code, logo_path_code, logo, name, member_code, hometown_code, outline, content, reg_date, mod_date, del_date);
+				TeamDTO dto = new TeamDTO(code, logo_path_code, logo, name, member_code, hometown_code, outline, content, reg_date, mod_date, del_date);
 				arr.add(dto);
 			}
 			return arr;

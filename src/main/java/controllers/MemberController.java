@@ -1,14 +1,18 @@
 package controllers;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import commons.EncryptionUtils;
 import dao.MemberDAO;
+import dto.MemberDTO;
 
 @WebServlet("*.member")
 public class MemberController extends HttpServlet {
@@ -72,7 +76,7 @@ public class MemberController extends HttpServlet {
 				
 			} else if(cmd.equals("/insert_new_member.member")) {
 				String member_id = request.getParameter("member_id");
-				String member_pw = Encryption.sha512(request.getParameter("member_pw"));
+				String member_pw = EncryptionUtils.sha512(request.getParameter("member_pw"));
 				String member_name = request.getParameter("member_name");
 				String member_nickname = request.getParameter("member_nickname");
 				String member_birth_date = request.getParameter("member_birth_year")
