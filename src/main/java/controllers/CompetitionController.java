@@ -14,6 +14,7 @@ import dto.AbilityDTO;
 import dto.CompetitionKindDTO;
 import dto.HometownDTO;
 import dto.StatusDTO;
+import dto.TeamDTO;
 
 
 @WebServlet("*.competition")
@@ -30,6 +31,10 @@ public class CompetitionController extends HttpServlet {
 		try {
 			if(cmd.equals("/registration.competition")) {
 
+				//팀명 선택
+				List<TeamDTO> teamname = CompetitionDAO.getinstance().teamname();
+				request.setAttribute("teamname", teamname);
+				
 				//실력 선택
 				List<AbilityDTO> ability = CompetitionDAO.getinstance().ability();
 				request.setAttribute("ability", ability);
@@ -42,13 +47,11 @@ public class CompetitionController extends HttpServlet {
 				List<HometownDTO> hometown = CompetitionDAO.getinstance().hometown();
 				request.setAttribute("hometown", hometown);
 
-				//팀명 선택
-				List<TeamDTO> teamname = CompetitionDAO.getinstance().teamname();
-				request.setAttribute("teamname", teamname);
-
+			
 				//상태정보글보내주기
 				List<StatusDTO> status = CompetitionDAO.getinstance().status();
 				request.setAttribute("status", status);
+				
 				
 				request.getRequestDispatcher("/matching/competition_registration.jsp").forward(request, response);
 
@@ -70,6 +73,19 @@ public class CompetitionController extends HttpServlet {
 
 
 
+			}else if(cmd.equals("/choose.competition")) {
+				
+				System.out.println("비동기통신 확인");
+				//팀명선택-팀명,이름,전화번호
+				String t = request.getParameter("teamname");
+				
+				System.out.println(t);
+				TeamDTO team = CompetitionDAO.getinstance().team(t);
+				request.setAttribute("team", team);
+				
+				
+				
+			request.getRequestDispatcher("/matching/competition_registration.jsp").forward(request, response);
 			}
 
 

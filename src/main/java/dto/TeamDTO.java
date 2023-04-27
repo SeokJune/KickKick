@@ -21,8 +21,7 @@ public class TeamDTO {
 	private Timestamp mod_date;
 	private Timestamp del_date;
 
-	public TeamDTO() {
-	}
+	
 
 	public TeamDTO(int code, String name) {
 		this.code = code;
