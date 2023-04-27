@@ -21,7 +21,8 @@ public class TeamDTO {
 	private Timestamp mod_date;
 	private Timestamp del_date;
 
-	
+
+	public TeamDTO() {};
 
 	public TeamDTO(int code, String name) {
 		this.code = code;
@@ -51,8 +52,8 @@ public class TeamDTO {
 		this.mod_date = mod_date;
 		this.del_date = del_date;
 	}
-	
-	
+
+
 
 	public TeamDTO(int code, int logo_path_code, String logo_path, String logo_name, String logo, String name, int member_code, String member_name, String member_phone, int hometown_code, String homtown_name, String outline, String content, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
 		super();
@@ -161,7 +162,7 @@ public class TeamDTO {
 	public void setDel_date(Timestamp del_date) {
 		this.del_date = del_date;
 	}
-	
+
 
 	public String getLogo_path() {
 		return logo_path;
