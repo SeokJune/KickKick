@@ -7,18 +7,21 @@ public class BoardDTO {
 	private int code;
 	private int board_kind_code;
 	private int board_headline_code;
+	private String board_headline_name;
 	private int member_code;
+	private String member_nickname;
 	private String title;
 	private String content;
 	private int view_count;
 	private int like_count;
+	private int reply_count;
 	private Timestamp reg_date;
 	private Timestamp mod_date;
 	private Timestamp del_date;
 
-	public BoardDTO() {
-	}
+	public BoardDTO() {}
 
+	//board 테이블 컬럼대로 입력
 	public BoardDTO(int code, int board_kind_code, int board_headline_code, int member_code, String title, String content, int view_count, int like_count, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
 		this.code = code;
 		this.board_kind_code = board_kind_code;
@@ -31,6 +34,21 @@ public class BoardDTO {
 		this.reg_date = reg_date;
 		this.mod_date = mod_date;
 		this.del_date = del_date;
+	}
+	
+	//글정보 출력하는 용도로 사용
+	public BoardDTO(int code, int board_kind_code, String board_headline_name, String title, String content, String member_nickname, int view_count, int like_count, int reply_count, Timestamp reg_date, Timestamp mod_date) {
+		this.code = code;
+		this.board_kind_code = board_kind_code;
+		this.board_headline_name = board_headline_name;
+		this.title = title;
+		this.content = content;
+		this.member_nickname = member_nickname;
+		this.view_count = view_count;
+		this.like_count = like_count;
+		this.reply_count = reply_count;
+		this.reg_date = reg_date;
+		this.mod_date = mod_date;
 	}
 
 	public int getCode() {
@@ -56,6 +74,15 @@ public class BoardDTO {
 	public void setBoard_headline_code(int board_headline_code) {
 		this.board_headline_code = board_headline_code;
 	}
+	
+
+	public String getBoard_headline_name() {
+		return board_headline_name;
+	}
+
+	public void setBoard_headline_name(String board_headline_name) {
+		this.board_headline_name = board_headline_name;
+	}
 
 	public int getMember_code() {
 		return member_code;
@@ -63,6 +90,14 @@ public class BoardDTO {
 
 	public void setMember_code(int member_code) {
 		this.member_code = member_code;
+	}
+	
+	public String getMember_nickname() {
+		return member_nickname;
+	}
+
+	public void setMember_nickname(String member_nickname) {
+		this.member_nickname = member_nickname;
 	}
 
 	public String getTitle() {
@@ -97,6 +132,14 @@ public class BoardDTO {
 		this.like_count = like_count;
 	}
 
+	public int getReply_count() {
+		return reply_count;
+	}
+
+	public void setReply_count(int reply_count) {
+		this.reply_count = reply_count;
+	}
+
 	public Timestamp getReg_date() {
 		return reg_date;
 	}
@@ -121,7 +164,8 @@ public class BoardDTO {
 		this.del_date = del_date;
 	}
 
-	public String calculated_date(Timestamp reg_date) {
+	public String getCalculated_date() {
+		Timestamp reg_date = this.getReg_date();
 		int SEC = 60;
 		int MIN = 60;
 		int HOUR = 24;
