@@ -13,6 +13,7 @@ import dao.CompetitionDAO;
 import dto.AbilityDTO;
 import dto.CompetitionKindDTO;
 import dto.HometownDTO;
+import dto.StatusDTO;
 
 
 @WebServlet("*.competition")
@@ -42,9 +43,12 @@ public class CompetitionController extends HttpServlet {
 				request.setAttribute("hometown", hometown);
 
 				//팀명 선택
-				List<TeamDTO> teamname = CompetitionDAO.getinstance().teamname());
+				List<TeamDTO> teamname = CompetitionDAO.getinstance().teamname();
 				request.setAttribute("teamname", teamname);
 
+				//상태정보글보내주기
+				List<StatusDTO> status = CompetitionDAO.getinstance().status();
+				request.setAttribute("status", status);
 				
 				request.getRequestDispatcher("/matching/competition_registration.jsp").forward(request, response);
 

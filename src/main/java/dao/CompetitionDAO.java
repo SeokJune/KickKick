@@ -15,6 +15,7 @@ import dto.AbilityDTO;
 import dto.CompetitionKindDTO;
 import dto.CreateTeamDTO;
 import dto.HometownDTO;
+import dto.StatusDTO;
 
 public class CompetitionDAO {
 
@@ -149,7 +150,31 @@ public class CompetitionDAO {
 		}
 	}
 
+	public List<StatusDTO> status() throws Exception{
+		String sql = "select * from status" ;
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();)
+		{
+			List<StatusDTO> status = new ArrayList<>();
+			
+			while(rs.next()) {
+				
+				int code = 	rs.getInt("code");
+				String name = rs.getString("name");
+				Timestamp reg_date = rs.getTimestamp("reg_date");
+				Timestamp mod_date = rs.getTimestamp("mod_date");
+				Timestamp del_date = rs.getTimestamp("del_date");
 
+				StatusDTO dto = new StatusDTO(code,name,reg_date,mod_date,del_date);
+				status.add(dto);
+			
+			}
+
+			return status;
+
+		}
+	}
 
 
 

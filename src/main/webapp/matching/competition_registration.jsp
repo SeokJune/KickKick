@@ -557,7 +557,7 @@
 
 					<div class="col-xs-12 col-md-1"></div>
 
-					<div class="col-xs-12 col-md-3 " style="border: 1px solid black;">등록상태정보불러오기</div>
+					<div class="col-xs-12 col-md-3 " style="border: 1px solid black;"> ${status[1].name}</div>
 
 
 
