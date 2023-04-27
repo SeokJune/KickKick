@@ -25,27 +25,26 @@ public class TeamController extends HttpServlet {
 		try {	
 			if(cmd.equals("/hometown.team")) {
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
-				List<HometownDTO> arr = dao.select();
+				List<HometownDTO> hometown_arr = dao.select();
 
-				request.setAttribute("arr", arr);
+				request.setAttribute("hometown_arr", hometown_arr);
 				request.getRequestDispatcher("/team/team_write.jsp").forward(request, response);
 			}
 			else if(cmd.equals("/team_name_check.team")) {
 				String team_name = request.getParameter("team_name");
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
-				boolean result = dao.team_name_exist(team_name);
+				boolean result = dao.team_nameExist(team_name);
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("/team/team_name_checkview.jsp").forward(request, response);
 			}
 			else if(cmd.equals("/create.team")) {
-				
 				String team_name = request.getParameter("team_name");
 				String captain_name = request.getParameter("captain_name");
 				String captain_phone = request.getParameter("captain_phone");
 				int hometown_code = Integer.parseInt(request.getParameter("hometown_code"));
 				String outline = request.getParameter("outline");
 				String content = request.getParameter("content");
-				CreateTeamDTO dto = new CreateTeamDTO(0, 0, "logo", team_name, 0, hometown_code, outline, content, null, null, null);
+				CreateTeamDTO dto = new CreateTeamDTO(0, 1001, "logo", team_name, 10000001, hometown_code, outline, content, null, null, null);
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
 				dao.insertTeam(dto);
 				response.sendRedirect("/list.team");
