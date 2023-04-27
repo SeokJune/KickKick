@@ -264,24 +264,25 @@
 				
 					<div class="row h-100 ">
 					
-						<div class="col-xs-12 " >
-							<input type="text" style="border: 1px solid black;" value=" ${team.name}" readonly>
+						<div class="col-xs-12 ">
+							<input type="text" style="border: 1px solid black;" placeholder="팀명"   value="${team.name}" readonly>
 						</div>
 						
-						<div class="col-xs-12 " >
-							<input type="text" style="border: 1px solid black;" value=" ${team.member_name}" readonly>
+						<div class="col-xs-12 ">
+							<input type="text" style="border: 1px solid black;" placeholder="팀장이름"  value="${team.member_name}" readonly>
 						</div>
 						
 						
-						<div class="col-xs-12 " >
-							<input type="text" style="border: 1px solid black;" value="${team.member_phone}" readonly>
+						<div class="col-xs-12 ">
+							<input type="text" style="border: 1px solid black;" placeholder="팀장전화번호" value="${team.member_phone}" readonly>
 						</div>
 						
 					
 					</div>
 				</div>
 
-				<div class="col-xs-12 col-md-4" id="h5"></div>
+				<div class="col-xs-12 col-md-4" id="h5">
+				</div>
 
 			</div>
 
