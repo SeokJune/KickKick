@@ -171,17 +171,22 @@ public class CompetitionDAO {
 
 				int code = 	rs.getInt("code");
 				int logo_path_code = rs.getInt("logo_path_code");
+				String logo_path = rs.getString("logo_path");
+				String logo_name = rs.getString("logo_name");
 				String logo = rs.getString("logo");
 				String name = rs.getString("name");
 				int member_code = rs.getInt("member_code");
+				String member_name = rs.getString("member_name");
+				String member_phone = rs.getString("member_phone");
 				int hometown_code = rs.getInt("hometown_code");
+				String hometown_name = rs.getString("hometown_name");
 				String outline = rs.getString("outline");
 				String content = rs.getString("content");
 				Timestamp reg_date = rs.getTimestamp("reg_date");
 				Timestamp mod_date = rs.getTimestamp("mod_date");
 				Timestamp del_date = rs.getTimestamp("del_date");
 
-				TeamDTO team = new TeamDTO(code,logo_path_code,logo,name,member_code,hometown_code,outline,content,reg_date,mod_date,del_date);
+				TeamDTO team = new TeamDTO(code,logo_path_code,logo_path,logo_name,logo,name,member_code,member_name,member_phone,hometown_code,hometown_name,outline,content,reg_date,mod_date,del_date);
 
 				return team;
 

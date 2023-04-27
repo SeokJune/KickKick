@@ -83,8 +83,6 @@ public class CompetitionController extends HttpServlet {
 				TeamDTO team = CompetitionDAO.getinstance().team(t);
 				request.setAttribute("team", team);
 				
-				
-				
 			request.getRequestDispatcher("/matching/competition_registration.jsp").forward(request, response);
 			}
 
