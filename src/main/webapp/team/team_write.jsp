@@ -88,7 +88,7 @@
 						<div class="col-md-3"></div>
 						<div class="col-12 col-md-6" style="margin: auto;">
 							<select name="hometown_code">
-								<c:forEach var="item" items="${arr}">
+								<c:forEach var="item" items="${hometown_arr}">
 									<option value="${item.code}">${item.name}</option>
 								</c:forEach>
 							</select>
