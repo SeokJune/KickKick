@@ -31,7 +31,7 @@ public class MemberController extends HttpServlet {
 			if (cmd.equals("/login.member")) {
 				String id = request.getParameter("id");
 				String pw = request.getParameter("pw"); //테스트용 입니다 회원가입기능 완료시 삭제
-//				String pw = Encryption.sha512(request.getParameter("pw"));
+//				String pw = EncryptionUtils.sha512(request.getParameter("pw"));
 
 				boolean result = dao.is_member(id, pw);
 
