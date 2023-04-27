@@ -99,7 +99,8 @@ public class MemberController extends HttpServlet {
 				MemberDTO dto = new MemberDTO(0,0,member_id,member_pw,member_name,member_nickname,member_birth_date,member_phone,member_email,member_agree,0,null,null,null);
 				int result = MemberDAO.getInstance().insert_new_member(dto);
 				if(result>0) {
-					
+					request.setAttribute("member_name", member_name);
+					request.getRequestDispatcher("/member/join_form.jsp?status=complete").forward(request, response);
 				}else {
 					response.sendRedirect("/error.html");
 				}
