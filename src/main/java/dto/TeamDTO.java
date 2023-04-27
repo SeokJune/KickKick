@@ -139,5 +139,8 @@ public class TeamDTO {
 	public void setDel_date(Timestamp del_date) {
 		this.del_date = del_date;
 	}
-
+	public String getFormedDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 E요일");
+		return sdf.format(this.reg_date);
+	}
 }

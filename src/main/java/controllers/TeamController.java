@@ -23,13 +23,15 @@ public class TeamController extends HttpServlet {
 		
 
 		try {	
+			// 팀 생성 시 연고지 목록 가져오기
 			if(cmd.equals("/hometown.team")) {
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
-				List<HometownDTO> hometown_arr = dao.select();
+				List<HometownDTO> hometown_arr = dao.selectHometown();
 
 				request.setAttribute("hometown_arr", hometown_arr);
 				request.getRequestDispatcher("/team/team_write.jsp").forward(request, response);
 			}
+			// 팀명 중복도 검사
 			else if(cmd.equals("/team_name_check.team")) {
 				String team_name = request.getParameter("team_name");
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
@@ -37,6 +39,7 @@ public class TeamController extends HttpServlet {
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("/team/team_name_checkview.jsp").forward(request, response);
 			}
+			// 팀생성 시 입력값 넘어오는 곳
 			else if(cmd.equals("/create.team")) {
 				String team_name = request.getParameter("team_name");
 				String captain_name = request.getParameter("captain_name");
@@ -50,10 +53,11 @@ public class TeamController extends HttpServlet {
 				response.sendRedirect("/list.team");
 				
 			}
+			// 생성된 팀 목록 뽑아오기
 			else if(cmd.equals("/list.team")) {
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
-				List<TeamDTO> arr = dao.selectTeam();
-				request.setAttribute("arr", arr);
+				List<TeamDTO> teamlist_arr = dao.selectTeam();
+				request.setAttribute("teamlist_arr", teamlist_arr);
 				request.getRequestDispatcher("/team/team_list.jsp").forward(request, response); 
 			}
 //			else if(cmd.equals("/teampage.team")) {
