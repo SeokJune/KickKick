@@ -128,6 +128,15 @@ public class MemberController extends HttpServlet {
 					response.sendRedirect("/error.html");
 				}
 				
+			}else if(cmd.equals("/my_profile.member")) {
+				//파라미터는 임시로 해둠
+				String member_id = request.getParameter("member_id");
+
+				MemberDTO result = MemberDAO.getInstance().select_member(member_id);
+				request.setAttribute("profile", result);
+				request.getRequestDispatcher("/member/my_profile.jsp").forward(request, response);
+				
+				
 			}
 
 		} catch (Exception e) {
