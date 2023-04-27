@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.CreateTeamDAO;
-import dto.CreateTeamDTO;
+import dto.TeamDTO;
 import dto.HometownDTO;
 
 
@@ -23,38 +23,41 @@ public class TeamController extends HttpServlet {
 		
 
 		try {	
+			// 팀 생성 시 연고지 목록 가져오기
 			if(cmd.equals("/hometown.team")) {
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
-				List<HometownDTO> arr = dao.select();
+				List<HometownDTO> hometown_arr = dao.selectHometown();
 
-				request.setAttribute("arr", arr);
+				request.setAttribute("hometown_arr", hometown_arr);
 				request.getRequestDispatcher("/team/team_write.jsp").forward(request, response);
 			}
+			// 팀명 중복도 검사
 			else if(cmd.equals("/team_name_check.team")) {
 				String team_name = request.getParameter("team_name");
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
-				boolean result = dao.team_name_exist(team_name);
+				boolean result = dao.team_nameExist(team_name);
 				request.setAttribute("result", result);
 				request.getRequestDispatcher("/team/team_name_checkview.jsp").forward(request, response);
 			}
+			// 팀생성 시 입력값 넘어오는 곳
 			else if(cmd.equals("/create.team")) {
-				
 				String team_name = request.getParameter("team_name");
 				String captain_name = request.getParameter("captain_name");
 				String captain_phone = request.getParameter("captain_phone");
 				int hometown_code = Integer.parseInt(request.getParameter("hometown_code"));
 				String outline = request.getParameter("outline");
 				String content = request.getParameter("content");
-				CreateTeamDTO dto = new CreateTeamDTO(0, 0, "logo", team_name, 0, hometown_code, outline, content, null, null, null);
+				TeamDTO dto = new TeamDTO(0, 1001, "logo", team_name, 10000001, hometown_code, outline, content, null, null, null);
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
 				dao.insertTeam(dto);
 				response.sendRedirect("/list.team");
 				
 			}
+			// 생성된 팀 목록 뽑아오기
 			else if(cmd.equals("/list.team")) {
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
-				List<CreateTeamDTO> arr = dao.selectTeam();
-				request.setAttribute("arr", arr);
+				List<TeamDTO> teamlist_arr = dao.selectTeam();
+				request.setAttribute("teamlist_arr", teamlist_arr);
 				request.getRequestDispatcher("/team/team_list.jsp").forward(request, response); 
 			}
 //			else if(cmd.equals("/teampage.team")) {

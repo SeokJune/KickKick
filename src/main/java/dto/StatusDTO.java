@@ -2,21 +2,18 @@ package dto;
 
 import java.sql.Timestamp;
 
-public class CompetitioinKindDTO {
+public class StatusDTO {
 private int code;
 private String name;
-private int headcount;
 private Timestamp reg_date;
 private Timestamp mod_date;
 private Timestamp del_date;
 
-public CompetitioinKindDTO() {};
-public CompetitioinKindDTO(int code, String name, int headcount, Timestamp reg_date, Timestamp mod_date,
-		Timestamp del_date) {
+public StatusDTO() {} ;
+public StatusDTO(int code, String name, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
 	super();
 	this.code = code;
 	this.name = name;
-	this.headcount = headcount;
 	this.reg_date = reg_date;
 	this.mod_date = mod_date;
 	this.del_date = del_date;
@@ -32,12 +29,6 @@ public String getName() {
 }
 public void setName(String name) {
 	this.name = name;
-}
-public int getHeadcount() {
-	return headcount;
-}
-public void setHeadcount(int headcount) {
-	this.headcount = headcount;
 }
 public Timestamp getReg_date() {
 	return reg_date;

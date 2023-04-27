@@ -30,8 +30,8 @@ body {
 	background-color: #76b852;
 }
 
-.row { -
-	-bs-gutter-x: 2rem; -
+.row {
+	-bs-gutter-x: 2rem;
 	-bs-gutter-y: 0;
 	display: flex;
 	flex-wrap: wrap;
@@ -57,6 +57,7 @@ body {
 	border-radius: 1rem;
 	box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0
 		rgba(0, 0, 0, 0.19);
+	animation-duration: 5s;
 }
 
 .login-form-1 h3 {
@@ -98,13 +99,19 @@ body {
 	font-size: small;
 }
 
+.btn_forget_pwd:hover {
+	cursor: pointer;
+}
+
 .join_form {
 	font-size: small;
 }
-.col-md-6{
+
+.col-md-6 {
 	font-size: medium;
 }
-.col-6{
+
+.col-6 {
 	font-size: small;
 }
 </style>
@@ -113,10 +120,12 @@ body {
 <body>
 
 	<div class="container login_container align-self-center">
-		<div>
-			<button type="button" class="btn-close" aria-label="Close"></button>
-		</div>
-		<div class="wrapper mx-auto">
+
+		<div class="wrapper mx-auto position-relative">
+			<div class="position-absolute top-10 end-0 me-5">
+				<button type="button" class="btn-close" id="btn_close"
+					aria-label="Close"></button>
+			</div>
 			<div class="wrapper_login" id="login_view_fadeOut">
 				<div class="row d-flex justify-content-center mx-auto p-0 loginForm">
 					<div class=" col-md-6 login-form-1">
@@ -169,7 +178,7 @@ body {
 						id="hidden">
 						<div class="form-group text-center mb-4">
 							<img src="/image/login_img/ball_icon.png" class="mx-auto d-block"
-								alt="" style="height: 50%; width: 50%;">
+								id="to_main_ball_img" alt="" style="height: 50%; width: 50%;">
 						</div>
 						<div class="form-group text-center">
 							<h5>SNS으로 로그인하기</h5>
@@ -217,16 +226,73 @@ body {
 					</div>
 				</div>
 			</div>
+			<!-- 휴대폰 인증하기 누르면 fadeIn -->
+			<div class="wrapper_phone_Certification justify-content-center"
+				id="to_phone_authentication_fadeIn" style="display: none">
+				<div class="KickKick_logo text-center d-md-block mb-5">
+					<h1 class="mb-4">⚽KickKick</h1>
+					<h3>이제 얼마 안남았습니다!</h3>
+				</div>
+				<form action="/phone_auth.member">
+					<div class="row g-3">
+						<div class="col-12 col-md-4 text-end">
+							<label for="phone" class="col-form-label">전화번호</label>
+						</div>
+						<div class="col-12 col-md-4">
+							<input type="text" id="phone" name="phone" class="form-control"
+								placeholder="(-) 제외">
+						</div>
+						<div class="col-12 col-md-4">
+							<button type="submit" class="btn btn-outline-success">인증번호
+								받기</button>
+						</div>
+					</div>
+				</form>
+				<br>
+				<div class="row g-3">
+					<div class="col-12 col-md-4 text-end">
+						<label class="col-form-label">인증번호</label>
+					</div>
+					<div class="col-12 col-md-4">
+						<input type="text" id="phone_auth_code"
+							class="form-control">
+					</div>
+					<div class="col-12 col-md-4">
+						<button type="button" class="btn btn-outline-success" id="phone_auth_ok">인증</button>
+					</div>
+				</div>
+			</div>
 		</div>
+	</div>
+	<!-- wrapper tag -->
 	</div>
 
 	<!-- JQuery-->
 	<script>
-	
+		$("#btn_close").on("click", function() {
+			location.reload();
+		});
+		$("#to_main_ball_img").on("click", function() {
+			location.href = "/index.jsp";
+		});
 		$("#btn_forget_pwd").on("click", function() {
-
 			$("#login_view_fadeOut").hide();
 			$("#find_member_fadeIn").fadeIn();
+		});
+
+		$("#btn-check-outlined").on("click", function() {
+			$("#login_view_fadeOut").hide();
+			$("#find_member_fadeIn").hide();
+			$("#to_phone_authentication_fadeIn").fadeIn();
+			//location.href="";
+		});
+		$("#phone_auth_ok").on("click",function(){
+			$.ajax({
+				url:"/phone_auth_ok.member",
+				type:"post",
+				data:{
+					code: $("#phone_auth_code").val()
+			});
 		});
 	</script>
 
