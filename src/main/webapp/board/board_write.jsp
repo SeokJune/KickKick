@@ -138,7 +138,7 @@
 					 	wordCountWrapper.appendChild(wordCountPlugin.wordCountContainer);
 					 })
 					.catch(error => {
-
+						console.log(error);
 					});
 
 				$("#cancel").on("click", function () {
