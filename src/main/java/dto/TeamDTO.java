@@ -205,7 +205,7 @@ public class TeamDTO {
 	}
 
 	public String getFormedDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 E요일");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		return sdf.format(this.reg_date);
 	}
 }

@@ -11,6 +11,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import commons.Settings;
 import dto.HometownDTO;
 import dto.TeamDTO;
 
@@ -72,9 +73,7 @@ public class CreateTeamDAO {
 			
 
 			int result = pstat.executeUpdate();
-			System.out.println("여기4");
 			con.commit();
-			System.out.println("여기5");
 
 			return result;
 
@@ -161,7 +160,7 @@ public class CreateTeamDAO {
 	}
 	
 	private int getRecordCount() throws Exception {
-		String sql = "select count(*) from board";
+		String sql = "select count(*) from team";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();) {
@@ -173,8 +172,8 @@ public class CreateTeamDAO {
 	public String getPageNavi(int currentPage) throws Exception {
 		// 네비게이터를 만들기 위해 필요한 초기 정보
 		int recordTotalCount = this.getRecordCount(); // 1. 전체 글의 개수
-		int recordCountPerPage = 10; // 2. 페이지 당 보여줄 글의 갯수
-		int naviCountPerPage = 10; // 3. 페이지 당 보여줄 네비게이터의 갯수
+		int recordCountPerPage = Settings.BOARD_RECORD_COUNT_PER_PAGE; // 2. 페이지 당 보여줄 글의 갯수
+		int naviCountPerPage = Settings.BOARD_NAVI_COUNT_PER_PAGE; // 3. 페이지 당 보여줄 네비게이터의 갯수
 
 		int pageTotalCount = 0; // 4. 1번과 2번 항목에 의해 총 페이지의 개수가 정해짐
 
@@ -221,14 +220,14 @@ public class CreateTeamDAO {
 
 		// 네비게이터의 양 끝 화살표
 		if(needPrev) {
-			sb.append("<a href='/list.board?cpage="+(startNavi-1)+"'> < </a>");
+			sb.append("<a href='/list.team?cpage="+(startNavi-1)+"'> < </a>");
 		}
 
 		for(int i = startNavi; i <= endNavi; i++) {
-			sb.append("<a href='/list.board?cpage="+i+"'>" + i + "</a> ");
+			sb.append("<a href='/list.team?cpage="+i+"'>" + i + "</a> ");
 		}
 		if(needNext) {
-			sb.append("<a href='/list.board?cpage="+(endNavi+1)+"'> > </a>");
+			sb.append("<a href='/list.team?cpage="+(endNavi+1)+"'> > </a>");
 		}	
 
 		return sb.toString();

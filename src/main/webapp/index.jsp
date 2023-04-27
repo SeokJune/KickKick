@@ -40,8 +40,8 @@
 						<a href="/list.board?b_c=1004&cpage=1" class="list-group-item list-group-item-action">홍보게시판</a>
 						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">팀 카테고리</a>
 						<a href="#" class="list-group-item list-group-item-action">팀 랭킹보기</a>
-						<a href="#" class="list-group-item list-group-item-action">팀 생성하기</a>
-						<a href="#" class="list-group-item list-group-item-action">팀 목록보기</a>
+						<a href="/hometown.team" class="list-group-item list-group-item-action">팀 생성하기</a>
+						<a href="/list.team?cpage=1" class="list-group-item list-group-item-action">팀 목록보기</a>
 						<a href="#" class="list-group-item list-group-item-action">내 팀 게시판으로</a>
 						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">매치메이킹</a>
 						<a href="#" class="list-group-item list-group-item-action">시설 검색</a>
