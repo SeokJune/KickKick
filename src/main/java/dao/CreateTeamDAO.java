@@ -11,9 +11,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import dto.TeamDTO;
+import commons.Settings;
 import dto.HometownDTO;
-import dto.MemberDTO;
+import dto.TeamDTO;
 
 public class CreateTeamDAO {
 
@@ -73,9 +73,7 @@ public class CreateTeamDAO {
 			
 
 			int result = pstat.executeUpdate();
-			System.out.println("여기4");
 			con.commit();
-			System.out.println("여기5");
 
 			return result;
 
@@ -128,20 +126,25 @@ public class CreateTeamDAO {
 //	}
 
 	public List<TeamDTO> selectTeam() throws Exception {
-		String sql = "select * from team"; 
+		String sql = "select * from team_view"; 
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();) {
 
-			List<TeamDTO> arr = new ArrayList();
+			List<TeamDTO> arr = new ArrayList<>();
 
 			while(rs.next()) {
 				int code = rs.getInt("code");
 				int logo_path_code = rs.getInt("logo_path_code");
+				String logo_path = rs.getString("logo_path");
+				String logo_name = rs.getString("logo_name");
 				String logo = rs.getString("logo");
 				String name = rs.getString("name");
 				int member_code = rs.getInt("member_code");
+				String member_name = rs.getString("member_name");
+				String member_phone = rs.getString("member_phone");
 				int hometown_code = rs.getInt("hometown_code");
+				String hometown_name = rs.getString("hometown_name");
 				String outline = rs.getString("outline");
 				String content = rs.getString("content");
 				Timestamp reg_date = rs.getTimestamp("reg_date");
@@ -149,10 +152,84 @@ public class CreateTeamDAO {
 				Timestamp del_date = rs.getTimestamp("del_date");
 
 
-				TeamDTO dto = new TeamDTO(code, logo_path_code, logo, name, member_code, hometown_code, outline, content, reg_date, mod_date, del_date);
+				TeamDTO dto = new TeamDTO(code, logo_path_code, logo_path, logo_name, logo, name, member_code, member_name, member_phone, hometown_code, hometown_name, outline, content, reg_date, mod_date, del_date);
 				arr.add(dto);
 			}
 			return arr;
 		}
+	}
+	
+	private int getRecordCount() throws Exception {
+		String sql = "select count(*) from team";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();) {
+			rs.next();
+			return rs.getInt(1);
+		}
+	}
+
+	public String getPageNavi(int currentPage) throws Exception {
+		// 네비게이터를 만들기 위해 필요한 초기 정보
+		int recordTotalCount = this.getRecordCount(); // 1. 전체 글의 개수
+		int recordCountPerPage = Settings.BOARD_RECORD_COUNT_PER_PAGE; // 2. 페이지 당 보여줄 글의 갯수
+		int naviCountPerPage = Settings.BOARD_NAVI_COUNT_PER_PAGE; // 3. 페이지 당 보여줄 네비게이터의 갯수
+
+		int pageTotalCount = 0; // 4. 1번과 2번 항목에 의해 총 페이지의 개수가 정해짐
+
+		// 전체 글의 개수를 페이지 당 보여줄 글의 갯수를 나누었을 때 나머지가 발생하면 페이지 +1
+		if(recordTotalCount % recordCountPerPage > 0) {
+			pageTotalCount = recordTotalCount / recordCountPerPage +1;
+		}
+		else {
+			pageTotalCount = recordTotalCount / recordCountPerPage;
+		}
+
+		
+
+		if(currentPage < 1) {	// currentPage가 1보단 작을 수 없다..
+			currentPage = 1;
+		}
+		else if(currentPage > pageTotalCount) {
+			currentPage = pageTotalCount;
+		}
+
+		int startNavi = (currentPage-1) / naviCountPerPage * naviCountPerPage + 1;  // 일반적으로 그냥 samesame이지만 자바언어 특성 상 소숫점을 날리는 과정이 된다.
+		int endNavi = startNavi + (naviCountPerPage - 1);
+
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+
+
+
+		boolean needPrev = true;
+		boolean needNext = true;
+
+		if(startNavi == 1) {
+			needPrev = false;
+		}
+		if(endNavi == pageTotalCount) {
+			needNext = false;
+		}
+
+		// 문자열 조립?
+		StringBuilder sb = new StringBuilder();
+
+
+
+		// 네비게이터의 양 끝 화살표
+		if(needPrev) {
+			sb.append("<a href='/list.team?cpage="+(startNavi-1)+"'> < </a>");
+		}
+
+		for(int i = startNavi; i <= endNavi; i++) {
+			sb.append("<a href='/list.team?cpage="+i+"'>" + i + "</a> ");
+		}
+		if(needNext) {
+			sb.append("<a href='/list.team?cpage="+(endNavi+1)+"'> > </a>");
+		}	
+
+		return sb.toString();
 	}
 }

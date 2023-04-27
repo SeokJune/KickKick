@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import commons.Settings;
 import dao.CreateTeamDAO;
 import dto.TeamDTO;
 import dto.HometownDTO;
@@ -56,8 +57,17 @@ public class TeamController extends HttpServlet {
 			// 생성된 팀 목록 뽑아오기
 			else if(cmd.equals("/list.team")) {
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
+				
+				int currentPage = Integer.parseInt(request.getParameter("cpage"));
+				request.getSession().setAttribute("updateCpage", currentPage);
+				int start = (currentPage * Settings.BOARD_RECORD_COUNT_PER_PAGE) - (Settings.BOARD_RECORD_COUNT_PER_PAGE-1);
+				int end = currentPage * Settings.BOARD_NAVI_COUNT_PER_PAGE;
+				
 				List<TeamDTO> teamlist_arr = dao.selectTeam();
+				String page_navi = dao.getPageNavi(currentPage);
+				
 				request.setAttribute("teamlist_arr", teamlist_arr);
+				request.setAttribute("navi", page_navi);
 				request.getRequestDispatcher("/team/team_list.jsp").forward(request, response); 
 			}
 //			else if(cmd.equals("/teampage.team")) {

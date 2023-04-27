@@ -97,5 +97,28 @@ public class MemberDAO {
 
 		}
 	}// insert_new_member
+	
+	//내정보 조회
+	public MemberDTO select_member(String member_id) throws Exception{
+		String sql = "select * from member where id = ?";
+		try( Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setString(1,member_id);
+			
+			try(ResultSet rs = pstat.executeQuery();){
+				rs.next();
+				int code = rs.getInt("code");
+				String id = rs.getString("id");
+				String name = rs.getString("name");
+				String phone = rs.getString("phone");
+				String birthdate = rs.getString("birthdate");
+				String email = rs.getString("email");
+				String nickname = rs.getString("nickname");
+				
+				MemberDTO dto = new MemberDTO(code,0,id,null,name,nickname,birthdate,phone,email,null,0,null,null,null);
+				return	dto;
+			}
+		}
+	}
 
 }
