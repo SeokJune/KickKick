@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,11 @@
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <style>
 div {
-	border: 1px solid black;
+	
+}
+
+.btn {
+	border: none;
 }
 </style>
 </head>
@@ -32,32 +37,38 @@ div {
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<th scope="row">1</th>
-				<td>은지</td>
-				<td>
-					<div class="col-12 col-md-12 col-xl-12">
-						<textarea class="form-control" name="contents" id="contents"
-							placeholder="소개글" readonly></textarea>
-					</div>
-				</td>
-				<td>
-					<button>수락</button>
-					<button>거절</button>
-				</td>
-			</tr>
+		<!--
+			<c:forEach var="i" items="${}">
+				<tr>
+					<th scope="row">1</th>
+					<td>은지</td>
+					<td>
+						<div class="col-12 col-md-12 col-xl-12">
+							<textarea class="form-control" name="contents" id="contents"
+								placeholder="소개글" readonly></textarea>
+						</div>
+					</td>
+					<td>
+						<button class="btn btn-primary">수락</button>
+						<button class="btn btn-primary">거절</button>
+					</td>
+				</tr>
+			</c:forEach>
+  		-->
+
+
 			<tr>
 				<th scope="row">2</th>
 				<td>금지</td>
 				<td>
 					<div class="col-12 col-md-12 col-xl-12">
-						<textarea class="form-control" name="contents" id="contents"
-							placeholder="소개글입니다" readonly></textarea>
+							<textarea class="form-control" name="contents" id="contents"
+								placeholder="소개글" readonly></textarea>
 					</div>
 				</td>
 				<td>
-					<button>수락</button>
-					<button>거절</button>
+					<button class="btn btn-primary">수락</button>
+					<button class="btn btn-primary">거절</button>
 				</td>
 			</tr>
 			<tr>
