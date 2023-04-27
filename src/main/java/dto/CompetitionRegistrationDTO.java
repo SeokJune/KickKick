@@ -15,13 +15,11 @@ public class CompetitionRegistrationDTO {
 	private Timestamp reg_date;
 	private Timestamp mod_date;
 	private Timestamp del_date;
-	
-	public CompetitionRegistrationDTO() {}
 
-	public CompetitionRegistrationDTO(int code, int team_code, int competition_kind_code, int latirude, int longitude,
-			Timestamp competition_date, int ability_code, String content, int status_code, Timestamp reg_date,
-			Timestamp mod_date, Timestamp del_date) {
-		super();
+	public CompetitionRegistrationDTO() {
+	}
+
+	public CompetitionRegistrationDTO(int code, int team_code, int competition_kind_code, int latirude, int longitude, Timestamp competition_date, int ability_code, String content, int status_code, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
 		this.code = code;
 		this.team_code = team_code;
 		this.competition_kind_code = competition_kind_code;
@@ -131,8 +129,5 @@ public class CompetitionRegistrationDTO {
 	public void setDel_date(Timestamp del_date) {
 		this.del_date = del_date;
 	};
-	
-	
-	
-	
+
 }

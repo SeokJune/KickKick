@@ -5,9 +5,9 @@
 <!-- JQuery-->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
-OJDBC - 6
-Tomcat - 8.5
 
-JSTL
-jstl-1.2.jar
+
+OJDBC - 6
+TOMCAT - 8.5
+JSTL - 1.2
  

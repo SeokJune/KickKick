@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.CreateTeamDAO;
-import dto.CreateTeamDTO;
+import dto.TeamDTO;
 import dto.HometownDTO;
 
 
@@ -44,7 +44,7 @@ public class TeamController extends HttpServlet {
 				int hometown_code = Integer.parseInt(request.getParameter("hometown_code"));
 				String outline = request.getParameter("outline");
 				String content = request.getParameter("content");
-				CreateTeamDTO dto = new CreateTeamDTO(0, 1001, "logo", team_name, 10000001, hometown_code, outline, content, null, null, null);
+				TeamDTO dto = new TeamDTO(0, 1001, "logo", team_name, 10000001, hometown_code, outline, content, null, null, null);
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
 				dao.insertTeam(dto);
 				response.sendRedirect("/list.team");
@@ -52,7 +52,7 @@ public class TeamController extends HttpServlet {
 			}
 			else if(cmd.equals("/list.team")) {
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
-				List<CreateTeamDTO> arr = dao.selectTeam();
+				List<TeamDTO> arr = dao.selectTeam();
 				request.setAttribute("arr", arr);
 				request.getRequestDispatcher("/team/team_list.jsp").forward(request, response); 
 			}
