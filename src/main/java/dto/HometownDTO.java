@@ -8,16 +8,17 @@ public class HometownDTO {
 	private Timestamp reg_date;
 	private Timestamp mod_date;
 	private Timestamp del_date;
-
-	public HometownDTO() {} ;
+	
+	
+	public HometownDTO() {}
 	public HometownDTO(int code, String name, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
-		super();
 		this.code = code;
 		this.name = name;
 		this.reg_date = reg_date;
 		this.mod_date = mod_date;
 		this.del_date = del_date;
 	}
+	
 	public int getCode() {
 		return code;
 	}
@@ -48,5 +49,5 @@ public class HometownDTO {
 	public void setDel_date(Timestamp del_date) {
 		this.del_date = del_date;
 	}
-
+	
 }
