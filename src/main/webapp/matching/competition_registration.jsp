@@ -217,6 +217,8 @@
 </style>
 </head>
 <body>
+
+<form action="/send.competition" method="get" enctype="multipart/form-data">
 	<div class="container-fluid ">
 
 		<div class="row header">
@@ -333,10 +335,10 @@
 
                                     // 정상적으로 검색이 완료됐으면
                                     // 검색 목록과 마커를 표출합니다
-                                    displayPlaces(data);
+                                 displayPlaces(data);
 
                                     // 페이지 번호를 표출합니다
-                                    displayPagination(pagination);
+                                    //displayPagination(pagination);
 
                                 } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
@@ -481,11 +483,11 @@
                                 }
                             }
 
-                            var marker = new kakao.maps.Marker({
-                                position: position,
-                                clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
-                            });
-
+                       /*     var marker = new kakao.maps.Marker({
+                               position: new kakao.maps.LatLng(37.54699, 127.09598),
+                               clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+                           });
+ */
 
                             marker.setMap(map);
 
@@ -560,19 +562,18 @@
 
 
 					<div class="col-xs-12 col-md-2">
-						<select size="1" class="w-100 h-100">
+						<select name="kind" size="1" class="w-100 h-100">
 							<option selected>경기 종류</option>
-							
-								<option>${kind[0].name} </option>
-							<option>${kind[3].name} </option>
+								<option value="${kind[0].code}">${kind[0].name} </option>
+								<option value="${kind[3].code}">${kind[3].name} </option>
 						</select>
 					</div>
 
 					<div class="col-xs-12 col-md-2">
-						<select size="1" class="w-100 h-100">
+						<select name="person" size="1" class="w-100 h-100">
 							<option selected>인원</option>
 							<c:forEach var="ki" items="${kind}">
-								<option>${ki.headcount}</option>
+								<option value="${ki.code}" >${ki.headcount}</option>
 							</c:forEach>
 						</select>
 					</div>
@@ -581,11 +582,11 @@
 
 					<div class="col-xs-12 col-md-3">
 
-						<select size="1" class="w-100 h-100">
+						<select name ="ability" size="1" class="w-100 h-100">
 							<option selected>실력(상/중/하)</option>
 
 							<c:forEach var="ab" items="${ability}">
-								<option>${ab.name}</option>
+								<option value="${ab.code}">${ab.name}</option>
 							</c:forEach>
 
 
@@ -608,7 +609,7 @@
 
 		<div class="row footer">
 			<div class="col-12" id="f1">
-				<textarea style="width: 75%; height: 400px;" placeholder="소개글(선택사항)"></textarea>
+				<textarea name="write"style="width: 75%; height: 400px;" placeholder="소개글(선택사항)"></textarea>
 			</div>
 
 			<div class="col-12" id="f2">
@@ -617,29 +618,15 @@
 						<button id="request" style="float: right;">등록</button>
 					</div>
 					<div class="col-6 ">
-						<button style="float: left;">취소</button>
+						<button  type ="button" style="float: left;">취소</button>
 					</div>
 				</div>
 			</div>
 		</div>
 
 
-		<script>
-            $("#request").on("click", function () {
-
-                window.open(("/IdCheck.member?id=") + $("#id").val(), "",
-                    "width=500px , height=600px");
-
-
-            })
-
-
-        </script>
-
-
-
-
 	</div>
+
 
 </body>
 </html>

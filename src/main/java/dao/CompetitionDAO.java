@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 
 import dto.AbilityDTO;
 import dto.CompetitionKindDTO;
+import dto.CreateTeamDTO;
 import dto.HometownDTO;
 
 public class CompetitionDAO {
@@ -116,7 +117,37 @@ public class CompetitionDAO {
 		}
 	}
 
+	public List<TeamDTO> teamname() throws Exception{
+		String sql = "select * from team" ;
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery();)
+		{
+			List<TeamDTO> teamname = new ArrayList<>();
+			
+			while(rs.next()) {
+				
+				int code = 	rs.getInt("code");
+				int logo_path_code = rs.getInt("logo_path_code");
+				String logo = rs.getString("logo");
+				String name = rs.getString("name");
+				int member_code = rs.getInt("member_code");
+				int hometown_code = rs.getInt("hometown_code");
+				String outline = rs.getString("outline");
+				String contect = rs.getString("contect");
+				Timestamp reg_date = rs.getTimestamp("reg_date");
+				Timestamp mod_date = rs.getTimestamp("mod_date");
+				Timestamp del_date = rs.getTimestamp("del_date");
 
+				TeamDTO dto = new TeamDTO(code,logo_path_code,logo,name,member_code,hometown_code,outline,contect,reg_date,mod_date,del_date);
+				teamname.add(dto);
+			
+			}
+
+			return teamname;
+
+		}
+	}
 
 
 
