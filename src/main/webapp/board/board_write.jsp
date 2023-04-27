@@ -44,8 +44,8 @@
 					<div class="row body">
 						<div class="col-12 col-md-8 p-1 p-md-2" style="padding-top: 0">
 							<select class="form-select" aria-label="Default select example" name="board" id="board"
-								onchange="boardKindChange(this)">
-								<option value="default" selected>게시판 선택</option>
+								onchange="boardKindChange(this)" required>
+								<option value="" selected>게시판 선택</option>
 								<c:forEach var="board" items="${board_list}">
 									<option value="${board}">${board}</option>
 								</c:forEach>
@@ -53,8 +53,8 @@
 						</div>
 						<div class="col-12 col-md-4 p-1 p-md-2" style="padding-top: 0">
 							<select class="form-select" aria-label="Default select example" name="headline"
-								id="headline" disabled>
-								<option value="headline" selected>카테고리 선택</option>
+								id="headline" disabled required>
+								<option value="" selected>카테고리 선택</option>
 							</select>
 						</div>
 						<div class="col-12 p-2">
@@ -63,7 +63,12 @@
 						<div class="col-12 p-2" id="editorBox">
 							<textarea id="editor" name="content" placeholder="1300자 이내로 작성해주세요"></textarea>
 						</div>
-						<div id="word-count"></div>
+						<div>
+							<strong id="word_count"></strong>
+							<small id="limit_check"></small>
+						</div>
+						<!-- <div id="word_count"></div> -->
+						<!-- <div class="col-10" id="limit_check" style="font-size: small;">test</div> -->
 
 					</div>
 					<div class="row footer p-2">
@@ -110,37 +115,49 @@
 				//max 4000하고 한글은 3글자씩 세고싶은데 설정 모르겠음
 				const maxCharacters = 1300;
 				const container = document.querySelector( '#editor' );
-				const charactersBox = document.querySelector( '#word-count' );
+				const charactersBox = document.querySelector( '#word_count' );
 				const sendButton = document.querySelector('#post');
 				
 				ClassicEditor
 					.create(document.querySelector('#editor'), {
 						language: 'ko',
-						 wordCount: {
+						wordCount: {
 							 displayWords:false,
 							 displayCharacters:false,
 					            onUpdate: stats => {
 					            	charactersBox.textContent = stats.characters + ' / ' + maxCharacters;
 					                const isLimitExceeded = stats.characters > maxCharacters;
+									const msg = "1300자 이내로 입력해 주세요";
 									// 글자수 제한을 넘기면 등록버튼을 누를 수 없음
+									$("#limit_check").html("");
 									sendButton.toggleAttribute( 'disabled', isLimitExceeded );
 					                // 글자수 제한 넘어가면 입력도 안되게 하고싶은데 방법을 잘 모르겠음.. 작동안함
-					                //if ( isLimitExceeded ) {
-					                //	stats.textContent = stats.textContent.slice(0, maxCharacters);
-									//}
+					                if ( isLimitExceeded ) {
+										// stats.textContent = stats.textContent.slice(0, maxCharacters);
+										$("#limit_check").html(msg).css("color","red");
+									}
 					            }
-					        }
+					    },
+						simpleUpload: {
+                    		uploadUrl: "http://localhost/to_write_form.board",
+                    		withCredentials: true,
+                		},
 					})
 					.then(editor => {
 					 	const wordCountPlugin = editor.plugins.get('WordCount');
-					 	const wordCountWrapper = document.getElementById('word-count');
+					 	const wordCountWrapper = document.getElementById('word_count');
 					 	
 					 	wordCountWrapper.appendChild(wordCountPlugin.wordCountContainer);
 					 })
 					.catch(error => {
 						console.log(error);
 					});
-
+				
+				$("#post").on("click",function(){
+					console.log($("#board").prop("required"));
+					console.log($("#headline").prop("required"));
+				});
+				
 				$("#cancel").on("click", function () {
 					history.back();
 				});
