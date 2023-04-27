@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,13 +94,19 @@ label {
 
 	<div class="container join_form_container">
 
+
 		<div class="wrapper join_form" id="join_form">
 			<form action="/insert_new_member.member" method="post">
 
+				<div class="row label" style="height: 20px;">
+					<div class="col">
+						<span class="essential">*</span><label>은 필수로 입력해주세요.</label>
+					</div>
+				</div>
 
-<!-- 아이디 -->
-				<div class="row insert" style="height:85px;">
-				<!--아이디 입력창 -->
+				<!-- 아이디 -->
+				<div class="row insert" style="height: 85px;">
+					<!--아이디 입력창 -->
 					<div class="col">
 						<div class="row label">
 							<div class="col md-9">
@@ -110,11 +117,11 @@ label {
 							<div class="col md-9">
 								<input type="text" class="form-control" id="member_id"
 									name="member_id" pattern="^[a-z](?=.*[0-9])[0-9a-z]{4,19}$"
-									title="5자 이상 20자 이내로 영소문자,숫자 필수 포함" minlength="5" maxlength="20"
-									required>
+									title="5자 이상 20자 이내로 영소문자,숫자 필수 포함" minlength="5"
+									maxlength="20" required>
 							</div>
 						</div>
-				<!-- 아이디 중복확인 메세지 -->
+						<!-- 아이디 중복확인 메세지 -->
 						<div class="row checking">
 							<div class="col md-3">
 								<h9 id="id_checking"></h9>
@@ -125,9 +132,9 @@ label {
 
 
 
-<!-- 비밀번호 -->
-				<div class="row insert" style="height:85px;">
-				<!-- 비밀번호 입력창 -->
+				<!-- 비밀번호 -->
+				<div class="row insert" style="height: 85px;">
+					<!-- 비밀번호 입력창 -->
 					<div class="col">
 						<div class="row label">
 							<div class="col md-9">
@@ -139,8 +146,8 @@ label {
 								<input type="password" class="form-control" id="member_pw"
 									name="member_pw"
 									pattern="^(?=.*[a-zA-Z])(?=.*[~.!@#$%^&*()_+={}>;<:,.?/\-\[\]\\\|])(?=.*[0-9]).{8,20}$"
-									title="영대소문자,숫자,특수문자를 모두 포함한 8~20자" minlength="8" maxlength="20"
-									required>
+									title="영대소문자,숫자,특수문자를 모두 포함한 8~20자" minlength="8"
+									maxlength="20" required>
 							</div>
 							<!-- 비밀번호 보기&숨기기 버튼 -->
 							<div class="col md-3">
@@ -153,9 +160,9 @@ label {
 
 
 
-<!-- 이름 -->
-				<div class="row insert" style="height:85px;">
-				<!-- 이름 입력창 -->
+				<!-- 이름 -->
+				<div class="row insert" style="height: 85px;">
+					<!-- 이름 입력창 -->
 					<div class="col">
 						<div class="row label">
 							<div class="col">
@@ -165,8 +172,8 @@ label {
 						<div class="row input">
 							<div class="col md-9">
 								<input type="text" class="form-control" id="member_name"
-									name="member_name" pattern="^[가-힣]{2,5}$" title="2자 이상 5자 이내의 한글"
-									minlength="2" maxlength="5" required>
+									name="member_name" pattern="^[가-힣]{2,5}$"
+									title="2자 이상 5자 이내의 한글" minlength="2" maxlength="5" required>
 							</div>
 						</div>
 					</div>
@@ -176,9 +183,9 @@ label {
 
 
 
-<!-- 전화번호 -->
-				<div class="row insert" style="height:85px;">
-				<!-- 전화번호1,2,3 입력창 -->
+				<!-- 전화번호 -->
+				<div class="row insert" style="height: 85px;">
+					<!-- 전화번호1,2,3 입력창 -->
 					<div class="col">
 						<div class="row label">
 							<div class="col">
@@ -201,14 +208,14 @@ label {
 									name="member_phone3" pattern="^\d{4}$" minlength="4"
 									maxlength="4" required style="width: 100px;">
 							</div>
-						<!-- 인증번호 전송 버튼 -->
+							<!-- 인증번호 전송 버튼 -->
 							<div class="col">
-								<button type="button" class="btn btn-primary btn-sm" style="font-size:small;">인증번호
-									발송</button>
+								<button type="button" class="btn btn-primary btn-sm"
+									style="font-size: small;">인증번호 발송</button>
 							</div>
-						</div>	
+						</div>
 						<!-- 전화번호 중복 메세지 -->
-						<div class="row checking">	
+						<div class="row checking">
 							<div class="col">
 								<h9 id="phone_checking"></h9>
 							</div>
@@ -218,9 +225,9 @@ label {
 
 
 
-<!-- 인증번호 -->
-				<div class="row insert" style="height:85px;">
-				<!-- 인증번호 입력창 -->
+				<!-- 인증번호 -->
+				<div class="row insert" style="height: 85px;">
+					<!-- 인증번호 입력창 -->
 					<div class="col">
 						<div class="row label">
 							<div class="col">
@@ -244,9 +251,9 @@ label {
 
 
 
-<!-- 생년월일 -->
-				<div class="row insert" style="height:85px;">
-				<!-- 생년월일 입력창 -->
+				<!-- 생년월일 -->
+				<div class="row insert" style="height: 85px;">
+					<!-- 생년월일 입력창 -->
 					<div class="col">
 						<div class="row label">
 							<div class="col">
@@ -258,7 +265,7 @@ label {
 								<select class="form-select" id="member_birth_year"
 									name="member_birth_year" style="width: 100px;"></select>
 							</div>
-		
+
 							<div class="col">
 								<select class="form-select" id="member_birth_month"
 									name="member_birth_month" style="width: 100px;"></select>
@@ -274,9 +281,9 @@ label {
 				</div>
 
 
-<!-- 이메일 -->
-				<div class="row insert" style="height:85px;">
-				<!-- 이메일 입력창 -->
+				<!-- 이메일 -->
+				<div class="row insert" style="height: 85px;">
+					<!-- 이메일 입력창 -->
 					<div class="col">
 						<div class="row label">
 							<div class="col">
@@ -291,8 +298,8 @@ label {
 									title="abc@abc.com 형식으로 입력">
 							</div>
 						</div>
-					<!-- 이메일 중복 확인 메세지 -->
-						<div class="row checking">	
+						<!-- 이메일 중복 확인 메세지 -->
+						<div class="row checking">
 							<div class="col md-3">
 								<h9 id="email_checking"> </h9>
 							</div>
@@ -302,9 +309,9 @@ label {
 
 
 
-<!-- 닉네임 -->
-				<div class="row insert" style="height:85px;">
-				<!-- 닉네임 입력창 -->
+				<!-- 닉네임 -->
+				<div class="row insert" style="height: 60px;">
+					<!-- 닉네임 입력창 -->
 					<div class="col">
 						<div class="row label">
 							<div class="col">
@@ -324,8 +331,8 @@ label {
 
 
 
-<!-- 가입동의  -->
-				<div class="row insert" >
+				<!-- 가입동의  -->
+				<div class="row insert">
 					<div class="col">
 						<div class="row input member_agree">
 							<div class="col">
@@ -340,7 +347,7 @@ label {
 
 
 
-<!-- 가입버튼 & 돌아가기 버튼 -->
+				<!-- 가입버튼 & 돌아가기 버튼 -->
 				<div class="row">
 					<div class="col">
 						<button class="btn btn-secondary" id="join"
@@ -360,8 +367,35 @@ label {
 
 		</div>
 
-	</div>
 
+
+		<!-- 가입 완료시 가입 환영 메세지 -->
+		<c:if test="${param.status=='complete'}">
+			<script>
+				$(".container").css({"height":"300px"})
+			 	$("#join_form").css({"display":"none"});
+			</script>
+			
+			<div class="wrapper welcome" id="welcome_fadein">
+
+				<div class="row">
+					<div class="col">
+						<div>${member_name}님</div>
+						<div>KickKick에 오신걸 환영합니다.</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col">
+						<a href="/member/login_view.jsp"><button type="button">로그인하러가기</button></a>
+								<!-- 임시 href -->
+					</div>
+				</div>
+
+			</div>
+		</c:if>
+
+	</div>
 
 
 
@@ -452,28 +486,6 @@ label {
 
 		})
 
-		//비밀번호 일치 확인 : 현재 사용X
-		$("#member_repw,#member_pw").on("keyup", function() {
-
-			if ($("#member_pw").val() != "" || $("#member_repw").val() != "") {
-
-				if ($("#member_pw").val() != $("#member_repw").val()) {
-					$("#check_repw").html("불일치").css({
-						"color" : "red"
-					});
-					return false;
-				} else {
-					$("#check_repw").html("일치").css({
-						"color" : "dodgerblue"
-					});
-					return true;
-				}
-			} else {
-				$("#check_repw").html("");
-			}
-
-		})
-
 		//전화번호 중복 체크
 		let phone_valid = false;
 		let regex_phone = /^[0-9]{10,11}$/;
@@ -517,35 +529,34 @@ label {
 		//이메일 중복 체크
 		let email_valid = false;
 
-		$("#member_email").on("keyup",function(){
-					let email = $("#member_email").val();
-					console.log(email);
-					$.ajax(
-							{
-								url : "/email_over_check.member",
-								type : "post",
-								data : {member_email : $("#member_email").val()},
-								error : function() {
-									alert("서버 요청 실패");
-								}
-							}).done(function(resp) {
-						resp = JSON.parse(resp);
-						console.log(resp);
-						if (resp) { //true면 중복인거
-							$("#email_checking").html("이미 사용중인 이메일 주소입니다.").css({
-								"color" : "red"
-							}).css("font-size", "x-small");
-							email_valid = false;
-						} else {
-							$("#email_checking").html("");
-							email_valid = true;
-						}
+		$("#member_email").on("keyup", function() {
+			let email = $("#member_email").val();
+			console.log(email);
+			$.ajax({
+				url : "/email_over_check.member",
+				type : "post",
+				data : {
+					member_email : $("#member_email").val()
+				},
+				error : function() {
+					alert("서버 요청 실패");
+				}
+			}).done(function(resp) {
+				resp = JSON.parse(resp);
+				console.log(resp);
+				if (resp) { //true면 중복인거
+					$("#email_checking").html("이미 사용중인 이메일 주소입니다.").css({
+						"color" : "red"
+					}).css("font-size", "x-small");
+					email_valid = false;
+				} else {
+					$("#email_checking").html("");
+					email_valid = true;
+				}
 
-					})
-				})
+			})
+		})
 
-				
-				
 		//submit전 아이디,전화번호,이메일 중복 검사
 		$("#join").on("click", function() {
 
@@ -558,7 +569,7 @@ label {
 				alert("전화번호 중복 여부를 확인하세요.");
 				return false;
 			}
-			
+
 			if (!email_valid) {
 				alert("이메일 중복 여부를 확인하세요.");
 				return false;
