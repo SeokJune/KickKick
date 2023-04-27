@@ -260,28 +260,28 @@
 
 				<div class="col-xs-12 col-md-2 " id="h3"></div>
 
-				<div class="col-xs-12 col-md-3 " id="h4">
+				<div class="col-xs-12 col-md-5 " id="h4">
 				
-					<div class="row h-100 ">
+					<div class="row h-100 w-100">
 					
-						<div class="col-xs-12 ">
-							<input type="text" style="border: 1px solid black;" placeholder="팀명"   value="${team.name}" readonly>
+						<div class="col-xs-12 w-100">
+							<input class="w-75" type="text" style="border: 1px solid black;" id="t1" value="팀명" readonly>
 						</div>
 						
 						<div class="col-xs-12 ">
-							<input type="text" style="border: 1px solid black;" placeholder="팀장이름"  value="${team.member_name}" readonly>
+							<input class="w-75" type="text" style="border: 1px solid black;" id="t2" value="팀장 이름" readonly>
 						</div>
 						
 						
 						<div class="col-xs-12 ">
-							<input type="text" style="border: 1px solid black;" placeholder="팀장전화번호" value="${team.member_phone}" readonly>
+							<input  class="w-75" type="text" style="border: 1px solid black;" id="t3" value="팀장 번호" readonly>
 						</div>
 						
 					
 					</div>
 				</div>
 
-				<div class="col-xs-12 col-md-4" id="h5">
+				<div class="col-xs-12 col-md-1 display:none"  id="h5">
 				</div>
 
 			</div>
@@ -689,20 +689,28 @@
 
 		</div>
 
+</form>
+
 
 		<script>
 								
 							
 			//팀명이름 비동기통신으로 파라미터를 넘긴다
 			$(".ajax_team_name").on("change",function(){									
-				let name = $(".ajax_team_name option:selected").val();
+				let name = $(".ajax_team_name option:selected").val(); //선택한 텍스트를 뺴오는거
 				
-				$.ajax({
+				$.ajax({ 
 					url: "/choose.competition",
 					type: "get",
 					data: {
 						teamname : name 
-					}	
+					}	//dao,dto때문에
+					
+				}).done(function(resp){ 	//append가 있을떄 done으로 가게된다
+					resp = JSON.parse(resp); //integer.parseint의 
+					$("#t1").val("팀명 : "+resp[0]);
+					$("#t2").val("팀장 이름 : "+resp[1]);
+					$("#t3").val("팀장 번호 : "+resp[2]);
 				})		
 			});
 			

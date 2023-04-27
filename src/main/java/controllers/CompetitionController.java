@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 import dao.CompetitionDAO;
 import dto.AbilityDTO;
@@ -78,12 +81,17 @@ public class CompetitionController extends HttpServlet {
 				System.out.println("비동기통신 확인");
 				//팀명선택-팀명,이름,전화번호
 				String t = request.getParameter("teamname");
-				
+
 				System.out.println(t);
-				TeamDTO team = CompetitionDAO.getinstance().team(t);
-				request.setAttribute("team", team);
 				
-			request.getRequestDispatcher("/matching/competition_registration.jsp").forward(request, response);
+				TeamDTO team = CompetitionDAO.getinstance().team(t);
+				List<String> list = new ArrayList<>(); //자바서의 배열이므로 자바스크립트가 알아볼수있게 데이터를 재조립해줘야한다
+				list.add(team.getName()); 
+				list.add(team.getMember_name());
+				list.add(team.getMember_phone());
+				Gson g = new Gson(); //gson사용할려고 인스턴스 생성
+				String glist = g.toJson(list); //자동직렬화 -> 그래야 데이터가 넘어감?  -> 데이터가 넘어가는 방식이 자동직렬화
+				response.getWriter().append(glist); // append를 사용하려면  get writer를 사용할수밖에 없다 이떄 append는 string형밖에 못다룸
 			}
 
 
