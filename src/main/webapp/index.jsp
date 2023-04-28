@@ -6,10 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>KickKick</title>
-<!-- CSS only -->
+<!-- Bootstrap - CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<!-- JavaScript Bundle with Popper -->
+<!-- Bootstrap - JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<!-- Bootstrap - icon -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 <!-- JQuery-->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
@@ -31,26 +33,26 @@
 				<div class="offcanvas-body">
 					<div class="list-group">
 						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">마이페이지</a>
-						<a href="#" class="list-group-item list-group-item-action">내 정보 보기</a>
-						<a href="#" class="list-group-item list-group-item-action">내 팀 보기</a>
-						<a href="#" class="list-group-item list-group-item-action">내 활동 관리</a>
+						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;내 정보 보기</a>
+						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;내 팀 보기</a>
+						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;내 활동 관리</a>
 						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">전체 게시판</a>
-						<a href="/list.board?b_c=1002&cpage=1" class="list-group-item list-group-item-action">공지사항</a>
-						<a href="/list.board?b_c=1003&cpage=1" class="list-group-item list-group-item-action">자유게시판</a>
-						<a href="/list.board?b_c=1004&cpage=1" class="list-group-item list-group-item-action">홍보게시판</a>
+						<a href="/list.board?b_c=1002&cpage=1" class="list-group-item list-group-item-action">&nbsp;&nbsp;공지사항</a>
+						<a href="/list.board?b_c=1003&cpage=1" class="list-group-item list-group-item-action">&nbsp;&nbsp;자유게시판</a>
+						<a href="/list.board?b_c=1004&cpage=1" class="list-group-item list-group-item-action">&nbsp;&nbsp;홍보게시판</a>
 						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">팀 카테고리</a>
-						<a href="#" class="list-group-item list-group-item-action">팀 랭킹보기</a>
-						<a href="/hometown.team" class="list-group-item list-group-item-action">팀 생성하기</a>
-						<a href="/list.team?cpage=1" class="list-group-item list-group-item-action">팀 목록보기</a>
-						<a href="#" class="list-group-item list-group-item-action">내 팀 게시판으로</a>
+						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;팀 랭킹보기</a>
+						<a href="/hometown.team" class="list-group-item list-group-item-action">&nbsp;&nbsp;팀 생성하기</a>
+						<a href="/list.team?cpage=1" class="list-group-item list-group-item-action">&nbsp;&nbsp;팀 목록보기</a>
+						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;내 팀 게시판으로</a>
 						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">매치메이킹</a>
-						<a href="#" class="list-group-item list-group-item-action">시설 검색</a>
-						<a href="#" class="list-group-item list-group-item-action">용병 등록하기</a>
-						<a href="#" class="list-group-item list-group-item-action">용병 목록보기</a>
-						<a href="/registration.competition" class="list-group-item list-group-item-action">매칭 등록하기</a>
-						<a href="/list.competition" class="list-group-item list-group-item-action">매칭 목록보기</a>
+						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;시설 검색</a>
+						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;용병 등록하기</a>
+						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;용병 목록보기</a>
+						<a href="/registration.competition" class="list-group-item list-group-item-action">&nbsp;&nbsp;매칭 등록하기</a>
+						<a href="/list.competition" class="list-group-item list-group-item-action">&nbsp;&nbsp;매칭 목록보기</a>
 						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">운영진에게</a>
-						<a href="/list.board?b_c=1005&cpage=1" class="list-group-item list-group-item-action">문의하기</a>
+						<a href="/list.board?b_c=1005&cpage=1" class="list-group-item list-group-item-action">&nbsp;&nbsp;문의하기</a>
 					</div>
 				</div>
 			</div>
