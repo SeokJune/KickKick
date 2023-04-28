@@ -84,6 +84,7 @@
 
 			<script>
 				function boardKindChange(e) {
+					//board이름 = [headline]이 담긴 배열 생성
 					<c:forEach var="board" items="${board_list}">
 						var ${board} = [];
 						<c:forEach var="head" items="${headline_list}">
@@ -111,6 +112,10 @@
 						target.appendChild(opt);
 					}
 				};
+
+				$("#board").val("${board_kind_name}").prop("selected",true);
+				$("#headline option:eq(0)").prop("selected",true);
+				
 				
 				//max 4000하고 한글은 3글자씩 세고싶은데 설정 모르겠음
 				const maxCharacters = 1300;
