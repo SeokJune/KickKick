@@ -267,47 +267,6 @@
     </div>
   </nav>
 
-	<nav class="navbar bg-body-tertiary fixed-top">
-		<div class="container-fluid">
-			<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<a class="navbar-brand" href="/member/login_view.jsp">Login</a>
-			<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-				<div class="offcanvas-header">
-					<a href="/index.jsp">
-						<h5 class="offcanvas-title" id="offcanvasNavbarLabel">KickKick</h5>
-					</a>
-					<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-				</div>
-				<div class="offcanvas-body">
-					<div class="list-group">
-						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">마이페이지</a>
-						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;내 정보 보기</a>
-						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;내 팀 보기</a>
-						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;내 활동 관리</a>
-						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">전체 게시판</a>
-						<a href="/list.board?b_c=1002&cpage=1" class="list-group-item list-group-item-action">&nbsp;&nbsp;공지사항</a>
-						<a href="/list.board?b_c=1003&cpage=1" class="list-group-item list-group-item-action">&nbsp;&nbsp;자유게시판</a>
-						<a href="/list.board?b_c=1004&cpage=1" class="list-group-item list-group-item-action">&nbsp;&nbsp;홍보게시판</a>
-						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">팀 카테고리</a>
-						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;팀 랭킹보기</a>
-						<a href="/hometown.team" class="list-group-item list-group-item-action">&nbsp;&nbsp;팀 생성하기</a>
-						<a href="/list.team?cpage=1" class="list-group-item list-group-item-action">&nbsp;&nbsp;팀 목록보기</a>
-						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;내 팀 게시판으로</a>
-						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">매치메이킹</a>
-						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;시설 검색</a>
-						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;용병 등록하기</a>
-						<a href="#" class="list-group-item list-group-item-action">&nbsp;&nbsp;용병 목록보기</a>
-						<a href="/registration.competition" class="list-group-item list-group-item-action">&nbsp;&nbsp;매칭 등록하기</a>
-						<a href="/list.competition" class="list-group-item list-group-item-action">&nbsp;&nbsp;매칭 목록보기</a>
-						<a href="#" class="list-group-item list-group-item-action list-group-item-primary">운영진에게</a>
-						<a href="/list.board?b_c=1005&cpage=1" class="list-group-item list-group-item-action">&nbsp;&nbsp;문의하기</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</nav>
 </body>
 
 </html>
