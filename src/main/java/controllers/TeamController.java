@@ -48,17 +48,17 @@ public class TeamController extends HttpServlet {
 				int hometown_code = Integer.parseInt(request.getParameter("hometown_code"));
 				String outline = request.getParameter("outline");
 				String content = request.getParameter("content");
-				TeamDTO dto = new TeamDTO(0, 1001, "logo", team_name, 10000001, hometown_code, outline, content, null, null, null);
+				TeamDTO dto = new TeamDTO(0, 1001, team_name, team_name, 10000001, hometown_code, outline, content, null, null, null);
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
 				dao.insertTeam(dto);
-				response.sendRedirect("/list.team");
+				response.sendRedirect("/list.team?cpage=1");
 				
 			}
 			// 생성된 팀 목록 뽑아오기
 			else if(cmd.equals("/list.team")) {
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
 				
-				int currentPage = Integer.parseInt(request.getParameter("cpage"));
+				int currentPage = request.getParameter("cpage")==null?1 : Integer.parseInt(request.getParameter("cpage"));
 				request.getSession().setAttribute("updateCpage", currentPage);
 				int start = (currentPage * Settings.BOARD_RECORD_COUNT_PER_PAGE) - (Settings.BOARD_RECORD_COUNT_PER_PAGE-1);
 				int end = currentPage * Settings.BOARD_NAVI_COUNT_PER_PAGE;
@@ -70,9 +70,10 @@ public class TeamController extends HttpServlet {
 				request.setAttribute("navi", page_navi);
 				request.getRequestDispatcher("/team/team_list.jsp").forward(request, response); 
 			}
-//			else if(cmd.equals("/teampage.team")) {
-//				
-//			}
+			else if(cmd.equals("/page.team")) {
+				int team_code = Integer.parseInt(request.getParameter("team_code"));
+				response.sendRedirect("/team/team_view.jsp?team_code" + team_code);
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();

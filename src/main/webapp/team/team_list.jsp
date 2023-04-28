@@ -27,6 +27,7 @@
 	font-size: 12px;
 	border: 1px solid black;
 	border-radius: 10px;
+	background-color: #F7F2E0;
 }
 
 .gate {
@@ -42,6 +43,10 @@
 hr {
 	border: 1px solid black;
 }
+a {
+	text-decoration: none; 
+  	color: inherit;
+}
 </style>
 </head>
 
@@ -52,7 +57,7 @@ hr {
 			<div class="col-md-4"></div>
 
 			<div class=" col-3 col-md-1"
-				style="text-align: center; line-height: 58px;">
+				style="text-align: right; line-height: 58px;">
 				<select>
 					<option>팀명</option>
 					<option>랭킹</option>
@@ -74,28 +79,27 @@ hr {
 		</div>
 
 		<div class="row hr">
-			<div class="col-md-1"></div>
-			<div class="col-12 col-md-10">
+			<div class="col-md-2"></div>
+			<div class="col-12 col-md-8">
 				<hr style="border: 2px solid black;">
 			</div>
-			<div class="col-md-1"></div>
+			<div class="col-md-2"></div>
 		</div>
 
 		<div class="row">
-			<div class="col-md-1 col-xl-1"></div>
-			<div class="col-12 col-md-10 col-xl-10">
+			<div class="col-1 col-md-2 col-xl-2"></div>
+			<div class="col-10 col-md-8 col-xl-8">
 				<div class="row gate_header">
-					<div class="col-4 col-md-2 col-xl-1">이미지</div>
+					<div class="col-4 col-md-2 col-xl-1">LOGO</div>
 					<div class="col-xl-1 d-none d-xl-block">no</div>
-					<div class="col-4 col-md-2 col-xl-1">팀명</div>
+					<div class="col-4 col-md-2 col-xl-2">팀명</div>
 					<div class="col-4 col-md-4 col-xl-3">간략 소개글</div>
 					<div class="col-md-2 col-xl-1 d-none d-md-block">랭킹</div>
 					<div class="col-md-2 col-xl-2 d-none d-md-block">작성자</div>
 					<div class="col-xl-2 d-none d-xl-block">작성일</div>
-					<div class="col-xl-1 d-none d-xl-block">조회수</div>
 				</div>
 			</div>
-			<div class="col-md-1 col-xl-1"></div>
+			<div class="col-1 col-md-2 col-xl-2"></div>
 		</div>
 
 		<c:choose>
@@ -103,56 +107,55 @@ hr {
 				<c:forEach var="i" items="${teamlist_arr}">
 
 					<div class="row hr">
-						<div class="col-md-1"></div>
-						<div class="col-12 col-md-10">
+						<div class="col-md-2"></div>
+						<div class="col-12 col-md-8">
 							<hr>
 						</div>
-						<div class="col-md-1"></div>
+						<div class="col-md-2"></div>
 					</div>
 
 					<div class="row">
-						<div class="col-md-1 col-xl-1"></div>
-						<div class="col-12 col-md-10 col-xl-10">
+						<div class="col-1 col-md-2 col-xl-2"></div>
+						<div class="col-10 col-12 col-md-8 col-xl-8">
 							<div class="row gate">
-								<div class="col-4 col-md-2 col-xl-1">${i.logo}</div>
-								<div class="col-xl-1 d-none d-xl-block">${i.code}</div>
-								<div class="col-4 col-md-2 col-xl-1">${i.name}</div>
+								<div class="col-4 col-md-2 col-xl-1"><a href="/page.team?team_code=${i.code}">${i.logo}</a></div>
+								<div class="col-xl-1 d-none d-xl-block"><a href="/page.team?team_code=${i.code}">${i.code}</a></div>
+								<div class="col-4 col-md-2 col-xl-2"><a href="/page.team?team_code=${i.code}">${i.name}</a></div>
 								<div class="col-4 col-md-4 col-xl-3">${i.outline}</div>
 								<div class="col-md-2 col-xl-1 d-none d-md-block">랭킹</div>
 								<div class="col-md-2 col-xl-2 d-none d-md-block">${i.member_name}</div>
 								<div class="col-xl-2 d-none d-xl-block">${i.formedDate}</div>
-								<div class="col-xl-1 d-none d-xl-block">조회수</div>
 							</div>
 						</div>
-						<div class="col-md-1 col-xl-1"></div>
+						<div class="col-md-2 col-xl-2"></div>
 					</div>
 
 					<div class="row hr">
-						<div class="col-md-1"></div>
-						<div class="col-12 col-md-10">
+						<div class="col-md-2"></div>
+						<div class="col-12 col-md-8">
 							<hr>
 						</div>
-						<div class="col-md-1"></div>
+						<div class="col-md-2"></div>
 					</div>
 
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
 				<div class="row gate">
-					<div class="col-md-1 col-xl-1"></div>
-					<div class="col-12 col-md-10 col-xl-10">생성된 팀이 없습니다.</div>
-					<div class="col-md-1 col-xl-1"></div>
+					<div class="col-md-1 col-xl-2"></div>
+					<div class="col-12 col-md-10 col-xl-8">생성된 팀이 없습니다.</div>
+					<div class="col-md-1 col-xl-2"></div>
 				</div>
 			</c:otherwise>
 		</c:choose>
 
 
 		<div class="row hr">
-			<div class="col-md-1"></div>
-			<div class="col-12 col-md-10">
+			<div class="col-md-2"></div>
+			<div class="col-12 col-md-8">
 				<hr style="border: 2px solid black;">
 			</div>
-			<div class="col-md-1"></div>
+			<div class="col-md-2"></div>
 		</div>
 
 
