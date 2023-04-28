@@ -139,7 +139,7 @@ body {
 
 		<div class="wrapper mx-auto position-relative">
 			<div class="position-absolute top-10 end-0 me-5">
-				<button type="button" class="btn-close" id="btn_close"
+				<button type="button" class="btn-close visually-hidden" id="btn_close"
 					aria-label="Close"></button>
 			</div>
 			<div class="wrapper_login" id="login_view_fadeOut">
@@ -351,12 +351,14 @@ body {
 		$("#btn_forget_pwd").on("click", function() {
 			$("#login_view_fadeOut").hide();
 			$("#find_member_fadeIn").fadeIn();
+			$("#btn_close").removeClass("visually-hidden");
 		});
 
 		$("#btn-check-outlined").on("click", function() {
 			$("#login_view_fadeOut").hide();
 			$("#find_member_fadeIn").hide();
 			$("#to_phone_authentication_fadeIn").fadeIn();
+			$("#btn_close").removeClass("visually-hidden");
 		});
 		$("#phone_auth").on("click", function() {
 			$.ajax({
