@@ -40,14 +40,12 @@ div {
 		<tbody>
 			<c:forEach var="i" items="${match_select_list}">
 				<tr>
-				<input type="hidden" value="${i.latirude}">
-				<input type="hidden" value="${i.longitude}">
 					<th scope="row"></th>
 					<td>${i.competition_kind_code}</td>
 					<td>${i.competition_kind_headcount}</td>
 					<td>장소</td>
 					<td>${i.competition_date}</td>
-					<td><a href="javascript:set_match('${i.competition_kind_code}','${i.competition_kind_headcount}','${i.latirude}','${i.longitude}','${i.competition_date}')">
+					<td><a href="javascript:set_match('${i.competition_kind_code}','${i.competition_kind_name}','${i.competition_kind_headcount}','${i.latirude}','${i.longitude}','${i.competition_date}')">
 					<button id="use" class="btn btn-primary btn-sm">선택</button></a></td>
 				</tr>
 
@@ -60,8 +58,8 @@ div {
 		</tbody>
 	</table>
 	<script>
-		function set_match(ckc,ckh,la,lo,cd){
-			opener.set_match_info(ckc,ckh,la,lo,cd);
+		function set_match(ckc,ckn,ckh,la,lo,cd){
+			opener.set_match_info(ckc,ckn,ckh,la,lo,cd);
 			window.close();
 		}
 		$("#close").on("click", function() {

@@ -20,9 +20,13 @@
 <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="fonts/icomoon/style.css">
 <link rel="stylesheet" href="css/owl.carousel.min.css">
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 </head>
 
  <style>
+ *{
+ 	font-family: 'NanumSquareNeoBold';
+ }
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -88,6 +92,9 @@
       z-index: 1500;
     }
 
+	.navbar{
+		--bs-navbar-padding-y: 0;
+	}
     a,
     a:hover {
       padding-top: 10px;
@@ -102,10 +109,10 @@
       margin-left: auto;
       margin-right: auto;
     }
-    li{
+    .nav-menu{
       font-size: 16px;
     }
-    li:hover {
+    .nav-menu:hover {
       background-color: #fcfcfc;
     }
     .btn-toggle-nav>li:hover{
@@ -174,7 +181,7 @@
 
         <div class=" p-3 nav-scroller">
           <ul class="list-unstyled ps-0">
-            <li class="mb-1">
+            <li class="mb-1 nav-menu">
               <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                 data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
                 마이페이지
@@ -208,7 +215,7 @@
               </div>
             </li> <!--전체게시판 카테고리-->
 
-            <li class="mb-1">
+            <li class="mb-1 nav-menu">
               <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                 data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
                 팀 카테고리
@@ -227,7 +234,7 @@
               </div>
             </li> <!-- 팀 카테고리 -->
 
-            <li class="mb-1">
+            <li class="mb-1 nav-menu">
               <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                 data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
                 매치메이킹
@@ -247,7 +254,7 @@
 
             <li class="border-top my-3"></li> <!-- 구분선 -->
 
-            <li class="mb-1">
+            <li class="mb-1 nav-menu">
               <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                 data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
                 운영진에게

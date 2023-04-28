@@ -24,10 +24,13 @@
 	crossorigin="anonymous"></script>
 <!--Popper Development version -->
 <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
-
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 <title>login_form</title>
 
 <style>
+ *{
+ 	font-family: 'NanumSquareNeoBold';
+ }
 html {
 	background-color: #76b852;
 }
@@ -584,7 +587,7 @@ body {
 				$("#btn_change_pw").on("click", function () {
 					let password = $("#password").val();
 					let password_check = $("#password_check").val();
-					if (password == password_check) {
+					if (password == password_check && password != "") {
 						alert("로그인페이지로 이동합니다");
 						$.ajax({
 							url: "/change_pw.member",
@@ -595,12 +598,12 @@ body {
 						});
 						location.reload();
 					} else {
+						password.val("");
+						password_check.val("");
 						alert("다시 입력해주세요");
 					}
 				});
 
-				import { createPopper } from '@popperjs/core';
-				import './styles.css';
 				
 				const image = document.querySelector("#to_main_ball_img");
 				const tooltip = document.querySelector("#tooltip");
