@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,12 +36,13 @@ public class MemberController extends HttpServlet {
 //				String pw = EncryptionUtils.sha512(request.getParameter("pw"));
 
 				boolean result = dao.is_member(id, pw);
-
+				
+				//test용입니다 나중에 지울게요! - 가은
+				request.getSession().setAttribute("id", "test지롱");
+				
 				response.sendRedirect("/index.jsp");// main 화면, 별명은 세션에 저장 예정
 
 				System.out.println("로그인 성공여부 : " + result);
-				
-				
 			} else if (cmd.equals("/phone_auth.member")) {
 
 				String phone = request.getParameter("phone");
@@ -53,6 +55,7 @@ public class MemberController extends HttpServlet {
 					try {
 						code = Naver_Sens_V2.send_random_message(phone);
 						request.getSession().setAttribute("rand", code);
+						request.getSession().setAttribute("phone", phone);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -66,11 +69,15 @@ public class MemberController extends HttpServlet {
 				
 				if (rand.equals(code)) {
 					request.getSession().removeAttribute("rand");
+					
+					//id가져오는 메서드 -> 세션에 저장된 phone 으로 찾기
+					String phone = (String) request.getSession().getAttribute("phone");
+					String id = dao.get_id_by_phone(phone);
+					request.getSession().setAttribute("id", id);
+					request.getSession().removeAttribute("phone");
 				}
-				
-				// 아이디는 우리가 출력되게해주고 비밀번호만 다시 재설정하기로 짜야함!
-	            
-				
+				//일단 놔두기
+
 			} else if (cmd.equals("/id_over_check.member")) {
 				String member_id = request.getParameter("member_id");
 				boolean result = MemberDAO.getInstance().id_over_check(member_id);
@@ -97,7 +104,7 @@ public class MemberController extends HttpServlet {
 				response.getWriter().append(resp);	
 				
 				
-			} else if(cmd.equals("/insert_new_member.member")) {
+			}else if(cmd.equals("/insert_new_member.member")) {
 				String member_id = request.getParameter("member_id");
 				String member_pw = EncryptionUtils.sha512(request.getParameter("member_pw"));
 				String member_name = request.getParameter("member_name");
@@ -137,6 +144,21 @@ public class MemberController extends HttpServlet {
 				request.getRequestDispatcher("/member/my_profile.jsp").forward(request, response);
 				
 				
+			}else if(cmd.equals("/my_profile.member")) {
+				//파라미터는 임시로 해둠
+				String member_id = request.getParameter("member_id");
+
+				MemberDTO result = MemberDAO.getInstance().select_member(member_id);
+				request.setAttribute("profile", result);
+				request.getRequestDispatcher("/member/my_profile.jsp").forward(request, response);
+				
+				
+			}else if(cmd.equals("/change_pw.member")){
+				//비밀번호 변경
+				String id = (String) request.getSession().getAttribute("id");
+				String pw = request.getParameter("password");
+				
+				dao.update_pw(pw, id);
 			}
 
 		} catch (Exception e) {
