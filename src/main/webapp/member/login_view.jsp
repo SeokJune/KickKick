@@ -24,13 +24,16 @@
 	crossorigin="anonymous"></script>
 <!--Popper Development version -->
 <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
-<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+<link
+	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
+	rel="stylesheet">
 <title>login_form</title>
 
 <style>
- *{
- 	font-family: 'NanumSquareNeoBold';
- }
+* {
+	font-family: 'NanumSquareNeoBold';
+}
+
 html {
 	background-color: #76b852;
 }
@@ -312,10 +315,18 @@ body {
 							placeholder="(-) 제외">
 					</div>
 					<div class="col-12 col-md-4">
-						<button type="submit" class="btn btn-outline-success"
+						<button disabled type="submit" class="btn btn-outline-success"
 							id="phone_auth">인증번호 받기</button>
 					</div>
+					<div class="row g-3 m-0 p-0  justify-content-center">
+						<div class="col-12 col-md-4">
+							<div class="timer">
+								<div id="timeLimit">03:00</div>
+							</div>
+						</div>
+					</div>
 				</div>
+
 				<br>
 				<div class="row g-3">
 					<div class="col-12 col-md-4 text-end">
@@ -335,10 +346,11 @@ body {
 				id="to_change_pw_fadeIn" style="display: none">
 				<div class="KickKick_logo text-center d-md-block mb-5">
 					<h1 class="mb-4">⚽KickKick</h1>
-					<h3>'${session.id}'님! 이제 진짜 진짜 얼마 안남았어요!</h3>
+					<h3>'${session.id}'님!</h3>
+					<h3>이제 진짜 진짜 얼마 안남았어요!</h3>
 				</div>
 				<div class="row d-flex justify-content-center">
-					<div class="col-12 col-md-6">
+					<div class="col-12 col-md-6 mb-1">
 						<div class="input-group d-flex">
 							<input type="password" class="form-control rounded mt-1"
 								placeholder="새 비밀번호" aria-label="password"
@@ -347,7 +359,9 @@ body {
 							<div class="invalid-feedback">Wrong</div>
 						</div>
 					</div>
-					<div class="col-12 col-md-6">
+				</div>
+				<div class="row d-flex justify-content-center">
+					<div class="col-12 col-md-6 mt-1">
 						<div class="input-group d-flex">
 							<input type="password" class="form-control rounded mt-1"
 								placeholder="새 비밀번호" aria-label="password"
@@ -358,29 +372,30 @@ body {
 						</div>
 					</div>
 					<br>
-					<div class="col-6 mt-4 mt-xxl-0 w-auto h-auto">
+					<div class="row d-flex justify-content-center">
+						<div class="col-6 mt-4 mt-xxl-0 w-auto h-auto">
+							<div class="alert px-4 py-3 mb-0 d-none" role="alert"
+								data-mdb-color="warning" id="password-alert">
+								<ul class="list-unstyled mb-0">
+									<li class="requirements leng"><i
+										class="bi bi-check text-success me-2"></i> <i
+										class="bi bi-x text-danger me-3"></i> 암호는 8자 이상이어야 합니다</li>
+									<li class="requirements big-letter"><i
+										class="bi bi-check text-success me-2"></i> <i
+										class="bi bi-x text-danger me-3"></i> 암호에 하나 이상의 알파벳 대문자를 포함해야
+										합니다.</li>
+									<li class="requirements num"><i
+										class="bi bi-check text-success me-2"></i> <i
+										class="bi bi-x text-danger me-3"></i> 암호에 숫자가 하나 이상 포함되어야 합니다.
+									</li>
+									<li class="requirements special-char"><i
+										class="bi bi-check text-success me-2"></i> <i
+										class="bi bi-x text-danger me-3"></i> 암호에 특수문자가 하나 이상 포함되어야
+										합니다.</li>
+								</ul>
+							</div>
 
-						<div class="alert px-4 py-3 mb-0 d-none" role="alert"
-							data-mdb-color="warning" id="password-alert">
-							<ul class="list-unstyled mb-0">
-								<li class="requirements leng"><i
-									class="bi bi-check text-success me-2"></i> <i
-									class="bi bi-x text-danger me-3"></i> 암호는 8자 이상이어야 합니다</li>
-								<li class="requirements big-letter"><i
-									class="bi bi-check text-success me-2"></i> <i
-									class="bi bi-x text-danger me-3"></i> 암호에 하나 이상의 알파벳 대문자를 포함해야
-									합니다.</li>
-								<li class="requirements num"><i
-									class="bi bi-check text-success me-2"></i> <i
-									class="bi bi-x text-danger me-3"></i> 암호에 숫자가 하나 이상 포함되어야 합니다.
-								</li>
-								<li class="requirements special-char"><i
-									class="bi bi-check text-success me-2"></i> <i
-									class="bi bi-x text-danger me-3"></i> 암호에 특수문자가 하나 이상 포함되어야
-									합니다.</li>
-							</ul>
 						</div>
-
 					</div>
 				</div>
 				<br>
