@@ -226,7 +226,7 @@
             <div class="container-fluid">
                 <div class="row header">
 
-                    <div class="col-xs-12 col-xl-6">
+                    <div class="col-xs-12 col-md-6">
                         <div class="row h-100">
 
                            
