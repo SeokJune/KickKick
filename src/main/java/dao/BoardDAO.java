@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import commons.Settings;
 import dto.BoardDTO;
 import dto.BoardHeadlineDTO;
+import dto.ReplyDTO;
 
 public class BoardDAO {
 	private BoardDAO() {}
@@ -29,7 +30,8 @@ public class BoardDAO {
 		DataSource ds = (DataSource)iCtx.lookup("java:/comp/env/jdbc/ora");
 		return ds.getConnection();
 	}
-
+	
+	//insert기능 미구현
 	//	public int insert(BoardDTO dto) throws Exception{
 	//		String sql1 = "select table_name from board_kind where code=?";
 	//		String board_name;
@@ -157,11 +159,11 @@ public class BoardDAO {
 	}
 	
 	//한 페이지에 띄워야 할 게시물 리스트 반환
-	public List<BoardDTO> select_bound(String board_table_name, int start, int end, String search_option, String search_word) throws Exception{
+	public List<BoardDTO> select_board_list(String board_table_name, int start, int end, String search_option, String search_word) throws Exception{
 //		String sql = "select * from (select "+board_table_name+".*, row_number() over(order by reg_date desc) rn from "+board_table_name+" where "+search_option+" like ?) where rn between ? and ?";
 		//수정한 쿼리.. 좀 심각하게 길어요
 		String sql = "select * from (select t.*, row_number() over(order by reg_date desc) rnk from "
-				+ "(select b.code, b.board_kind_code, h.name \"headline_name\", b.title, b.content, "
+				+ "(select b.code, b.board_kind_code, h.name \"board_headline_name\", b.title, b.content, "
 				+ "m.code \"member_code\", m.nickname \"member_nickname\", b.view_count, b.like_count,"
 				+ " r.*, b.reg_date, b.mod_date from board_"+board_table_name+" b join (select board_"
 				+board_table_name+"_code,count(code) \"reply_count\" from reply_"+board_table_name
@@ -180,7 +182,7 @@ public class BoardDAO {
 				while(rs.next()) {
 					int code = rs.getInt("code");
 					int board_kind_code = rs.getInt("board_kind_code");
-					String board_headline_name = rs.getString("headline_name");
+					String board_headline_name = rs.getString("board_headline_name");
 					String title = rs.getString("title");
 					String content = rs.getString("content");
 					String member_nickname = rs.getString("member_nickname");
@@ -194,6 +196,41 @@ public class BoardDAO {
 				return result;
 			}
 		}
-		
 	}
+	
+	//글 하나의 정보 담아보내기
+	public BoardDTO select_board(String board_table_name, int code) throws Exception{
+		String sql = "select b.code, b.board_kind_code, h.name \"board_headline_name\", "
+				+ "b.title, b.content, m.code \"member_code\", m.nickname \"member_nickname\", "
+				+ "b.view_count, b.like_count, r.*, b.reg_date, b.mod_date from board_"
+				+board_table_name+" b join (select board_"+board_table_name+"_code,"
+						+ "count(code) \"reply_count\" from reply_"+board_table_name
+						+" group by board_"+board_table_name+"_code) r on b.code=r.board_"
+						+board_table_name+"_code join (select code, id, nickname from member) m "
+						+ "on b.member_code=m.code join (select code, name from board_headline) h "
+						+ "on b.board_headline_code=h.code where b.code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			try(ResultSet rs = pstat.executeQuery()){
+				BoardDTO result = new BoardDTO();
+				while(rs.next()) {
+					result.setCode(rs.getInt("code"));
+					result.setBoard_kind_code(rs.getInt("board_kind_code"));
+					result.setBoard_headline_name(rs.getString("board_headline_name"));
+					result.setTitle(rs.getString("title"));
+					result.setContent(rs.getString("content"));
+					result.setMember_nickname(rs.getString("member_nickname"));
+					result.setView_count(rs.getInt("view_count"));
+					result.setLike_count(rs.getInt("like_count"));
+					result.setReply_count(rs.getInt("reply_count"));
+					result.setReg_date(rs.getTimestamp("reg_date"));
+					result.setMod_date(rs.getTimestamp("mod_date"));
+				}
+				return result;
+			}
+		}
+	}
+	
+
 }
