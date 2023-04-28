@@ -1,18 +1,18 @@
 package controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
 import commons.EncryptionUtils;
-import commons.Naver_Sens_V2;
+import commons.SensUtils;
 import dao.MemberDAO;
 import dto.MemberDTO;
 
@@ -32,13 +32,14 @@ public class MemberController extends HttpServlet {
 		try {
 			if (cmd.equals("/login.member")) {
 				String id = request.getParameter("id");
-				String pw = request.getParameter("pw"); //테스트용 입니다 회원가입기능 완료시 삭제
+				String pw = request.getParameter("pw"); //테스트용 입니다 완료시 삭제
 //				String pw = EncryptionUtils.sha512(request.getParameter("pw"));
 
 				boolean result = dao.is_member(id, pw);
 				
 				//test용입니다 나중에 지울게요! - 가은
-				request.getSession().setAttribute("id", "test지롱");
+		        HttpSession session = request.getSession();
+		        session.setAttribute("id", "testID");
 				
 				response.sendRedirect("/index.jsp");// main 화면, 별명은 세션에 저장 예정
 
@@ -53,7 +54,7 @@ public class MemberController extends HttpServlet {
 					// PR할때 이부분 주석해서 올리기***
 					String code;
 					try {
-						code = Naver_Sens_V2.send_random_message(phone);
+						code = new SensUtils().sendSMS(phone);
 						request.getSession().setAttribute("rand", code);
 						request.getSession().setAttribute("phone", phone);
 					} catch (Exception e) {
