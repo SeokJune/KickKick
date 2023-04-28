@@ -118,9 +118,8 @@ public class BoardController extends HttpServlet {
 				else if(board_kind_name.equals("홍보게시판")) {
 					board_table_name="promotion";
 				}
-				else if(board_kind_name.equals("문의하기")) {
-					board_table_name="inquire";
-				}
+				//문의하기 게시판은 컬럼이 다르니까 따로 처리하자
+
 				//게시판 코드 그대로 유지
 				request.setAttribute("b_c", request.getParameter("b_c"));
 				
