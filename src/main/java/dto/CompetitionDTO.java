@@ -24,18 +24,16 @@ public class CompetitionDTO {
 	
 	public CompetitionDTO() {}
 
-	public CompetitionDTO(int competition_kind_code, int competition_kind_headcount, int latirude, int longitude,
-			Timestamp competition_date) {
+	public CompetitionDTO(int competition_kind_code, String competition_kind_name, int competition_kind_headcount,
+			int latirude, int longitude, Timestamp competition_date) {
 		super();
 		this.competition_kind_code = competition_kind_code;
+		this.competition_kind_name = competition_kind_name;
 		this.competition_kind_headcount = competition_kind_headcount;
 		this.latirude = latirude;
 		this.longitude = longitude;
 		this.competition_date = competition_date;
 	}
-	
-
-
 
 	public int getCompetition_registration_code() {
 		return competition_registration_code;

@@ -39,13 +39,22 @@ public class MercenaryController extends HttpServlet {
 				
 			}else if(cmd.equals("/to_apply_form.mercenary")) {
 				// 나 용병할래요 신청하는 폼으로
-				int team_code = Integer.parseInt(request.getParameter("team_code"));
-				int competition_result_code = Integer.parseInt(request.getParameter("competition_result_code")); // 매치 코드
+				MercenaryDAO dao = MercenaryDAO.getInstance();
+				//int team_code = Integer.parseInt(request.getParameter("team_code"));
+				//int competition_result_code = Integer.parseInt(request.getParameter("competition_result_code")); // 매치 코드
+				//String name = request.getParameter("name");
+				String ability_code = request.getParameter("ability_code");
 				
-//				TeamInfoDTO team_info = MercenaryDAO.getInstance().select_team_info(team_code, competition_result_code);
+				// TeamDTO team_info = MercenaryDAO.getInstance().select_team_info(team_code, competition_result_code);
+//				TeamDTO team_info = dao.select_team_info(1, 1);
+//				CompetitionDTO match_info = dao.select_match_info(1, 1);
+//				String opponent_team = dao.select_opponent_team(1, 1, "test");
 //				
 //				request.setAttribute("team_info", team_info);
-//				request.getRequestDispatcher("/mercenary/apply_form.jsp").forward(request, response);
+//				request.setAttribute("match_info", match_info);
+//				request.setAttribute("opponent_team", opponent_team);
+				request.setAttribute("ability_code", ability_code);
+				request.getRequestDispatcher("/mercenary/apply_form.jsp").forward(request, response);
 				
 			}else if(cmd.equals("/to_apply_list.mercenary")) {
 				// 신청된 용병 확인하는 폼으로
@@ -54,7 +63,7 @@ public class MercenaryController extends HttpServlet {
 			}else if(cmd.equals("/team_check.mercenary")) {
 				// 로그인 ID에 맞는 팀 선택할 수 있도록
 				// 세션에서 로그인 아이디 받아올 수 있도록 수정
-				String login_id = "agji";
+				String login_id = "agji12";
 				List<TeamDTO> team_select_list = MercenaryDAO.getInstance().select_team_by_id(login_id);
 
 				request.getSession().setAttribute("login_id", login_id);
@@ -63,22 +72,24 @@ public class MercenaryController extends HttpServlet {
 				
 			}else if(cmd.equals("/match_check.mercenary")) {
 				// 본인 팀이름에 맞는 경기 선택할 수 있도록
-				int code = Integer.parseInt(request.getParameter("code"));
-				List<CompetitionDTO> match_select_list = MercenaryDAO.getInstance().select_match_by_name(code);
-				
-				request.setAttribute("match_select_list", match_select_list);
+				int code = 0;
+				if(request.getParameter("code")==""){
+					code=0;
+				}else {
+					code = Integer.parseInt(request.getParameter("code"));
+					
+					List<CompetitionDTO> match_select_list = MercenaryDAO.getInstance().select_match_by_name(code);
+					request.setAttribute("match_select_list", match_select_list);
+				}
 				request.getRequestDispatcher("/mercenary/match_check_view.jsp").forward(request, response);
 				
 			}else if(cmd.equals("/to_mercenary_register.mercenary")) {
 				// DB에 용병 등록하기
-				//String match_place = request.getParameter("match_place");
-				//String match_date = request.getParameter("match_date");
-				int team_code = Integer.parseInt(request.getParameter("team_code"));
-				//String team_name = request.getParameter("team_name");
+				int code = Integer.parseInt(request.getParameter("code"));
 				int ability_code = Integer.parseInt(request.getParameter("ability")); 
 				int people_count = Integer.parseInt(request.getParameter("people_count"));
 				
-				RegisterInfoDTO r = new RegisterInfoDTO(0,0,team_code,ability_code,people_count,0,null,0,0,null);
+				RegisterInfoDTO r = new RegisterInfoDTO(0,0,code,ability_code,people_count,0,null,0,0,null);
 				
 				int result = MercenaryDAO.getInstance().insert_register_mercenary(r);
 				if(result>0) {
@@ -87,8 +98,17 @@ public class MercenaryController extends HttpServlet {
 					pwriter.println("<script>alert('용병 등록 완료!'); location.href='/index.jsp';</script>"); 
 					pwriter.close();
 				}
-			}
+			}else if(cmd.equals("/to_mercenary_apply.mercenary")) {
+				// DB에 용병 신청하기
+				// 세션에서 로그인 아이디 받아올 수 있도록 수정
+				String login_id = "agji";
 				
+				int ability_code = Integer.parseInt(request.getParameter("ability_code"));
+				String contents = request.getParameter("contents");
+				
+				// MercenaryDAO.getInstance().insert_apply_mercenary(login_id,contents);
+				
+			}
 			
 			
 		}catch(Exception e) {

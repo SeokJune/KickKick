@@ -23,6 +23,8 @@
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <style>
 * {
+ 	margin: 0;
+ 	padding: 0;
 	box-sizing: border-box;
 	border: 1px solid black;
 }
@@ -35,7 +37,7 @@
 	text-align: center;
 }
 
-#logo_img {
+#imgChange {
 	width: 100px;
 	height: 100px;
 }
@@ -48,14 +50,28 @@
 			<div class="row body">
 				<div class="col-12 col-md-2"></div>
 
+
+
+
 				<div class="col-12 col-md-2" id="logo">
 					<div class="row">
-						<img src="/image/competition_img/team_logo.png">
+						<div class="col-md-4 col-xl-4 d-none d-md-block"></div>
+						<div class="col-12 col-md-8 col-xl-8">
+							<a href="javascript:void(0);" onclick="$('#imgUpload').trigger('click')" class="imgUploadBtn">
+								<img src="/image/team_img/로고를 선택해주세요.png" id="imgChange" alt="사진 업로드">
+							</a> 
+							<input type="file" id="imgUpload" name="bf_file" id="bf_file" accept="image/jpeg,image/png,image/jpg" style="display: none" onchange="previewFile()">							
+						</div>
 					</div>
 					<div class="row">
-						<div class="col-12 "><input type=file name=file  accept="image/jpeg,image/png"></div>
+						<div class="col-12">
+						</div>
 					</div>
 				</div>
+
+
+
+
 
 				<div class="col-12 col-md-4" id="team_info">
 					<div class="row">
@@ -64,8 +80,8 @@
 							<input type="text" placeholder="팀명" class="w-100"
 								name="team_name" id="team_name">
 						</div>
-						<div class="col-3 col-md-3">
-							<button type="button" id="dup" style="font-size: 12px;">중복</button>
+						<div class="col-3 col-md-3" align="center">
+							<button type="button" id="dup" style="font-size: 15px;">중복</button>
 						</div>
 					</div>
 
@@ -151,12 +167,15 @@
 			let val = team_name.val();
 			tf = team_name_regex.test(val);
 			if (tf) {
-				window.open("/team_name_check.team?team_name="+ $("#team_name").val(), "", "width=350px,height=250px");
+				window
+						.open("/team_name_check.team?team_name="
+								+ $("#team_name").val(), "",
+								"width=350px,height=250px");
 			} else {
 				swal('사용 불가능한 팀명!', "이 팀명으로는 사용 못해!!", 'warning');
 			}
 		}
-		
+
 		// 중복 검사 후 팀명 값을 변경했을 때 false 반환.
 		$("#team_name").on("keyup", function() {
 			team_name_ValidFlag = false;
@@ -169,22 +188,39 @@
 			if (team_name_regex.test(team_name.val()) == false) {
 				alert("팀명을 다시 입력하세요.");
 				return false;
-			} 
-			else if(team_name_ValidFlag == false) {
+			} else if (team_name_ValidFlag == false) {
 				alert("중복도 검사를 다시 하세요.")
 				return false;
-			}
-			else if ($("#outline").val().trim() == "" ) {
+			} else if ($("#outline").val().trim() == "") {
 				alert("간략소개글을 입력하세요.");
 				return false;
-			}
-			else if ($("#edi").html().trim() == "") {
+			} else if ($("#edi").html().trim() == "") {
 				alert("게시글을 입력하세요.");
 				return false;
 			}
 			let content = $("#edi").html();
 			$("#spy").val(content);
 		});
+		
+		
+		function previewFile() {
+			  let preview = document.querySelector("img");
+			  let file = document.querySelector("input[type=file]").files[0];
+			  let reader = new FileReader();
+
+			  reader.addEventListener(
+			    "load",
+			    () => {
+			      // convert image file to base64 string
+			      preview.src = reader.result;
+			    },
+			    false
+			  );
+
+			  if (file) {
+			    reader.readAsDataURL(file);
+			  }
+			}
 	</script>
 
 </body>
