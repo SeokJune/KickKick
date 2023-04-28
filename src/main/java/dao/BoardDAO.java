@@ -97,7 +97,7 @@ public class BoardDAO {
 	}
 	
 	//페이지 번호가 적힌 pagination 만들기
-	public String get_page_navi(String board_table_name, int current_page, String search_option, String search_word) throws Exception{
+	public String get_page_navi(int b_c, String board_table_name, int current_page, String search_option, String search_word) throws Exception{
 		//네비 기본 설정
 		int record_total_count = get_record_count(board_table_name,search_option,search_word);
 		int record_count_per_page = Settings.BOARD_RECORD_COUNT_PER_PAGE;
@@ -135,24 +135,24 @@ public class BoardDAO {
 		StringBuilder sb = new StringBuilder();
 		if(search_option==null) {
 			if(need_prev) {
-				sb.append("<li class='page-item'><a class='page-link' href='/list.board?cpage="+(start_navi-1)+"' aria-label='Previous'> <span aria-hidden='true'>&laquo;</span></a></li>");
+				sb.append("<li class='page-item'><a class='page-link' href='/list.board?b_c="+b_c+"&cpage="+(start_navi-1)+"' aria-label='Previous'> <span aria-hidden='true'>&laquo;</span></a></li>");
 			}
 			for(int i=start_navi;i<=end_navi;i++) {
-				sb.append("<li class='page-item'><a class='page-link' href='/list.board?cpage="+i+"'>"+i+"</a></li>");
+				sb.append("<li class='page-item'><a class='page-link' href='/list.board?b_c="+b_c+"&cpage="+i+"'>"+i+"</a></li>");
 			}
 			if(need_next) {
-				sb.append("<li class='page-item'><a class='page-link' href='/list.board?cpage="+(end_navi+1)+"' aria-label='Next'> <span aria-hidden='true'>&raquo;</span></a></li>");
+				sb.append("<li class='page-item'><a class='page-link' href='/list.board?b_c="+b_c+"&cpage="+(end_navi+1)+"' aria-label='Next'> <span aria-hidden='true'>&raquo;</span></a></li>");
 			}
 		}
 		else {
 			if(need_prev) {
-				sb.append("<li class='page-item'><a class='page-link' href='/list.board?cpage="+(start_navi-1)+"&search_option="+search_option+"&search_word="+search_word+"' aria-label='Previous'> <span aria-hidden='true'>&laquo;</span></a></li>");
+				sb.append("<li class='page-item'><a class='page-link' href='/list.board?b_c="+b_c+"&cpage="+(start_navi-1)+"&search_option="+search_option+"&search_word="+search_word+"' aria-label='Previous'> <span aria-hidden='true'>&laquo;</span></a></li>");
 			}
 			for(int i=start_navi;i<=end_navi;i++) {
-				sb.append("<li class='page-item'><a class='page-link' href='/list.board?cpage="+i+"&search_option="+search_option+"&search_word="+search_word+"'>"+i+"</a></li>");
+				sb.append("<li class='page-item'><a class='page-link' href='/list.board?b_c="+b_c+"&cpage="+i+"&search_option="+search_option+"&search_word="+search_word+"'>"+i+"</a></li>");
 			}
 			if(need_next) {
-				sb.append("<li class='page-item'><a class='page-link' href='/list.board?cpage="+(end_navi+1)+"&search_option="+search_option+"&search_word="+search_word+"' aria-label='Next'> <span aria-hidden='true'>&raquo;</span></a></li>");
+				sb.append("<li class='page-item'><a class='page-link' href='/list.board?b_c="+b_c+"&cpage="+(end_navi+1)+"&search_option="+search_option+"&search_word="+search_word+"' aria-label='Next'> <span aria-hidden='true'>&raquo;</span></a></li>");
 			}
 		}
 		return sb.toString();
@@ -162,22 +162,23 @@ public class BoardDAO {
 	public List<BoardDTO> select_board_list(String board_table_name, int start, int end, String search_option, String search_word) throws Exception{
 //		String sql = "select * from (select "+board_table_name+".*, row_number() over(order by reg_date desc) rn from "+board_table_name+" where "+search_option+" like ?) where rn between ? and ?";
 		//수정한 쿼리.. 좀 심각하게 길어요
-		String sql = "select * from (select t.*, row_number() over(order by reg_date desc) rnk from "
-				+ "(select b.code, b.board_kind_code, h.name \"board_headline_name\", b.title, b.content, "
-				+ "m.code \"member_code\", m.nickname \"member_nickname\", b.view_count, b.like_count,"
-				+ " r.*, b.reg_date, b.mod_date from board_"+board_table_name+" b join (select board_"
-				+board_table_name+"_code,count(code) \"reply_count\" from reply_"+board_table_name
+		String sql = "select * from (select t.*, row_number() over(order by reg_date) rnk from "
+				+ "(select b.code, b.board_kind_code, h.name board_headline_name, b.title, b.content, "
+				+ "m.code member_code, m.nickname member_nickname, b.view_count, b.like_count, "
+				+ "r.*, b.reg_date, b.mod_date from board_"+board_table_name+" b join (select board_"
+				+board_table_name+"_code,count(code) reply_count from reply_"+board_table_name
 				+" group by board_"+board_table_name+"_code) r on b.code=r.board_"+board_table_name
-				+"_code join (select code, id, nickname from member) m on b.member_code=m.code "
-				+ "join (select code, name from board_headline) h on b.board_headline_code=h.code) t "
-				+ "where title like ?) t where rnk between ? and ?";
+				+"_code join (select code, id, nickname from member) m on b.member_code=m.code join "
+				+ "(select code, name from board_headline) h on b.board_headline_code=h.code) t where "
+				+search_option+" like ?) where rnk between ? and ?";
+		
 		try(Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql)){
+				PreparedStatement pstat = con.prepareStatement(sql);){
 			pstat.setString(1, "%"+search_word+"%");
 			pstat.setInt(2, start);
 			pstat.setInt(3, end);
 			
-			try(ResultSet rs = pstat.executeQuery()){
+			try(ResultSet rs = pstat.executeQuery();){
 				List<BoardDTO> result = new ArrayList<>();
 				while(rs.next()) {
 					int code = rs.getInt("code");
@@ -232,5 +233,7 @@ public class BoardDAO {
 		}
 	}
 	
-
+	public int select_prev_post(String board_table_name, int code) throws Exception{
+		String sql = "select * from board";
+	}
 }

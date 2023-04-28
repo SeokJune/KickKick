@@ -45,7 +45,7 @@
 </head>
 
 <body>
-	<form action="/create.team" id="frm">
+	<form action="/create.team" id="frm" method="post" enctype="multipart/form-data">
 		<div class="container-fluid">
 			<div class="row body">
 				<div class="col-12 col-md-2"></div>
@@ -60,7 +60,7 @@
 							<a href="javascript:void(0);" onclick="$('#imgUpload').trigger('click')" class="imgUploadBtn">
 								<img src="/image/team_img/로고를 선택해주세요.png" id="imgChange" alt="사진 업로드">
 							</a> 
-							<input type="file" id="imgUpload" name="bf_file" id="bf_file" accept="image/jpeg,image/png,image/jpg" style="display: none" onchange="previewFile()">							
+							<input type="file" id="imgUpload" name="file" id="file" accept="image/jpeg,image/png,image/jpg" style="display: none" onchange="previewFile()">							
 						</div>
 					</div>
 					<div class="row">
