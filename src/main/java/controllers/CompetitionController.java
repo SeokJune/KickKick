@@ -67,12 +67,18 @@ public class CompetitionController extends HttpServlet {
 
 			}else if(cmd.equals("/send.competition")) {
 
-				
+				String latlng = request.getParameter("latlng");
 				String ability = request.getParameter("ability");
 				String kindnum = request.getParameter("kind");
 				String personnum = request.getParameter("person");
 				String write = request.getParameter("write");
 
+				String[] latlngarr = latlng.split(",");
+				
+				String lat = latlngarr[0]; //위도
+				String lng = latlngarr[0]; // 경도
+				
+				
 				String kind = kindnum.substring(0,2);  //앞자리 2자 뽑아옴
 
 				String person = personnum.substring(2,4);  //뒷자리 2자 뽑아옴

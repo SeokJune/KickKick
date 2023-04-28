@@ -233,13 +233,13 @@
 
                             <div class="col-xs-12 col-md-2">
                                 <div class="row">
-                                    <div class="col-12 h-50" style="border: 1px solid red;">${status[0].name}</div>
+                                    <div class="col-xs-12 col-md-12 h-50" style="border: 1px solid red;">${status[0].name}</div>
                                 </div>
                             </div>
 
                             <div class="col-xs-12 col-md-8">
                                 <div class="row h-100">
-                                    <div class="col-12 h-25">
+                                    <div class="col-xs-12 col-md-12 h-25">
 
                                         <select size="1" class="w-75 h-100 ajax_team_name">
                                             <option selected>팀명선택</option>
@@ -253,7 +253,7 @@
 
                                     </div>
 
-                                    <div class="col-12 h-75">
+                                    <div class="col-xs-12 col-md-12 h-75">
                                         <img class="h-100" src="/image/competition_img/team_logo.png">
                                     </div>
 
@@ -275,7 +275,7 @@
                             <div class="col-xs-12 col-md-8">
                                 <div class="row h-100">
 
-                                    <div class="col-12">
+                                    <div class="col-12 col-">
                                         <input class="w-75" type="text" style="border: 1px solid black;" id="t1"
                                             value="팀명" readonly>
                                     </div>
@@ -306,7 +306,13 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-md-2"></div>
                                     <div class="col-xs-12 col-md-10">
-                                        <div id="clickLatlng"></div>
+                                        
+                                        
+                                        
+                                        <div name="latlng" id="clickLatlng"></div>
+                                   
+                                        
+                                        
 
 
                                         <div class="map_wrap">
@@ -357,12 +363,20 @@
 
                                                 // 클릭한 위도, 경도 정보를 가져옵니다 
                                                 var latlng = mouseEvent.latLng;
-
+												
+                                               //위도
+                                               var lat = latlng.getLat();
+                                               
+                                               //경도
+                                               var lng = latlng.getLng();
+                                               
                                                 // 마커 위치를 클릭한 위치로 옮깁니다
                                                 marker.setPosition(latlng);
+                                                
+                                                
 
-                                                var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-                                                message += '경도는 ' + latlng.getLng() + ' 입니다';
+                                                var message = lat + ','+ lng ;
+                                               
 
                                                 var resultDiv = document.getElementById('clickLatlng');
                                                 resultDiv.innerHTML = message;
@@ -789,6 +803,9 @@
                     });
 
                 });
+                
+                
+               
             </script>
 
 
