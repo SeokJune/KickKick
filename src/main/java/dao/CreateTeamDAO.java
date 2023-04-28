@@ -159,6 +159,7 @@ public class CreateTeamDAO {
 		}
 	}
 	
+	
 	private int getRecordCount() throws Exception {
 		String sql = "select count(*) from team";
 		try(Connection con = this.getConnection();
