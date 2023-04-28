@@ -16,9 +16,12 @@
 			<script src="/ckeditor5/build/ckeditor.js"></script>
 			<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 			<style>
-			div{
-				font-family: 'NanumSquareNeoBold';
-			}
+				div{
+					font-family: 'NanumSquareNeoBold';
+				}
+				.container{
+					padding-top:70px;
+				}
 				.ck-editor__editable {
 					min-height: 400px;
 				}

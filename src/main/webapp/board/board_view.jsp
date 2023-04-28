@@ -16,6 +16,9 @@
             padding: 10px;
             font-family: 'NanumSquareNeoBold';
         }
+        .container{
+			padding-top:70px;
+		}
         .dropdown-toggle{
         	height:30px;
         	background-color:#a7a7a7;

@@ -9,6 +9,9 @@
 <!-- Font -->
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 기본 : font-family: 'NanumSquareNeoBold'
+<!--Popper Development version -->
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+
 
 
 
