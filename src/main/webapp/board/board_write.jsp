@@ -14,7 +14,11 @@
 				crossorigin="anonymous"></script>
 			<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 			<script src="/ckeditor5/build/ckeditor.js"></script>
+			<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 			<style>
+			div{
+				font-family: 'NanumSquareNeoBold';
+			}
 				.ck-editor__editable {
 					min-height: 400px;
 				}

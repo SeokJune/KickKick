@@ -16,21 +16,30 @@
 	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 	crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 <style>
+
 div {
 	border: 1px solid black;
 	padding: 10px;
 	box-sizing: border-box;
+	font-family: 'NanumSquareNeoBold';
 }
 .list-group{
 	padding:10px;
 }
+        #title{
+        	font-family: 'NanumSquareNeoExtraBold';
+        }
+        .title{
+        	font-family: 'NanumSquareNeoExtraBold';
+        }
 </style>
 </head>
 <body>
 	<div class="container">
 		<div class="row header">
-			<div class="col-12">
+			<div class="col-12" id="title">
 				<h2>${board_kind_name}</h2>
 			</div>
 			<div class="col-12">
@@ -49,7 +58,7 @@ div {
 				<a href="#"
 					class="list-group-item list-group-item-action list-group-item-primary">
 					<div class="col-12">
-						<div class="col">
+						<div class="col title">
 							<b>[말머리]</b> 필독 공지사항 <span class="badge rounded-pill text-bg-light">💬댓글수</span>
 						</div>
 						<div class="col" style="font-size: small;">
@@ -60,7 +69,7 @@ div {
 				<c:forEach var="post" items="${list}">
 					<a href="/select_post.board?b_c=${b_c}&c=${post.code}&cpage=${cpage}" class="list-group-item list-group-item-action">
 						<div class="col-12">
-							<div class="col">
+							<div class="col title">
 								<b>[${post.board_headline_name}]</b> ${post.title} <span class="badge rounded-pill text-bg-light">💬${post.reply_count}</span>
 							</div>
 							<div class="col" style="font-size: small;">
