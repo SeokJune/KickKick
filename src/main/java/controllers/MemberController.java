@@ -29,6 +29,7 @@ public class MemberController extends HttpServlet {
 		System.out.println(cmd);
 
 		MemberDAO dao = MemberDAO.getInstance();
+		Gson g = new Gson();
 		try {
 			if (cmd.equals("/login.member")) {
 				String id = request.getParameter("id");
@@ -81,31 +82,33 @@ public class MemberController extends HttpServlet {
 
 			} else if (cmd.equals("/id_over_check.member")) {
 				String member_id = request.getParameter("member_id");
-				boolean result = MemberDAO.getInstance().id_over_check(member_id);
-				Gson g = new Gson();
+				boolean result = dao.id_over_check(member_id);
 				String resp = g.toJson(result);
 				response.getWriter().append(resp);
 				
 				
 			} else if (cmd.equals("/phone_over_check.member")) {
 				String member_phone = request.getParameter("member_phone");
-				System.out.println(member_phone);
-				boolean result = MemberDAO.getInstance().phone_over_check(member_phone);
-				Gson g = new Gson();
+				boolean result = dao.phone_over_check(member_phone);
 				String resp = g.toJson(result);
 				response.getWriter().append(resp);
 			
 				
 			} else if (cmd.equals("/email_over_check.member")) {
 				String member_email = request.getParameter("member_email");
-				System.out.println(member_email);
-				boolean result = MemberDAO.getInstance().email_over_check(member_email);
-				Gson g = new Gson();
+				boolean result = dao.email_over_check(member_email);
 				String resp = g.toJson(result);
 				response.getWriter().append(resp);	
 				
 				
-			}else if(cmd.equals("/insert_new_member.member")) {
+			} else if (cmd.equals("/nickname_over_check.member")) {
+				String member_nickname = request.getParameter("member_nickname");
+				boolean result = dao.nickname_over_check(member_nickname);
+				String resp = g.toJson(result);
+				response.getWriter().append(resp);		
+				
+				
+			} else if(cmd.equals("/insert_new_member.member")) {
 				String member_id = request.getParameter("member_id");
 				String member_pw = EncryptionUtils.sha512(request.getParameter("member_pw"));
 				String member_name = request.getParameter("member_name");
@@ -149,7 +152,7 @@ public class MemberController extends HttpServlet {
 				//파라미터는 임시로 해둠
 				String member_id = request.getParameter("member_id");
 
-				MemberDTO result = MemberDAO.getInstance().select_member(member_id);
+				MemberDTO result = dao.select_member(member_id);
 				request.setAttribute("profile", result);
 				request.getRequestDispatcher("/member/my_profile.jsp").forward(request, response);
 				
@@ -160,6 +163,34 @@ public class MemberController extends HttpServlet {
 				String pw = request.getParameter("password");
 				
 				dao.update_pw(pw, id);
+				
+				
+			}else if(cmd.equals("/modify_member_profile.member")) {
+				String member_id = request.getParameter("member_id");
+				//String member_pw = EncryptionUtils.sha512(request.getParameter("member_new_pw")); 비밀번호는 따로 변경
+				String member_nickname = request.getParameter("member_nickname");
+				String member_birth_date = request.getParameter("member_birth_year")
+						+ request.getParameter("member_birth_month")
+						+ request.getParameter("member_birth_day");
+				String member_phone = request.getParameter("member_phone");
+				String member_email = request.getParameter("member_email");
+				
+				MemberDTO dto = new MemberDTO(0,0,member_id,null,null,member_nickname,member_birth_date,member_phone,member_email,null,0,null,null,null);
+				int result = dao.modify_member(dto);
+				if(result>0) {
+					response.sendRedirect("/my_profile.member?member_id=" + member_id);
+				}else {
+					response.sendRedirect("/error.html");
+				}
+				
+				
+			}else if(cmd.equals("/verify_pw.member")) {
+				String id = request.getParameter("id");
+				String pw = EncryptionUtils.sha512(request.getParameter("verify_pw"));
+				boolean result = dao.is_member(id, pw);
+				String resp = g.toJson(result);
+				response.getWriter().append(resp);	
+				 
 			}
 
 		} catch (Exception e) {
