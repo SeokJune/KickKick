@@ -1,6 +1,7 @@
 package dto;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class TeamDTO {
 	private int code;
@@ -15,13 +16,13 @@ public class TeamDTO {
 	private int hometown_code;
 	private String homtown_name;
 	private String outline;
-	private String contect;
+	private String content;
 	private Timestamp reg_date;
 	private Timestamp mod_date;
 	private Timestamp del_date;
 
-	public TeamDTO() {
-	}
+
+	public TeamDTO() {};
 
 	public TeamDTO(int code, String name) {
 		this.code = code;
@@ -38,7 +39,7 @@ public class TeamDTO {
 		this.member_phone = member_phone;
 	}
 
-	public TeamDTO(int code, int logo_path_code, String logo, String name, int member_code, int hometown_code, String outline, String contect, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
+	public TeamDTO(int code, int logo_path_code, String logo, String name, int member_code, int hometown_code, String outline, String content, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
 		this.code = code;
 		this.logo_path_code = logo_path_code;
 		this.logo = logo;
@@ -46,7 +47,29 @@ public class TeamDTO {
 		this.member_code = member_code;
 		this.hometown_code = hometown_code;
 		this.outline = outline;
-		this.contect = contect;
+		this.content = content;
+		this.reg_date = reg_date;
+		this.mod_date = mod_date;
+		this.del_date = del_date;
+	}
+
+
+
+	public TeamDTO(int code, int logo_path_code, String logo_path, String logo_name, String logo, String name, int member_code, String member_name, String member_phone, int hometown_code, String homtown_name, String outline, String content, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
+		super();
+		this.code = code;
+		this.logo_path_code = logo_path_code;
+		this.logo_path = logo_path;
+		this.logo_name = logo_name;
+		this.logo = logo;
+		this.name = name;
+		this.member_code = member_code;
+		this.member_name = member_name;
+		this.member_phone = member_phone;
+		this.hometown_code = hometown_code;
+		this.homtown_name = homtown_name;
+		this.outline = outline;
+		this.content = content;
 		this.reg_date = reg_date;
 		this.mod_date = mod_date;
 		this.del_date = del_date;
@@ -109,11 +132,11 @@ public class TeamDTO {
 	}
 
 	public String getContect() {
-		return contect;
+		return content;
 	}
 
 	public void setContect(String contect) {
-		this.contect = contect;
+		this.content = contect;
 	}
 
 	public Timestamp getReg_date() {
@@ -139,8 +162,50 @@ public class TeamDTO {
 	public void setDel_date(Timestamp del_date) {
 		this.del_date = del_date;
 	}
+
+
+	public String getLogo_path() {
+		return logo_path;
+	}
+
+	public void setLogo_path(String logo_path) {
+		this.logo_path = logo_path;
+	}
+
+	public String getLogo_name() {
+		return logo_name;
+	}
+
+	public void setLogo_name(String logo_name) {
+		this.logo_name = logo_name;
+	}
+
+	public String getMember_name() {
+		return member_name;
+	}
+
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
+	}
+
+	public String getMember_phone() {
+		return member_phone;
+	}
+
+	public void setMember_phone(String member_phone) {
+		this.member_phone = member_phone;
+	}
+
+	public String getHomtown_name() {
+		return homtown_name;
+	}
+
+	public void setHomtown_name(String homtown_name) {
+		this.homtown_name = homtown_name;
+	}
+
 	public String getFormedDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 E요일");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		return sdf.format(this.reg_date);
 	}
 }

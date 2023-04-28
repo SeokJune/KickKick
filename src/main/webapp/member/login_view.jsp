@@ -535,7 +535,6 @@ body {
 					url:"/change_pw.member",
 					type:"post",
 					data:{
-						id:${session.id},
 						password:$("#password").val()
 					}
 				});

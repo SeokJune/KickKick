@@ -104,7 +104,7 @@ public class MemberController extends HttpServlet {
 				response.getWriter().append(resp);	
 				
 				
-			} else if(cmd.equals("/insert_new_member.member")) {
+			}else if(cmd.equals("/insert_new_member.member")) {
 				String member_id = request.getParameter("member_id");
 				String member_pw = EncryptionUtils.sha512(request.getParameter("member_pw"));
 				String member_name = request.getParameter("member_name");
@@ -129,17 +129,36 @@ public class MemberController extends HttpServlet {
 				MemberDTO dto = new MemberDTO(0,0,member_id,member_pw,member_name,member_nickname,member_birth_date,member_phone,member_email,member_agree,0,null,null,null);
 				int result = MemberDAO.getInstance().insert_new_member(dto);
 				if(result>0) {
-					
-				}else if(cmd.equals("/change_pw.member")){
-					//비밀번호 변경
-					String id = request.getParameter("id");
-					String pw = request.getParameter("password");
-					
-					dao.update_pw(pw, id);
-				} else {
+					request.setAttribute("member_name", member_name);
+					request.getRequestDispatcher("/member/join_form.jsp?status=complete").forward(request, response);
+				}else {
 					response.sendRedirect("/error.html");
 				}
 				
+			}else if(cmd.equals("/my_profile.member")) {
+				//파라미터는 임시로 해둠
+				String member_id = request.getParameter("member_id");
+
+				MemberDTO result = MemberDAO.getInstance().select_member(member_id);
+				request.setAttribute("profile", result);
+				request.getRequestDispatcher("/member/my_profile.jsp").forward(request, response);
+				
+				
+			}else if(cmd.equals("/my_profile.member")) {
+				//파라미터는 임시로 해둠
+				String member_id = request.getParameter("member_id");
+
+				MemberDTO result = MemberDAO.getInstance().select_member(member_id);
+				request.setAttribute("profile", result);
+				request.getRequestDispatcher("/member/my_profile.jsp").forward(request, response);
+				
+				
+			}else if(cmd.equals("/change_pw.member")){
+				//비밀번호 변경
+				String id = (String) request.getSession().getAttribute("id");
+				String pw = request.getParameter("password");
+				
+				dao.update_pw(pw, id);
 			}
 
 		} catch (Exception e) {

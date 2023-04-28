@@ -1,4 +1,4 @@
-CREATE OR REPLACE PROCEDURE TABLE_INIT
+create or replace PROCEDURE TABLE_INIT
 IS
 BEGIN
     DECLARE
@@ -216,7 +216,7 @@ BEGIN
                         ,'(INQUIRE_KIND_CODE.NEXTVAL, ''CCCCC'', DEFAULT, NULL, NULL)'
                         ,'(INQUIRE_KIND_CODE.NEXTVAL, ''DDDDD'', DEFAULT, NULL, NULL)'
                         ,'(INQUIRE_KIND_CODE.NEXTVAL, ''EEEEE'', DEFAULT, NULL, NULL)'),
-            
+
             -- 회원 정보 관리 테이블
             TABLE_INFO_S('MEMBER', '8', '(
                         CODE NUMBER,
@@ -307,7 +307,7 @@ BEGIN
                         CONSTRAINT Q_A_TEAM_JOIN_APPLY_CODE_FK FOREIGN KEY (TEAM_JOIN_APPLY_CODE) REFERENCES TEAM_JOIN_APPLY(CODE) ON DELETE CASCADE,
                         CONSTRAINT Q_A_QUESTION_CODE_FK FOREIGN KEY (QUESTION_CODE) REFERENCES QUESTION(CODE) ON DELETE CASCADE
                         )'),
-            
+
             -- 경기 등록 정보 관리 테이블
             TABLE_INFO_S('COMPETITION_REGISTRATION', '8', '(
                         CODE NUMBER,
@@ -396,7 +396,7 @@ BEGIN
                         CONSTRAINT M_A_ABILITY_CODE_FK FOREIGN KEY (ABILITY_CODE) REFERENCES ABILITY(CODE) ON DELETE CASCADE,
                         CONSTRAINT M_A_STATUS_CODE_FK FOREIGN KEY (STATUS_CODE) REFERENCES STATUS(CODE) ON DELETE CASCADE
                         )'),
-                        
+
             -- 팀 게시판 정보 관리 테이블
             TABLE_INFO_S('BOARD_TEAM', 'M', '(
                         CODE NUMBER,
@@ -525,7 +525,7 @@ BEGIN
                         CONSTRAINT R_P_BOARD_PROMOTION_CODE_FK FOREIGN KEY (BOARD_PROMOTION_CODE) REFERENCES BOARD_PROMOTION(CODE) ON DELETE CASCADE,
                         CONSTRAINT R_P_MEMBER_CODE_FK FOREIGN KEY (MEMBER_CODE) REFERENCES MEMBER(CODE) ON DELETE CASCADE
                         )'),
-            
+
             -- 신고 정보 관리 테이블
             -- CONSTRAINT R_BOARD_CODE_FK FOREIGN KEY (BOARD_CODE) REFERENCES BOARD(CODE) ON DELETE CASCADE,
             -- CONSTRAINT R_REPLY_CODE_FK FOREIGN KEY (REPLY_CODE) REFERENCES REPLY(CODE) ON DELETE CASCADE,
@@ -534,9 +534,9 @@ BEGIN
                         MEMBER_CODE NUMBER NOT NULL,
                         BOARD_KIND_CODE NUMBER NOT NULL,
                         BOARD_CODE NUMBER NOT NULL,
-                            
+
                         REPLY_CODE NUMBER NOT NULL,
-                            
+
                         REPORT_KIND_CODE NUMBER NOT NULL,
                         CONTENT VARCHAR2(4000) NOT NULL,
                         STATUS_CODE NUMBER NOT NULL,
@@ -586,7 +586,7 @@ BEGIN
         FOR P IN (SELECT * FROM ALL_SEQUENCES WHERE SEQUENCE_OWNER=LOGIN_ID) LOOP
             EXECUTE IMMEDIATE 'DROP SEQUENCE '||P.SEQUENCE_NAME;
         END LOOP;
-        
+
         -- 테이블 및 시퀀스 생성
         FOR i IN 1..T_I.COUNT LOOP
             BEGIN
@@ -605,16 +605,17 @@ BEGIN
                     FOR j IN 4..T_I(i).COUNT LOOP
                         BEGIN
                             EXECUTE IMMEDIATE 'INSERT INTO '||T_I(i)(1)||' VALUES '||T_I(i)(j);
+                            COMMIT;
                         END;
                     END LOOP;
                 END IF;
             END;
         END LOOP;
-        
+    
+    -- ERROR
     EXCEPTION WHEN OTHERS THEN
         DBMS_OUTPUT.PUT_LINE('SQL ERROR CODE: ' || SQLCODE);
         DBMS_OUTPUT.PUT_LINE('SQL ERROR MESSAGE: ' || SQLERRM);
         DBMS_OUTPUT.PUT_LINE(SYS.dbms_utility.format_error_backtrace);
     END;
 END;
-
