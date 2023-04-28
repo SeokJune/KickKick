@@ -79,6 +79,17 @@ public class MemberDAO {
 		}
 	}// email_over_check
 
+	// 닉네임 중복 체크: 비동기
+	public boolean nickname_over_check(String member_nickname) throws Exception {
+		String sql = "select * from member where nickname = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, member_nickname);
+			try (ResultSet rs = pstat.executeQuery();) {
+				return rs.next();
+			}
+		}
+	}// nickname_over_check
+	
 	// 회원가입
 	public int insert_new_member(MemberDTO dto) throws Exception {
 		String sql = "insert into member values(MEMBER_CODE.NEXTVAL,1001,?,?,?,?,?,?,?,?,1001,SYSDATE,NULL,NULL)";
@@ -107,7 +118,6 @@ public class MemberDAO {
 			
 			try(ResultSet rs = pstat.executeQuery();){
 				rs.next();
-				int code = rs.getInt("code");
 				String id = rs.getString("id");
 				String name = rs.getString("name");
 				String phone = rs.getString("phone");
@@ -115,7 +125,7 @@ public class MemberDAO {
 				String email = rs.getString("email");
 				String nickname = rs.getString("nickname");
 				
-				MemberDTO dto = new MemberDTO(code,0,id,null,name,nickname,birthdate,phone,email,null,0,null,null,null);
+				MemberDTO dto = new MemberDTO(0,0,id,null,name,nickname,birthdate,phone,email,null,0,null,null,null);
 				return	dto;
 			}
 		}
@@ -146,6 +156,24 @@ public class MemberDAO {
 			return result;
 		}
 	}
+	
+	
+	//내정보 수정
+		public int modify_member(MemberDTO dto) throws Exception{
+			String sql = "update member set nickname=?, birthdate=?, phone=?, email=?, mod_date=sysdate where id=?";
+			try( Connection con = this.getConnection();
+					PreparedStatement pstat = con.prepareStatement(sql);){
+				//pstat.setString(1, dto.getPw()); 비밀번호 변경 따로
+				pstat.setString(1, dto.getNick_name());
+				pstat.setString(2, dto.getBirth_date());
+				pstat.setString(3, dto.getPhone());
+				pstat.setString(4, dto.getEmail());
+				pstat.setString(5, dto.getId());
+				int result = pstat.executeUpdate();
+				con.commit();
+				return result;
+			}
+		}
 	
 	
 }

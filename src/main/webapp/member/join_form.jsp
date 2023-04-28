@@ -310,7 +310,7 @@ label {
 
 
 				<!-- 닉네임 -->
-				<div class="row insert" style="height: 60px;">
+				<div class="row insert" style="height: 85px;">
 					<!-- 닉네임 입력창 -->
 					<div class="col">
 						<div class="row label">
@@ -324,6 +324,12 @@ label {
 									name="member_nickname" pattern="^[가-힣a-zA-Z0-9]{2,10}$"
 									title="2자 이상 10자 이내로 한글, 영대소문자, 숫자 중 1개 이상 포함 " 
 									minlength="2" maxlength="10" style="width: 255px;">
+							</div>
+						</div>
+						<!-- 닉네임 중복 확인 메세지 -->
+						<div class="row checking">
+							<div class="col md-3">
+								<h9 id="nickname_checking"> </h9>
 							</div>
 						</div>
 					</div>
@@ -387,7 +393,7 @@ label {
 
 				<div class="row">
 					<div class="col">
-						<button type="button" onClick="location.hrefs('/member/login_view.jsp')">로그인하러가기</button>
+						<button type="button" onClick="location.href('/member/login_view.jsp')">로그인하러가기</button>
 								<!-- 임시 href -->
 					</div>
 				</div>
@@ -533,6 +539,7 @@ label {
 		$("#member_email").on("keyup", function() {
 			let email = $("#member_email").val();
 			console.log(email);
+			
 			if(email==""){
 				email_valid = true;
 			}else{
@@ -561,7 +568,43 @@ label {
 				
 			}
 		})
+		
+		//닉네임 중복 체크
+		let nickname_valid = true;
+		$("#member_nickname").on("keyup", function() {
+			let nickname = $("#member_nickname").val();
+			console.log(nickname);
+			
+			if(nickname==""){
+				nickname_valid = true;
+			}else{
+				$.ajax({
+					url : "/nickname_over_check.member",
+					type : "post",
+					data : {
+						member_nickname : $("#member_nickname").val()
+					},
+					error : function() {
+						alert("서버 요청 실패");
+					}
+				}).done(function(resp) {
+					resp = JSON.parse(resp);
+					console.log(resp);
+					if (resp) { //true면 중복인거
+						$("#nickname_checking").html("이미 사용중인 닉네임입니다.").css({
+							"color" : "red"
+						}).css("font-size", "x-small");
+						nickname_valid = false;
+					} else {
+						$("#nickname_checking").html("");
+						nickname_valid = true;
+					}
+				})
+				
+			}
+		})
 
+		
 		//submit전 아이디,전화번호,이메일 중복 검사
 		$("#join").on("click", function() {
 
@@ -580,6 +623,10 @@ label {
 				return false;
 			}
 
+			if (!nickname_valid) {
+				alert("닉네임 중복 여부를 확인하세요.");
+				return false;
+			}
 		})
 
 		//생년월 select option 
