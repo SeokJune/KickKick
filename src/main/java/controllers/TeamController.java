@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -9,10 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import commons.Settings;
 import dao.CreateTeamDAO;
-import dto.TeamDTO;
 import dto.HometownDTO;
+import dto.TeamDTO;
 
 
 @WebServlet("*.team")
@@ -42,16 +46,30 @@ public class TeamController extends HttpServlet {
 			}
 			// 팀생성 시 입력값 넘어오는 곳
 			else if(cmd.equals("/create.team")) {
-				String team_name = request.getParameter("team_name");
-				String captain_name = request.getParameter("captain_name");
-				String captain_phone = request.getParameter("captain_phone");
-				int hometown_code = Integer.parseInt(request.getParameter("hometown_code"));
-				String outline = request.getParameter("outline");
-				String content = request.getParameter("content");
-				TeamDTO dto = new TeamDTO(0, 1001, team_name, team_name, 10000001, hometown_code, outline, content, null, null, null);
-				CreateTeamDAO dao = CreateTeamDAO.getInstance();
-				dao.insertTeam(dto);
-				response.sendRedirect("/list.team?cpage=1");
+				String realPath = request.getServletContext().getRealPath("image/team_img");
+				System.out.println(realPath);
+				File realPathFile = new File(realPath);
+				if(!realPathFile.exists()) {
+					realPathFile.mkdir();
+				}
+				
+				MultipartRequest multi = new MultipartRequest(request, realPath, 1024*1024*50, "utf8", new DefaultFileRenamePolicy());
+				  
+				String oriName = multi.getOriginalFileName("file");
+				String sysName = multi.getFilesystemName("file");
+				System.out.println(oriName + " : " + sysName);
+    
+				
+//				String team_name = multi.getParameter("team_name");
+//				String captain_name = multi.getParameter("captain_name");
+//				String captain_phone = multi.getParameter("captain_phone");
+//				int hometown_code = Integer.parseInt(multi.getParameter("hometown_code"));
+//				String outline = multi.getParameter("outline");
+//				String content = multi.getParameter("content");
+//				TeamDTO dto = new TeamDTO(0, 1001, team_name, team_name, 10000001, hometown_code, outline, content, null, null, null);
+//				CreateTeamDAO dao = CreateTeamDAO.getInstance();
+//				dao.insertTeam(dto);
+//				response.sendRedirect("/list.team?cpage=1"); 
 				
 			}
 			// 생성된 팀 목록 뽑아오기

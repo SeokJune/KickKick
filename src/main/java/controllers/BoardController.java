@@ -29,7 +29,8 @@ public class BoardController extends HttpServlet {
 		try {
 			if(cmd.equals("/list.board")) {
 				//게시판 종류 설정
-				String board_kind_name = bdao.select_board_name(Integer.parseInt(request.getParameter("b_c")));
+				int b_c = Integer.parseInt(request.getParameter("b_c"));
+				String board_kind_name = bdao.select_board_name(b_c);
 				request.setAttribute("board_kind_name", board_kind_name);
 				String board_table_name="";
 				if(board_kind_name.equals("공지사항")) {
@@ -45,7 +46,7 @@ public class BoardController extends HttpServlet {
 					board_table_name="inquire";
 				}
 				//게시판 코드 그대로 유지 -> 세션에 넣는게 좋을까? 세션이 만료되면?
-				request.setAttribute("b_c", request.getParameter("b_c"));
+				request.setAttribute("b_c", b_c);
 
 				//현재 페이지 설정
 				int current_page = Integer.parseInt(request.getParameter("cpage"));
@@ -64,7 +65,7 @@ public class BoardController extends HttpServlet {
 				}
 
 				//페이지네이션 설정
-				String page_navi = bdao.get_page_navi(board_table_name, current_page,search_option,search_word);
+				String page_navi = bdao.get_page_navi(b_c,board_table_name, current_page,search_option,search_word);
 				int start = current_page*Settings.BOARD_RECORD_COUNT_PER_PAGE-(Settings.BOARD_RECORD_COUNT_PER_PAGE-1);
 				int end = current_page*Settings.BOARD_RECORD_COUNT_PER_PAGE;
 				List<BoardDTO> list = bdao.select_board_list(board_table_name,start,end,search_option,search_word);
@@ -117,9 +118,8 @@ public class BoardController extends HttpServlet {
 				else if(board_kind_name.equals("홍보게시판")) {
 					board_table_name="promotion";
 				}
-				else if(board_kind_name.equals("문의하기")) {
-					board_table_name="inquire";
-				}
+				//문의하기 게시판은 컬럼이 다르니까 따로 처리하자
+
 				//게시판 코드 그대로 유지
 				request.setAttribute("b_c", request.getParameter("b_c"));
 				
