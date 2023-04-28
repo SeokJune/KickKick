@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 
 import dto.AbilityDTO;
 import dto.CompetitionKindDTO;
-
+import dto.CompetitionRegistrationDTO;
 import dto.HometownDTO;
 import dto.StatusDTO;
 import dto.TeamDTO;
@@ -226,6 +226,50 @@ public class CompetitionDAO {
 
 		}
 	}
+	
+//	public List<CompetitionRegistrationDTO> selectAll() throws Exception{
+//		String sql = "select * from competition_registration" ;
+//		try(Connection con = this.getConnection();
+//				PreparedStatement pstat = con.prepareStatement(sql);
+//				ResultSet rs = pstat.executeQuery();)
+//		{
+//			List<CompetitionRegistrationDTO> list = new ArrayList<>();
+//
+//			while(rs.next()) {
+//				private int code;
+//				private int team_code;
+//				private int competition_kind_code;
+//				private int latirude;
+//				private int longitude;
+//				private Timestamp competition_date;
+//				private int ability_code;
+//				private String content;
+//				private int status_code;
+//				private Timestamp reg_date;
+//				private Timestamp mod_date;
+//				private Timestamp del_date;
+//				
+//				
+//				int code = 	rs.getInt("code");
+//				int team_code = rs.getInt("team_code");
+//				int competition_kind_code = rs.getInt("competition_kind_code");
+//				int latirude = 	rs.getInt("latirude");
+//				int longitude = 	rs.getInt("longitude");
+//				Timestamp comeptition_date = rs.getTimestamp("comeptition_date");
+//				
+//				Timestamp reg_date = rs.getTimestamp("reg_date");
+//				Timestamp mod_date = rs.getTimestamp("mod_date");
+//				Timestamp del_date = rs.getTimestamp("del_date");
+//
+//				CompetitionRegistrationDTO dto = new CompetitionRegistrationDTO(code,name,reg_date,mod_date,del_date);
+//				status.add(dto);
+//
+//			}
+//
+//			return status;
+//
+//		}
+//	}
 
 
 

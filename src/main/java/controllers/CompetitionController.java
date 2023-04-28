@@ -61,10 +61,13 @@ public class CompetitionController extends HttpServlet {
 
 			}else if(cmd.equals("/list.competition")) {
 
+//				CompetitionDAO.getinstance().selectAll();
+				
 				response.sendRedirect("/matching/competition_list.jsp");
 
 			}else if(cmd.equals("/send.competition")) {
 
+				
 				String ability = request.getParameter("ability");
 				String kindnum = request.getParameter("kind");
 				String personnum = request.getParameter("person");
@@ -74,6 +77,7 @@ public class CompetitionController extends HttpServlet {
 
 				String person = personnum.substring(2,4);  //뒷자리 2자 뽑아옴
 
+				System.out.println(kind);
 
 
 			}else if(cmd.equals("/choose.competition")) {
@@ -93,27 +97,6 @@ public class CompetitionController extends HttpServlet {
 				String glist = g.toJson(list); //자동직렬화 -> 그래야 데이터가 넘어감?  -> 데이터가 넘어가는 방식이 자동직렬화
 				response.getWriter().append(glist); // append를 사용하려면  get writer를 사용할수밖에 없다 이떄 append는 string형밖에 못다룸
 			}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
