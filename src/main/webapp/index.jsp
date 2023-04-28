@@ -95,8 +95,8 @@
 	.navbar{
 		--bs-navbar-padding-y: 0;
 	}
-    a,
-    a:hover {
+    .nav_a,
+    .nav_a:hover {
       padding-top: 10px;
       padding-bottom: 10px;
       padding-left: 30px;
@@ -130,11 +130,11 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="offcanvas-header">
-        <a href="/index.jsp" class="">
+        <a href="/index.jsp" class="nav_a">
           <h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="text-decoration: none;">⚽KickKick</h5>
         </a>
       </div>
-      <a class="navbar-brand" href="/member/login_view.jsp">Login</a>
+      <a class="navbar-brand nav_a" href="/member/login_view.jsp">Login</a>
       
       <div class="offcanvas offcanvas-start flex-shrink-0 p-3" style="width: 280px;" tabindex="-1" id="offcanvasNavbar"
         aria-labelledby="offcanvasNavbarLabel">
@@ -145,7 +145,7 @@
         <!-- 프로필 -->
         <!-- div 태그 아래에만 border 1 주기 색은 그레이-->
         <div class="profile border-bottom text-center pb-2">
-                  <a href="/index.jsp" class="">
+                  <a href="/index.jsp" class="nav_a">
             <h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="text-decoration: none;">⚽KickKick</h5>
           </a>
           <img src="/image/login_img/ball_icon.png" alt="Image" class="center-block mb-4" style="width: 80px; height: 80px;">
@@ -188,11 +188,11 @@
               </button>
               <div class="collapse show" id="home-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                  <li><a href="#" class="link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 정보
+                  <li><a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 정보
                       보기</a></li>
-                  <li><a href="#" class="link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀
+                  <li><a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀
                       보기</a></li>
-                  <li><a href="#" class="link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 활동
+                  <li><a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 활동
                       관리</a></li>
                 </ul>
               </div>
@@ -206,11 +206,11 @@
               <div class="collapse" id="dashboard-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                   <li><a href="/list.board?b_c=1002&cpage=1"
-                      class="link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">공지사항</a></li>
+                      class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">공지사항</a></li>
                   <li><a href="/list.board?b_c=1003&cpage=1"
-                      class="link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">자유게시판</a></li>
+                      class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">자유게시판</a></li>
                   <li><a href="/list.board?b_c=1004&cpage=1"
-                      class="link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">홍보게시판</a></li>
+                      class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">홍보게시판</a></li>
                 </ul>
               </div>
             </li> <!--전체게시판 카테고리-->
@@ -222,13 +222,13 @@
               </button>
               <div class="collapse" id="orders-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                  <li><a href="#" class="link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 랭킹
+                  <li><a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 랭킹
                       보기</a></li>
                   <li><a href="hometown.team"
-                      class="link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 생성하기</a></li>
+                      class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 생성하기</a></li>
                   <li><a href="/list.team?cpage=1"
-                      class="link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 목록보기</a></li>
-                  <li><a href="#" class="link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀
+                      class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 목록보기</a></li>
+                  <li><a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀
                       게시판으로</a></li>
                 </ul>
               </div>
@@ -241,12 +241,12 @@
               </button>
               <div class="collapse" id="account-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                  <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">시설 검색</a></li>
-                  <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">용병 등록하기</a></li>
-                  <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">용병 목록보기</a></li>
+                  <li><a href="#" class="nav_a link-dark d-inline-flex text-decoration-none rounded">시설 검색</a></li>
+                  <li><a href="#" class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병 등록하기</a></li>
+                  <li><a href="#" class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병 목록보기</a></li>
                   <li><a href="/registration.competition"
-                      class="link-dark d-inline-flex text-decoration-none rounded">매칭 등록하기</a></li>
-                  <li><a href="/list.competition" class="link-dark d-inline-flex text-decoration-none rounded">매칭
+                      class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭 등록하기</a></li>
+                  <li><a href="/list.competition" class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭
                       목복보기</a></li>
                 </ul>
               </div>
@@ -262,7 +262,7 @@
               <div class="collapse" id="account-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                   <li><a href="/list.board?b_c=1005&cpage=1"
-                      class="link-dark d-inline-flex text-decoration-none rounded">문의하기</a></li>
+                      class="nav_a link-dark d-inline-flex text-decoration-none rounded">문의하기</a></li>
                 </ul>
               </div>
             </li> <!-- 운영진 카테고리 -->

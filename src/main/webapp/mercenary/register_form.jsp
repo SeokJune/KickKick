@@ -95,6 +95,21 @@ div {
 						</div>
 					</div>
 				</div>
+				<div class="box">
+					<div class="col-12 col-md-6 col-xl-6">
+						<div class="input-group mb-3">
+							<span class="input-group-text">종목</span> <input type="text"
+								class="form-control" id="competition_kind_name" name="competition_kind_name"
+								readonly>
+						</div>
+					</div>
+					<div class="col-12 col-md-6 col-xl-6">
+						<div class="input-group mb-3">
+							<span class="input-group-text">총 인원수</span> <input type="text"
+								class="form-control" id="competition_kind_headcount" name="competition_kind_headcount" readonly>
+						</div>
+					</div>
+				</div>
 			</div>
 			<br>
 			<div class="row body2">
@@ -140,9 +155,11 @@ div {
 			document.getElementById("member_phone").value = mp;
 		}
 
-		function set_match_info(ckc,ckh,la,lo,cd) {
-			document.getElementById("match_place").value = mp;
+		function set_match_info(ckc,ckn,ckh,la,lo,cd) {
+			document.getElementById("competition_kind_name").value = ckn;
 			document.getElementById("competition_kind_headcount").value = ckh;
+			document.getElementById("latirude").value = la;
+			document.getElementById("longitude").value = lo;
 			document.getElementById("competition_date").value = cd;
 
 		}
@@ -180,7 +197,7 @@ div {
 			var callback = function(result, status) {
 			    if (status === kakao.maps.services.Status.OK) {
 			        console.log(result[0].address.address_name);
-			        document.getElementById("centerAddr").innerHTML=result[0].address.address_name;
+			        document.getElementById("match_place").innerHTML=result[0].address.address_name;
 			    }
 			};
 
