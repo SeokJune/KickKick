@@ -55,12 +55,12 @@
 
 				<div class="col-12 col-md-2" id="logo">
 					<div class="row">
-						<div class="col-xl-4 d-none d-xl-block"></div>
-						<div class="col-12 col-md-12 col-xl-8">
+						<div class="col-md-4 col-xl-4 d-none d-md-block"></div>
+						<div class="col-12 col-md-8 col-xl-8">
 							<a href="javascript:void(0);" onclick="$('#imgUpload').trigger('click')" class="imgUploadBtn">
 								<img src="/image/team_img/로고를 선택해주세요.png" id="imgChange" alt="사진 업로드">
 							</a> 
-							<input type="file" id="imgUpload" name="bf_file" id="bf_file" accept="image/jpeg,image/png" style="display: none" onchange="previewFile()">							
+							<input type="file" id="imgUpload" name="bf_file" id="bf_file" accept="image/jpeg,image/png,image/jpg" style="display: none" onchange="previewFile()">							
 						</div>
 					</div>
 					<div class="row">
@@ -80,8 +80,8 @@
 							<input type="text" placeholder="팀명" class="w-100"
 								name="team_name" id="team_name">
 						</div>
-						<div class="col-3 col-md-3">
-							<button type="button" id="dup" style="font-size: 12px;">중복</button>
+						<div class="col-3 col-md-3" align="center">
+							<button type="button" id="dup" style="font-size: 15px;">중복</button>
 						</div>
 					</div>
 
