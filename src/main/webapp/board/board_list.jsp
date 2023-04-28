@@ -46,7 +46,7 @@ div {
 		</div>
 		<div class="row body">
 			<div class="list-group" style="border-radius: 0;">
-				<a href="/board/board_view.jsp"
+				<a href="#"
 					class="list-group-item list-group-item-action list-group-item-primary">
 					<div class="col-12">
 						<div class="col">
@@ -58,7 +58,7 @@ div {
 					</div>
 				</a> 
 				<c:forEach var="post" items="${list}">
-					<a href="/board_view.jsp" class="list-group-item list-group-item-action">
+					<a href="/select_post.board?b_c=${b_c}&c=${post.code}&cpage=${cpage}" class="list-group-item list-group-item-action">
 						<div class="col-12">
 							<div class="col">
 								<b>[${post.board_headline_name}]</b> ${post.title} <span class="badge rounded-pill text-bg-light">💬${post.reply_count}</span>
@@ -69,16 +69,6 @@ div {
 						</div>
 					</a>					
 				</c:forEach>
-				<a href="#" class="list-group-item list-group-item-action">
-					<div class="col-12">
-						<div class="col">
-							<b>[말머리]</b> 제목 <span class="badge rounded-pill text-bg-light">💬댓글수</span>
-						</div>
-						<div class="col" style="font-size: small;">
-							닉네임 · 작성일 · 조회수 · <span class="badge rounded-pill text-bg-success">👍🏻추천수</span>
-						</div>
-					</div>
-				</a>
 			</div>
 			<div class="col-12">
 				<nav aria-label="Page navigation example">
