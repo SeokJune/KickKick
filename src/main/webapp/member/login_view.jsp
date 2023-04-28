@@ -22,6 +22,8 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	crossorigin="anonymous"></script>
+<!--Popper Development version -->
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
 
 <title>login_form</title>
 
@@ -119,6 +121,10 @@ body {
 	font-size: small;
 }
 
+#to_main_ball_img:hover {
+	cursor: pointer;
+}
+
 .wrong .bi-check {
 	display: none;
 }
@@ -130,17 +136,59 @@ body {
 .valid-feedback, .invalid-feedback {
 	margin-left: 0.5rem;
 }
+
+#tooltip {
+	display: inline-block;
+	background: #76b852;
+	color: whitesmoke;
+	font-weight: bold;
+	padding: 5px 10px;
+	font-size: 13px;
+	border-radius: 4px;
+}
+
+#arrow, #arrow::before {
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	background: inherit;
+}
+
+#arrow {
+	visibility: hidden;
+}
+
+#arrow::before {
+	visibility: visible;
+	content: '';
+	transform: rotate(45deg);
+}
+
+#tooltip[data-popper-placement^='top']>#arrow {
+	bottom: -4px;
+}
+
+#tooltip[data-popper-placement^='bottom']>#arrow {
+	top: -4px;
+}
+
+#tooltip[data-popper-placement^='left']>#arrow {
+	right: -4px;
+}
+
+#tooltip[data-popper-placement^='right']>#arrow {
+	left: -4px;
+}
 </style>
 </head>
 
 <body>
-
 	<div class="container login_container align-self-center">
 
 		<div class="wrapper mx-auto position-relative">
 			<div class="position-absolute top-10 end-0 me-5">
-				<button type="button" class="btn-close" id="btn_close"
-					aria-label="Close"></button>
+				<button type="button" class="btn-close visually-hidden"
+					id="btn_close" aria-label="Close"></button>
 			</div>
 			<div class="wrapper_login" id="login_view_fadeOut">
 				<div class="row d-flex justify-content-center mx-auto p-0 loginForm">
@@ -154,12 +202,12 @@ body {
 							<div class="form-group mb-4">
 								<label class="control-label font-weight-bold font-size-7pt">아이디</label>
 								<span>*</span> <input type="text" class="form-control" id="id"
-									name="id" value="" />
+									name="id" required />
 							</div>
 							<div class="form-group">
 								<label class="control-label font-weight-bold font-size-7pt">비밀번호</label>
 								<span>*</span> <input type="password" class="form-control m-0"
-									id="pw" name="pw" value="" />
+									id="pw" name="pw" required />
 							</div>
 							<div class="form-group mb-4">
 								<a class="btn_forget_pwd" id="btn_forget_pwd">아이디 / 비밀번호를
@@ -194,6 +242,10 @@ body {
 						class="d-none d-md-block col-md-6 login-form-2 align-self-center"
 						id="hidden">
 						<div class="form-group text-center mb-4">
+							<div id="tooltip" role="tooltip" class="mb-3">
+								메인으로!
+								<div id="arrow" data-popper-arrow></div>
+							</div>
 							<img src="/image/login_img/ball_icon.png" class="mx-auto d-block"
 								id="to_main_ball_img" alt="" style="height: 50%; width: 50%;">
 						</div>
@@ -296,7 +348,8 @@ body {
 						<div class="input-group d-flex">
 							<input type="password" class="form-control rounded mt-1"
 								placeholder="새 비밀번호" aria-label="password"
-								aria-describedby="password_check" id="password_check" class="password_check" />
+								aria-describedby="password_check" id="password_check"
+								class="password_check" />
 							<div class="valid-feedback">Good</div>
 							<div class="invalid-feedback">Wrong</div>
 						</div>
@@ -339,211 +392,235 @@ body {
 	</div>
 	<!-- wrapper tag -->
 	</div>
-
+	<script src="https://unpkg.com/@popperjs/core@2"></script>
 	<!-- JQuery-->
 	<script>
-		$("#btn_close").on("click", function() {
-			location.reload();
-		});
-		$("#to_main_ball_img").on("click", function() {
-			location.href = "/index.jsp";
-		});
-		$("#btn_forget_pwd").on("click", function() {
-			$("#login_view_fadeOut").hide();
-			$("#find_member_fadeIn").fadeIn();
-		});
+				$("#btn_close").on("click", function () {
+					location.reload();
+				});
+				$("#to_main_ball_img").on("click", function () {
+					location.href = "/index.jsp";
+				});
+				$("#btn_forget_pwd").on("click", function () {
+					$("#login_view_fadeOut").hide();
+					$("#find_member_fadeIn").fadeIn();
+					$("#btn_close").removeClass("visually-hidden");
+				});
 
-		$("#btn-check-outlined").on("click", function() {
-			$("#login_view_fadeOut").hide();
-			$("#find_member_fadeIn").hide();
-			$("#to_phone_authentication_fadeIn").fadeIn();
-		});
-		$("#phone_auth").on("click", function() {
-			$.ajax({
-				url : "/phone_auth.member",
-				type : "post",
-				data : {
-					phone : $("#phone").val()
-				}
-			});
-		});
-		$("#phone_auth_ok").on("click", function() {
-			$("#login_view_fadeOut").hide();
-			$("#find_member_fadeIn").hide();
-			$("#to_phone_authentication_fadeIn").hide();
-			$("#to_change_pw_fadeIn").fadeIn();
-			$.ajax({
-				url : "/phone_auth_ok.member",
-				type : "post",
-				data : {
-					code : $("#phone_auth_code").val()
-				}
-			}).done({
+				$("#btn-check-outlined").on("click", function () {
+					$("#login_view_fadeOut").hide();
+					$("#find_member_fadeIn").hide();
+					$("#to_phone_authentication_fadeIn").fadeIn();
+					$("#btn_close").removeClass("visually-hidden");
+				});
+				$("#phone_auth").on("click", function () {
+					$.ajax({
+						url: "/phone_auth.member",
+						type: "post",
+						data: {
+							phone: $("#phone").val()
+						}
+					});
+				});
+				$("#phone_auth_ok").on("click", function () {
+					$("#login_view_fadeOut").hide();
+					$("#find_member_fadeIn").hide();
+					$("#to_phone_authentication_fadeIn").hide();
+					$("#to_change_pw_fadeIn").fadeIn();
+					$.ajax({
+						url: "/phone_auth_ok.member",
+						type: "post",
+						data: {
+							code: $("#phone_auth_code").val()
+						}
+					}).done({
 
-			// 아이디는 우리가 출력되게해주고 비밀번호만 다시 재설정하기로 짜야함!
-			// null 값 return 
-			//writer.println("<script>alert('인증이 완료되었습니다. 비밀번호 재성절 페이지로 이동합니다'); location.href=`/member/change_pw.jsp`;<\/script>"); 
-			//writer.close();
-			});
-	
-		});
-        //pw 유효성 검사
-        addEventListener("DOMContentLoaded", (event) => {
-            const password = document.getElementById("password");
-            const passwordAlert = document.getElementById("password-alert");
-            const requirements = document.querySelectorAll(".requirements");
-            let lengBoolean, bigLetterBoolean, numBoolean, specialCharBoolean;
-            let leng = document.querySelector(".leng");
-            let bigLetter = document.querySelector(".big-letter");
-            let num = document.querySelector(".num");
-            let specialChar = document.querySelector(".special-char");
-            const specialChars = "!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?`~";
-            const numbers = "0123456789";
+						// 아이디는 우리가 출력되게해주고 비밀번호만 다시 재설정하기로 짜야함!
+						// null 값 return 
+						//writer.println("<script>alert('인증이 완료되었습니다. 비밀번호 재성절 페이지로 이동합니다'); location.href=`/member/change_pw.jsp`;<\/script>"); 
+						//writer.close();
+					});
 
-            requirements.forEach((element) => element.classList.add("wrong"));
+				});
+				//pw 유효성 검사
+				addEventListener("DOMContentLoaded", (event) => {
+					const password = document.getElementById("password");
+					const passwordAlert = document.getElementById("password-alert");
+					const requirements = document.querySelectorAll(".requirements");
+					let lengBoolean, bigLetterBoolean, numBoolean, specialCharBoolean;
+					let leng = document.querySelector(".leng");
+					let bigLetter = document.querySelector(".big-letter");
+					let num = document.querySelector(".num");
+					let specialChar = document.querySelector(".special-char");
+					const specialChars = "!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?`~";
+					const numbers = "0123456789";
 
-            password.addEventListener("focus", () => {
-                passwordAlert.classList.remove("d-none");
-                if (!password.classList.contains("is-valid")) {
-                    password.classList.add("is-invalid");
-                }
-            });
+					requirements.forEach((element) => element.classList.add("wrong"));
 
-            password.addEventListener("input", () => {
-                let value = password.value;
-                if (value.length < 8) {
-                    lengBoolean = false;
-                } else if (value.length > 7) {
-                    lengBoolean = true;
-                }
+					password.addEventListener("focus", () => {
+						passwordAlert.classList.remove("d-none");
+						if (!password.classList.contains("is-valid")) {
+							password.classList.add("is-invalid");
+						}
+					});
 
-                if (value.toLowerCase() == value) {
-                    bigLetterBoolean = false;
-                } else {
-                    bigLetterBoolean = true;
-                }
+					password.addEventListener("input", () => {
+						let value = password.value;
+						if (value.length < 8) {
+							lengBoolean = false;
+						} else if (value.length > 7) {
+							lengBoolean = true;
+						}
 
-                numBoolean = false;
-                for (let i = 0; i < value.length; i++) {
-                    for (let j = 0; j < numbers.length; j++) {
-                        if (value[i] == numbers[j]) {
-                            numBoolean = true;
-                        }
-                    }
-                }
+						if (value.toLowerCase() == value) {
+							bigLetterBoolean = false;
+						} else {
+							bigLetterBoolean = true;
+						}
 
-                specialCharBoolean = false;
-                for (let i = 0; i < value.length; i++) {
-                    for (let j = 0; j < specialChars.length; j++) {
-                        if (value[i] == specialChars[j]) {
-                            specialCharBoolean = true;
-                        }
-                    }
-                }
+						numBoolean = false;
+						for (let i = 0; i < value.length; i++) {
+							for (let j = 0; j < numbers.length; j++) {
+								if (value[i] == numbers[j]) {
+									numBoolean = true;
+								}
+							}
+						}
 
-                if (lengBoolean == true && bigLetterBoolean == true && numBoolean == true && specialCharBoolean == true) {
-                    password.classList.remove("is-invalid");
-                    password.classList.add("is-valid");
+						specialCharBoolean = false;
+						for (let i = 0; i < value.length; i++) {
+							for (let j = 0; j < specialChars.length; j++) {
+								if (value[i] == specialChars[j]) {
+									specialCharBoolean = true;
+								}
+							}
+						}
 
-                    requirements.forEach((element) => {
-                        element.classList.remove("wrong");
-                        element.classList.add("good");
-                    });
-                    passwordAlert.classList.remove("alert-warning");
-                    passwordAlert.classList.add("alert-success");
-                } else {
-                    password.classList.remove("is-valid");
-                    password.classList.add("is-invalid");
+						if (lengBoolean == true && bigLetterBoolean == true && numBoolean == true && specialCharBoolean == true) {
+							password.classList.remove("is-invalid");
+							password.classList.add("is-valid");
 
-                    passwordAlert.classList.add("alert-warning");
-                    passwordAlert.classList.remove("alert-success");
+							requirements.forEach((element) => {
+								element.classList.remove("wrong");
+								element.classList.add("good");
+							});
+							passwordAlert.classList.remove("alert-warning");
+							passwordAlert.classList.add("alert-success");
+						} else {
+							password.classList.remove("is-valid");
+							password.classList.add("is-invalid");
 
-                    if (lengBoolean == false) {
-                        leng.classList.add("wrong");
-                        leng.classList.remove("good");
-                    } else {
-                        leng.classList.add("good");
-                        leng.classList.remove("wrong");
-                    }
+							passwordAlert.classList.add("alert-warning");
+							passwordAlert.classList.remove("alert-success");
 
-                    if (bigLetterBoolean == false) {
-                        bigLetter.classList.add("wrong");
-                        bigLetter.classList.remove("good");
-                    } else {
-                        bigLetter.classList.add("good");
-                        bigLetter.classList.remove("wrong");
-                    }
+							if (lengBoolean == false) {
+								leng.classList.add("wrong");
+								leng.classList.remove("good");
+							} else {
+								leng.classList.add("good");
+								leng.classList.remove("wrong");
+							}
 
-                    if (numBoolean == false) {
-                        num.classList.add("wrong");
-                        num.classList.remove("good");
-                    } else {
-                        num.classList.add("good");
-                        num.classList.remove("wrong");
-                    }
+							if (bigLetterBoolean == false) {
+								bigLetter.classList.add("wrong");
+								bigLetter.classList.remove("good");
+							} else {
+								bigLetter.classList.add("good");
+								bigLetter.classList.remove("wrong");
+							}
 
-                    if (specialCharBoolean == false) {
-                        specialChar.classList.add("wrong");
-                        specialChar.classList.remove("good");
-                    } else {
-                        specialChar.classList.add("good");
-                        specialChar.classList.remove("wrong");
-                    }
-                }
-            });
+							if (numBoolean == false) {
+								num.classList.add("wrong");
+								num.classList.remove("good");
+							} else {
+								num.classList.add("good");
+								num.classList.remove("wrong");
+							}
 
-            password.addEventListener("blur", () => {
-                passwordAlert.classList.add("d-none");
-            });
-        });
+							if (specialCharBoolean == false) {
+								specialChar.classList.add("wrong");
+								specialChar.classList.remove("good");
+							} else {
+								specialChar.classList.add("good");
+								specialChar.classList.remove("wrong");
+							}
+						}
+					});
 
-        //pw 일치 검사
-        addEventListener("DOMContentLoaded", (event) => {
-            const password = document.getElementById("password_check");
-            const passwordAlert = document.getElementById("password-alert");
-            const requirements = document.querySelectorAll(".requirements");
-            
-            password.addEventListener("focus", () => {
-                if (!password.classList.contains("is-valid")) {
-                    password.classList.add("is-invalid");
-                }
-            });
-            requirements.forEach((element) => element.classList.add("wrong"));
-            
-            password.addEventListener("input", () => {
-                let value = password.value;
-                if(value == document.getElementById("password").value){
-                    password.classList.remove("is-invalid");
-                    password.classList.add("is-valid");
+					password.addEventListener("blur", () => {
+						passwordAlert.classList.add("d-none");
+					});
+				});
 
-                    requirements.forEach((element) => {
-                        element.classList.remove("wrong");
-                        element.classList.add("good");
-                    });
-                    passwordAlert.classList.remove("alert-warning");
-                    passwordAlert.classList.add("alert-success");
-                }
-            });
-        });
-        //pw 빈칸 체크
-		$("#btn_change_pw").on("click", function() {
-			let password = $("#password").val();
-			let password_check = $("#password_check").val();
-			if(password == password_check){
-				alert("로그인페이지로 이동합니다");
-				$.ajax({
-					url:"/change_pw.member",
-					type:"post",
-					data:{
-						password:$("#password").val()
+				//pw 일치 검사
+				addEventListener("DOMContentLoaded", (event) => {
+					const password = document.getElementById("password_check");
+					const passwordAlert = document.getElementById("password-alert");
+					const requirements = document.querySelectorAll(".requirements");
+
+					password.addEventListener("focus", () => {
+						if (!password.classList.contains("is-valid")) {
+							password.classList.add("is-invalid");
+						}
+					});
+					requirements.forEach((element) => element.classList.add("wrong"));
+
+					password.addEventListener("input", () => {
+						let value = password.value;
+						if (value == document.getElementById("password").value) {
+							password.classList.remove("is-invalid");
+							password.classList.add("is-valid");
+
+							requirements.forEach((element) => {
+								element.classList.remove("wrong");
+								element.classList.add("good");
+							});
+							passwordAlert.classList.remove("alert-warning");
+							passwordAlert.classList.add("alert-success");
+						}
+					});
+				});
+				//pw 빈칸 체크
+				$("#btn_change_pw").on("click", function () {
+					let password = $("#password").val();
+					let password_check = $("#password_check").val();
+					if (password == password_check) {
+						alert("로그인페이지로 이동합니다");
+						$.ajax({
+							url: "/change_pw.member",
+							type: "post",
+							data: {
+								password: $("#password").val()
+							}
+						});
+						location.reload();
+					} else {
+						alert("다시 입력해주세요");
 					}
 				});
-				location.reload();
-			}else{
-				alert("다시 입력해주세요");
-			}
-		});
-	</script>
+
+				import { createPopper } from '@popperjs/core';
+				import './styles.css';
+				
+				const image = document.querySelector("#to_main_ball_img");
+				const tooltip = document.querySelector("#tooltip");
+
+				// Pass the button, the tooltip, and some options, and Popper will do the
+				// magic positioning for you:
+				createPopper(image, tooltip, {
+ 					placement: 'top',
+  					modifiers: [
+    					{
+      						name: 'offset',
+      						options: {
+        						offset: [0, 8],
+      						},
+    					},
+  					],
+				});
+
+
+			</script>
 
 </body>
 
