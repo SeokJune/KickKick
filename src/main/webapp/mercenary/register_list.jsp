@@ -16,6 +16,7 @@
 	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0474140514f12dfa658e3a29b717ea54&libraries=services"></script>
 <style>
 div {
 	border: 1px solid black;
@@ -39,9 +40,9 @@ div {
 			<c:forEach var="i" items="${register_list}">
 				<tr>
 					<th scope="row"></th>
-					<td>${i.match_date}</td>
-					<td>${i.match_place}</td>
-					<td>${i.team_name}</td>
+					<td>${i.competition_date}</td>
+					<td><script>set_place(${latirude},${i.longitude})</script></td>
+					<td>${i.name}</td>
 					<c:choose>
 						<c:when test="${i.ability_code ==1}">
 							<td>하</td>
@@ -55,7 +56,8 @@ div {
 					</c:choose>
 					<td>${i.headcount}명</td>
 					<td><a
-						href="/to_apply_form.mercenary?team_code=${i.team_code}&competition_result_code=${i.competition_result_code}"><input
+						href="/to_apply_form.mercenary?team_code=${i.team_code}&competition_result_code=${i.competition_result_code}
+						&name=${i.name}&ability_code=${i.ability_code}"><input
 							type="button" value="신청" class="btn btn-primary btn-sm"></a></td>
 				</tr>
 			</c:forEach>
@@ -65,5 +67,20 @@ div {
 			</tr>
 		</tbody>
 	</table>
+	<script>
+		function set_place(latirude,longitude) {
+			var geocoder = new kakao.maps.services.Geocoder();
+
+			var coord = new kakao.maps.LatLng(latirude, longitude);
+			var callback = function(result, status) {
+				if (status === kakao.maps.services.Status.OK) {
+					console.log(result[0].address.address_name);
+					document.getElementById("centerAddr").innerHTML = result[0].address.address_name;
+				}
+			};
+
+			geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+		}
+	</script>
 </body>
 </html>

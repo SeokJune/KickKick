@@ -17,7 +17,7 @@ import dto.TeamDTO;
 
 
 public class MercenaryDAO {
-	
+
 	private static MercenaryDAO instance = null;
 	public synchronized static MercenaryDAO getInstance() {
 		if(instance == null) {
@@ -33,7 +33,7 @@ public class MercenaryDAO {
 		DataSource ds = (DataSource)iCtx.lookup("java:/comp/env/jdbc/ora");
 		return ds.getConnection();
 	}
-	
+
 	public List<TeamDTO> select_team_by_id(String login_id) throws Exception{
 		String sql = "select code,logo_path,logo,name,member_name,member_phone from team_view "
 				+ "where code in (select team_code from team_member "
@@ -47,25 +47,25 @@ public class MercenaryDAO {
 			pstat.setString(1, login_id);
 			try(ResultSet rs = pstat.executeQuery();){
 				while(rs.next()) {
-					int team_code = rs.getInt("code");
+					int code = rs.getInt("code");
 					String logo_path = rs.getString("logo_path");
 					String logo = rs.getString("logo");
 					String name = rs.getString("name");
 					String member_name = rs.getString("member_name");
 					String member_phone = rs.getString("member_phone");
-					
-					list.add(new TeamDTO(team_code,logo_path,logo,name,member_name,member_phone));
+
+					list.add(new TeamDTO(code,logo_path,logo,name,member_name,member_phone));
 				}
 				return list;
 			}
 		}
 	}
-	
+
 	public List<CompetitionDTO> select_match_by_name(int code) throws Exception {
-		String sql = "select competition_kind_code,latirude,longitude,competition_date,competition_kind_headcount "
+		String sql = "select competition_kind_code,competition_kind_name,latirude,longitude,competition_date,competition_kind_headcount "
 				+ "from competition_view "
 				+ "where (registration_team_code=? or application_team_code=?) and status_code=1202;";
-		
+
 		List<CompetitionDTO> list = new ArrayList<>();
 		try(
 				Connection con = this.getConnection();
@@ -75,18 +75,19 @@ public class MercenaryDAO {
 			try(ResultSet rs = pstat.executeQuery();){
 				while(rs.next()) {
 					int competition_kind_code = rs.getInt("competition_kind_code");
+					String competition_kind_name = rs.getString("competition_kind_name");
 					int competition_kind_headcount = rs.getInt("competition_kind_headcount");
 					int latirude = rs.getInt("latirude");
 					int longitude = rs.getInt("longitude");
 					Timestamp competition_date = rs.getTimestamp("competition_date");
-					
-					list.add(new CompetitionDTO(competition_kind_code,competition_kind_headcount,latirude,longitude,competition_date));
+
+					list.add(new CompetitionDTO(competition_kind_code,competition_kind_name,competition_kind_headcount,latirude,longitude,competition_date));
 				}
 				return list;
 			}
 		}
 	}
-	
+
 	public int insert_register_mercenary(RegisterInfoDTO r) throws Exception {
 		String sql = "insert into mercenary_registration values(MERCENARY_REGISTRATION_CODE.nextval,?,?,?,?,?,sysdate,null,null)";
 		try(
@@ -97,13 +98,13 @@ public class MercenaryDAO {
 			pstat.setInt(3,r.getAbility_code());
 			pstat.setInt(4,r.getHeadcount());
 			pstat.setInt(5,r.getStatus_code());
-			
+
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
 		}
 	}
-	
+
 	public List<RegisterInfoDTO> select_register_list() throws Exception {
 		String sql = "select mre.code, mre.competition_result_code, mre.team_code, mre.ability_code, mre.headcount,"
 				+ "mre.status_code, t.name, cr.latirude, cr.longitude, cr.competition_date "
@@ -126,56 +127,98 @@ public class MercenaryDAO {
 				int latirude = rs.getInt("latirude");
 				int longitude = rs.getInt("longitude");;
 				Timestamp competition_date = rs.getTimestamp("competition_date");
-				
+
 				list.add(new RegisterInfoDTO(code,competition_result_code,team_code,ability_code,headcount,status_code,name,latirude,longitude,competition_date));
 			}
 			return list;
 		}
 	}
-	
-	
-	/*
-	public TeamInfoDTO select_team_info(int sc_team_code, int sc_competition_result_code) throws Exception {
-		String sql = "select t.team_code,t.team_logo,t.team_name,m.name,m.phone, mr.competition_result_code "
-				+ "from member m join team_member tm on m.member_code=tm.member_code "
-				+ "join team t on t.team_code=tm.team_code "
-				+ "join team_member_grade tmg on tm.member_grade_code = tmg.grade_code "
-				+ "join mercenary_registration mr on t.team_code = mr.team_code "
-				+ "where tm.member_grade_code=2 and t.team_code=? and mr.competition_result_code=?";
+
+	public TeamDTO select_team_info(int team_code, int competition_result_code) throws Exception {
+		String sql = "select tv.code,tv.logo_path,tv.logo,tv.name,tv.member_name,tv.member_phone "
+				+ "from team_view tv "
+				+ "join mercenary_registration mr on tv.code = mr.team_code "
+				+ "where tv.code=? and mr.competition_result_code=?";
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);){
-			pstat.setInt(1, sc_team_code);
-			pstat.setInt(2, sc_competition_result_code);
+			pstat.setInt(1, team_code);
+			pstat.setInt(2, competition_result_code);
 			try(ResultSet rs = pstat.executeQuery();){
 				rs.next();
-				int team_code = rs.getInt("team_code");
-				String team_logo = rs.getString("team_logo");
-				String team_name = rs.getString("team_name");
+				int code = rs.getInt("code");
+				String logo_path = rs.getString("logo_path");
+				String logo = rs.getString("logo");
 				String name = rs.getString("name");
-				String phone = rs.getString("phone");
-				
-				return new TeamInfoDTO(team_code,team_logo,team_name,name,phone);
+				String member_name = rs.getString("member_name");
+				String member_phone = rs.getString("member_phone");
+
+				return new TeamDTO(code,logo_path,logo,name,member_name,member_phone);
 			}
 		}
 	}
-	*/
-//	public ? select_match_info(int sc_team_code, int sc_competition_result_code) throws Exception {
+
+	public CompetitionDTO select_match_info(int team_code, int competition_result_code) throws Exception {
+		String sql = "select competition_kind_code,competition_kind_name,competition_kind_headcount,latirude,longitude,competition_date "
+				+ "from competition_view cv "
+				+ "join mercenary_registration mr on cv.competition_registration_code = mr.competition_result_code "
+				+ "where mr.team_code=? and mr.competition_result_code=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1, team_code);
+			pstat.setInt(2, competition_result_code);
+			try(ResultSet rs = pstat.executeQuery();){
+				rs.next();
+				int competition_kind_code = rs.getInt("competition_kind_code");
+				String competition_kind_name = rs.getString("competition_kind_name");
+				int competition_kind_headcount = rs.getInt("competition_kind_headcount");
+				int latirude = rs.getInt("latirude");
+				int longitude = rs.getInt("longitude");
+				Timestamp competition_date = rs.getTimestamp("competition_date");
+
+				return new CompetitionDTO(competition_kind_code,competition_kind_name,competition_kind_headcount,latirude,longitude,competition_date);
+			}
+		}
+	}
+	
+	public String select_opponent_team(int team_code, int competition_result_code, String team_name) throws Exception {
+		String sql = "select registration_team_name, application_team_name "
+				+ "from competition_view "
+				+ "where (registration_team_code=? or application_team_code=?) and competition_registration_code=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1, team_code);
+			pstat.setInt(2, competition_result_code);
+			try(ResultSet rs = pstat.executeQuery();){
+				rs.next();
+				String registration_team_name = rs.getString("registration_team_name");
+				String application_team_name = rs.getString("application_team_name");
+				
+				if(team_name.equals(registration_team_name)) {
+					return application_team_name;
+				}else {
+					return registration_team_name;
+				}
+			}
+		}
+	}
+	
+//	public int insert_apply_mercenary(String login_id, String contents) throws Exception {
 //		String sql = "";
 //		try(
 //				Connection con = this.getConnection();
 //				PreparedStatement pstat = con.prepareStatement(sql);){
-//			pstat.setInt(1, sc_team_code);
-//			pstat.setInt(2, sc_competition_result_code);
-//			try(ResultSet rs = pstat.executeQuery();){
-//				
-//				
-//			}
+//			
+//			int result = pstat.executeUpdate();
+//			con.commit();
+//			return 1;
 //		}
 //	}
-	
-	
-	
-	
-	
+
+
+
+
+
 }
