@@ -322,8 +322,8 @@ label {
 							<div class="col md-9">
 								<input type="text" class="form-control" id="member_nickname"
 									name="member_nickname" pattern="^[가-힣a-zA-Z0-9]{2,10}$"
-									title="2자 이상 10자 이내로 한글, 영대소문자, 숫자 중 1개 이상 포함 " minlength="2"
-									maxlength="10" style="width: 255px;">
+									title="2자 이상 10자 이내로 한글, 영대소문자, 숫자 중 1개 이상 포함 " 
+									minlength="2" maxlength="10" style="width: 255px;">
 							</div>
 						</div>
 					</div>
@@ -387,7 +387,7 @@ label {
 
 				<div class="row">
 					<div class="col">
-						<a href="/member/login_view.jsp"><button type="button">로그인하러가기</button></a>
+						<button type="button" onClick="location.hrefs('/member/login_view.jsp')">로그인하러가기</button>
 								<!-- 임시 href -->
 					</div>
 				</div>
@@ -426,6 +426,7 @@ label {
 			showError(this);
 		});
 
+		
 		//아이디 중복 체크
 		let id_valid = false;
 		let regex_id = /^[a-z](?=.*[0-9])[0-9a-z]{4,19}$/;
@@ -527,34 +528,38 @@ label {
 				})
 
 		//이메일 중복 체크
-		let email_valid = false;
+		let email_valid = true;
 
 		$("#member_email").on("keyup", function() {
 			let email = $("#member_email").val();
 			console.log(email);
-			$.ajax({
-				url : "/email_over_check.member",
-				type : "post",
-				data : {
-					member_email : $("#member_email").val()
-				},
-				error : function() {
-					alert("서버 요청 실패");
-				}
-			}).done(function(resp) {
-				resp = JSON.parse(resp);
-				console.log(resp);
-				if (resp) { //true면 중복인거
-					$("#email_checking").html("이미 사용중인 이메일 주소입니다.").css({
-						"color" : "red"
-					}).css("font-size", "x-small");
-					email_valid = false;
-				} else {
-					$("#email_checking").html("");
-					email_valid = true;
-				}
-
-			})
+			if(email==""){
+				email_valid = true;
+			}else{
+				$.ajax({
+					url : "/email_over_check.member",
+					type : "post",
+					data : {
+						member_email : $("#member_email").val()
+					},
+					error : function() {
+						alert("서버 요청 실패");
+					}
+				}).done(function(resp) {
+					resp = JSON.parse(resp);
+					console.log(resp);
+					if (resp) { //true면 중복인거
+						$("#email_checking").html("이미 사용중인 이메일 주소입니다.").css({
+							"color" : "red"
+						}).css("font-size", "x-small");
+						email_valid = false;
+					} else {
+						$("#email_checking").html("");
+						email_valid = true;
+					}
+				})
+				
+			}
 		})
 
 		//submit전 아이디,전화번호,이메일 중복 검사
