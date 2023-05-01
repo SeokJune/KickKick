@@ -133,6 +133,10 @@ public class BoardController extends HttpServlet {
 				List<ReplyDTO> reply_list = rdao.select_reply_list(board_table_name, code);
 				request.setAttribute("reply_list", reply_list);
 				
+				//이전글, 다음글 코드 담긴 배열 get
+				int[] code_list = bdao.select_prev_next_post(board_table_name, code);
+				request.setAttribute("code_list", code_list);
+				
 				request.getRequestDispatcher("/board/board_view.jsp").forward(request, response);
 			}
 		}catch(Exception e) {
