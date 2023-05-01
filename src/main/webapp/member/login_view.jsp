@@ -383,6 +383,12 @@ body {
 		$("#to_main_ball_img").on("click", function () {
 			location.href = "/";
 		});
+		// 아이디/비밀번호 확인
+		$($(".site_login")[0]).on("click", function () {
+			$.ajax({
+				url: "/login_chk.member"
+			});
+		});
 		// 아이디/비밀번호 찾기 버튼
 		$("#btn_forget_pwd").on("click", function () {
 			$("#login_view_fadeOut").hide();
