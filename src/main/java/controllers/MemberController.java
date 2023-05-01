@@ -31,7 +31,12 @@ public class MemberController extends HttpServlet {
 		MemberDAO dao = MemberDAO.getInstance();
 		Gson g = new Gson();
 		try {
-			if (cmd.equals("/login_.member")) {
+			if (cmd.equals("/login_chk.member")) {
+				String id = request.getParameter("id");
+				String pw = EncryptionUtils.sha512(request.getParameter("pw"));
+				
+				response.getWriter().append(g.toJson(dao.is_member(id, pw)));
+			} else if (cmd.equals("/login_.member")) {
 				String id = request.getParameter("id");
 				String pw = request.getParameter("pw"); //테스트용 입니다 완료시 삭제
 //				String pw = EncryptionUtils.sha512(request.getParameter("pw"));
