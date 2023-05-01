@@ -14,8 +14,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <!-- Bootstrap - icon -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-<!-- JQuery-->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- Font 기본 : {font-family: 'NanumSquareNeoBold'}-->
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 
@@ -228,7 +226,7 @@
 							<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">운영진에게</button>
 							<div class="collapse" id="account-collapse">
 								<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-									<li><a href="/list.board?b_c=1005&cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">문의하기</a></li>
+									<li><a href="/" class="nav_a link-dark d-inline-flex text-decoration-none rounded">문의하기</a></li>
 								</ul>
 							</div>
 						</li>

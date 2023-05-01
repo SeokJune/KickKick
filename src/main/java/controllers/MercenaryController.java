@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.MercenaryDAO;
+import dto.ApplyInfoDTO;
 import dto.CompetitionDTO;
 import dto.RegisterInfoDTO;
 import dto.TeamDTO;
@@ -40,19 +41,20 @@ public class MercenaryController extends HttpServlet {
 			}else if(cmd.equals("/to_apply_form.mercenary")) {
 				// 나 용병할래요 신청하는 폼으로
 				MercenaryDAO dao = MercenaryDAO.getInstance();
-				//int team_code = Integer.parseInt(request.getParameter("team_code"));
-				//int competition_result_code = Integer.parseInt(request.getParameter("competition_result_code")); // 매치 코드
-				//String name = request.getParameter("name");
+				int code = Integer.parseInt(request.getParameter("code"));
+				int team_code = Integer.parseInt(request.getParameter("team_code"));
+				int competition_result_code = Integer.parseInt(request.getParameter("competition_result_code")); // 매치 코드
+				String name = request.getParameter("name");
 				String ability_code = request.getParameter("ability_code");
 				
-				// TeamDTO team_info = MercenaryDAO.getInstance().select_team_info(team_code, competition_result_code);
-//				TeamDTO team_info = dao.select_team_info(1, 1);
-//				CompetitionDTO match_info = dao.select_match_info(1, 1);
-//				String opponent_team = dao.select_opponent_team(1, 1, "test");
-//				
-//				request.setAttribute("team_info", team_info);
-//				request.setAttribute("match_info", match_info);
-//				request.setAttribute("opponent_team", opponent_team);
+				TeamDTO team_info = dao.select_team_info(team_code, competition_result_code);
+				CompetitionDTO match_info = dao.select_match_info(team_code, competition_result_code);
+				String opponent_team = dao.select_opponent_team(team_code, competition_result_code, name);
+				
+				request.setAttribute("team_info", team_info);
+				request.setAttribute("match_info", match_info);
+				request.setAttribute("code", code);
+				request.setAttribute("opponent_team", opponent_team);
 				request.setAttribute("ability_code", ability_code);
 				request.getRequestDispatcher("/mercenary/apply_form.jsp").forward(request, response);
 				
@@ -77,7 +79,7 @@ public class MercenaryController extends HttpServlet {
 					code=0;
 				}else {
 					code = Integer.parseInt(request.getParameter("code"));
-					
+
 					List<CompetitionDTO> match_select_list = MercenaryDAO.getInstance().select_match_by_name(code);
 					request.setAttribute("match_select_list", match_select_list);
 				}
@@ -85,11 +87,12 @@ public class MercenaryController extends HttpServlet {
 				
 			}else if(cmd.equals("/to_mercenary_register.mercenary")) {
 				// DB에 용병 등록하기
-				int code = Integer.parseInt(request.getParameter("code"));
+				int team_code = Integer.parseInt(request.getParameter("code"));
+				int competition_registration_code = Integer.parseInt(request.getParameter("competition_registration_code"));
 				int ability_code = Integer.parseInt(request.getParameter("ability")); 
 				int people_count = Integer.parseInt(request.getParameter("people_count"));
-				
-				RegisterInfoDTO r = new RegisterInfoDTO(0,0,code,ability_code,people_count,0,null,0,0,null);
+
+				RegisterInfoDTO r = new RegisterInfoDTO(0,competition_registration_code,team_code,ability_code,people_count,1202,null,0,0,null);
 				
 				int result = MercenaryDAO.getInstance().insert_register_mercenary(r);
 				if(result>0) {
@@ -101,12 +104,24 @@ public class MercenaryController extends HttpServlet {
 			}else if(cmd.equals("/to_mercenary_apply.mercenary")) {
 				// DB에 용병 신청하기
 				// 세션에서 로그인 아이디 받아올 수 있도록 수정
-				String login_id = "agji";
-				
+				String login_id = "test";
+				int mercenary_registration_code = Integer.parseInt(request.getParameter("mercenary_registration_code"));
 				int ability_code = Integer.parseInt(request.getParameter("ability_code"));
 				String contents = request.getParameter("contents");
+				System.out.println(mercenary_registration_code);
+				int result = MercenaryDAO.getInstance().insert_apply_mercenary(new ApplyInfoDTO(login_id,mercenary_registration_code,0,ability_code,contents));
+				if(result>0) {
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter pwriter = response.getWriter();
+					pwriter.println("<script>alert('용병 신청 완료!'); location.href='/index.jsp';</script>"); 
+					pwriter.close();
+				}
+			}else if(cmd.equals("/apply_list_ajax.mercenary")) {
+				int code = Integer.parseInt(request.getParameter("code"));
+				int competition_registration_code = Integer.parseInt(request.getParameter("competition_registration_code"));
 				
-				// MercenaryDAO.getInstance().insert_apply_mercenary(login_id,contents);
+				System.out.println(code);
+				System.out.println(competition_registration_code);
 				
 			}
 			

@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>RegisterForm</title>
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -16,10 +17,10 @@
 	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0474140514f12dfa658e3a29b717ea54&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a47338e87e3d914e6d508799cd4f4e17&libraries=services"></script>
 <style>
 div {
-	border: 1px solid black;
+	font-family: 'NanumSquareNeoBold';
 }
 
 .header2>div {
@@ -52,6 +53,7 @@ div {
 				</div>
 				<div class="col-xs-12 col-md-8 col-xl-8">
 					<input type="hidden" id="code" name="code" readonly>
+					<input type="hidden" id="competition_registration_code" name="competition_registration_code" readonly>
 					<div class="input-group mb-3">
 						<span class="input-group-text">팀명</span> <input type="text"
 							class="form-control" id="name" name="name" readonly>
@@ -117,14 +119,14 @@ div {
 					<div class="col-12 col-md-6 col-xl-6 text-center">
 						실력 <select class="form-select" name="ability">
 							<option value="" selected>-- 선택해주세요 --</option>
-							<option value="1">상</option>
-							<option value="2">중</option>
-							<option value="3">하</option>
+							<option value="1001">상</option>
+							<option value="1002">중</option>
+							<option value="1003">하</option>
 						</select>
 					</div>
 					<div class="col-12 col-md-6 col-xl-6 text-center">
-						<input type="hidden" id="competition_kind_headcount" readonly> 인원수
-						<select class="form-select" id="people_count" name="people_count">
+					<!-- <input type="hidden" id="competition_kind_headcount" readonly>--> 
+						인원수 <select class="form-select" id="people_count" name="people_count">
 							<option value="0" selected>-- 선택해주세요 --</option>
 						</select>
 					</div>
@@ -155,7 +157,8 @@ div {
 			document.getElementById("member_phone").value = mp;
 		}
 
-		function set_match_info(ckc,ckn,ckh,la,lo,cd) {
+		function set_match_info(crc,ckc,ckn,ckh,la,lo,cd) {
+			document.getElementById("competition_registration_code").value = crc;
 			document.getElementById("competition_kind_name").value = ckn;
 			document.getElementById("competition_kind_headcount").value = ckh;
 			document.getElementById("latirude").value = la;
@@ -178,14 +181,16 @@ div {
 			objSel.options.add(objOption);
 			objSel.options.add(objOption2);
 			if ($("#competition_kind_headcount").val() >= 9) {
-				var objOption = document.createElement("option");
-				objOption.text = "3";
-				objOption.value = "3";
+				var objOption3 = document.createElement("option");
+				objOption3.text = "3";
+				objOption3.value = "3";
 
-				var objOption2 = document.createElement("option");
-				objOption2.text = "4";
-				objOption2.value = "4";
-
+				var objOption4 = document.createElement("option");
+				objOption4.text = "4";
+				objOption4.value = "4";
+	
+				objSel.options.add(objOption3);
+				objSel.options.add(objOption4);
 			}
 		});
 		survey('#latirude', function() {
