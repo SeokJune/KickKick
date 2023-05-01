@@ -31,28 +31,33 @@ public class MemberController extends HttpServlet {
 		MemberDAO dao = MemberDAO.getInstance();
 		Gson g = new Gson();
 		try {
-			if (cmd.equals("/login.member")) {
+			if (cmd.equals("/login_.member")) {
 				String id = request.getParameter("id");
 				String pw = request.getParameter("pw"); //테스트용 입니다 완료시 삭제
 //				String pw = EncryptionUtils.sha512(request.getParameter("pw"));
 
-				boolean result = dao.is_member(id, pw);
-				
-				//닉네임 가져오기
-				String nickName = dao.get_nickName_by_id(id);
-		        HttpSession session = request.getSession();
-		        session.setAttribute("nickName", nickName);
-				
-		        //login & logout 용 아이디 세션에 저장 & 비번 변경
-		        session.setAttribute("id", id);
 
-				//member_code 세션에 저장
-				String member_code = dao.get_memberCode_by_id(id);
-				session.setAttribute("member_code", member_code);
-				
+				boolean result = dao.is_member(id, pw);
 				System.out.println("로그인 성공여부 : " + result);
+				if(result == true) {
+					//닉네임 가져오기
+					String nickName = dao.get_nickName_by_id(id);
+			        HttpSession session = request.getSession();
+			        session.setAttribute("nickName", nickName);
+					
+			        //login & logout 용 아이디 세션에 저장 & 비번 변경
+			        session.setAttribute("id", id);
+
+					//member_code 세션에 저장
+					String member_code = dao.get_memberCode_by_id(id);
+					session.setAttribute("member_code", member_code);
+					
+					response.sendRedirect("/index.jsp");
+				}else {
+					response.sendRedirect("/member/login_view.jsp");
+				}
 				
-				response.sendRedirect("/index.jsp");// main 화면, 별명은 세션에 저장 예정
+				
 			} else if (cmd.equals("/phone_auth.member")) {
 				System.out.println(request.getParameter("phone"));
 
