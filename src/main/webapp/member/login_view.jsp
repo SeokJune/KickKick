@@ -396,6 +396,8 @@ body {
 				}
 			}).done(function (chk_result) {
 				if (!chk_result) {
+					$("#id").val("");
+					$("#pw").val("");
 					alert("올바른 사용자 아이디와 비밀번호를 입력해주세요.");
 				} else {
 					$("#form_login").submit();
@@ -418,50 +420,59 @@ body {
 		// 인증 코드
 		var rand_code;
 		// 인증 시간
-		$("#phone_auth").on("click", function () {
-			$("#phone_auth").attr("disabled", true);
-			// 타이머 구현_daldal
-			function $ComTimer() {
-				//prototype extend
-			}
-			// 인증 번호 발송
+		$("#phone_auth").on("click", function (evt) {
+			// 전화번호 check 및 인증번호 발송
 			$.ajax({
 				url: "/phone_auth.member",
 				type: "post",
+				dataType: "json",
 				data: { phone: $("#phone").val() }
 			}).done(function (str) {
 				rand_code = str;
+				
+				// 전화번호 check
+				if (rand_code == "") {
+					$("#phone").val("");
+					alert("전화번호를 확인해주세요.");
+					return false;
+				}
+				
+				// 인증번호 받기 버튼 비활성화
+				$("#phone_auth").attr("disabled", true);
+				// 타이머 구현_daldal
+				function $ComTimer() {
+					//prototype extend
+				}
+				$ComTimer.prototype = {
+					comSecond: "",
+					fnCallback: function () { },
+					timer: "",
+					domId: "",
+					fnTimer: function () {
+						// 남은 시간 계산
+						var m = Math.floor(this.comSecond / 60) + "분 " + (this.comSecond % 60) + "초";
+						// 1초씩 감소
+						this.comSecond--;					
+						this.domId.innerText = m;
+						// 시간이 종료 되었으면..
+						if (this.comSecond < 0) {
+							// 타이머 해제
+							clearInterval(this.timer);
+							alert("인증시간이 초과하였습니다. 다시 인증해주시기 바랍니다.");
+							$("#phone_auth").attr("disabled", false);
+							$("#timeLimit").text("");
+						}
+					},
+					fnStop: function () { clearInterval(this.timer); }
+				}
+				var AuthTimer = new $ComTimer()
+				// 제한 시간
+				AuthTimer.comSecond = 30; 
+				// 제한 시간 만료 메세지
+				AuthTimer.fnCallback = function () { alert("다시인증을 시도해주세요.") };
+				AuthTimer.timer = setInterval(function () { AuthTimer.fnTimer() }, 1000);
+				AuthTimer.domId = document.getElementById("timeLimit");
 			});
-			
-			$ComTimer.prototype = {
-				comSecond: "",
-				fnCallback: function () { },
-				timer: "",
-				domId: "",
-				fnTimer: function () {
-					// 남은 시간 계산
-					var m = Math.floor(this.comSecond / 60) + "분 " + (this.comSecond % 60) + "초";
-					// 1초씩 감소
-					this.comSecond--;					
-					this.domId.innerText = m;
-					// 시간이 종료 되었으면..
-					if (this.comSecond < 0) {
-						// 타이머 해제
-						clearInterval(this.timer);
-						alert("인증시간이 초과하였습니다. 다시 인증해주시기 바랍니다.");
-						$("#phone_auth").attr("disabled", false);
-						$("$timeLimit").text("");
-					}
-				},
-				fnStop: function () { clearInterval(this.timer); }
-			}
-			var AuthTimer = new $ComTimer()
-			// 제한 시간
-			AuthTimer.comSecond = 180; 
-			// 제한 시간 만료 메세지
-			AuthTimer.fnCallback = function () { alert("다시인증을 시도해주세요.") };
-			AuthTimer.timer = setInterval(function () { AuthTimer.fnTimer() }, 1000);
-			AuthTimer.domId = document.getElementById("timeLimit");
 		});
 		// 인증 버튼
 		$("#phone_auth_ok").on("click", function () {
@@ -480,12 +491,13 @@ body {
 					url: "/phone_auth_ok.member",
 					type: "post",
 					data: { rand: rand_code, code: $("#phone_auth_code").val() }
+				}).done(function name() {
+					$("#login_view_fadeOut").hide();
+					$("#find_member_fadeIn").hide();
+					$("#to_phone_authentication_fadeIn").hide();
+					$("#to_change_pw_fadeIn").fadeIn();
 				});
 			}
-			$("#login_view_fadeOut").hide();
-			$("#find_member_fadeIn").hide();
-			$("#to_phone_authentication_fadeIn").hide();
-			$("#to_change_pw_fadeIn").fadeIn();
 		});
 		//pw 유효성 검사
 		addEventListener("DOMContentLoaded", (event) => {
@@ -634,8 +646,9 @@ body {
 					url: "/change_pw.member",
 					type: "post",
 					data: { password: $("#password").val() }
+				}).done(function () {
+					location.reload();
 				});
-				location.reload();
 			} else {
 				password.val("");
 				password_check.val("");
