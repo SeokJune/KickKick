@@ -75,6 +75,15 @@ public class TeamDTO {
 		this.del_date = del_date;
 	}
 
+	
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
 	public int getCode() {
 		return code;
 	}

@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>RegisterList</title>
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -16,10 +17,10 @@
 	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0474140514f12dfa658e3a29b717ea54&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a47338e87e3d914e6d508799cd4f4e17&libraries=services"></script>
 <style>
-div {
-	border: 1px solid black;
+* {
+	font-family: 'NanumSquareNeoBold';
 }
 </style>
 </head>
@@ -40,14 +41,21 @@ div {
 			<c:forEach var="i" items="${register_list}">
 				<tr>
 					<th scope="row"></th>
-					<td>${i.competition_date}</td>
-					<td><script>set_place(${latirude},${i.longitude})</script></td>
+					<td>
+						<input type="hidden" name="code" value="${i.code}" readonly>
+						<input type="hidden" name="team_code" value="${i.team_code}" readonly>
+						<input type="hidden" name="competition_result_code" value="${i.competition_result_code}" readonly>
+						<input type="hidden" name="ability_code" value="${i.ability_code}" readonly>
+						<input type="hidden" name="name" value ="${i.name}" readonly>
+						${i.competition_date}
+					</td>
+					<td>장소!</td>
 					<td>${i.name}</td>
 					<c:choose>
-						<c:when test="${i.ability_code ==1}">
+						<c:when test="${i.ability_code == 1003}">
 							<td>하</td>
 						</c:when>
-						<c:when test="${i.ability_code ==2}">
+						<c:when test="${i.ability_code == 1002}">
 							<td>중</td>
 						</c:when>
 						<c:otherwise>
@@ -55,10 +63,11 @@ div {
 						</c:otherwise>
 					</c:choose>
 					<td>${i.headcount}명</td>
-					<td><a
-						href="/to_apply_form.mercenary?team_code=${i.team_code}&competition_result_code=${i.competition_result_code}
-						&name=${i.name}&ability_code=${i.ability_code}"><input
-							type="button" value="신청" class="btn btn-primary btn-sm"></a></td>
+					<td>
+						<a href="/to_apply_form.mercenary?code=${i.code}&team_code=${i.team_code}&competition_result_code=${i.competition_result_code}&
+						name=${i.name}&ability_code=${i.ability_code}">
+						<input type="button" value="신청" class="btn btn-primary btn-sm"></a>
+					</td>
 				</tr>
 			</c:forEach>
 			<tr>
