@@ -128,7 +128,13 @@
 					<h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="text-decoration: none;">⚽KickKick</h5>
 				</a>
 			</div>
-			<a class="navbar-brand nav_a" href="/member/login_view.jsp">Login</a>
+			
+			<c:if test="${sessionScope.id == null}">
+				<a class="navbar-brand nav_a" href="/member/login_view.jsp">Login</a>
+			</c:if>
+			<c:if test="${sessionScope.id != null}">
+				<a class="navbar-brand nav_a" href="/logout.member">Logout</a>
+			</c:if>
 			<div class="offcanvas offcanvas-start flex-shrink-0 p-3" style="width: 280px;" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 				<div class="offcanvas-header d-flex justify-content-end">
 					<button type="button" class="btn-close text-end" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -141,7 +147,7 @@
 					</a>
 					<img src="/image/login_img/ball_icon.png" alt="MyIcon" class="center-block mb-4" style="width: 80px; height: 80px;">
 					<!-- 유저이름 -->
-					<h3 class="nick_name text-center mb-3">TEST</h3>
+					<h3 class="nick_name text-center mb-3">${sessionScope.nickName}</h3>
 					<!-- 알림 -->
 					<div class="counter d-flex justify-content-center">
 						<div class="col d-flex justify-content-center">

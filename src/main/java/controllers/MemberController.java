@@ -38,10 +38,13 @@ public class MemberController extends HttpServlet {
 
 				boolean result = dao.is_member(id, pw);
 				
-				//test용입니다 나중에 지울게요! - 가은
+				//닉네임 가져오기
+				String nickName = dao.get_nickName_by_id(id);
 		        HttpSession session = request.getSession();
-		        session.setAttribute("id", "testID");
+		        session.setAttribute("nickName", nickName);
 				
+		        //login & logout 용 아이디 세션에 저장 & 비번 변경
+		        session.setAttribute("id", id);
 				response.sendRedirect("/index.jsp");// main 화면, 별명은 세션에 저장 예정
 
 				System.out.println("로그인 성공여부 : " + result);
@@ -191,6 +194,11 @@ public class MemberController extends HttpServlet {
 				String resp = g.toJson(result);
 				response.getWriter().append(resp);	
 				 
+			}else if(cmd.equals("/logout.member")){
+				HttpSession session = request.getSession();
+				session.invalidate();
+				response.sendRedirect("index.jsp");
+
 			}
 
 		} catch (Exception e) {

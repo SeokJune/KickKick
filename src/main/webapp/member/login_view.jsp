@@ -293,7 +293,7 @@ body {
 					<div class="row g-3 m-0 p-0  justify-content-center">
 						<div class="col-12 col-md-4">
 							<div class="timer">
-								<div id="timeLimit">03:00</div>
+								<div id="timeLimit"></div>
 							</div>
 						</div>
 					</div>
@@ -315,7 +315,7 @@ body {
 			<div class="wrapper_change_pw justify-content-center" id="to_change_pw_fadeIn" style="display: none">
 				<div class="KickKick_logo text-center d-md-block mb-5">
 					<h1 class="mb-4">⚽KickKick</h1>
-					<h3>'${session.id}'님!</h3>
+					<h3>'${sessionScope.id}'님!</h3>
 					<h3>이제 진짜 진짜 얼마 안남았어요!</h3>
 				</div>
 				<div class="row d-flex justify-content-center">
