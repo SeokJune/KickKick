@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -9,13 +10,24 @@
 <!-- JQuery-->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- Bootstrap - CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
 <!-- Bootstrap - JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
 <!-- Bootstrap - icon -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+	rel="stylesheet">
 <!-- Font 기본 : {font-family: 'NanumSquareNeoBold'}-->
-<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+<link
+	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
+	rel="stylesheet">
 <!--Popper Development version -->
 <script src="https://unpkg.com/@popperjs/core@2"></script>
 <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
@@ -183,7 +195,8 @@ body {
 	<div class="container login_container align-self-center">
 		<div class="wrapper mx-auto position-relative">
 			<div class="position-absolute top-10 end-0 me-5">
-				<button type="button" class="btn-close visually-hidden" id="btn_close" aria-label="Close"></button>
+				<button type="button" class="btn-close visually-hidden"
+					id="btn_close" aria-label="Close"></button>
 			</div>
 			<div class="wrapper_login" id="login_view_fadeOut">
 				<div class="row d-flex justify-content-center mx-auto p-0 loginForm">
@@ -196,22 +209,25 @@ body {
 						<form action="/login.member" method="post">
 							<div class="form-group mb-4">
 								<label class="control-label font-weight-bold font-size-7pt">아이디</label>
-								<span>*</span>
-								<input type="text" class="form-control" id="id" name="id" required />
+								<span>*</span> <input type="text" class="form-control" id="id"
+									name="id" required />
 							</div>
 							<div class="form-group">
 								<label class="control-label font-weight-bold font-size-7pt">비밀번호</label>
-								<span>*</span>
-								<input type="password" class="form-control m-0" id="pw" name="pw" required />
+								<span>*</span> <input type="password" class="form-control m-0"
+									id="pw" name="pw" required />
 							</div>
 							<div class="form-group mb-4">
-								<a class="btn_forget_pwd" id="btn_forget_pwd">아이디 / 비밀번호를 잊으셨나요?</a>
+								<a class="btn_forget_pwd" id="btn_forget_pwd">아이디 / 비밀번호를
+									잊으셨나요?</a>
 							</div>
 							<div class="form-group mb-4">
-								<input type="submit" class="site_login form-control" value="Login" />
+								<input type="submit" class="site_login form-control"
+									value="Login" />
 							</div>
 						</form>
-						<div class="form-group d-block d-md-none d-flex justify-content-center mb-4 login_button">
+						<div
+							class="form-group d-block d-md-none d-flex justify-content-center mb-4 login_button">
 							<button class="btnSubmit kakao_login">
 								<img src="/image/login_img/kakao_login_logo.png" alt="카카오 로그인">
 							</button>
@@ -223,23 +239,28 @@ body {
 							</button>
 						</div>
 						<div class="form-group join_form">
-							아직 계정이 없으신가요?
-							<a href="/member/join_form.jsp" class="btnJoin">가입하기</a>
+							아직 계정이 없으신가요? <a href="/member/join_form.jsp" class="btnJoin">가입하기</a>
 						</div>
 					</div>
 					<!-- 로그인창 2 미디어 사이즈 xs이하면 사라짐 -->
-					<div class="d-none d-md-block col-md-6 login-form-2 align-self-center" id="hidden">
+					<div
+						class="d-none d-md-block col-md-6 login-form-2 align-self-center"
+						id="hidden">
 						<div class="form-group text-center mb-4">
 							<div id="tooltip" role="tooltip" class="mb-3">
 								메인으로!
 								<div id="arrow" data-popper-arrow></div>
 							</div>
-							<img src="/image/login_img/ball_icon.png" class="mx-auto d-block" id="to_main_ball_img" alt="메인으로" style="height: 50%; width: 50%;">
+							<img src="/image/login_img/ball_icon.png" class="mx-auto d-block"
+								id="to_main_ball_img" alt="메인으로"
+								style="height: 50%; width: 50%;">
 						</div>
 						<div class="form-group text-center">
 							<h5>SNS으로 로그인하기</h5>
 						</div>
-						<div class="form-group text-center d-flex justify-content-center login_button" style="background-color: #25252500;">
+						<div
+							class="form-group text-center d-flex justify-content-center login_button"
+							style="background-color: #25252500;">
 							<button class="btnSubmit kakao_login">
 								<img src="/image/login_img/kakao_login_logo.png" alt="카카오 로그인">
 							</button>
@@ -254,7 +275,8 @@ body {
 				</div>
 			</div>
 			<!-- id/pw 찾기 누르면 fadeIn -->
-			<div class="wrapper_find_member" id="find_member_fadeIn" style="display: none">
+			<div class="wrapper_find_member" id="find_member_fadeIn"
+				style="display: none">
 				<div class="row d-flex justify-content-center mx-auto p-0 loginForm">
 					<div class="col-md-6 login-form-1 align-center">
 						<div class="KickKick_logo text-center d-md-block mb-4">
@@ -262,8 +284,10 @@ body {
 							<p class="body_font mb-5">휴대폰 인증을 통해 아이디를 확인합니다.</p>
 						</div>
 						<div class="text-center">
-							<input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-							<label class="btn btn-outline-success" for="btn-check-outlined">휴대폰 인증하기</label>
+							<input type="checkbox" class="btn-check" id="btn-check-outlined"
+								autocomplete="off"> <label
+								class="btn btn-outline-success" for="btn-check-outlined">휴대폰
+								인증하기</label>
 						</div>
 						<hr>
 						<div>
@@ -275,7 +299,8 @@ body {
 				</div>
 			</div>
 			<!-- 휴대폰 인증하기 누르면 fadeIn -->
-			<div class="wrapper_phone_Certification justify-content-center" id="to_phone_authentication_fadeIn" style="display: none">
+			<div class="wrapper_phone_Certification justify-content-center"
+				id="to_phone_authentication_fadeIn" style="display: none">
 				<div class="KickKick_logo text-center d-md-block mb-5">
 					<h1 class="mb-4">⚽KickKick</h1>
 					<h3>이제 얼마 안남았습니다!</h3>
@@ -285,10 +310,12 @@ body {
 						<label for="phone" class="col-form-label">전화번호</label>
 					</div>
 					<div class="col-12 col-md-4">
-						<input type="text" id="phone" name="phone" class="form-control" placeholder="(-) 제외">
+						<input type="text" id="phone" name="phone" class="form-control"
+							placeholder="(-) 제외">
 					</div>
 					<div class="col-12 col-md-4">
-						<button type="submit" class="btn btn-outline-success" id="phone_auth">인증번호 받기</button>
+						<button type="submit" class="btn btn-outline-success"
+							id="phone_auth">인증번호 받기</button>
 					</div>
 					<div class="row g-3 m-0 p-0  justify-content-center">
 						<div class="col-12 col-md-4">
@@ -307,12 +334,14 @@ body {
 						<input type="text" id="phone_auth_code" class="form-control">
 					</div>
 					<div class="col-12 col-md-4">
-						<button type="button" class="btn btn-outline-success" id="phone_auth_ok">인증</button>
+						<button type="button" class="btn btn-outline-success"
+							id="phone_auth_ok">인증</button>
 					</div>
 				</div>
 			</div>
 			<!-- 인증하기 누르면 fadeIn -->
-			<div class="wrapper_change_pw justify-content-center" id="to_change_pw_fadeIn" style="display: none">
+			<div class="wrapper_change_pw justify-content-center"
+				id="to_change_pw_fadeIn" style="display: none">
 				<div class="KickKick_logo text-center d-md-block mb-5">
 					<h1 class="mb-4">⚽KickKick</h1>
 					<h3>'${sessionScope.id}'님!</h3>
@@ -321,7 +350,9 @@ body {
 				<div class="row d-flex justify-content-center">
 					<div class="col-12 col-md-6 mb-1">
 						<div class="input-group d-flex">
-							<input type="password" class="form-control rounded mt-1" placeholder="새 비밀번호" aria-label="password" aria-describedby="password" id="password" class="password" />
+							<input type="password" class="form-control rounded mt-1"
+								placeholder="새 비밀번호" aria-label="password"
+								aria-describedby="password" id="password" class="password" />
 							<div class="valid-feedback">Good</div>
 							<div class="invalid-feedback">Wrong</div>
 						</div>
@@ -330,7 +361,10 @@ body {
 				<div class="row d-flex justify-content-center">
 					<div class="col-12 col-md-6 mt-1">
 						<div class="input-group d-flex">
-							<input type="password" class="form-control rounded mt-1" placeholder="새 비밀번호" aria-label="password" aria-describedby="password_check" id="password_check" class="password_check" />
+							<input type="password" class="form-control rounded mt-1"
+								placeholder="새 비밀번호" aria-label="password"
+								aria-describedby="password_check" id="password_check"
+								class="password_check" />
 							<div class="valid-feedback">Good</div>
 							<div class="invalid-feedback">Wrong</div>
 						</div>
@@ -338,28 +372,24 @@ body {
 					<br>
 					<div class="row d-flex justify-content-center">
 						<div class="col-6 mt-4 mt-xxl-0 w-auto h-auto">
-							<div class="alert px-4 py-3 mb-0 d-none" role="alert" data-mdb-color="warning" id="password-alert">
+							<div class="alert px-4 py-3 mb-0 d-none" role="alert"
+								data-mdb-color="warning" id="password-alert">
 								<ul class="list-unstyled mb-0">
-									<li class="requirements leng">
-										<i class="bi bi-check text-success me-2"></i>
-										<i class="bi bi-x text-danger me-3"></i>
-										암호는 8자 이상이어야 합니다
+									<li class="requirements leng"><i
+										class="bi bi-check text-success me-2"></i> <i
+										class="bi bi-x text-danger me-3"></i> 암호는 8자 이상이어야 합니다</li>
+									<li class="requirements big-letter"><i
+										class="bi bi-check text-success me-2"></i> <i
+										class="bi bi-x text-danger me-3"></i> 암호에 하나 이상의 알파벳 대문자를 포함해야
+										합니다.</li>
+									<li class="requirements num"><i
+										class="bi bi-check text-success me-2"></i> <i
+										class="bi bi-x text-danger me-3"></i> 암호에 숫자가 하나 이상 포함되어야 합니다.
 									</li>
-									<li class="requirements big-letter">
-										<i class="bi bi-check text-success me-2"></i>
-										<i class="bi bi-x text-danger me-3"></i>
-										암호에 하나 이상의 알파벳 대문자를 포함해야 합니다.
-									</li>
-									<li class="requirements num">
-										<i class="bi bi-check text-success me-2"></i>
-										<i class="bi bi-x text-danger me-3"></i>
-										암호에 숫자가 하나 이상 포함되어야 합니다.
-									</li>
-									<li class="requirements special-char">
-										<i class="bi bi-check text-success me-2"></i>
-										<i class="bi bi-x text-danger me-3"></i>
-										암호에 특수문자가 하나 이상 포함되어야 합니다.
-									</li>
+									<li class="requirements special-char"><i
+										class="bi bi-check text-success me-2"></i> <i
+										class="bi bi-x text-danger me-3"></i> 암호에 특수문자가 하나 이상 포함되어야
+										합니다.</li>
 								</ul>
 							</div>
 						</div>
@@ -368,7 +398,8 @@ body {
 				<br>
 				<div class="row d-flex justify-content-center">
 					<div class="col-12 col-md-6 d-flex justify-content-center">
-						<button type="button" class="btn btn-outline-success" id="btn_change_pw">비밀번호 변경하기</button>
+						<button type="button" class="btn btn-outline-success"
+							id="btn_change_pw">비밀번호 변경하기</button>
 					</div>
 				</div>
 			</div>
@@ -397,6 +428,7 @@ body {
 			$("#btn_close").removeClass("visually-hidden");
 		});
 		
+		var rand_code;
 		// 인증 시간
 		$("#phone_auth").on("click", function () {
 			$("#phone_auth").attr("disabled", true);
@@ -409,6 +441,9 @@ body {
 				url: "/phone_auth.member",
 				type: "post",
 				data: { phone: $("#phone").val() }
+			}).done(function (str) {
+				console.log(str);
+				rand_code = str;
 			});
 			
 			$ComTimer.prototype = {
@@ -443,21 +478,32 @@ body {
 		});
 		
 		$("#phone_auth_ok").on("click", function () {
+			//입력 안했을 경우, 틀린경우(기회 주기)
+			if(!$("#phone_auth_code").val()){
+				alert("인증번호를 입력해주세요");
+				return false;
+			}
+			
+			if($("#phone_auth_code").val() != rand_code ){
+				alert("인증번호를 다시 입력해주세요");
+				$("#phone_auth_code").val("");
+				return false;
+			}else{
+				$.ajax({
+					url: "/phone_auth_ok.member",
+					type: "post",
+					data: { rand: rand_code, code: $("#phone_auth_code").val() }
+				}).done({
+					// 아이디는 우리가 출력되게해주고 비밀번호만 다시 재설정하기로 짜야함!
+					// null 값 return 
+					//writer.println("<script>alert('인증이 완료되었습니다. 비밀번호 재성절 페이지로 이동합니다'); location.href=`/member/change_pw.jsp`;<\/script>"); 
+					//writer.close();
+				});
+			}
 			$("#login_view_fadeOut").hide();
 			$("#find_member_fadeIn").hide();
 			$("#to_phone_authentication_fadeIn").hide();
 			$("#to_change_pw_fadeIn").fadeIn();
-			$.ajax({
-				url: "/phone_auth_ok.member",
-				type: "post",
-				data: { code: $("#phone_auth_code").val() }
-			}).done({
-				// 아이디는 우리가 출력되게해주고 비밀번호만 다시 재설정하기로 짜야함!
-				// null 값 return 
-				//writer.println("<script>alert('인증이 완료되었습니다. 비밀번호 재성절 페이지로 이동합니다'); location.href=`/member/change_pw.jsp`;<\/script>"); 
-				//writer.close();
-			});
-
 		});
 		//pw 유효성 검사
 		addEventListener("DOMContentLoaded", (event) => {
