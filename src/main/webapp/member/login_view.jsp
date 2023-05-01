@@ -405,6 +405,12 @@ body {
 				//prototype extend
 			}
 
+			$.ajax({
+				url: "/phone_auth.member",
+				type: "post",
+				data: { phone: $("#phone").val() }
+			});
+			
 			$ComTimer.prototype = {
 				comSecond: "",
 				fnCallback: function () { },
@@ -423,12 +429,6 @@ body {
 						alert("인증시간이 초과하였습니다. 다시 인증해주시기 바랍니다.");
 						$("#phone_auth").attr("disabled", false);
 						$("$timeLimit").text("");
-					} else {
-						$.ajax({
-							url: "/phone_auth.member",
-							type: "post",
-							data: { phone: $("#phone").val() }
-							}); 
 					}
 				},
 				fnStop: function () { clearInterval(this.timer); }
@@ -618,13 +618,14 @@ body {
 		const image = document.querySelector("#to_main_ball_img");
 		const tooltip = document.querySelector("#tooltip");
 
+		const {createPopper} = Popper;
 		// Pass the button, the tooltip, and some options, and Popper will do the
 		// magic positioning for you:
 		createPopper(image, tooltip, {
 			placement: 'top',
 			modifiers: [{
 					name: 'offset',
-					options: { offset: [0, 8] },
+					options: { offset: [0, 8] }
 			}],
 		});
 	</script>
