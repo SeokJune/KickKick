@@ -49,6 +49,7 @@ public class MemberController extends HttpServlet {
 
 				System.out.println("로그인 성공여부 : " + result);
 			} else if (cmd.equals("/phone_auth.member")) {
+				System.out.println(request.getParameter("phone"));
 
 				String phone = request.getParameter("phone");
 				
@@ -60,6 +61,7 @@ public class MemberController extends HttpServlet {
 					try {
 						code = new SensUtils().sendSMS(phone);
 						request.getSession().setAttribute("rand", code);
+						response.getWriter().append(code);
 						request.getSession().setAttribute("phone", phone);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -67,12 +69,11 @@ public class MemberController extends HttpServlet {
 				}
 				
 			} else if (cmd.equals("/phone_auth_ok.member")) {
-				String rand = (String) request.getSession().getAttribute("rand");
+				String rand = (String) request.getParameter("rand");
 				String code = (String) request.getParameter("code");
-
 				System.out.println(rand + " : " + code);
 				
-				if (rand.equals(code)) {
+				if (rand.equals(code)) { //인증번호 == 입력번호
 					request.getSession().removeAttribute("rand");
 					
 					//id가져오는 메서드 -> 세션에 저장된 phone 으로 찾기
@@ -81,7 +82,7 @@ public class MemberController extends HttpServlet {
 					request.getSession().setAttribute("id", id);
 					request.getSession().removeAttribute("phone");
 				}
-				//일단 놔두기
+				
 
 			} else if (cmd.equals("/id_over_check.member")) {
 				String member_id = request.getParameter("member_id");
