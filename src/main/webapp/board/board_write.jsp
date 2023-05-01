@@ -18,6 +18,7 @@
 	crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/ckeditor5/build/ckeditor.js"></script>
+
 <link
 	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
 	rel="stylesheet">
@@ -436,6 +437,8 @@ div {
 				const charactersBox = document.querySelector( '#word_count' );
 				const sendButton = document.querySelector('#post');
 				
+        //에디터 설정
+		
 				ClassicEditor
 					.create(document.querySelector('#editor'), {
 						language: 'ko',
@@ -459,6 +462,10 @@ div {
 						simpleUpload: {
                     		uploadUrl: "http://localhost/to_write_form.board",
                     		withCredentials: true,
+                        	headers: {
+                          		'X-CSRF-TOKEN': 'CSRF-Token',
+                          		Authorization: 'Bearer <JSON Web Token>'
+                        	},
                 		},
 					})
 					.then(editor => {
