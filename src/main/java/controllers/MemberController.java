@@ -31,21 +31,40 @@ public class MemberController extends HttpServlet {
 		MemberDAO dao = MemberDAO.getInstance();
 		Gson g = new Gson();
 		try {
-			if (cmd.equals("/login.member")) {
+			if (cmd.equals("/login_chk.member")) {
+				String id = request.getParameter("id");
+				String pw = EncryptionUtils.sha512(request.getParameter("pw"));
+				
+				response.getWriter().append(g.toJson(dao.is_member(id, pw)));
+			} else if (cmd.equals("/login_.member")) {
 				String id = request.getParameter("id");
 				String pw = request.getParameter("pw"); //테스트용 입니다 완료시 삭제
 //				String pw = EncryptionUtils.sha512(request.getParameter("pw"));
 
-				boolean result = dao.is_member(id, pw);
-				
-				//test용입니다 나중에 지울게요! - 가은
-		        HttpSession session = request.getSession();
-		        session.setAttribute("id", "testID");
-				
-				response.sendRedirect("/index.jsp");// main 화면, 별명은 세션에 저장 예정
 
+				boolean result = dao.is_member(id, pw);
 				System.out.println("로그인 성공여부 : " + result);
+				if(result == true) {
+					//닉네임 가져오기
+					String nickName = dao.get_nickName_by_id(id);
+			        HttpSession session = request.getSession();
+			        session.setAttribute("nickName", nickName);
+					
+			        //login & logout 용 아이디 세션에 저장 & 비번 변경
+			        session.setAttribute("id", id);
+
+					//member_code 세션에 저장
+					String member_code = dao.get_memberCode_by_id(id);
+					session.setAttribute("member_code", member_code);
+					
+					response.sendRedirect("/index.jsp");
+				}else {
+					response.sendRedirect("/member/login_view.jsp");
+				}
+				
+				
 			} else if (cmd.equals("/phone_auth.member")) {
+				System.out.println(request.getParameter("phone"));
 
 				String phone = request.getParameter("phone");
 				
@@ -57,6 +76,7 @@ public class MemberController extends HttpServlet {
 					try {
 						code = new SensUtils().sendSMS(phone);
 						request.getSession().setAttribute("rand", code);
+						response.getWriter().append(code);
 						request.getSession().setAttribute("phone", phone);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -64,12 +84,11 @@ public class MemberController extends HttpServlet {
 				}
 				
 			} else if (cmd.equals("/phone_auth_ok.member")) {
-				String rand = (String) request.getSession().getAttribute("rand");
+				String rand = (String) request.getParameter("rand");
 				String code = (String) request.getParameter("code");
-
 				System.out.println(rand + " : " + code);
 				
-				if (rand.equals(code)) {
+				if (rand.equals(code)) { //인증번호 == 입력번호
 					request.getSession().removeAttribute("rand");
 					
 					//id가져오는 메서드 -> 세션에 저장된 phone 으로 찾기
@@ -78,7 +97,7 @@ public class MemberController extends HttpServlet {
 					request.getSession().setAttribute("id", id);
 					request.getSession().removeAttribute("phone");
 				}
-				//일단 놔두기
+				
 
 			} else if (cmd.equals("/id_over_check.member")) {
 				String member_id = request.getParameter("member_id");
@@ -191,6 +210,11 @@ public class MemberController extends HttpServlet {
 				String resp = g.toJson(result);
 				response.getWriter().append(resp);	
 				 
+			}else if(cmd.equals("/logout.member")){
+				HttpSession session = request.getSession();
+				session.invalidate();
+				response.sendRedirect("index.jsp");
+
 			}
 
 		} catch (Exception e) {

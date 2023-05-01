@@ -162,10 +162,10 @@ public class BoardDAO {
 	public List<BoardDTO> select_board_list(String board_table_name, int start, int end, String search_option, String search_word) throws Exception{
 //		String sql = "select * from (select "+board_table_name+".*, row_number() over(order by reg_date desc) rn from "+board_table_name+" where "+search_option+" like ?) where rn between ? and ?";
 		//수정한 쿼리.. 좀 심각하게 길어요
-		String sql = "select * from (select t.*, row_number() over(order by reg_date) rnk from "
+		String sql = "select * from (select t.*, row_number() over(order by reg_date desc) rnk from "
 				+ "(select b.code, b.board_kind_code, h.name board_headline_name, b.title, b.content, "
 				+ "m.code member_code, m.nickname member_nickname, b.view_count, b.like_count, "
-				+ "r.*, b.reg_date, b.mod_date from board_"+board_table_name+" b join (select board_"
+				+ "r.*, b.reg_date, b.mod_date from board_"+board_table_name+" b left join (select board_"
 				+board_table_name+"_code,count(code) reply_count from reply_"+board_table_name
 				+" group by board_"+board_table_name+"_code) r on b.code=r.board_"+board_table_name
 				+"_code join (select code, id, nickname from member) m on b.member_code=m.code join "
@@ -204,7 +204,7 @@ public class BoardDAO {
 		String sql = "select b.code, b.board_kind_code, h.name \"board_headline_name\", "
 				+ "b.title, b.content, m.code \"member_code\", m.nickname \"member_nickname\", "
 				+ "b.view_count, b.like_count, r.*, b.reg_date, b.mod_date from board_"
-				+board_table_name+" b join (select board_"+board_table_name+"_code,"
+				+board_table_name+" b left join (select board_"+board_table_name+"_code,"
 						+ "count(code) \"reply_count\" from reply_"+board_table_name
 						+" group by board_"+board_table_name+"_code) r on b.code=r.board_"
 						+board_table_name+"_code join (select code, id, nickname from member) m "
@@ -233,7 +233,21 @@ public class BoardDAO {
 		}
 	}
 	
-	public int select_prev_post(String board_table_name, int code) throws Exception{
-		String sql = "select * from board";
+	//해당 글 코드와 이전글, 다음글 코드 정보를 담은 데이터 출력 
+	public int[] select_prev_next_post(String board_table_name, int code) throws Exception{
+		String sql = "select * from (select code, lag(code) over(order by reg_date) as prev, lead(code) over(order by reg_date) as next from board_"+board_table_name+" order by reg_date desc) where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			try(ResultSet rs = pstat.executeQuery()){
+				int[] result = new int[3];
+				while(rs.next()) {
+					result[0] = rs.getInt("code");
+					result[1] = rs.getInt("prev");
+					result[2] = rs.getInt("next");
+				}
+				return result;
+			}
+		}
 	}
 }

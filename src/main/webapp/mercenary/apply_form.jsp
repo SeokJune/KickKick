@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>ApplyForm</title>
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -17,6 +18,7 @@
 	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <style>
+*{font-family: 'NanumSquareNeoBold';}
 div {
 	border: 1px solid black;
 }
@@ -40,11 +42,16 @@ div {
 
 			<div class="row header">
 				<div class="col-xs-12 col-md-4 col-xl-4 text-center">
-					<input type="hidden" id="logo_path" name="logo_path"
-						value="${team_info.logo_path}" readonly> <input
-						type="hidden" id="logo" name="logo" value="${team_info.logo}"
-						readonly>
-					<div id="team_logo">로고!!!!!!!!</div>
+					<input type="hidden" id="logo_path" name="logo_path" value="${team_info.logo_path}" readonly>
+					<input type="hidden" id="logo" name="logo" value="${team_info.logo}" readonly>
+					<c:choose>
+						<c:when test="${team_info.logo.equals('')}">
+							<div>${team_info.logo_path}</div>
+						</c:when>
+						<c:otherwise>
+							<div>${team_info.logo_path}\${team_info.logo}</div>
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<div class="col-xs-12 col-md-8 col-xl-8">
 					<input type="hidden" id="team_code" name="team_code"
@@ -83,11 +90,23 @@ div {
 						</div>
 					</div>
 					<div class="col-12 col-md-6 col-xl-6">
-					<input type="hidden" id="ability_code" name="ability_code" value="${ability_code}" readonly>
+					<input type="hidden" id="mercenary_registration_code" name="mercenary_registration_code"
+							value="${code}" readonly>
+						<input type="hidden" id="ability_code" name="ability_code"
+							value="${ability_code}" readonly>
 						<div class="input-group mb-3">
-							<span class="input-group-text">요구 실력</span> <input type="text"
-								class="form-control" name="ability" readonly>
-								
+							<span class="input-group-text">요구 실력</span>
+							<c:choose>
+								<c:when test="${ability_code == 1003}">
+									<input type="text" class="form-control" value="하" readonly>
+								</c:when>
+								<c:when test="${ability_code == 1002}">
+									<input type="text" class="form-control" value="중" readonly>
+								</c:when>
+								<c:otherwise>
+									<input type="text" class="form-control" value="상" readonly>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 				</div>
@@ -149,14 +168,6 @@ div {
 		</div>
 	</form>
 	<script>
-		// 받은 logo_path에 따라 경로 조절
-		survey("#logo_path", function() {
-			if(document.getElementById("logo") == ''){
-				document.getElementById("team_logo").innerHTML = ${"#logo_path"}.val();
-			}else {
-				document.getElementById("team_logo").innerHTML = ${"#logo_path"}.val() + "\\" + ${"#logo"}.val();
-			}
-		});
 		survey('#latirude', function() {
 			var latirude = document.getElementById("latirude");
 			var longitude = document.getElementById("longitude");
@@ -172,16 +183,18 @@ div {
 
 			geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
 		})
+		/*
 		survey('#ability_code', function() {
 			var ability = document.getElementById("ability").value;
-			if(document.getElementById("ability_code").value == 1){
+			if(document.getElementById("ability_code").value == 1003){
 				ability = "하";
-			}else if(document.getElementById("ability_code").value == 2){
+			}else if(document.getElementById("ability_code").value == 1002){
 				ability = "중";
 			}else {
 				ability = "상";
 			}
 		});
+		*/
 		function survey(selector, callback) {
 			var input = $(selector);
 			var oldvalue = input.val();
