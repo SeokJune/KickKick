@@ -344,7 +344,7 @@ div {
 				</div>
 				<div class="col-12 p-2">
 					<input type="text" placeholder="제목" style="width: 100%"
-						name="title">
+						name="title" required id="title">
 				</div>
 				<div class="col-12 p-2" id="editorBox">
 					<textarea id="editor" name="content" placeholder="1300자 이내로 작성해주세요"></textarea>
@@ -479,8 +479,13 @@ div {
 					});
 				
 				$("#post").on("click",function(){
-					console.log($("#board").prop("required"));
-					console.log($("#headline").prop("required"));
+					if($("#board").val()==""||$("#headline").val()==""||$("#title").val()==""||$("#editor").html()==""){
+						alert("내용을 모두 입력해주세요.");
+						return false;
+					}
+					else{
+						alert("등록되었습니다.");
+					}
 				});
 				
 				$("#cancel").on("click", function () {

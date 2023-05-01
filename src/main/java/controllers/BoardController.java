@@ -82,7 +82,7 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("board_kind_name", board_kind_name);
 
 				//게시판 헤드라인 목록 가져오기
-				List<BoardHeadlineDTO> board_headline = bdao.select_board_headline();
+				List<BoardHeadlineDTO> board_headline = bdao.select_board_headline_list();
 				//게시판 종류도 따로 분리
 				List<String> board_name = new ArrayList<>();
 				for(BoardHeadlineDTO b:board_headline) {
@@ -94,11 +94,6 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("headline_list", board_headline);
 
 				request.getRequestDispatcher("/board/board_write.jsp").forward(request, response);
-			}
-			else if(cmd.equals("/insert.board")) {
-				int board_kind_code = Integer.parseInt(request.getParameter(""));
-				String member_code = (String)request.getSession().getAttribute("login_id");
-
 			}
 			else if(cmd.equals("/select_post.board")) {
 				//어떤 페이지에서 글으로 들어갔는지 기억시키려면
@@ -138,6 +133,96 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("code_list", code_list);
 				
 				request.getRequestDispatcher("/board/board_view.jsp").forward(request, response);
+			}
+			else if(cmd.equals("/insert.board")) {
+				String board_kind_name = request.getParameter("board");
+				String board_table_name="";
+				if(board_kind_name.equals("공지사항")) {
+					board_table_name="announcement";
+				}
+				else if(board_kind_name.equals("자유게시판")) {
+					board_table_name="free";
+				}
+				else if(board_kind_name.equals("홍보게시판")) {
+					board_table_name="promotion";
+				}
+				
+				String board_headline_name = request.getParameter("headline");
+				BoardHeadlineDTO headline_dto = bdao.select_board_headline(board_headline_name);
+				
+				int board_kind_code = headline_dto.getBoard_kind_code();
+				int board_headline_code = headline_dto.getCode();
+				int member_code = (int)request.getSession().getAttribute("member_code");
+				String title = request.getParameter("title");
+				String content = request.getParameter("content");
+				BoardDTO bdto = new BoardDTO(0,board_kind_code,board_headline_code,member_code,title,content,0,0,null,null,null);
+				int result = bdao.insert_post(board_table_name,bdto);
+				if(result>0) {
+					response.sendRedirect("/list.board?b_c="+board_kind_code+"&cpage=1");
+				}
+			}
+			else if(cmd.equals("/to_update_form.board")) {
+				int cpage = Integer.parseInt(request.getParameter("cpage"));
+				
+				//게시판 헤드라인 목록 넣어주고
+				List<BoardHeadlineDTO> board_headline = bdao.select_board_headline_list();
+				//게시판 종류도 따로 분리해서 넣어주기
+				List<String> board_name = new ArrayList<>();
+				for(BoardHeadlineDTO b:board_headline) {
+					if(!board_name.contains(b.getBoard_name())) {
+						board_name.add(b.getBoard_name());
+					}
+				}
+				request.setAttribute("board_list", board_name);
+				request.setAttribute("headline_list", board_headline);
+				
+				//게시판 코드로 게시판 이름 get
+				String board_kind_name = bdao.select_board_name(Integer.parseInt(request.getParameter("b_c")));
+				request.setAttribute("board_kind_name", board_kind_name);
+				
+				//게시판 table명과 글코드로 글 정보 get
+				String board_table_name="";
+				if(board_kind_name.equals("공지사항")) {
+					board_table_name="announcement";
+				}
+				else if(board_kind_name.equals("자유게시판")) {
+					board_table_name="free";
+				}
+				else if(board_kind_name.equals("홍보게시판")) {
+					board_table_name="promotion";
+				}
+				int board_code = Integer.parseInt(request.getParameter("code"));
+				BoardDTO bdto = bdao.select_board(board_table_name, board_code);
+				request.setAttribute("board", bdto);
+				
+				request.getRequestDispatcher("/board/board_update.jsp").forward(request, response);
+			}
+			else if(cmd.equals("/update.board")) {
+				int cpage = Integer.parseInt(request.getParameter("cpage"));
+				
+				String board_kind_name = request.getParameter("board");
+				String board_table_name="";
+				if(board_kind_name.equals("공지사항")) {
+					board_table_name="announcement";
+				}
+				else if(board_kind_name.equals("자유게시판")) {
+					board_table_name="free";
+				}
+				else if(board_kind_name.equals("홍보게시판")) {
+					board_table_name="promotion";
+				}
+				int code = Integer.parseInt(request.getParameter("code"));
+				String headline_name = request.getParameter("headline");
+				String title = request.getParameter("title");
+				String content = request.getParameter("content");
+				BoardDTO bdto = new BoardDTO(code,headline_name,title,content);
+				int result = bdao.update_post(board_table_name, bdto);
+				if(result>0) {
+					response.sendRedirect("/select_post.board?b_c=?&c="+code+"&cpage="+cpage);
+				}
+			}
+			else if(cmd.equals("/delete.board")) {
+				
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

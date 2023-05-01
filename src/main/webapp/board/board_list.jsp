@@ -117,8 +117,8 @@ div {
 	.navbar{
 		--bs-navbar-padding-y: 0;
 	}
-    nav_a,
-    nav_a:hover {
+  .nav_a,
+  .nav_a:hover {
       padding-top: 10px;
       padding-bottom: 10px;
       padding-left: 30px;
