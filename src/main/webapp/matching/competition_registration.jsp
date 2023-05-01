@@ -29,7 +29,7 @@
             <style>
                 * {
                     box-sizing: border-box;
-border:1px solid black;
+
                     text-align: center;
                 }
 
@@ -232,7 +232,7 @@ border:1px solid black;
 
         <body>
 
-            <form action="/send.comeptition" method="get" enctype="multipart/form-data">
+            <form action="/send.competition" method="get" enctype="multipart/form-data">
                 <div class="container-fluid  " style="background-color: whitesmoke;">
                     <div class="row header">
 
@@ -252,8 +252,8 @@ border:1px solid black;
                                     <div class="row h-100">
                                         <div class="col-xs-12 col-md-12 h-25">
 
-                                            <select size="1" name="teamname" class="w-75 h-100 ajax_team_name">
-                                                <option selected>팀명선택</option>
+                                            <select size="1" id="tn" name="teamname" class="w-75 h-100 ajax_team_name">
+                                                <option selected value="">팀명선택</option>
 
 
                                                 <c:forEach var="t" items="${teamname}">
@@ -285,6 +285,7 @@ border:1px solid black;
 
                                 <div class="col-xs-12 col-md-8">
                                     <div class="row h-100" >
+
 
                                         <div class="col-12 " >
                                             <input class="w-75" type="text" style="border: 1px solid black; padding:3%;" id="t1"
@@ -320,9 +321,9 @@ border:1px solid black;
 
 
                                             <br>
-                                            <div name="latlng" id="clickLatlng"></div>
+                                            <input style="width:300px;" name="latlng" id="clickLatlng">
 
-
+ 
 
 
 
@@ -334,11 +335,10 @@ border:1px solid black;
                                                 <div id="menu_wrap" class="bg_white">
                                                     <div class="option">
                                                         <div>
-                                                            <form onsubmit="searchPlaces(); return false;">
                                                                 키워드 : <input type="text" value="서울올림픽경기장" id="keyword"
                                                                     size="15">
-                                                                <button type="button">검색하기</button>
-                                                            </form>
+                                                                <button id="search" type="button" onclick="searchPlaces(); return false;">검색하기</button>
+                                                            
                                                         </div>
                                                     </div>
                                                     <hr>
@@ -349,7 +349,30 @@ border:1px solid black;
 
 
                                             <script>
-
+                                            
+                                            	$(function(){
+                                            		$(window).keydown(function(event){
+                                            		    if(event.keyCode == 13) {
+                                            		      event.preventDefault();
+                                            		      return false;
+                                            		    }
+                                            		});
+                                          
+                                            	})
+                                            	
+                                            	$(function(){
+                                            		$("#keyword").on("keyup",function(e){
+                                            	
+                                            			if(e.keyCode == 13){
+                                            				searchPlaces(); 
+                                                    		return false;
+                                            			}
+                                            	
+                                            		})
+                                            	})
+                                            	
+                                            	
+                                            	
                                                 // 마커를 담을 배열입니다
                                                 var markers = [];
 
@@ -391,8 +414,11 @@ border:1px solid black;
                                                     var message = lat + ',' + lng;
 
 
-                                                    var resultDiv = document.getElementById('clickLatlng');
-                                                    resultDiv.innerHTML = message;
+                                                   // var resultDiv = document.getElementById('clickLatlng');
+                                                  //  resultDiv.innerHTML = message;
+                                                    
+
+                                                    $("input[name=latlng]").attr('value',message);
 
                                                 });
 
@@ -627,10 +653,10 @@ border:1px solid black;
 
 
                                                 <div class="col-12">
-                                                    <select size="1" class="w-75 " style="border:none; border-radius: 10px; height:40px;">
-                                                        <option selected>지역선택</option>
+                                                    <select size="1" name="hometown" id="hometown" class="w-75 " style="border:none; border-radius: 10px; height:40px;">
+                                                        <option selected value="">지역선택</option>
                                                         <c:forEach var="h" items="${hometown}">
-                                                            <option>${h.name}</option>
+                                                            <option value="${h.name}">${h.name}</option>
                                                         </c:forEach>
                                                     </select>
 
@@ -647,14 +673,17 @@ border:1px solid black;
                                                 <div class="col-12">
                                                     <br>
                                                     <div class="row w-100">
-                                                        <div class="col-2"> </div>
-                                                        <div class="col-2" name="year" id="year"> </div>
-                                                        <div class="col-2" name="month" id="month"> </div>
-                                                        <div class="col-2" name="day" id="day"> </div>
-                                                        <div class="col-2" name="mydate" id="mydate"> </div>
-                                                        <div class="col-2"> </div>
+                                                      
+                                                        <div class="col-4 "> <input type="hidden"  style="width:100%;" name="year" id="year"> </div>
+                                                        <div class="col-4 "> <input type="hidden"  style="width:100%;" name="month" id="month"> </div>
+                                                        <div class="col-4 "> <input type="hidden"  style="width:100%;"name="day" id="day"> </div>
+                                                    
+                                                      
                                                     </div>
                                                 </div>
+                                                
+                                              
+                                              
 
                                                 <div class="col-12">
                                                     <br>
@@ -662,8 +691,9 @@ border:1px solid black;
                                                     <div class="row w-100">
                                                         <div class="col-5" style=" margin-top: 20px;" >시간(시) 선택</div>
                                                         <div class="col-7">
-                                                            <select size="3" name="hour" class="w-75 ">
+                                                            <select size="3" id="hour" name="hour" class="w-75 ">
 
+																<option selected value="">---선택---</option>
                                                                 <option value="06">오전 6:00시</option>
                                                                 <option value="07">오전 7:00시</option>
                                                                 <option value="08">오전 8:00시</option>
@@ -697,9 +727,9 @@ border:1px solid black;
                                                     <div class="row w-100">
                                                         <div class="col-5" style=" margin-top: 20px;">시간(분) 선택</div>
                                                         <div class="col-7">
-                                                            <select size="3" name="minute" class="w-75 ">
+                                                            <select size="3" id="minute" name="minute" class="w-75 ">
 
-
+															<option selected value="">---선택---</option>
                                                                 <option value="10">10분</option>
                                                                 <option value="20">20분</option>
                                                                 <option value="30">30분</option>
@@ -758,8 +788,8 @@ border:1px solid black;
                                                 
                                                 <div class="col-4">
 
-                                                    <select name="kind" size="1" class="w-100 "  style="border:none; border-radius: 10px; height:40px;">
-                                                        <option selected>경기 종류</option>
+                                                    <select name="kind" id="kind" size="1" class="w-100 "  style="border:none; border-radius: 10px; height:40px;">
+                                                        <option selected value="">경기 종류</option>
                                                         <option value="${kind[0].code}">${kind[0].name}</option>
                                                         <option value="${kind[3].code}">${kind[3].name}</option>
                                                     </select>
@@ -767,8 +797,8 @@ border:1px solid black;
                                                 </div>
                                                 <div class="col-4">
 
-                                                    <select name="person" size="1" class="w-100 "  style="border:none; border-radius: 10px; height:40px;">
-                                                        <option selected>인원</option>
+                                                    <select name="person" id="person" size="1" class="w-100 "  style="border:none; border-radius: 10px; height:40px;">
+                                                        <option selected value="">인원</option>
                                                         <c:forEach var="ki" items="${kind}">
                                                             <option value="${ki.code}">${ki.headcount}</option>
                                                         </c:forEach>
@@ -777,8 +807,8 @@ border:1px solid black;
                                                 </div>
                                                 <div class="col-4">
 
-                                                    <select name="ability" size="1" class="w-100 "  style="border:none; border-radius: 10px; height:40px;">
-                                                        <option selected>실력(상/중/하)</option>
+                                                    <select name="ability" id="ability" size="1" class="w-100 "  style="border:none; border-radius: 10px; height:40px;">
+                                                        <option selected value="">실력(상/중/하)</option>
 
                                                         <c:forEach var="ab" items="${ability}">
                                                             <option value="${ab.code}">${ab.name}</option>
@@ -830,6 +860,10 @@ border:1px solid black;
 
                     </div>
                 </div>
+                
+                
+      
+         
             </form>
 
 
@@ -837,6 +871,9 @@ border:1px solid black;
 
             <script>
 
+            
+            
+      
 
                 //팀명이름 비동기통신으로 파라미터를 넘긴다
                 $(".ajax_team_name").on("change", function () {
@@ -856,7 +893,53 @@ border:1px solid black;
                         $("#t3").val("팀장 번호 : " + resp[2]);
                     })
                 });
+                
+                
+                
+                //유효성 검사(필수항목)
+                      
+                      $("#request").on("click", function () {
 
+
+            
+                          let latlng = document.getElementById("clickLatlng"); //위도,경도
+
+
+                          if ($("#tn").val() == "") {
+                              alert("팀을 선택하십시오!");
+                              return false;
+                          } else if ($("#hometown").val() == "") {
+                              alert("지역을 선택하십시오!");
+                              return false;
+                          } else if ($("#year").val() == "" || $("#month").val() == "" || $("#day").val() == "") {
+                              alert("날짜를 선택하십시오!");
+                              return false;
+                          } else if ($("#hour").val() == "") {
+                              alert("시간(시) 선택하십시오!");
+                              return false;
+                          }else if ($("#minute").val() == "") {
+                              alert("시간(분) 선택하십시오!");
+                              return false;
+                          }else if ($("#kind").val() == "") {
+                              alert("경기종류를 선택하십시오!");
+                              return false;
+                          }else if ($("#person").val() == "") {
+                              alert("인원수를 선택하십시오!");
+                              return false;
+                          }else if ($("#ability").val() == "") {
+                              alert("실력을 선택하십시오!");
+                              return false;
+                          }else if($("#clickLatlng").val()== ""){
+                          	 alert("지도에 최종 결정지인곳에 맵핀을 찍어주세요");
+                          	return false;
+                     	  }
+                          
+                      })
+                      
+
+                   //    else if (year.innerHTML == "" || month.innerHTML == "" || day.innerHTML == "") {
+                   //    alert("날짜를 선택하십시오!");
+                   //    return false; }
             </script>
 
             <script type="text/javascript">
@@ -873,18 +956,25 @@ border:1px solid black;
                             var month = arr[1];
                             var day = arr[2];
 
-                            $("#year").text(year + "년");
-                            $("#month").text(month + "월");
-                            $("#day").text(day + "일");
+                            $("input[name=year]").attr('value',year);
+                            $("input[name=month]").attr('value',month);
+                            $("input[name=day]").attr('value',day);
+                            
+                       //   $("#year").text(year + "년");
+                        //    $("#month").text(month + "월");
+                        //    $("#day").text(day + "일"); 
 
                             //요일 가져오기
                             //데이터를 먼저 가져오고 (숫자로 넘어옴)
-                            var date = new Date($("#date").datepicker({ dateFormat: "yy/mm/dd" }).val());
+                         //   var date = new Date($("#date").datepicker({ dateFormat: "yy/mm/dd" }).val());
                             //일요일 0~
 
 
-                            week = new Array("일", "월", "화", "수", "목", "금", "토");
-                            $("#mydate").text(week[date.getDay()] + "요일");
+                          //  week = new Array("일", "월", "화", "수", "목", "금", "토");
+                          //  $("#mydate").text(week[date.getDay()] + "요일");
+                            
+                            
+                          
                         }
                     });
 
