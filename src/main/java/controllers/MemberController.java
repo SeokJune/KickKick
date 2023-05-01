@@ -123,13 +123,7 @@ public class MemberController extends HttpServlet {
 				} else {
 					response.sendRedirect("/error.jsp");
 				}
-			} else if (cmd.equals("/my_profile.member")) {
-				//파라미터는 임시로 해둠
-				String member_id = request.getParameter("member_id");
-
-				MemberDTO result = MemberDAO.getInstance().select_member(member_id);
-				request.setAttribute("profile", result);
-				request.getRequestDispatcher("/member/my_profile.jsp").forward(request, response);
+			
 			} else if (cmd.equals("/my_profile.member")) {
 				//파라미터는 임시로 해둠
 				String member_id = request.getParameter("member_id");
@@ -143,21 +137,38 @@ public class MemberController extends HttpServlet {
 				String pw = request.getParameter("password");
 
 				dao.update_pw(pw, id);
-			} else if (cmd.equals("/modify_member_profile.member")) {
+				
+			}else if(cmd.equals("/modify_member_profile.member")) {
 				String member_id = request.getParameter("member_id");
-				//String member_pw = EncryptionUtils.sha512(request.getParameter("member_new_pw")); 비밀번호는 따로 변경
+				String member_confirm_pw = request.getParameter("member_confirm_pw"); 
+				System.out.println("기존비번"+member_confirm_pw);
+				String member_new_pw = request.getParameter("member_new_pw"); 
+				System.out.println("새비번"+member_new_pw);
+				String member_pw = "";
+				if( member_new_pw != "null" || member_new_pw != "" && !member_confirm_pw.isEmpty() ) {
+					member_pw =  EncryptionUtils.sha512(member_new_pw);
+					System.out.println("새비번확정"+member_pw);
+				}else {
+					member_pw = member_confirm_pw;
+					System.out.println("기존비번확정"+member_pw);
+				}
 				String member_nickname = request.getParameter("member_nickname");
-				String member_birth_date = request.getParameter("member_birth_year") + request.getParameter("member_birth_month") + request.getParameter("member_birth_day");
+				String member_birth_date = request.getParameter("member_birth_year")
+						+ request.getParameter("member_birth_month")
+						+ request.getParameter("member_birth_day");
 				String member_phone = request.getParameter("member_phone");
 				String member_email = request.getParameter("member_email");
-
-				MemberDTO dto = new MemberDTO(0, 0, member_id, null, null, member_nickname, member_birth_date, member_phone, member_email, null, 0, null, null, null);
+				
+				MemberDTO dto = new MemberDTO(0,0,member_id,member_pw,null,member_nickname,member_birth_date,member_phone,member_email,null,0,null,null,null);
 				int result = dao.modify_member(dto);
-				if (result > 0) {
+				
+				if(result>0) {
 					response.sendRedirect("/my_profile.member?member_id=" + member_id);
-				} else {
-					response.sendRedirect("/error.jsp");
+				}else {
+					response.sendRedirect("/error.html");
 				}
+				
+			
 			} else if (cmd.equals("/verify_pw.member")) {
 				String id = request.getParameter("id");
 				String pw = EncryptionUtils.sha512(request.getParameter("verify_pw"));
