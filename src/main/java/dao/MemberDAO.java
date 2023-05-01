@@ -102,25 +102,29 @@ public class MemberDAO {
 		}
 	}// insert_new_member
 
+	
 	//내정보 조회
-	public MemberDTO select_member(String member_id) throws Exception {
-		String sql = "select * from member where id = ?";
-		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-			pstat.setString(1, member_id);
-			try (ResultSet rs = pstat.executeQuery();) {
-				rs.next();
-				String id = rs.getString("id");
-				String name = rs.getString("name");
-				String phone = rs.getString("phone");
-				String birthdate = rs.getString("birthdate");
-				String email = rs.getString("email");
-				String nickname = rs.getString("nickname");
-
-				MemberDTO dto = new MemberDTO(0, 0, id, null, name, nickname, birthdate, phone, email, null, 0, null, null, null);
-				return dto;
+		public MemberDTO select_member(String member_id) throws Exception{
+			String sql = "select * from member where id = ?";
+			try( Connection con = this.getConnection();
+					PreparedStatement pstat = con.prepareStatement(sql);){
+				pstat.setString(1,member_id);
+				
+				try(ResultSet rs = pstat.executeQuery();){
+					rs.next();
+					String id = rs.getString("id");
+					String pw = rs.getString("pw");
+					String name = rs.getString("name");
+					String phone = rs.getString("phone");
+					String birthdate = rs.getString("birthdate");
+					String email = rs.getString("email");
+					String nickname = rs.getString("nickname");
+					
+					MemberDTO dto = new MemberDTO(0,0,id,pw,name,nickname,birthdate,phone,email,null,0,null,null,null);
+					return	dto;
+				}
 			}
 		}
-	}
 
 	public String get_id_by_phone(String phone) throws Exception {
 		String sql = "select id from member where phone = ?";
@@ -148,20 +152,21 @@ public class MemberDAO {
 	}
 
 	//내정보 수정
-	public int modify_member(MemberDTO dto) throws Exception {
-		String sql = "update member set nickname=?, birthdate=?, phone=?, email=?, mod_date=sysdate where id=?";
-		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
-			//pstat.setString(1, dto.getPw()); 비밀번호 변경 따로
-			pstat.setString(1, dto.getNick_name());
-			pstat.setString(2, dto.getBirth_date());
-			pstat.setString(3, dto.getPhone());
-			pstat.setString(4, dto.getEmail());
-			pstat.setString(5, dto.getId());
-			int result = pstat.executeUpdate();
-			con.commit();
-			return result;
+		public int modify_member(MemberDTO dto) throws Exception{
+			String sql = "update member set pw=? , nickname=?, birthdate=?, phone=?, email=?, mod_date=sysdate where id=?";
+			try( Connection con = this.getConnection();
+					PreparedStatement pstat = con.prepareStatement(sql);){
+				pstat.setString(1, dto.getPw());
+				pstat.setString(2, dto.getNick_name());
+				pstat.setString(3, dto.getBirth_date());
+				pstat.setString(4, dto.getPhone());
+				pstat.setString(5, dto.getEmail());
+				pstat.setString(6, dto.getId());
+				int result = pstat.executeUpdate();
+				con.commit();
+				return result;
+			}
 		}
-	}
 
 	//닉네임 가져오기
 	public String get_nickName_by_id(String id) throws Exception {
