@@ -34,9 +34,9 @@ div {
 			<tr>
 				<th scope="col">#</th>
 				<th scope="col">매치 코드</th>
-				<th scope="col">팀당 인원 수</th>
 				<th scope="col">장소</th>
 				<th scope="col">일시</th>
+				<th scope="col">팀당 인원 수</th>
 				<th scope="col"></th>
 			</tr>
 		</thead>
@@ -45,13 +45,27 @@ div {
 				<tr>
 					<th scope="row"></th>
 					<td>${i.competition_registration_code}</td>
-					<td>${i.competition_kind_headcount}</td>
-					<td>
+					<td id="match_place_${i.competition_registration_code}">
+					<!--  
 					<input type="hidden" id="latirude" value="${i.latirude}">
 					<input type="hidden" id="longitude" value="${i.longitude}">
-					<span id='match_place'></span>
+					-->
+					<script>
+						var geocoder = new kakao.maps.services.Geocoder();
+
+						var coord = new kakao.maps.LatLng(${i.latirude},${i.longitude});
+						var callback = function(result, status) {
+							if (status === kakao.maps.services.Status.OK) {
+								console.log(result[0].address.address_name);
+								document.getElementById("match_place_"+${i.competition_registration_code}).innerHTML = result[0].address.address_name;
+							}
+						};
+
+						geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+						</script>
 					</td>
 					<td>${i.competition_date}</td>
+					<td>${i.competition_kind_headcount}</td>
 					<td><a href="javascript:set_match('${i.competition_registration_code}','${i.competition_kind_code}','${i.competition_kind_name}','${i.competition_kind_headcount}','${i.latirude}','${i.longitude}','${i.competition_date}')">
 					<button id="use" class="btn btn-primary btn-sm">선택</button></a></td>
 				</tr>
