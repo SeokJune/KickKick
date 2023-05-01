@@ -145,7 +145,7 @@ font-size: small;
 										placeholder=" 새 비밀번호"
 										pattern="^(?=.*[A-Z])(?=.*[~.!@#$%^&*()_+={}>;<:,.?/\-\[\]\\\|])(?=.*[0-9]).{8,20}$"
 										aria-describedby="password" class="password" 
-										maxlength="20" disabled>
+										maxlength="20">
 									<div class="valid-feedback">Good</div>
 									<div class="invalid-feedback">Wrong</div>
 								</div>
@@ -405,15 +405,11 @@ font-size: small;
 				$("#member_confirm_pw").val("").removeAttr("disabled").removeAttr("readonly").attr("required","true");
 				$("#confirm_pw").removeAttr("disabled").html("확인");
 				$("#member_new_pw").val("").attr("disabled","true");
-				console.log($("#member_confirm_pw").val());
-				console.log($("#member_new_pw").val());
 			} else {
 				$("#edit_pw_fadeIn").hide();
 				$("#edit_pw_btn").text("비밀번호 변경");
 				$("#member_confirm_pw").val("${profile.pw}");
-				$("#member_new_pw").val("").removeAttr("required");
-				console.log($("#member_confirm_pw").val());
-				console.log($("#member_new_pw").val());
+				$("#member_new_pw").val("").removeAttr("required").removeAttr("disabled");
 			}
 		})
 

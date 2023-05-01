@@ -141,17 +141,14 @@ public class MemberController extends HttpServlet {
 			}else if(cmd.equals("/modify_member_profile.member")) {
 				String member_id = request.getParameter("member_id");
 				String member_confirm_pw = request.getParameter("member_confirm_pw"); 
-				System.out.println("기존비번"+member_confirm_pw);
 				String member_new_pw = request.getParameter("member_new_pw"); 
-				System.out.println("새비번"+member_new_pw);
 				String member_pw = "";
-				if( member_new_pw != "null" || member_new_pw != "" && !member_confirm_pw.isEmpty() ) {
+				if(  member_new_pw != "" ) {
 					member_pw =  EncryptionUtils.sha512(member_new_pw);
-					System.out.println("새비번확정"+member_pw);
-				}else {
+				} else{
 					member_pw = member_confirm_pw;
-					System.out.println("기존비번확정"+member_pw);
 				}
+				
 				String member_nickname = request.getParameter("member_nickname");
 				String member_birth_date = request.getParameter("member_birth_year")
 						+ request.getParameter("member_birth_month")
@@ -168,7 +165,7 @@ public class MemberController extends HttpServlet {
 					response.sendRedirect("/error.html");
 				}
 				
-			
+				
 			} else if (cmd.equals("/verify_pw.member")) {
 				String id = request.getParameter("id");
 				String pw = EncryptionUtils.sha512(request.getParameter("verify_pw"));
