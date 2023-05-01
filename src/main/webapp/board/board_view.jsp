@@ -337,15 +337,29 @@
     </div>
     
     <script>
+    if(${code_list[1]}==0){
     	$("#to_prev").on("click",function(){
-    		//location.href="/select_post.board?b_c=${b_c}&c=${board.code-1}&cpage=${cpage}";
+    		alert("이전글이 없습니다.");
     	});
+    }
+    else{
+    	$("#to_prev").on("click",function(){
+    		location.href="/select_post.board?b_c=${b_c}&c=${code_list[1]}&cpage=${cpage}";
+    	});
+    }
     	$("#to_list").on("click",function(){
     		location.href="/list.board?b_c=${b_c}&cpage=${cpage}";
     	});
-    	$("#to_next").on("click",function(){
-    		//location.href="/select_post.board?b_c=${b_c}&c=${board.code+1}&cpage=${cpage}";
-    	});
+        if(${code_list[2]}==0){
+        	$("#to_next").on("click",function(){
+        		alert("다음글이 없습니다.");
+        	});
+        }
+        else{
+        	$("#to_next").on("click",function(){
+        		location.href="/select_post.board?b_c=${b_c}&c=${code_list[2]}&cpage=${cpage}";
+        	});
+        }
     </script>
 </body>
 </html>
