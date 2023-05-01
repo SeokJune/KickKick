@@ -15,11 +15,18 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 	crossorigin="anonymous"></script>
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <style>
 * {
 	box-sizing: border-box;
+}
+div {
+	font-family: 'NanumSquareNeoBold';
+}
+.container-fluid {
+	background-color: whitesmoke;	
 }
 
 .gate_header {
@@ -28,6 +35,9 @@
 	border: 1px solid black;
 	border-radius: 10px;
 	background-color: #F7F2E0;
+}
+.gate_header>div {
+	font-family: 'NanumSquareNeoExtraBold';
 }
 
 .gate {
@@ -47,6 +57,15 @@ a {
 	text-decoration: none; 
   	color: inherit;
 }
+.search_btn {
+	font-weight: 600;
+	color: whitesmoke;
+	background-color: #76b852;
+	border: none;
+	padding: 5px;
+	border-radius: 3px;
+}
+
 </style>
 </head>
 
@@ -56,8 +75,7 @@ a {
 		<div class="row search">
 			<div class="col-md-4"></div>
 
-			<div class=" col-3 col-md-1"
-				style="text-align: right; line-height: 58px;">
+			<div class=" col-3 col-md-1" style="text-align: right; line-height: 58px;">
 				<select>
 					<option>팀명</option>
 					<option>랭킹</option>
@@ -69,7 +87,7 @@ a {
 					<form class="d-flex" style="margin: auto;">
 						<input class="form-control me-2" type="search"
 							placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">Search</button>
+						<button class="btn btn-outline-success search_btn" type="submit">Search</button>
 					</form>
 				</nav>
 			</div>
@@ -95,8 +113,8 @@ a {
 					<div class="col-4 col-md-2 col-xl-2">팀명</div>
 					<div class="col-4 col-md-4 col-xl-3">간략 소개글</div>
 					<div class="col-md-2 col-xl-1 d-none d-md-block">랭킹</div>
-					<div class="col-md-2 col-xl-2 d-none d-md-block">작성자</div>
-					<div class="col-xl-2 d-none d-xl-block">작성일</div>
+					<div class="col-md-2 col-xl-2 d-none d-md-block">팀장</div>
+					<div class="col-xl-2 d-none d-xl-block">팀 생성일</div>
 				</div>
 			</div>
 			<div class="col-1 col-md-2 col-xl-2"></div>
@@ -118,7 +136,7 @@ a {
 						<div class="col-1 col-md-2 col-xl-2"></div>
 						<div class="col-10 col-12 col-md-8 col-xl-8">
 							<div class="row gate">
-								<div class="col-4 col-md-2 col-xl-1"><a href="/page.team?team_code=${i.code}">${i.logo}</a></div>
+								<div class="col-4 col-md-2 col-xl-1"><a href="/page.team?team_code=${i.code}"><img src="${i.logo_path}${i.logo}" style="width: 100%; height: 100%;"></a></div>
 								<div class="col-xl-1 d-none d-xl-block"><a href="/page.team?team_code=${i.code}">${i.code}</a></div>
 								<div class="col-4 col-md-2 col-xl-2"><a href="/page.team?team_code=${i.code}">${i.name}</a></div>
 								<div class="col-4 col-md-4 col-xl-3">${i.outline}</div>
