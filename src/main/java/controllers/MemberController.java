@@ -49,18 +49,19 @@ public class MemberController extends HttpServlet {
 
 				response.sendRedirect("/");
 			} else if (cmd.equals("/phone_auth.member")) {
-				System.out.println(request.getParameter("phone"));
 
 				String phone = request.getParameter("phone");
 
 				// 이미 가입된 전화번호가 있으면 -> member table에 전화번호 있으면 -> MemberDAO에 class OK
 				boolean result = dao.phone_over_check(phone);
-				if (!result) {
+				if (result) {
 					// PR할때 이부분 주석해서 올리기***
 					String code = new SensUtils().sendSMS(phone);
 					request.getSession().setAttribute("rand", code);
-					response.getWriter().append(code);
+					response.getWriter().append(g.toJson(code));
 					request.getSession().setAttribute("phone", phone);
+				} else {
+					response.getWriter().append(g.toJson(""));
 				}
 			} else if (cmd.equals("/phone_auth_ok.member")) {
 				String rand = (String) request.getParameter("rand");
