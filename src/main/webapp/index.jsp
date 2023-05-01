@@ -16,7 +16,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 <!-- Font 기본 : {font-family: 'NanumSquareNeoBold'}-->
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
-</head>
 
 <style>
 * {
@@ -116,7 +115,6 @@
 	background-color: #547cec1e;
 }
 </style>
-
 </head>
 
 <body>
@@ -141,7 +139,7 @@
 					<a href="/" class="nav_a">
 						<h5 class="offcanvas-title" id="offcanvasNavbarLabel" style="text-decoration: none;">⚽KickKick</h5>
 					</a>
-					<img src="/image/login_img/ball_icon.png" alt="Image" class="center-block mb-4" style="width: 80px; height: 80px;">
+					<img src="/image/login_img/ball_icon.png" alt="MyIcon" class="center-block mb-4" style="width: 80px; height: 80px;">
 					<!-- 유저이름 -->
 					<h3 class="nick_name text-center mb-3">TEST</h3>
 					<!-- 알림 -->

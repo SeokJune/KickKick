@@ -23,10 +23,11 @@ public class CompetitionDTO {
 	private Timestamp del_date;
 	
 	public CompetitionDTO() {}
-
-	public CompetitionDTO(int competition_kind_code, String competition_kind_name, int competition_kind_headcount,
-			int latirude, int longitude, Timestamp competition_date) {
+	
+	public CompetitionDTO(int competition_registration_code, int competition_kind_code, String competition_kind_name,
+			int competition_kind_headcount, int latirude, int longitude, Timestamp competition_date) {
 		super();
+		this.competition_registration_code = competition_registration_code;
 		this.competition_kind_code = competition_kind_code;
 		this.competition_kind_name = competition_kind_name;
 		this.competition_kind_headcount = competition_kind_headcount;
@@ -34,6 +35,7 @@ public class CompetitionDTO {
 		this.longitude = longitude;
 		this.competition_date = competition_date;
 	}
+
 
 	public int getCompetition_registration_code() {
 		return competition_registration_code;
