@@ -417,8 +417,32 @@ body {
 			$("#to_phone_authentication_fadeIn").fadeIn();
 			$("#btn_close").removeClass("visually-hidden");
 		});
-		// 인증 코드
-		var rand_code;
+		// 타이머 구현_daldal
+		function $ComTimer() {
+			//prototype extend
+		}
+		$ComTimer.prototype = {
+			comSecond: "",
+			fnCallback: function () { },
+			timer: "",
+			domId: "",
+			fnTimer: function () {
+				// 남은 시간 계산
+				var m = Math.floor(this.comSecond / 60) + "분 " + (this.comSecond % 60) + "초";
+				// 1초씩 감소
+				this.comSecond--;					
+				this.domId.innerText = m;
+				// 시간이 종료 되었으면..
+				if (this.comSecond < 0) {
+					// 타이머 해제
+					clearInterval(this.timer);
+					alert("인증시간이 초과하였습니다. 다시 인증해주시기 바랍니다.");
+					$("#phone_auth").attr("disabled", false);
+					$("#timeLimit").text("");
+				}
+			},
+			fnStop: function () { clearInterval(this.timer); }
+		}
 		// 인증 시간
 		$("#phone_auth").on("click", function (evt) {
 			// 전화번호 check 및 인증번호 발송
@@ -439,33 +463,8 @@ body {
 				
 				// 인증번호 받기 버튼 비활성화
 				$("#phone_auth").attr("disabled", true);
-				// 타이머 구현_daldal
-				function $ComTimer() {
-					//prototype extend
-				}
-				$ComTimer.prototype = {
-					comSecond: "",
-					fnCallback: function () { },
-					timer: "",
-					domId: "",
-					fnTimer: function () {
-						// 남은 시간 계산
-						var m = Math.floor(this.comSecond / 60) + "분 " + (this.comSecond % 60) + "초";
-						// 1초씩 감소
-						this.comSecond--;					
-						this.domId.innerText = m;
-						// 시간이 종료 되었으면..
-						if (this.comSecond < 0) {
-							// 타이머 해제
-							clearInterval(this.timer);
-							alert("인증시간이 초과하였습니다. 다시 인증해주시기 바랍니다.");
-							$("#phone_auth").attr("disabled", false);
-							$("#timeLimit").text("");
-						}
-					},
-					fnStop: function () { clearInterval(this.timer); }
-				}
-				var AuthTimer = new $ComTimer()
+				
+				var AuthTimer = new $ComTimer();
 				// 제한 시간
 				AuthTimer.comSecond = 30; 
 				// 제한 시간 만료 메세지
@@ -492,6 +491,7 @@ body {
 					type: "post",
 					data: { rand: rand_code, code: $("#phone_auth_code").val() }
 				}).done(function name() {
+					AuthTimer.clearInterval(this.timer);
 					$("#login_view_fadeOut").hide();
 					$("#find_member_fadeIn").hide();
 					$("#to_phone_authentication_fadeIn").hide();
