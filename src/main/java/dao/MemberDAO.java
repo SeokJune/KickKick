@@ -3,16 +3,11 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import dto.MemberDTO;
 
 public class MemberDAO {
@@ -38,7 +33,6 @@ public class MemberDAO {
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, id);
 			pstat.setString(2, pw);
-
 			try (ResultSet rs = pstat.executeQuery();) {
 				return rs.next();
 			}
@@ -89,7 +83,7 @@ public class MemberDAO {
 			}
 		}
 	}// nickname_over_check
-	
+
 	// 회원가입
 	public int insert_new_member(MemberDTO dto) throws Exception {
 		String sql = "insert into member values(MEMBER_CODE.NEXTVAL,1001,?,?,?,?,?,?,?,?,1001,SYSDATE,NULL,NULL)";
@@ -105,9 +99,9 @@ public class MemberDAO {
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
-
 		}
 	}// insert_new_member
+
 	
 	//내정보 조회
 		public MemberDTO select_member(String member_id) throws Exception{
@@ -134,31 +128,29 @@ public class MemberDAO {
 
 	public String get_id_by_phone(String phone) throws Exception {
 		String sql = "select id from member where phone = ?";
-		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, phone);
-			String result="";
-			try(ResultSet rs = pstat.executeQuery()){
-				while(rs.next()) {
+			String result = "";
+			try (ResultSet rs = pstat.executeQuery()) {
+				while (rs.next()) {
 					result = rs.getString("id");
 				}
 			}
 			return result;
 		}
 	}
-	
-	public int update_pw(String pw,String id) throws Exception {
+
+	public int update_pw(String pw, String id) throws Exception {
 		String sql = "update member set pw =? where id=?";
-		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, pw);
 			pstat.setString(2, id);
-			
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
 		}
 	}
-	
-	
+
 	//내정보 수정
 		public int modify_member(MemberDTO dto) throws Exception{
 			String sql = "update member set pw=? , nickname=?, birthdate=?, phone=?, email=?, mod_date=sysdate where id=?";
@@ -175,34 +167,35 @@ public class MemberDAO {
 				return result;
 			}
 		}
-	
+
 	//닉네임 가져오기
-		public String get_nickName_by_id(String id) throws Exception {
-			String sql = "select nickname from member where id = ?";
-			try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
-				pstat.setString(1, id);
-				String result="";
-				try(ResultSet rs = pstat.executeQuery()){
-					while(rs.next()) {
-						result = rs.getString("nickname");
-					}
+	public String get_nickName_by_id(String id) throws Exception {
+		String sql = "select nickname from member where id = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, id);
+			String result = "";
+			try (ResultSet rs = pstat.executeQuery()) {
+				while (rs.next()) {
+					result = rs.getString("nickname");
 				}
-				return result;
 			}
+			return result;
 		}
+	}
+
 	//멤버코드 가져오기
-		public String get_memberCode_by_id(String id) throws Exception {
-			String sql = "select code from member where id = ?";
-			try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
-				pstat.setString(1, id);
-				String result="";
-				try(ResultSet rs = pstat.executeQuery()){
-					while(rs.next()) {
-						result = rs.getString("code");
-					}
+	public String get_memberCode_by_id(String id) throws Exception {
+		String sql = "select code from member where id = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, id);
+			String result = "";
+			try (ResultSet rs = pstat.executeQuery()) {
+				while (rs.next()) {
+					result = rs.getString("code");
 				}
-				return result;
 			}
+			return result;
 		}
-	
+	}
+
 }
