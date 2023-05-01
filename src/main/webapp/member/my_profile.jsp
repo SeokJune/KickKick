@@ -30,7 +30,7 @@ body {
 .container {
 	border: 1px solid black;
 	width: 600px;
-	height: 900px;
+	height: auto;
 	padding: 32px;
 	margin-top: 5%;
 	margin-bottom: 5%;
