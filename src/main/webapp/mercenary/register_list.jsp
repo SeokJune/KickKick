@@ -23,6 +23,11 @@
 	font-family: 'NanumSquareNeoBold';
 }
 </style>
+<script>
+	window.onload = function(){
+		
+	}
+</script>
 </head>
 <body>
 	<table class="table">
@@ -47,9 +52,25 @@
 						<input type="hidden" name="competition_result_code" value="${i.competition_result_code}" readonly>
 						<input type="hidden" name="ability_code" value="${i.ability_code}" readonly>
 						<input type="hidden" name="name" value ="${i.name}" readonly>
+						<input type="hidden" id="latirude" name="latirude" value ="${i.latirude}" readonly>
+						<input type="hidden" id="longitude" name="longitude" value ="${i.longitude}" readonly>
 						${i.competition_date}
 					</td>
-					<td>장소!</td>
+					<td id="match_place_${i.code}">
+						<script>
+						var geocoder = new kakao.maps.services.Geocoder();
+
+						var coord = new kakao.maps.LatLng(${i.latirude},${i.longitude});
+						var callback = function(result, status) {
+							if (status === kakao.maps.services.Status.OK) {
+								console.log(result[0].address.address_name);
+								document.getElementById("match_place_"+${i.code}).innerHTML = result[0].address.address_name;
+							}
+						};
+
+						geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+						</script>
+					</td>
 					<td>${i.name}</td>
 					<c:choose>
 						<c:when test="${i.ability_code == 1003}">
@@ -76,20 +97,5 @@
 			</tr>
 		</tbody>
 	</table>
-	<script>
-		function set_place(latirude,longitude) {
-			var geocoder = new kakao.maps.services.Geocoder();
-
-			var coord = new kakao.maps.LatLng(latirude, longitude);
-			var callback = function(result, status) {
-				if (status === kakao.maps.services.Status.OK) {
-					console.log(result[0].address.address_name);
-					document.getElementById("centerAddr").innerHTML = result[0].address.address_name;
-				}
-			};
-
-			geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-		}
-	</script>
 </body>
 </html>

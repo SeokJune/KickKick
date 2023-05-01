@@ -10,13 +10,13 @@ public class RegisterInfoDTO {
 	private int headcount;
 	private int status_code;
 	private String name;
-	private int latirude;
-	private int longitude;
+	private double latirude;
+	private double longitude;
 	private Timestamp competition_date;
 	
 	public RegisterInfoDTO() {}
 	public RegisterInfoDTO(int code, int competition_result_code, int team_code, int ability_code, int headcount,
-			int status_code, String name, int latirude, int longitude, Timestamp competition_date) {
+			int status_code, String name, double latirude, double longitude, Timestamp competition_date) {
 		super();
 		this.code = code;
 		this.competition_result_code = competition_result_code;
@@ -72,16 +72,16 @@ public class RegisterInfoDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getLatirude() {
+	public double getLatirude() {
 		return latirude;
 	}
-	public void setLatirude(int latirude) {
+	public void setLatirude(double latirude) {
 		this.latirude = latirude;
 	}
-	public int getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(int longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	public Timestamp getCompetition_date() {
