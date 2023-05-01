@@ -250,4 +250,26 @@ public class BoardDAO {
 			}
 		}
 	}
+	
+	public int add_view_count(String board_table_name, int code) throws Exception{
+		String sql = "update board_"+board_table_name+" set view_count=view_count+1 where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
+	
+	public int substract_view_count(String board_table_name, int code) throws Exception{
+		String sql = "update board_"+board_table_name+" set view_count=view_count-1 where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
 }
