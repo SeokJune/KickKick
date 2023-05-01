@@ -464,7 +464,7 @@ body {
 				// 인증번호 받기 버튼 비활성화
 				$("#phone_auth").attr("disabled", true);
 				
-				var AuthTimer = new $ComTimer();
+				AuthTimer = new $ComTimer();
 				// 제한 시간
 				AuthTimer.comSecond = 30; 
 				// 제한 시간 만료 메세지
@@ -491,7 +491,7 @@ body {
 					type: "post",
 					data: { rand: rand_code, code: $("#phone_auth_code").val() }
 				}).done(function name() {
-					AuthTimer.clearInterval(this.timer);
+					AuthTimer.fnStop();
 					$("#login_view_fadeOut").hide();
 					$("#find_member_fadeIn").hide();
 					$("#to_phone_authentication_fadeIn").hide();
