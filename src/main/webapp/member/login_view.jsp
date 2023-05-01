@@ -193,7 +193,7 @@ body {
 							<h1 class="mb-4">⚽KickKick</h1>
 							<h3>킥킥에 돌아오신걸 환영해요!</h3>
 						</div>
-						<form action="/login.member" method="post">
+						<form action="/login.member" method="post" id="form_login">
 							<div class="form-group mb-4">
 								<label class="control-label font-weight-bold font-size-7pt">아이디</label>
 								<span>*</span>
@@ -384,9 +384,22 @@ body {
 			location.href = "/";
 		});
 		// 아이디/비밀번호 확인
-		$($(".site_login")[0]).on("click", function () {
+		$($(".site_login")[0]).on("click", function (evt) {
+			evt.preventDefault();
 			$.ajax({
-				url: "/login_chk.member"
+				url: "/login_chk.member",
+				type: "post",
+				dataType: "json",
+				data: {
+					id: $("#id").val(),
+					pw: $("#pw").val()
+				}
+			}).done(function (chk_result) {
+				if (!chk_result) {
+					alert("올바른 사용자 아이디와 비밀번호를 입력해주세요.");
+				} else {
+					$("#form_login").submit();
+				}
 			});
 		});
 		// 아이디/비밀번호 찾기 버튼
