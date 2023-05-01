@@ -47,6 +47,10 @@ public class MemberController extends HttpServlet {
 		        session.setAttribute("id", id);
 				response.sendRedirect("/index.jsp");// main 화면, 별명은 세션에 저장 예정
 
+				//member_code 세션에 저장
+				String member_code = dao.get_memberCode_by_id(id);
+				session.setAttribute("member_code", member_code);
+				
 				System.out.println("로그인 성공여부 : " + result);
 			} else if (cmd.equals("/phone_auth.member")) {
 				System.out.println(request.getParameter("phone"));

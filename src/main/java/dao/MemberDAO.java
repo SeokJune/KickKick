@@ -189,5 +189,19 @@ public class MemberDAO {
 				return result;
 			}
 		}
+	//멤버코드 가져오기
+		public String get_memberCode_by_id(String id) throws Exception {
+			String sql = "select member_code from member where id = ?";
+			try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);){
+				pstat.setString(1, id);
+				String result="";
+				try(ResultSet rs = pstat.executeQuery()){
+					while(rs.next()) {
+						result = rs.getString("member_code");
+					}
+				}
+				return result;
+			}
+		}
 	
 }
