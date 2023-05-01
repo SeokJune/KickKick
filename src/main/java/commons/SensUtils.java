@@ -51,7 +51,6 @@ public class SensUtils {
 	 * @throws NoSuchAlgorithmException
 	 */
 	public String sendSMS(String phone) throws Exception {
-		System.out.println(apiUrl);
 		URL url = new URL(apiUrl);
 
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -73,7 +72,6 @@ public class SensUtils {
 
 		int responseCode = con.getResponseCode();
 		BufferedReader br;
-		System.out.println("responseCode" + " " + responseCode);
 		if (responseCode == 202) { // 정상 호출
 			br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		} else { // 에러 발생
@@ -87,7 +85,6 @@ public class SensUtils {
 		}
 		br.close();
 
-		System.out.println(response.toString());
 		return randNum;
 	}
 
@@ -176,11 +173,9 @@ public class SensUtils {
 
 		String num_str = "";
 		for (int i = 0; i < 6; i++) {
-			System.out.println(rand.nextInt(10));
 			String ran = Integer.toString(rand.nextInt(10));
 			num_str += ran;
 		}
-		System.out.println(num_str);
 		return num_str;
 	}
 }
