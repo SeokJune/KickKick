@@ -6,7 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>RegisterForm</title>
+<!-- 폰트 -->
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+<!-- Bootstrap -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -16,11 +18,20 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 	crossorigin="anonymous"></script>
+<!-- JQuery -->
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+<!-- kakao api -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a47338e87e3d914e6d508799cd4f4e17&libraries=services"></script>
 <style>
+
 div {
 	font-family: 'NanumSquareNeoBold';
+}
+
+.container{
+	width: 70%;
+	background:white;
+	
 }
 
 .header2>div {
@@ -38,8 +49,8 @@ div {
 </head>
 <body>
 	<form action="/to_mercenary_register.mercenary" method="post">
-		<div class="container fluid">
-
+		<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
+			<br>
 			<div class="row header1">
 				<div>
 					<button type="button" id="team_select"
@@ -47,28 +58,29 @@ div {
 						선택</button>
 				</div>
 			</div>
+			<br>
 			<div class="row header2">
-				<div class="col-xs-12 col-md-4 col-xl-4 text-center">
+				<div class="col-xs-12 col-md-4 col-xl-4 text-center" style="border:1px solid black;">
 					<div id="team_logo">img</div>
 				</div>
 				<div class="col-xs-12 col-md-8 col-xl-8">
-					<input type="hidden" id="code" name="code" readonly>
-					<input type="hidden" id="competition_registration_code" name="competition_registration_code" readonly>
+					<input type="hidden" id="code" name="code" required readonly>
+					<input type="hidden" id="competition_registration_code" name="competition_registration_code" required readonly>
 					<div class="input-group mb-3">
 						<span class="input-group-text">팀명</span> <input type="text"
-							class="form-control" id="name" name="name" readonly>
+							class="form-control" id="name" name="name" required readonly>
 					</div>
 					<div class="box">
 						<div class="col-12 col-md-6 col-xl-6">
 							<div class="input-group mb-3">
 								<span class="input-group-text">팀장</span> <input type="text"
-									class="form-control" id="member_name" readonly>
+									class="form-control" id="member_name" required readonly>
 							</div>
 						</div>
 						<div class="col-12 col-md-6 col-xl-6">
 							<div class="input-group mb-3">
 								<span class="input-group-text">연락처</span> <input type="text"
-									class="form-control" id="member_phone" readonly>
+									class="form-control" id="member_phone" required readonly>
 							</div>
 						</div>
 					</div>
@@ -81,32 +93,21 @@ div {
 						class="btn btn-primary btn-sm">경기 선택</button>
 				</div>
 				<div class="box">
+				<br>
 					<div class="col-12 col-md-6 col-xl-6">
 					<input type="hidden" id="latirude" readonly> <!-- 위도 -->
 					<input type="hidden" id="longitude" readonly> <!-- 경도 -->
 						<div class="input-group mb-3">
-						<script>
-						var geocoder = new kakao.maps.services.Geocoder();
-
-						var coord = new kakao.maps.LatLng(${"#latirude"},${"#longitude"});
-						var callback = function(result, status) {
-							if (status === kakao.maps.services.Status.OK) {
-								console.log(result[0].address.address_name);
-								document.getElementById("match_place_"+${"#code"}).innerHTML = result[0].address.address_name;
-							}
-						};
-
-						geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-						</script>
+						
 							<span class="input-group-text">장소</span> <input type="text"
-								class="form-control" id="match_place_"${"#code"} name="match_place"
-								readonly>
+								class="form-control" id="match_place" name="match_place"
+								required readonly>
 						</div>
 					</div>
 					<div class="col-12 col-md-6 col-xl-6">
 						<div class="input-group mb-3">
-							<span class="input-group-text">일시</span> <input type="text"
-								class="form-control" id="competition_date" name="competition_date" readonly>
+							<span class="input-group-text">일시</span> 
+							<input type="text" class="form-control" id="competition_date" name="competition_date" required readonly>
 						</div>
 					</div>
 				</div>
@@ -115,13 +116,13 @@ div {
 						<div class="input-group mb-3">
 							<span class="input-group-text">종목</span> <input type="text"
 								class="form-control" id="competition_kind_name" name="competition_kind_name"
-								readonly>
+								required readonly>
 						</div>
 					</div>
 					<div class="col-12 col-md-6 col-xl-6">
 						<div class="input-group mb-3">
 							<span class="input-group-text">총 인원수</span> <input type="text"
-								class="form-control" id="competition_kind_headcount" name="competition_kind_headcount" readonly>
+								class="form-control" id="competition_kind_headcount" name="competition_kind_headcount" required readonly>
 						</div>
 					</div>
 				</div>
@@ -130,7 +131,7 @@ div {
 			<div class="row body2">
 				<div class="box">
 					<div class="col-12 col-md-6 col-xl-6 text-center">
-						실력 <select class="form-select" name="ability">
+						실력 <select class="form-select" name="ability" required>
 							<option value="" selected>-- 선택해주세요 --</option>
 							<option value="1001">상</option>
 							<option value="1002">중</option>
@@ -139,8 +140,8 @@ div {
 					</div>
 					<div class="col-12 col-md-6 col-xl-6 text-center">
 					<!-- <input type="hidden" id="competition_kind_headcount" readonly>--> 
-						인원수 <select class="form-select" id="people_count" name="people_count">
-							<option value="0" selected>-- 선택해주세요 --</option>
+						인원수 <select class="form-select" id="people_count" name="people_count" required>
+							<option value="" selected>-- 선택해주세요 --</option>
 						</select>
 					</div>
 				</div>
@@ -153,6 +154,7 @@ div {
 						class="btn btn-primary"></a>
 				</div>
 			</div>
+			<br>
 		</div>
 	</form>
 	<script>
@@ -169,17 +171,35 @@ div {
 			document.getElementById("member_name").value = mn;
 			document.getElementById("member_phone").value = mp;
 		}
-
-		function set_match_info(crc,ckc,ckn,ckh,la,lo,cd) {
+		function set_match_info(crc,ckc,ckn,ckh,la,lo,cd,dft) {
 			document.getElementById("competition_registration_code").value = crc;
 			document.getElementById("competition_kind_name").value = ckn;
 			document.getElementById("competition_kind_headcount").value = ckh;
 			document.getElementById("latirude").value = la;
 			document.getElementById("longitude").value = lo;
-			document.getElementById("competition_date").value = cd;
+			document.getElementById("competition_date").value = dft;
 
 		}
+		
+		// 받은 위도, 경도에 따라 위치 구하는 함수
+		survey('#latirude,#longitude', function() {
+			var latirude = document.getElementById("latirude").value;
+			var longitude = document.getElementById("longitude").value;
+			
+			var geocoder = new kakao.maps.services.Geocoder();
 
+			var coord = new kakao.maps.LatLng(latirude,longitude);
+			var callback = function(result, status) {
+				if (status === kakao.maps.services.Status.OK) {
+					var mp = result[0].address.address_name
+					document.getElementById("match_place").value = result[0].address.address_name;
+				}
+			};
+
+			geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+			
+		});
+		
 		// 받은 총 인원 수에 따라 용병 인원수 조절
 		survey('#competition_kind_headcount', function() {
 			var objSel = document.getElementById("people_count");
@@ -218,6 +238,7 @@ div {
 			}, 100);
 		}
 
+		
 		$("#team_select").on(
 				"click",
 				function() {

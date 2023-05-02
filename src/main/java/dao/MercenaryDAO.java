@@ -65,9 +65,8 @@ public class MercenaryDAO {
 
 	// register_form : 팀 코드로 매치 선택하기 (단, 매치가 신청 완료 되었을 때 / 매치 등록, 신청 둘 다 검색)
 	public List<CompetitionDTO> select_match_by_name(int code) throws Exception {
-		String sql = "select competition_registration_code,competition_kind_code,competition_kind_name,latirude,longitude,competition_date,competition_kind_headcount "
-				+ "from competition_view "
-				+ "where (registration_team_code=? or application_team_code=?) and status_code=1202";
+		String sql = "select * from mer_reg_list_view "
+				+ "where (registration_team_code=? or application_team_code=?) and status_code=1301";
 
 		List<CompetitionDTO> list = new ArrayList<>();
 		try(
@@ -80,7 +79,7 @@ public class MercenaryDAO {
 					int competition_registration_code = rs.getInt("competition_registration_code");
 					int competition_kind_code = rs.getInt("competition_kind_code");
 					String competition_kind_name = rs.getString("competition_kind_name");
-					int competition_kind_headcount = rs.getInt("competition_kind_headcount");
+					int competition_kind_headcount = rs.getInt("headcount");
 					double latirude = rs.getDouble("latirude");
 					double longitude = rs.getDouble("longitude");
 					Timestamp competition_date = rs.getTimestamp("competition_date");
@@ -116,7 +115,7 @@ public class MercenaryDAO {
 				+ "mre.status_code, t.name, cr.latirude, cr.longitude, cr.competition_date "
 				+ "from MERCENARY_REGISTRATION mre "
 				+ "join team t on mre.team_code = t.code "
-				+ "join competition_registration cr on cr.team_code = t.code";
+				+ "join competition_registration cr on mre.competition_result_code = cr.code";
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -215,6 +214,34 @@ public class MercenaryDAO {
 			}
 		}
 	}
+	
+//	public ? select_apply_info(int code) throws Exception {
+//		String sql = "select * from mercenary_registration_view mrv "
+//				+ "left join competition_registration cr on mrv.competition_result_code = cr.code "
+//				+ "where mrv.code=?";
+//		try(
+//				Connection con = this.getConnection();
+//				PreparedStatement pstat = con.prepareStatement(sql);){
+//			pstat.setInt(1, code);
+//			try(ResultSet rs = pstat.executeQuery();){
+//				rs.next();
+//				String logo_path
+//				String logo_name
+//				String team_name
+//				String member_name
+//				String member_phone
+//				String opposing_team_name
+//				
+//				int competition_result_code = rs.getInt("competition_result_code");
+//				int competition_kind_code = rs.getInt("competition_kind_code");
+//				String competition_kind_name = rs.getString("competition_kind_name");
+//				int competition_kind_headcount = rs.getInt("competition_kind_headcount");
+//				double latirude = rs.getDouble("latirude");
+//				double longitude = rs.getDouble("longitude");
+//				Timestamp competition_date = rs.getTimestamp("competition_date");
+//			}
+//		}
+//	}
 	
 	// apply_form : 용병 신청 insert문
 	public int insert_apply_mercenary(ApplyInfoDTO d) throws Exception {
