@@ -34,8 +34,8 @@ public class ReplyDAO {
 		String sql = "select r.code, r.board_"+board_table_name
 				+"_code \"board_code\", m.nickname \"member_nickname\", r.content, "
 				+ "r.like_count, r.reg_date, r.mod_date from reply_"+board_table_name
-				+" r join member m on R.MEMBER_CODE=m.code where r.board_"+board_table_name
-				+"_code=? order by r.reg_date desc";
+				+" r join member m on r.member_code=m.code where r.board_"+board_table_name
+				+"_code=? order by r.reg_date";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setInt(1, board_code);
@@ -43,6 +43,7 @@ public class ReplyDAO {
 				List<ReplyDTO> result = new ArrayList<>();
 				while(rs.next()) {
 					int code = rs.getInt("code");
+					System.out.println(code);
 					board_code = rs.getInt("board_code");
 					String member_nickname = rs.getString("member_nickname");
 					String content = rs.getString("content");
@@ -59,9 +60,40 @@ public class ReplyDAO {
 	
 	//댓글 하나의 정보 담아보내기
 	public ReplyDTO select_reply(String board_table_name, int code) throws Exception{
-		String sql = "";
+		String sql = "select r.code, r.board_"+board_table_name+"_code board_code, "
+				+ "m.nickname member_nickname, r.content, r.like_count, r.reg_date, "
+				+ "r.mod_date from reply_"+board_table_name
+				+" r join member m on r.member_code=m.code where r.code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			try(ResultSet rs = pstat.executeQuery()){
+				ReplyDTO result = new ReplyDTO();
+				while(rs.next()) {
+					result.setCode(rs.getInt("code"));
+					result.setBoard_code(rs.getInt("board_code"));
+					result.setMember_nickname(rs.getString("member_nickname"));
+					result.setContent(rs.getString("content"));
+					result.setLike_count(rs.getInt("like_count"));
+					result.setReg_date(rs.getTimestamp("reg_date"));
+					result.setMod_date(rs.getTimestamp("mod_date"));
+				}
+				return result;
+			}
+		}
 		
-		ReplyDTO result = new ReplyDTO();
-		return result;
 	}
+	
+	public int insert_reply(String board_table_name, ReplyDTO dto) throws Exception{
+		String sql = "insert into reply_"+board_table_name+" values(reply_"+board_table_name+"_code.nextval,?,?,?,default,default,null,null)";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, dto.getBoard_code());
+			pstat.setInt(2, dto.getMember_code());
+			pstat.setString(3, dto.getContent());
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	} 
 }
