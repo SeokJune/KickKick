@@ -40,14 +40,16 @@ div {
 	font-family: 'NanumSquareNeoExtraBold';
 }
 
-.gate {
+.team_info {
 	text-align: center;
 	font-size: 12px;
+	display: flex;
+    align-items: center;
 }
 
 .navi {
 	text-align: center;
-	font-size: 12px;
+	font-size: 15px;
 }
 
 hr {
@@ -60,7 +62,7 @@ a {
 .search_btn {
 	font-weight: 600;
 	color: whitesmoke;
-	background-color: #76b852;
+	background: linear-gradient(to right, #76b852, #74DF00);
 	border: none;
 	padding: 5px;
 	border-radius: 3px;
@@ -109,8 +111,8 @@ a {
 			<div class="col-10 col-md-8 col-xl-8">
 				<div class="row gate_header">
 					<div class="col-4 col-md-2 col-xl-1">LOGO</div>
-					<div class="col-xl-1 d-none d-xl-block">no</div>
 					<div class="col-4 col-md-2 col-xl-2">팀명</div>
+					<div class="col-xl-1 d-none d-xl-block">연고지</div>
 					<div class="col-4 col-md-4 col-xl-3">간략 소개글</div>
 					<div class="col-md-2 col-xl-1 d-none d-md-block">랭킹</div>
 					<div class="col-md-2 col-xl-2 d-none d-md-block">팀장</div>
@@ -135,10 +137,10 @@ a {
 					<div class="row">
 						<div class="col-1 col-md-2 col-xl-2"></div>
 						<div class="col-10 col-12 col-md-8 col-xl-8">
-							<div class="row gate">
-								<div class="col-4 col-md-2 col-xl-1"><a href="/page.team?team_code=${i.code}"><img src="${i.logo_path}${i.logo}" style="width: 100%; height: 100%;"></a></div>
-								<div class="col-xl-1 d-none d-xl-block"><a href="/page.team?team_code=${i.code}">${i.code}</a></div>
-								<div class="col-4 col-md-2 col-xl-2"><a href="/page.team?team_code=${i.code}">${i.name}</a></div>
+							<div class="row team_info">
+								<div class="col-4 col-md-2 col-xl-1"><a href="/view.team?team_code=${i.code}"><img src="${i.logo_path}${i.logo}" style="width: 100%; height: 100%;"></a></div>
+								<div class="col-4 col-md-2 col-xl-2"><a href="/view.team?team_code=${i.code}">${i.name}</a></div>
+								<div class="col-xl-1 d-none d-xl-block">${i.hometown_name}</div>
 								<div class="col-4 col-md-4 col-xl-3">${i.outline}</div>
 								<div class="col-md-2 col-xl-1 d-none d-md-block">랭킹</div>
 								<div class="col-md-2 col-xl-2 d-none d-md-block">${i.member_name}</div>

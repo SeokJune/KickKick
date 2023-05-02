@@ -11,38 +11,60 @@
 	rel="stylesheet"
 	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
 	crossorigin="anonymous">
+<link
+	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
+	rel="stylesheet">
+
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 	crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <style>
 * {
-	border: 1px solid black;
 	box-sizing: border-box;
+	border: 1px solid black;
+}
+
+div {
+	font-family: 'NanumSquareNeoBold';
 }
 
 .container-fluid {
 	padding: 0px;
+	background-color: whitesmoke;
+}
+
+#team_name {
+	font-size: 30px;
 }
 </style>
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="row team_info1">
-			<div class="col-xs-12 col-md-3 col-xl-2" style="text-align: center;">
-				<img src="세터.png" style="width: 80px; height: 80px;">
+			<div class="col-md-1 col-xl-1"></div>
+			
+			<div class="col-xs-12 col-md-2 col-xl-1" style="display: flex; justify-content: center; align-items: flex-end;">
+				<img src="${team_info.logo_path}${team_info.logo}"
+					style="width: 80px; height: 80px;">
 			</div>
-			<div class="col-xs-12 col-md-9 col-xl-8">
+			
+			<div class="col-xs-12 col-md-9 col-xl-8" style="text-align: center;">
 				<div class="row">
-					<div class="col-12 col-md-12 col-xl-6">${team_info.name}</div>
-					<div class="col-12 col-md-12 col-xl-6">${team_info.hometown_name}</div>
-					<div class="col-12 col-md-12 col-xl-6">${team_info.member_name}</div>
-					<div class="col-12 col-md-12 col-xl-6">${team_info.member_phone}</div>
-					<div class="col-12 col-md-12 col-xl-6">승무패</div>
-					<div class="col-12 col-md-12 col-xl-6">${team_info.outline}</div>
+					<div class="col-12 col-md-3 col-xl-3" id="team_name">${team_info.name}</div>
+				</div>
+				<div class="row">
+					<div class="col-12 col-md-3 col-xl-3">${team_info.hometown_name}|${team_info.member_name}</div>
+				</div>
+				<div class="row">
+					<div class="col-12 col-md-3 col-xl-3">승무패</div>
 				</div>
 			</div>
+			
 			<div class="col-xl-2"></div>
 		</div>
 
@@ -50,11 +72,42 @@
 			<div class="col-12" style="height: 50px;"></div>
 		</div>
 
-		<div class="row team_info2">
-			<div class="col-xl-3"></div>
-			<div class="col-md-12 col-xl-6" style="height: 150px">${team_info.content}</div>
-			<div class="col-xl-3"></div>
 
+		<div class="row team_info2">
+			<div class="col-md-2 col-xl-2"></div>
+				<div class="col-md-8 col-xl-8">
+				
+					<div class="row">
+							<ul class="nav nav-tabs" style="text-align: center;">
+								<li class="nav-item col-3"><a class="nav-link active"
+									data-toggle="tab" href="#team_info">팀정보</a></li>
+								<li class="nav-item col-3"><a class="nav-link" data-toggle="tab"
+									href="#recode">전적</a></li>
+								<li class="nav-item col-3"><a class="nav-link" data-toggle="tab"
+									href="#game_schedule">경기일정</a></li>
+								<li class="nav-item col-3"><a class="nav-link" data-toggle="tab"
+									href="#community">커뮤니티</a></li>
+							</ul>
+					</div>
+					
+					<div class="row">
+						<div class="col-12 tab-content">
+							<div class="tab-pane fade show active" id="team_info">
+								<p>팀정보</p>
+							</div>
+							<div class="tab-pane fade" id="recode">
+								<p>전적</p>
+							</div>
+							<div class="tab-pane fade" id="game_schedule">
+								<p>게임 스케줄</p>
+							</div>
+							<div class="tab-pane fade" id="community">
+								<p>커뮤니티</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			<div class="col-md-2 col-xl-2"></div>
 		</div>
 	</div>
 </body>

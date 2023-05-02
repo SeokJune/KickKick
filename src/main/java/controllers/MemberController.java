@@ -35,26 +35,24 @@ public class MemberController extends HttpServlet {
 				response.getWriter().append(g.toJson(dao.is_member(id, pw)));
 			} else if (cmd.equals("/login.member")) {
 				String id = request.getParameter("id");
-				//닉네임 가져오기
-				String nickName = dao.get_nickName_by_id(id);
+				// code, 닉네임 가져오기
+				MemberDTO info = dao.get_info_by_id(id);
 				HttpSession session = request.getSession();
-				session.setAttribute("nickName", nickName);
-
+				session.setAttribute("code", info.getCode());
+				session.setAttribute("nickname", info.getNick_name());
+				
 				//login & logout 용 아이디 세션에 저장 & 비번 변경
 				session.setAttribute("id", id);
-
-				//member_code 세션에 저장
-				String member_code = dao.get_memberCode_by_id(id);
-				session.setAttribute("member_code", member_code);
 
 				response.sendRedirect("/");
 			} else if (cmd.equals("/phone_auth.member")) {
 
 				String phone = request.getParameter("phone");
-
+				System.out.println(phone);
 				// 이미 가입된 전화번호가 있으면 -> member table에 전화번호 있으면 -> MemberDAO에 class OK
 				boolean result = dao.phone_over_check(phone);
-				if (result) {
+				System.out.println("result: " + result);
+				if (!result) {
 					// PR할때 이부분 주석해서 올리기***
 					String code = new SensUtils().sendSMS(phone);
 					request.getSession().setAttribute("rand", code);
@@ -80,41 +78,29 @@ public class MemberController extends HttpServlet {
 			} else if (cmd.equals("/id_over_check.member")) {
 				String member_id = request.getParameter("member_id");
 				boolean result = dao.id_over_check(member_id);
-				String resp = g.toJson(result);
-				response.getWriter().append(resp);
+				response.getWriter().append(g.toJson(result));
 			} else if (cmd.equals("/phone_over_check.member")) {
 				String member_phone = request.getParameter("member_phone");
 				boolean result = dao.phone_over_check(member_phone);
-				String resp = g.toJson(result);
-				response.getWriter().append(resp);
+				response.getWriter().append(g.toJson(result));
 			} else if (cmd.equals("/email_over_check.member")) {
 				String member_email = request.getParameter("member_email");
 				boolean result = dao.email_over_check(member_email);
-				String resp = g.toJson(result);
-				response.getWriter().append(resp);
+				response.getWriter().append(g.toJson(result));
 			} else if (cmd.equals("/nickname_over_check.member")) {
 				String member_nickname = request.getParameter("member_nickname");
 				boolean result = dao.nickname_over_check(member_nickname);
-				String resp = g.toJson(result);
-				response.getWriter().append(resp);
+				response.getWriter().append(g.toJson(result));
 			} else if (cmd.equals("/insert_new_member.member")) {
 				String member_id = request.getParameter("member_id");
 				String member_pw = EncryptionUtils.sha512(request.getParameter("member_pw"));
 				String member_name = request.getParameter("member_name");
 				String member_nickname = request.getParameter("member_nickname");
 				String member_birth_date = request.getParameter("member_birth_year") + request.getParameter("member_birth_month") + request.getParameter("member_birth_day");
-				String member_phone = request.getParameter("member_phone1") + request.getParameter("member_phone2") + request.getParameter("member_phone3");
+				String member_phone = request.getParameter("member_phone");
 				String member_email = request.getParameter("member_email");
 				String member_agree = request.getParameter("member_agree");
 
-				//				System.out.println(member_id);
-				//				System.out.println(member_pw);
-				//				System.out.println(member_name);
-				//				System.out.println(member_nickname);
-				//				System.out.println(member_birth_date);
-				//				System.out.println(member_phone);
-				//				System.out.println(member_email);
-				//				System.out.println(member_agree);
 				MemberDTO dto = new MemberDTO(0, 0, member_id, member_pw, member_name, member_nickname, member_birth_date, member_phone, member_email, member_agree, 0, null, null, null);
 				int result = MemberDAO.getInstance().insert_new_member(dto);
 				if (result > 0) {
@@ -125,9 +111,7 @@ public class MemberController extends HttpServlet {
 				}
 			
 			} else if (cmd.equals("/my_profile.member")) {
-				//파라미터는 임시로 해둠
-				String member_id = request.getParameter("member_id");
-
+				String member_id = (String) request.getSession().getAttribute("id");
 				MemberDTO result = dao.select_member(member_id);
 				request.setAttribute("profile", result);
 				request.getRequestDispatcher("/member/my_profile.jsp").forward(request, response);
@@ -139,7 +123,7 @@ public class MemberController extends HttpServlet {
 				dao.update_pw(pw, id);
 				
 			}else if(cmd.equals("/modify_member_profile.member")) {
-				String member_id = request.getParameter("member_id");
+				String member_id = (String) request.getSession().getAttribute("id");
 				String member_confirm_pw = request.getParameter("member_confirm_pw"); 
 				String member_new_pw = request.getParameter("member_new_pw"); 
 				String member_pw = "";
@@ -167,15 +151,26 @@ public class MemberController extends HttpServlet {
 				
 				
 			} else if (cmd.equals("/verify_pw.member")) {
-				String id = request.getParameter("id");
+				String id = (String) request.getSession().getAttribute("id");
 				String pw = EncryptionUtils.sha512(request.getParameter("verify_pw"));
 				boolean result = dao.is_member(id, pw);
-				String resp = g.toJson(result);
-				response.getWriter().append(resp);
+				response.getWriter().append(g.toJson(result));
 			} else if (cmd.equals("/logout.member")) {
 				HttpSession session = request.getSession();
 				session.invalidate();
 				response.sendRedirect("/");
+			} else if (cmd.equals("/delete_member.member")) {
+				String id = (String) request.getSession().getAttribute("id");
+				int result = dao.delete_member(id);
+				if(result>0) {
+					HttpSession session = request.getSession();
+					session.invalidate();
+					response.sendRedirect("/");
+				}else {
+					response.sendRedirect("/error.html");
+				}
+				
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

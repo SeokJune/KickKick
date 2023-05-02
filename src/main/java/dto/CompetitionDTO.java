@@ -7,8 +7,8 @@ public class CompetitionDTO {
 	private int competition_kind_code;
 	private String competition_kind_name;
 	private int competition_kind_headcount;
-	private int latirude;
-	private int longitude;
+	private double latirude;
+	private double longitude;
 	private Timestamp competition_date;
 	private int registration_team_code;
 	private String registration_team_name;
@@ -25,7 +25,7 @@ public class CompetitionDTO {
 	public CompetitionDTO() {}
 	
 	public CompetitionDTO(int competition_registration_code, int competition_kind_code, String competition_kind_name,
-			int competition_kind_headcount, int latirude, int longitude, Timestamp competition_date) {
+			int competition_kind_headcount, double latirude, double longitude, Timestamp competition_date) {
 		super();
 		this.competition_registration_code = competition_registration_code;
 		this.competition_kind_code = competition_kind_code;
@@ -69,19 +69,19 @@ public class CompetitionDTO {
 		this.competition_kind_headcount = competition_kind_headcount;
 	}
 
-	public int getLatirude() {
+	public double getLatirude() {
 		return latirude;
 	}
 
-	public void setLatirude(int latirude) {
+	public void setLatirude(double latirude) {
 		this.latirude = latirude;
 	}
 
-	public int getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(int longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 

@@ -2,6 +2,8 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import commons.DateCalculationUtils;
 import dao.MercenaryDAO;
 import dto.ApplyInfoDTO;
 import dto.CompetitionDTO;
@@ -80,13 +83,17 @@ public class MercenaryController extends HttpServlet {
 				int code = 0;
 				if(request.getParameter("code")==""){
 					code=0;
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter pwriter = response.getWriter();
+					pwriter.println("<script>alert('팀을 먼저 선택해 주세요!'); window.close();</script>"); 
+					pwriter.close();
 				}else {
 					code = Integer.parseInt(request.getParameter("code"));
 
 					List<CompetitionDTO> match_select_list = MercenaryDAO.getInstance().select_match_by_name(code);
 					request.setAttribute("match_select_list", match_select_list);
+					request.getRequestDispatcher("/mercenary/match_check_view.jsp").forward(request, response);
 				}
-				request.getRequestDispatcher("/mercenary/match_check_view.jsp").forward(request, response);
 				
 			}else if(cmd.equals("/to_mercenary_register.mercenary")) {
 				// DB에 용병 등록하기
@@ -129,6 +136,14 @@ public class MercenaryController extends HttpServlet {
 				List<ApplyInfoDTO> apply_list = MercenaryDAO.getInstance().select_apply_list(new ApplyInfoDTO(login_id,code,competition_registration_code));
 				
 				String resp = g.toJson(apply_list);
+				response.getWriter().append(resp);
+				
+			}else if(cmd.equals("/date_format_ajax.mercenary")) {
+				String competition_date = request.getParameter("competition_date");
+				System.out.println(competition_date);
+				String strDate = DateCalculationUtils.date_format_string(competition_date);
+				
+				String resp = g.toJson(strDate);
 				response.getWriter().append(resp);
 			}
 			

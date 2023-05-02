@@ -31,30 +31,21 @@ public class BoardDAO {
 		return ds.getConnection();
 	}
 	
-	//insert기능 미구현
-	//	public int insert(BoardDTO dto) throws Exception{
-	//		String sql1 = "select table_name from board_kind where code=?";
-	//		String board_name;
-	//		String headline_name;
-	//		try(Connection con = this.getConnection()){				
-	//			try(PreparedStatement pstat = con.prepareStatement(sql1)){
-	//				pstat.setInt(1, dto.getBoard_kind_code());
-	//				try(ResultSet rs = pstat.executeQuery()){
-	//					while(rs.next()) {
-	//						board_name = rs.getString("table_name");
-	//					}
-	//				}
-	//			}
-	//
-	//			String sql2 = "insert into ? values(?,?)";
-	//			try(PreparedStatement pstat = con.prepareStatement(sql2)){
-	//				pstat.setString(1, board_name);
-	//				pstat.setString(2, dto.getBoard_headline_code());
-	//			}
-	//		}
-	//	}
-
-	public List<BoardHeadlineDTO> select_board_headline() throws Exception{
+	public String set_table(String board_kind_name) {
+		if(board_kind_name.equals("공지사항")) {
+			return "ANNOUNCEMENT";
+		}
+		else if(board_kind_name.equals("자유게시판")) {
+			return "FREE";
+		}
+		else if(board_kind_name.equals("홍보게시판")) {
+			return "PROMOTION";
+		}
+		//문의하기 게시판은 컬럼이 다르니까 따로 처리하자
+		return "";
+	}
+	
+	public List<BoardHeadlineDTO> select_board_headline_list() throws Exception{
 		String sql = "select h.code, h.name, b.code as \"board_kind_code\", b.name as \"board_name\" from board_kind b join board_headline h on b.code=h.board_kind_code";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -71,6 +62,25 @@ public class BoardDAO {
 		}
 	}
 	
+	public BoardHeadlineDTO select_board_headline(String headline_name) throws Exception{
+		String sql = "select b.code board_code, b.name board_name, h.code headline_code, h.name headline_name from board_kind b join board_headline h on b.code=h.board_kind_code where h.name=?";
+		try(Connection con  = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setString(1, headline_name);
+			try(ResultSet rs = pstat.executeQuery()){
+				BoardHeadlineDTO result = new BoardHeadlineDTO();
+				while(rs.next()) {
+					result.setBoard_kind_code(rs.getInt("board_code"));
+					result.setBoard_name(rs.getString("board_name"));
+					result.setCode(rs.getInt("headline_code"));
+					result.setName(rs.getString("headline_name"));
+				}
+				return result;
+			}
+		}
+	}
+	
+	//게시판 코드로 게시판 이름 get
 	public String select_board_name(int board_code) throws Exception{
 		String sql = "select name from board_kind where code = ?";
 		try(Connection con = this.getConnection();
@@ -248,6 +258,69 @@ public class BoardDAO {
 				}
 				return result;
 			}
+		}
+	}
+	
+	public int add_view_count(String board_table_name, int code) throws Exception{
+		String sql = "update board_"+board_table_name+" set view_count=view_count+1 where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
+	
+	public int substract_view_count(String board_table_name, int code) throws Exception{
+		String sql = "update board_"+board_table_name+" set view_count=view_count-1 where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
+	
+	//(임시)insert기능 
+	public int insert_post(String board_table_name, BoardDTO dto) throws Exception{
+			String sql = "insert into board_"+board_table_name+" values(board_"+board_table_name+"_code.nextval,?,?,?,?,?,default,default,default,null,null)";
+			try(Connection con = this.getConnection();
+					PreparedStatement pstat = con.prepareStatement(sql)){
+				pstat.setInt(1, dto.getBoard_kind_code());
+				pstat.setInt(2, dto.getBoard_headline_code());
+				pstat.setInt(3, dto.getMember_code());
+				pstat.setString(4, dto.getTitle());
+				pstat.setString(5, dto.getContent());
+				int result = pstat.executeUpdate();
+				con.commit();
+				return result;
+		}
+	}
+	
+	public int update_post(String board_table_name, BoardDTO dto) throws Exception{
+		String sql = "update board_"+board_table_name+" set board_headline_code=(select code from board_headline where name=?), title=?, content=?, mod_date=sysdate where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setString(1, dto.getBoard_headline_name());
+			pstat.setString(2, dto.getTitle());
+			pstat.setString(3, dto.getContent());
+			pstat.setInt(4, dto.getCode());
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
+	
+	public int delete_post(String board_table_name, int code) throws Exception{
+		String sql = "delete from board_"+board_table_name+" where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
 		}
 	}
 }

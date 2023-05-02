@@ -22,6 +22,9 @@
 * {
 	font-family: 'NanumSquareNeoBold';
 }
+.container{
+	width: 70%;
+}
 </style>
 <script>
 	window.onload = function(){
@@ -30,6 +33,7 @@
 </script>
 </head>
 <body>
+<div class="container fluid">
 	<table class="table">
 		<thead>
 			<tr>
@@ -54,7 +58,7 @@
 						<input type="hidden" name="name" value ="${i.name}" readonly>
 						<input type="hidden" id="latirude" name="latirude" value ="${i.latirude}" readonly>
 						<input type="hidden" id="longitude" name="longitude" value ="${i.longitude}" readonly>
-						${i.competition_date}
+						<%@page import="commons.DateCalculationUtils"%>${DateCalculationUtils.date_format_timestamp(i.competition_date)}
 					</td>
 					<td id="match_place_${i.code}">
 						<script>
@@ -97,5 +101,6 @@
 			</tr>
 		</tbody>
 	</table>
+	</div>
 </body>
 </html>
