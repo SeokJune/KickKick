@@ -42,6 +42,13 @@ public class ReplyDTO {
 		this.reg_date = reg_date;
 		this.mod_date = mod_date;
 	}
+	
+	//댓글 입력할 때 사용할 생성자
+	public ReplyDTO(int board_code,int member_code,String content) {
+		this.board_code = board_code;
+		this.member_code = member_code;
+		this.content = content;
+	}
 
 	public int getCode() {
 		return code;
