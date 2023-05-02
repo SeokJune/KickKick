@@ -153,7 +153,7 @@ div {
 				<div class="col-12 col-md-12 col-xl-12">
 					<div class="input-group">
 						<span class="input-group-text">소개글</span>
-						<textarea class="form-control" name="contents" id="contents"
+						<textarea class="form-control" name="content" id="content"
 							placeholder="간단한 소개를 적어주세요."></textarea>
 					</div>
 				</div>

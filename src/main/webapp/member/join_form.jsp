@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>KickKick - 회원가입</title>
 <!-- 부트스트랩 CSS CDN -->
 <link
@@ -17,6 +19,8 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 	crossorigin="anonymous"></script>
+<!-- 폰트 -->	
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">	
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 html {
@@ -25,12 +29,13 @@ html {
 
 body {
 	background-color: #76b852;
+	font-family: 'NanumSquareNeo';
 }
 
 .container {
 	border: 1px solid black;
-	width: 600px;
-	height: 800px;
+	width: 700px;
+	height: 1000px;
 	padding: 32px;
 	margin-top: 5%;
 	margin-bottom: 5%;
@@ -42,11 +47,11 @@ body {
 }
 
 .wrapper {
+	height: auto;
 	position: relative;
 	padding-left:25px;
 	padding-right:25px;
 	padding-top:20px;
-	
 }
 
 .row input {
@@ -54,13 +59,14 @@ body {
 	width:250px;
 }
 
-
 label {
-	font-size: small
+	font-size: small;
+	font-family: 'NanumSquareNeoBold';
 }
 
 .essential {
 	font-size: small;
+	font-family: 'NanumSquareNeoBold';
 	color: red;
 }
 
@@ -74,6 +80,12 @@ label {
 	bottom: 15%;
 }
 
+#password-alert *{
+font-size: x-small;
+}
+.valid-feedback,.invalid-feedback{
+font-size: small;
+}
 .btn {
 	border: none;
 }
@@ -117,7 +129,6 @@ label {
 							<div class="col md-9">
 								<input type="text" class="form-control" id="member_id"
 									name="member_id" pattern="^[a-z](?=.*[0-9])[0-9a-z]{4,19}$"
-									title="5자 이상 20자 이내로 영소문자,숫자 필수 포함" minlength="5"
 									maxlength="20" required>
 							</div>
 						</div>
@@ -133,91 +144,53 @@ label {
 
 
 				<!-- 비밀번호 -->
-				<div class="row insert" style="height: 85px;">
+				<div class="row insert" style="height: 90px;">
 					<!-- 비밀번호 입력창 -->
 					<div class="col">
 						<div class="row label">
-							<div class="col md-9">
+							<div class="col">
 								<span class="essential">* </span><label for="member_pw">비밀번호</label>
 							</div>
 						</div>
 						<div class="row input">
 							<div class="col md-9">
-								<input type="password" class="form-control" id="member_pw"
-									name="member_pw"
-									pattern="^(?=.*[a-zA-Z])(?=.*[~.!@#$%^&*()_+={}>;<:,.?/\-\[\]\\\|])(?=.*[0-9]).{8,20}$"
-									title="영대소문자,숫자,특수문자를 모두 포함한 8~20자" minlength="8"
-									maxlength="20" required>
+								<input type="password" class="form-control rounded mt-1"
+									id="member_pw" name="member_pw" aria-label="password"
+									pattern="^(?=.*[A-Z])(?=.*[~.!@#$%^&*()_+={}>;<:,.?/\-\[\]\\\|])(?=.*[0-9]).{8,20}$"
+									aria-describedby="password" class="password" maxlength="20"
+									required>
+								<div class="valid-feedback">Good</div>
+								<div class="invalid-feedback">Wrong</div>
 							</div>
 							<!-- 비밀번호 보기&숨기기 버튼 -->
-							<div class="col md-3">
+							<div class="col">
 								<button class="btn btn-light btn-sm" id="view_pw" type="button">보기</button>
 							</div>
-						</div>
-					</div>
-				</div>
-
-
-
-
-				<!-- 이름 -->
-				<div class="row insert" style="height: 85px;">
-					<!-- 이름 입력창 -->
-					<div class="col">
-						<div class="row label">
-							<div class="col">
-								<span class="essential">* </span> <label for="member_name">이름</label>
-							</div>
-						</div>
-						<div class="row input">
-							<div class="col md-9">
-								<input type="text" class="form-control" id="member_name"
-									name="member_name" pattern="^[가-힣]{2,5}$"
-									title="2자 이상 5자 이내의 한글" minlength="2" maxlength="5" required>
-							</div>
-						</div>
-					</div>
-				</div>
-
-
-
-
-
-				<!-- 전화번호 -->
-				<div class="row insert" style="height: 85px;">
-					<!-- 전화번호1,2,3 입력창 -->
-					<div class="col">
-						<div class="row label">
-							<div class="col">
-								<span class="essential">* </span><label for="member__phone">전화번호</label>
-							</div>
-						</div>
-						<div class="row input">
-							<div class="col">
-								<input type="text" class="form-control" id="member_phone1"
-									name="member_phone1" pattern="^0+\d{1,2}$" minlength="2"
-									maxlength="3" required style="width: 100px;">
-							</div>
-							<div class="col">
-								<input type="text" class="form-control" id="member_phone2"
-									name="member_phone2" pattern="^\d{3,4}$" minlength="3"
-									maxlength="4" required style="width: 100px;">
-							</div>
-							<div class="col">
-								<input type="text" class="form-control" id="member_phone3"
-									name="member_phone3" pattern="^\d{4}$" minlength="4"
-									maxlength="4" required style="width: 100px;">
-							</div>
-							<!-- 인증번호 전송 버튼 -->
-							<div class="col">
-								<button type="button" class="btn btn-primary btn-sm"
-									style="font-size: small;">인증번호 발송</button>
-							</div>
-						</div>
-						<!-- 전화번호 중복 메세지 -->
-						<div class="row checking">
-							<div class="col">
-								<h9 id="phone_checking"></h9>
+							<div class="col w-auto h-auto">
+								<div class="alert px-3 py-3 mb-0 d-none" role="alert" data-mdb-color="warning" id="password-alert">
+									<ul class="list-unstyled mb-0">
+										<li class="requirements leng">
+											<i class="bi bi-check text-success me-2"></i> 
+											<i class="bi bi-x text-danger me-3"></i> 
+											8자 이상
+										</li>
+										<li class="requirements big-letter">
+											<i class="bi bi-check text-success me-2"></i> 
+											<i class="bi bi-x text-danger me-3"></i> 
+											하나 이상의 알파벳 대문자를 포함
+										</li>
+										<li class="requirements num">
+											<i class="bi bi-check text-success me-2"></i> 
+											<i class="bi bi-x text-danger me-3"></i> 
+											숫자 하나 이상 포함
+										</li>
+										<li class="requirements special-char">
+											<i class="bi bi-check text-success me-2"></i> 
+											<i class="bi bi-x text-danger me-3"></i> 
+											특수문자가 하나 이상 포함
+										</li>
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -225,150 +198,217 @@ label {
 
 
 
-				<!-- 인증번호 -->
-				<div class="row insert" style="height: 85px;">
-					<!-- 인증번호 입력창 -->
-					<div class="col">
-						<div class="row label">
+						<!-- 이름 -->
+						<div class="row insert" style="height: 85px;">
+							<!-- 이름 입력창 -->
 							<div class="col">
-								<span class="essential">* </span><label for="member_pin">인증번호</label>
+								<div class="row label">
+									<div class="col">
+										<span class="essential">* </span> <label for="member_name">이름</label>
+									</div>
+								</div>
+								<div class="row input">
+									<div class="col md-9">
+										<input type="text" class="form-control" id="member_name"
+											name="member_name" pattern="^[가-힣]{2,5}$"
+											title="2자 이상 5자 이내의 한글" minlength="2" maxlength="5" required>
+									</div>
+								</div>
 							</div>
 						</div>
-						<div class="row input">
-							<div class="col md-9">
-								<input type="text" class="form-control" id="member_pin"
-									name="member_pin" required>
-							</div>
-							<!-- 인증완료 버튼 -->
+
+
+
+
+
+						<!-- 전화번호 -->
+						<div class="row insert" style="height: 85px;">
+							<!-- 전화번호1,2,3 입력창 -->
 							<div class="col">
-								<button type="button" class="btn btn-primary btn-sm">인증완료</button>
+								<div class="row label">
+									<div class="col">
+										<span class="essential">* </span><label for="member__phone">전화번호</label>
+									</div>
+								</div>
+								<div class="row input">
+									<div class="col">
+										<input type="text" class="form-control" id="member_phone1"
+											name="member_phone1" pattern="^0+\d{1,2}$" minlength="2"
+											maxlength="3" required style="width: 100px;">
+									</div>
+									<div class="col">-</div>
+									<div class="col">
+										<input type="text" class="form-control" id="member_phone2"
+											name="member_phone2" pattern="^\d{3,4}$" minlength="3"
+											maxlength="4" required style="width: 100px;">
+									</div>
+									<div class="col">-</div>
+									<div class="col">
+										<input type="text" class="form-control" id="member_phone3"
+											name="member_phone3" pattern="^\d{4}$" minlength="4"
+											maxlength="4" required style="width: 100px;">
+									</div>
+									<!-- 인증번호 전송 버튼 -->
+									<div class="col">
+										<button type="button" class="btn btn-primary btn-sm"
+											style="font-size: small;">인증번호 발송</button>
+									</div>
+								</div>
+								<!-- 전화번호 중복 메세지 -->
+								<div class="row checking">
+									<div class="col">
+										<h9 id="phone_checking"></h9>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
 
 
 
-
-
-				<!-- 생년월일 -->
-				<div class="row insert" style="height: 85px;">
-					<!-- 생년월일 입력창 -->
-					<div class="col">
-						<div class="row label">
+						<!-- 인증번호 -->
+						<div class="row insert" style="height: 85px;">
+							<!-- 인증번호 입력창 -->
 							<div class="col">
-								<span class="essential">* </span><label for="member_birth">생년월일</label>
+								<div class="row label">
+									<div class="col">
+										<span class="essential">* </span><label for="member_pin">인증번호</label>
+									</div>
+								</div>
+								<div class="row input">
+									<div class="col md-9">
+										<input type="text" class="form-control" id="member_pin"
+											name="member_pin" required>
+									</div>
+									<!-- 인증완료 버튼 -->
+									<div class="col">
+										<button type="button" class="btn btn-primary btn-sm">인증완료</button>
+									</div>
+								</div>
 							</div>
 						</div>
-						<div class="row input">
-							<div class="col md-9">
-								<select class="form-select" id="member_birth_year"
-									name="member_birth_year" style="width: 100px;"></select>
-							</div>
 
+
+
+
+
+
+						<!-- 생년월일 -->
+						<div class="row insert" style="height: 85px;">
+							<!-- 생년월일 입력창 -->
 							<div class="col">
-								<select class="form-select" id="member_birth_month"
-									name="member_birth_month" style="width: 100px;"></select>
+								<div class="row label">
+									<div class="col">
+										<span class="essential">* </span><label for="member_birth">생년월일</label>
+									</div>
+								</div>
+								<div class="row input">
+									<div class="col md-9">
+										<select class="form-select" id="member_birth_year"
+											name="member_birth_year" style="width: 100px;">년</select>
+									</div>
+									<div class="col">년</div>
+									<div class="col">
+										<select class="form-select" id="member_birth_month"
+											name="member_birth_month" style="width: 100px;"></select>
+									</div>
+									<div class="col">월</div>
+									<div class="col">
+										<input type="text" class="form-control" id="member_birth_day"
+											name="member_birth_day" pattern="^(0[1-9]|[12][0-9]|3[01])$"
+											title="두자리로 입력" minlength="2" maxlength="2" required
+											style="width: 100px;">
+									</div>
+									<div class="col">일</div>
+								</div>
+							</div>
+						</div>
+
+
+						<!-- 이메일 -->
+						<div class="row insert" style="height: 85px;">
+							<!-- 이메일 입력창 -->
+							<div class="col">
+								<div class="row label">
+									<div class="col">
+										<label for="member_email"> E-mail</label>
+									</div>
+								</div>
+								<div class="row input">
+									<div class="col md-9">
+										<input type="email" class="form-control" id="member_email"
+											name="member_email"
+											pattern="^([a-z]{1}[a-z0-9_+.-]+@)([a-zA-Z0-9]+\.)([a-z0-9]{2,4})$"
+											title="abc@abc.com 형식으로 입력">
+									</div>
+								</div>
+								<!-- 이메일 중복 확인 메세지 -->
+								<div class="row checking">
+									<div class="col md-3">
+										<h9 id="email_checking"> </h9>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+						<!-- 닉네임 -->
+						<div class="row insert" style="height: 85px;">
+							<!-- 닉네임 입력창 -->
+							<div class="col">
+								<div class="row label">
+									<div class="col">
+										<label for="member_nickname"> 닉네임</label>
+									</div>
+								</div>
+								<div class="row input">
+									<div class="col md-9">
+										<input type="text" class="form-control" id="member_nickname"
+											name="member_nickname" pattern="^[가-힣a-zA-Z0-9]{2,10}$"
+											title="2자 이상 10자 이내로 한글, 영대소문자, 숫자 중 1개 이상 포함 " minlength="2"
+											maxlength="10" style="width: 255px;">
+									</div>
+								</div>
+								<!-- 닉네임 중복 확인 메세지 -->
+								<div class="row checking">
+									<div class="col md-3">
+										<h9 id="nickname_checking"> </h9>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+						<!-- 가입동의  -->
+						<div class="row insert">
+							<div class="col">
+								<div class="row input member_agree">
+									<div class="col">
+										<span> 가입에 동의하시겠습니까? </span> <input class="form-check-input"
+											type="checkbox" id="member_agree" name="member_agree"
+											value="Y" style="height: 25px; width: 25px;" required>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+
+						<!-- 가입버튼 & 돌아가기 버튼 -->
+						<div class="row">
+							<div class="col">
+								<button class="btn btn-secondary" id="join"
+									style="background-color: #76b852;">가입하기</button>
 							</div>
 							<div class="col">
-								<input type="text" class="form-control" id="member_birth_day"
-									name="member_birth_day" pattern="^(0[1-9]|[12][0-9]|3[01])$"
-									title="두자리로 입력" minlength="2" maxlength="2" required
-									style="width: 100px;">
+								<a href="">
+									<button class="btn btn-secondary" type="button" id="back"
+										style="background-color: #76b852;">뒤로가기</button>
+								</a>
 							</div>
 						</div>
-					</div>
-				</div>
-
-
-				<!-- 이메일 -->
-				<div class="row insert" style="height: 85px;">
-					<!-- 이메일 입력창 -->
-					<div class="col">
-						<div class="row label">
-							<div class="col">
-								<label for="member_email"> E-mail</label>
-							</div>
-						</div>
-						<div class="row input">
-							<div class="col md-9">
-								<input type="email" class="form-control" id="member_email"
-									name="member_email"
-									pattern="^([a-z]{1}[a-z0-9_+.-]+@)([a-zA-Z0-9]+\.)([a-z0-9]{2,4})$"
-									title="abc@abc.com 형식으로 입력">
-							</div>
-						</div>
-						<!-- 이메일 중복 확인 메세지 -->
-						<div class="row checking">
-							<div class="col md-3">
-								<h9 id="email_checking"> </h9>
-							</div>
-						</div>
-					</div>
-				</div>
-
-
-
-				<!-- 닉네임 -->
-				<div class="row insert" style="height: 85px;">
-					<!-- 닉네임 입력창 -->
-					<div class="col">
-						<div class="row label">
-							<div class="col">
-								<label for="member_nickname"> 닉네임</label>
-							</div>
-						</div>
-						<div class="row input">
-							<div class="col md-9">
-								<input type="text" class="form-control" id="member_nickname"
-									name="member_nickname" pattern="^[가-힣a-zA-Z0-9]{2,10}$"
-									title="2자 이상 10자 이내로 한글, 영대소문자, 숫자 중 1개 이상 포함 " 
-									minlength="2" maxlength="10" style="width: 255px;">
-							</div>
-						</div>
-						<!-- 닉네임 중복 확인 메세지 -->
-						<div class="row checking">
-							<div class="col md-3">
-								<h9 id="nickname_checking"> </h9>
-							</div>
-						</div>
-					</div>
-				</div>
-
-
-
-				<!-- 가입동의  -->
-				<div class="row insert">
-					<div class="col">
-						<div class="row input member_agree">
-							<div class="col">
-								<span> 가입에 동의하시겠습니까? </span> <input class="form-check-input"
-									type="checkbox" id="member_agree" name="member_agree" value="Y"
-									style="height: 25px; width: 25px;" required>
-							</div>
-						</div>
-					</div>
-				</div>
-
-
-
-
-				<!-- 가입버튼 & 돌아가기 버튼 -->
-				<div class="row">
-					<div class="col">
-						<button class="btn btn-secondary" id="join"
-							style="background-color: #76b852;">가입하기</button>
-					</div>
-					<div class="col">
-						<a href="">
-							<button class="btn btn-secondary" type="button" id="back"
-								style="background-color: #76b852;">뒤로가기</button>
-						</a>
-					</div>
-				</div>
-
-
-
 			</form>
 
 		</div>
@@ -492,10 +532,121 @@ label {
 			}
 
 		})
+		
+		//pw 유효성 검사
+				let lengBoolean, bigLetterBoolean, numBoolean, specialCharBoolean;
+				addEventListener("DOMContentLoaded", (event) => {
+					const password = document.getElementById("member_pw");
+					const passwordAlert = document.getElementById("password-alert");
+					const requirements = document.querySelectorAll(".requirements");
+					let leng = document.querySelector(".leng");
+					let bigLetter = document.querySelector(".big-letter");
+					let num = document.querySelector(".num");
+					let specialChar = document.querySelector(".special-char");
+					const specialChars = "!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?`~";
+					const numbers = "0123456789";
+
+					requirements.forEach((element) => element.classList.add("wrong"));
+
+					password.addEventListener("focus", () => {
+						passwordAlert.classList.remove("d-none");
+						if (!password.classList.contains("is-valid")) {
+							password.classList.add("is-invalid");
+						}
+					});
+
+					password.addEventListener("input", () => {
+						let value = password.value;
+						if (value.length < 8) {
+							lengBoolean = false;
+						} else if (value.length > 7) {
+							lengBoolean = true;
+						}
+
+						if (value.toLowerCase() == value) {
+							bigLetterBoolean = false;
+						} else {
+							bigLetterBoolean = true;
+						}
+
+						numBoolean = false;
+						for (let i = 0; i < value.length; i++) {
+							for (let j = 0; j < numbers.length; j++) {
+								if (value[i] == numbers[j]) {
+									numBoolean = true;
+								}
+							}
+						}
+
+						specialCharBoolean = false;
+						for (let i = 0; i < value.length; i++) {
+							for (let j = 0; j < specialChars.length; j++) {
+								if (value[i] == specialChars[j]) {
+									specialCharBoolean = true;
+								}
+							}
+						}
+
+						if (lengBoolean == true && bigLetterBoolean == true && numBoolean == true && specialCharBoolean == true) {
+							password.classList.remove("is-invalid");
+							password.classList.add("is-valid");
+
+							requirements.forEach((element) => {
+								element.classList.remove("wrong");
+								element.classList.add("good");
+							});
+							passwordAlert.classList.remove("alert-warning");
+							passwordAlert.classList.add("alert-success");
+						} else {
+							password.classList.remove("is-valid");
+							password.classList.add("is-invalid");
+
+							passwordAlert.classList.add("alert-warning");
+							passwordAlert.classList.remove("alert-success");
+
+							if (lengBoolean == false) {
+								leng.classList.add("wrong");
+								leng.classList.remove("good");
+							} else {
+								leng.classList.add("good");
+								leng.classList.remove("wrong");
+							}
+
+							if (bigLetterBoolean == false) {
+								bigLetter.classList.add("wrong");
+								bigLetter.classList.remove("good");
+							} else {
+								bigLetter.classList.add("good");
+								bigLetter.classList.remove("wrong");
+							}
+
+							if (numBoolean == false) {
+								num.classList.add("wrong");
+								num.classList.remove("good");
+							} else {
+								num.classList.add("good");
+								num.classList.remove("wrong");
+							}
+
+							if (specialCharBoolean == false) {
+								specialChar.classList.add("wrong");
+								specialChar.classList.remove("good");
+							} else {
+								specialChar.classList.add("good");
+								specialChar.classList.remove("wrong");
+							}
+						}
+					});
+
+					password.addEventListener("blur", () => {
+						passwordAlert.classList.add("d-none");
+					});
+				});
+
+		
 
 		//전화번호 중복 체크
 		let phone_valid = false;
-		let regex_phone = /^[0-9]{10,11}$/;
 
 		$("#member_phone1,#member_phone2,#member_phone3").on(
 				"keyup",
@@ -542,6 +693,7 @@ label {
 			
 			if(email==""){
 				email_valid = true;
+				$("#email_checking").html("");
 			}else{
 				$.ajax({
 					url : "/email_over_check.member",
@@ -571,12 +723,14 @@ label {
 		
 		//닉네임 중복 체크
 		let nickname_valid = true;
+		
 		$("#member_nickname").on("keyup", function() {
 			let nickname = $("#member_nickname").val();
 			console.log(nickname);
 			
 			if(nickname==""){
 				nickname_valid = true;
+				$("#nickname_checking").html("");
 			}else{
 				$.ajax({
 					url : "/nickname_over_check.member",
@@ -612,7 +766,8 @@ label {
 				alert("아이디 중복 여부를 확인하세요.");
 				return false;
 			}
-
+			
+		
 			if (!phone_valid) {
 				alert("전화번호 중복 여부를 확인하세요.");
 				return false;

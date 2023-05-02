@@ -36,7 +36,7 @@ public class CreateTeamDAO {
 	}
 
 
-	public List<HometownDTO> selectHometown() throws Exception {
+	public List<HometownDTO> select_hometown() throws Exception {
 		String sql = "select * from hometown";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -57,10 +57,12 @@ public class CreateTeamDAO {
 		}
 	}
 
-	public int insertTeam(TeamDTO dto) throws Exception {
+	public int insert_team(TeamDTO dto) throws Exception {
+		System.out.println("!");
 		String sql = "insert into team values(team_code.nextval,?,?,?,?,?,?,?,sysdate,null,null)"; 
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
+			System.out.println("!!");
 
 
 			pstat.setInt(1, dto.getLogo_path_code());
@@ -71,8 +73,9 @@ public class CreateTeamDAO {
 			pstat.setString(6, dto.getOutline());
 			pstat.setString(7, dto.getContect());
 			
-
+			System.out.println("!!!");
 			int result = pstat.executeUpdate();
+			System.out.println("!!!!");
 			con.commit();
 
 			return result;
@@ -81,7 +84,7 @@ public class CreateTeamDAO {
 
 	}
 
-	public boolean team_nameExist(String team_name) throws Exception {
+	public boolean team_name_exist(String team_name) throws Exception {
 		String sql = "select * from team where name=?";
 
 		try(Connection con = this.getConnection();
@@ -93,6 +96,10 @@ public class CreateTeamDAO {
 			}
 		}
 	}
+	
+
+	
+	
 
 //	public List<MemberDTO> selectMember() throws Exception {
 //		String sql = "select * from member";
@@ -125,7 +132,7 @@ public class CreateTeamDAO {
 //		
 //	}
 
-	public List<TeamDTO> selectTeam() throws Exception {
+	public List<TeamDTO> select_team() throws Exception {
 		String sql = "select * from team_view"; 
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -160,7 +167,7 @@ public class CreateTeamDAO {
 	}
 	
 	
-	private int getRecordCount() throws Exception {
+	private int get_recode_count() throws Exception {
 		String sql = "select count(*) from team";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -170,9 +177,9 @@ public class CreateTeamDAO {
 		}
 	}
 
-	public String getPageNavi(int currentPage) throws Exception {
+	public String get_page_navi(int currentPage) throws Exception {
 		// 네비게이터를 만들기 위해 필요한 초기 정보
-		int recordTotalCount = this.getRecordCount(); // 1. 전체 글의 개수
+		int recordTotalCount = this.get_recode_count(); // 1. 전체 글의 개수
 		int recordCountPerPage = Settings.BOARD_RECORD_COUNT_PER_PAGE; // 2. 페이지 당 보여줄 글의 갯수
 		int naviCountPerPage = Settings.BOARD_NAVI_COUNT_PER_PAGE; // 3. 페이지 당 보여줄 네비게이터의 갯수
 
