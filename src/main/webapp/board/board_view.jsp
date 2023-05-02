@@ -330,10 +330,12 @@ div {
 			<div class="col-12" style="height: 500px;">${board.content}</div>
 			<div class="col text-center">
 				<button type="button" class="btn btn-primary">좋아요</button>
+				<c:if test="${sessionScope.nickname ne board.member_nickname}">
 				<button type="button" class="btn btn-danger">신고</button>
+				</c:if>
 			</div>
 			<c:if
-				test="${sessionScope.nickname.equals(board.member_nickname)}">
+				test="${sessionScope.nickname eq board.member_nickname}">
 				<div class="col-12 gap-2 d-flex justify-content-end">
 					<button type="button" class="btn btn-dark" id="to_update">수정</button>
 					<button type="button" class="btn btn-secondary" id="delete">삭제</button>
@@ -360,6 +362,7 @@ div {
 										class="badge rounded-pill text-bg-success">👍🏻${reply.like_count}</span></small>
 								</div>
 							</div>
+							<c:if test="${sessionScope.code ne null}">
 							<div class="right d-flex p-0">
 								<div class="p-0" style="margin-right: 5px">
 									<small>답글달기</small>
@@ -374,7 +377,7 @@ div {
 									</button>
 									<ul class="dropdown-menu p-0">
 										<c:choose>
-											<c:when test="${sessionScope.nickname.equals(reply.member_nickname)}">
+											<c:when test="${sessionScope.nickname eq reply.member_nickname}">
 												<li><small><a class="dropdown-item" href="#">수정</a></small></li>
 												<li><small><a class="dropdown-item" href="#">삭제</a></small></li>
 											</c:when>
@@ -385,6 +388,7 @@ div {
 									</ul>
 								</div>
 							</div>
+							</c:if>
 						</div>
 						<div class="col-12">${reply.content}</div>
 					</div>
