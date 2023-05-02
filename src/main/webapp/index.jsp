@@ -42,8 +42,7 @@
 	background-color: rgba(0, 0, 0, .1);
 	border: solid rgba(0, 0, 0, .15);
 	border-width: 1px 0;
-	box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em
-		rgba(0, 0, 0, .15);
+	box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
 }
 
 .b-example-vr {
@@ -176,13 +175,13 @@
 							<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">마이페이지</button>
 							<div class="collapse show" id="home-collapse">
 								<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-									<li>
+									<li class="login">
 										<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 활동 관리</a>
 									</li>
-									<li>
+									<li class="login">
 										<a href="/member/my_profile.jsp" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 정보 보기</a>
 									</li>
-									<li>
+									<li class="login">
 										<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀 보기</a>
 									</li>
 								</ul>
@@ -210,13 +209,13 @@
 							<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">팀 카테고리</button>
 							<div class="collapse" id="orders-collapse">
 								<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-									<li>
+									<li class="login">
 										<a href="/hometown.team" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 생성</a>
 									</li>
 									<li>
 										<a href="/list.team?cpage=1" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 목록보기</a>
 									</li>
-									<li>
+									<li class="login">
 										<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀 게시판으로</a>
 									</li>
 									<li>
@@ -230,13 +229,13 @@
 							<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">매치메이킹</button>
 							<div class="collapse" id="account-collapse">
 								<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-									<li>
+									<li class="login">
 										<a href="/registration.competition" class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭 등록</a>
 									</li>
 									<li>
 										<a href="/list.competition" class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭 신청</a>
 									</li>
-									<li>
+									<li class="login">
 										<a href="#" class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병 등록</a>
 									</li>
 									<li>
@@ -266,6 +265,14 @@
 			</div>
 		</div>
 	</nav>
+	<script type="text/javascript">
+		let data = '<c:out value="${sessionScope.id}"/>';
+		if (data == "") {
+			$(".login").hide();
+		} else {
+			$(".login").show();
+		}
+	</script>
 </body>
 
 </html>
