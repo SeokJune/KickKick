@@ -90,13 +90,13 @@ public class TeamController extends HttpServlet {
 				int start = (current_page * Settings.BOARD_RECORD_COUNT_PER_PAGE) - (Settings.BOARD_RECORD_COUNT_PER_PAGE-1);
 				int end = current_page * Settings.BOARD_NAVI_COUNT_PER_PAGE;
 				
-				List<TeamDTO> teamlist_arr = dao.select_team();
+				List<TeamDTO> teamlist_arr = dao.select_team(start, end);
 				String page_navi = dao.get_page_navi(current_page);
 				request.setAttribute("teamlist_arr", teamlist_arr);
 				request.setAttribute("navi", page_navi);
 				request.getRequestDispatcher("/team/team_list.jsp").forward(request, response); 
 			}
-			else if(cmd.equals("/page.team")) {
+			else if(cmd.equals("/view.team")) {
 				int team_code = Integer.parseInt(request.getParameter("team_code"));
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
 				TeamDTO team_info = dao.team_info(team_code);
