@@ -31,10 +31,27 @@
 }
 div {
 	font-family: 'NanumSquareNeoBold';
+	outline-color: red;
 }
-
+input {
+	border-radius: 5px;
+	box-shadow: 5px 2px 3px;
+}
 .container-fluid{
-	background-color: whitesmoke;	
+	background:
+      repeating-linear-gradient(190deg, rgba(255, 0, 0, 0.5) 40px,
+        rgba(255, 153, 0, 0.5) 80px, rgba(255, 255, 0, 0.5) 120px,
+        rgba(0, 255, 0, 0.5) 160px, rgba(0, 0, 255, 0.5) 200px,
+        rgba(75, 0, 130, 0.5) 240px, rgba(238, 130, 238, 0.5) 280px,
+        rgba(255, 0, 0, 0.5) 300px),
+      repeating-linear-gradient(-190deg, rgba(255, 0, 0, 0.5) 30px,
+        rgba(255, 153, 0, 0.5) 60px, rgba(255, 255, 0, 0.5) 90px,
+        rgba(0, 255, 0, 0.5) 120px, rgba(0, 0, 255, 0.5) 150px,
+        rgba(75, 0, 130, 0.5) 180px, rgba(238, 130, 238, 0.5) 210px,
+        rgba(255, 0, 0, 0.5) 230px),
+      repeating-linear-gradient(23deg, red 50px, orange 100px,
+        yellow 150px, green 200px, blue 250px,
+        indigo 300px, violet 350px, red 370px);	
 }
 
 #logo {
@@ -45,16 +62,57 @@ div {
 	width: 100px;
 	height: 100px;
 }
-button {
-	font-weight: 600;
+#dup_btn {
+	font-weight: 500;
 	color: whitesmoke;
-	background-color: #76b852;
 	border: none;
+	padding: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	background: linear-gradient(red, yellow, blue, orange);
+}
+#dup_check {
+	font-size: 12px;
+	color: rgba(0,0,0,0.5);
+}
+#create_team {
+	font-weight: 500;
+	color: whitesmoke;
+	background: linear-gradient(red, yellow, blue, orange);
+	border: none;
+	margin-top: 4px;
+	margin-bottom: 4px;
 	padding: 5px;
 	border-radius: 3px;
+	box-shadow: 5px 2px 3px;
+}
+#cancel_team {
+	font-weight: 500;
+	color: whitesmoke;
+	background: linear-gradient(red, yellow, blue, orange);	
+	border: none;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	padding: 5px;
+	border-radius: 3px;
+	box-shadow: 5px 2px 3px;
+}
+#hometown_code {
+	border-radius: 10px;
+	box-shadow: 5px 2px 3px;
+}
+#outline {
+	border-radius: 10px;
+	box-shadow: 5px 2px 3px;
 }
 #edi {
 	background-color: #FFFFFF;
+	width: 70%;
+	height: 150px; 
+	border: 1px solid black;
+	margin: auto;
+	border-radius: 10px;
+	box-shadow: 5px 2px 3px;
 }
 </style>
 </head>
@@ -64,8 +122,6 @@ button {
 		<div class="container-fluid">
 			<div class="row body">
 				<div class="col-12 col-md-2"></div>
-
-
 
 
 				<div class="col-12 col-md-2" id="logo">
@@ -89,15 +145,20 @@ button {
 
 
 				<div class="col-12 col-md-4" id="team_info">
-					<div class="row">
+					<div class="row" style="margin-top:10px;">
 						<div class="col-md-3"></div>
 						<div class="col-9 col-md-6" style="margin: auto;">
 							<input type="text" placeholder="팀명" class="w-100"
 								name="team_name" id="team_name">
 						</div>
-						<div class="col-3 col-md-3" align="center">
-							<button type="button" id="dup" style="font-size: 15px;">중복</button>
+						<div class="col-3 col-md-3" align="center" style="text-align: left;">
+							<button type="button" id="dup_btn">중복</button>
 						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3"></div>
+						<div class="col-md-6" id="dup_check">한글,영어만 가능</div>
+						<div class="col-md-3"></div>
 					</div>
 
 
@@ -110,7 +171,7 @@ button {
 						<div class="col-md-3"></div>
 					</div>
 
-					<div class="row">
+					<div class="row" style="margin-top:17px;">
 						<div class="col-md-3"></div>
 						<div class="col-12 col-md-6" style="margin: auto;">
 							<input type="text"
@@ -120,10 +181,10 @@ button {
 						<div class="col-md-3"></div>
 					</div>
 
-					<div class="row">
+					<div class="row" style="margin-top:17px;">
 						<div class="col-md-3"></div>
 						<div class="col-12 col-md-6" style="margin: auto;">
-							<select name="hometown_code">
+							<select name="hometown_code" id="hometown_code">
 								<c:forEach var="item" items="${hometown_arr}">
 									<option value="${item.code}">${item.name}</option>
 								</c:forEach>
@@ -134,33 +195,32 @@ button {
 
 					<div class="row">
 
-						<div class="col-12 col-md-8" style="margin: auto;">
+						<div class="col-12 col-md-8" style="margin:auto; margin-top:17px;">
 							<textarea placeholder="간략 소개글" name="outline" class="w-100"
 								id="outline"></textarea>
 						</div>
 					</div>
 				</div>
 
-				<div class="col-12 col-md-4"></div>
+				
 			</div>
 
-			<div class="row" style="margin: auto;">
-				<div class="col-xl-3 "></div>
+			<div class="row" style="margin:auto; margin-top:10px;">
+				<div class="col-md-3 col-xl-3 "></div>
 
-				<div class="col-12 col-md-6" style="margin: auto;">
-					<div contenteditable="true" id="edi"
-						style="height: 150px; border: 1px solid black;"></div>
+				<div class="col-12 col-md-6">
+					<div contenteditable="true" id="edi"></div>
 					<input type="hidden" name="content" id="spy">
 				</div>
 
-				<div class="col-xl-3"></div>
+				<div class="col-md-3 col-xl-3"></div>
 			</div>
 
 			<br>
 
 			<div class="row footer">
 				<div class="col-6">
-					<a href="/"><button type="button" style="float: right;">생성취소</button></a>
+					<button type="button" id="cancel_team" style="float: right;" onclick="location.href='/'">생성취소</button>
 				</div>
 				<div class="col-6">
 					<button id="create_team">생성하기</button>
@@ -170,10 +230,12 @@ button {
 	</form>
 
 	<script>
+		// 생성취소 눌렀을 시 전 페이지로 넘어가기
+		
 		// 팀명 중복도 및 올바른 형식 
 		let team_name = $("#team_name");
 		let team_name_regex = /^[가-힣a-zA-Z]+$/;
-		let dup = document.getElementById("dup");
+		let dup = document.getElementById("dup_btn");
 		let tf;
 
 		var team_name_ValidFlag = false; // 팀명 사용 취소 누를 때 false를 반환해서 생성하기 버튼을 눌렀을 때 데이터 넘어가는 것을 막음.
@@ -182,12 +244,33 @@ button {
 			let val = team_name.val();
 			tf = team_name_regex.test(val);
 			if (tf) {
-				window
-						.open("/team_name_check.team?team_name="
-								+ $("#team_name").val(), "",
-								"width=350px,height=250px");
+				$.ajax({
+					url : "/team_name_check.team",
+					type : "post",
+					data : {
+						team_name : $("#team_name").val()
+					}
+				}).done(function(resp) {
+					resp = JSON.parse(resp);
+					
+					if(resp) {
+						$("#dup_check").html("사용불가능").css("color", "#DF013A");
+						team_name_ValidFlag = false;
+					}
+					else {
+						$("#dup_check").html("사용가능").css("color", "#2E2EFE");
+						team_name_ValidFlag = true;
+					}
+					
+				})
+				
+
 			} else {
-				swal('사용 불가능한 팀명!', "이 팀명으로는 사용 못해!!", 'warning');
+				swal('사용 불가능한 팀명!', "팀명을 다시 입력하세요.", 'warning');
+				$("#team_name").val("");
+				$("#dup_check").text("한글,영어만 가능").css({
+					"color":"#000000", "color":"rgba(0,0,0,0.5)"
+				});
 			}
 		}
 
@@ -199,7 +282,7 @@ button {
 		// 생성하기 눌렀을 시
 		$("#frm").on("submit", function() {
 
-			if (team_name_regex.test(team_name.val()) == false) {
+			if (team_name_regex.test(team_name.val().trim()) == false) {
 				alert("팀명을 다시 입력하세요.");
 				return false;
 			}
@@ -222,6 +305,8 @@ button {
 			}
 			let content = $("#edi").html();
 			$("#spy").val(content);
+
+			
 		});
 		
 		

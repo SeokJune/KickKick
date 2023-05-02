@@ -48,10 +48,11 @@ public class MemberController extends HttpServlet {
 			} else if (cmd.equals("/phone_auth.member")) {
 
 				String phone = request.getParameter("phone");
-
+				System.out.println(phone);
 				// 이미 가입된 전화번호가 있으면 -> member table에 전화번호 있으면 -> MemberDAO에 class OK
 				boolean result = dao.phone_over_check(phone);
-				if (result) {
+				System.out.println("result: " + result);
+				if (!result) {
 					// PR할때 이부분 주석해서 올리기***
 					String code = new SensUtils().sendSMS(phone);
 					request.getSession().setAttribute("rand", code);
@@ -96,7 +97,7 @@ public class MemberController extends HttpServlet {
 				String member_name = request.getParameter("member_name");
 				String member_nickname = request.getParameter("member_nickname");
 				String member_birth_date = request.getParameter("member_birth_year") + request.getParameter("member_birth_month") + request.getParameter("member_birth_day");
-				String member_phone = request.getParameter("member_phone1") + request.getParameter("member_phone2") + request.getParameter("member_phone3");
+				String member_phone = request.getParameter("member_phone");
 				String member_email = request.getParameter("member_email");
 				String member_agree = request.getParameter("member_agree");
 

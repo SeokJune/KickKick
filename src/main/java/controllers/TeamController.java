@@ -39,11 +39,12 @@ public class TeamController extends HttpServlet {
 			}
 			// 팀명 중복도 검사
 			else if(cmd.equals("/team_name_check.team")) {
-				String team_name = request.getParameter("team_name");
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
+				String team_name = request.getParameter("team_name");
 				boolean result = dao.team_name_exist(team_name);
-				request.setAttribute("result", result);
-				request.getRequestDispatcher("/team/team_name_checkview.jsp").forward(request, response);
+				String resp = g.toJson(result);
+				response.getWriter().append(resp);
+
 			}
 			// 팀생성 시 입력값 넘어오는 곳
 			else if(cmd.equals("/create.team")) {
