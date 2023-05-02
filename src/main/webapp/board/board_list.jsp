@@ -117,8 +117,8 @@ div {
 	.navbar{
 		--bs-navbar-padding-y: 0;
 	}
-    nav_a,
-    nav_a:hover {
+  .nav_a,
+  .nav_a:hover {
       padding-top: 10px;
       padding-bottom: 10px;
       padding-left: 30px;
@@ -372,11 +372,12 @@ div {
 				</div>
 			</form>
 		</div>
+		<c:if test="${sessionScope.code ne null}">
 		<div class="col-12 d-grid justify-content-end">
 			<a class="btn btn-primary"
 				href="/to_write_form.board?b_n=${board_kind_name}" role="button">글쓰기</a>
 		</div>
-	</div>
+		</c:if>
 	</div>
 </body>
 </html>
