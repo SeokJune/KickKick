@@ -43,7 +43,6 @@ public class ReplyDAO {
 				List<ReplyDTO> result = new ArrayList<>();
 				while(rs.next()) {
 					int code = rs.getInt("code");
-					System.out.println(code);
 					board_code = rs.getInt("board_code");
 					String member_nickname = rs.getString("member_nickname");
 					String content = rs.getString("content");
@@ -96,4 +95,15 @@ public class ReplyDAO {
 			return result;
 		}
 	} 
+	
+	public int delete_reply(String board_table_name, int code) throws Exception{
+		String sql = "delete from reply_"+board_table_name+" where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
 }
