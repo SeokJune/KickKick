@@ -39,7 +39,7 @@ public class MemberController extends HttpServlet {
 				MemberDTO info = dao.get_info_by_id(id);
 				HttpSession session = request.getSession();
 				session.setAttribute("code", info.getCode());
-				session.setAttribute("nickName", info.getNick_name());
+				session.setAttribute("nickname", info.getNick_name());
 				//login & logout 용 아이디 세션에 저장 & 비번 변경
 				session.setAttribute("id", id);
 
