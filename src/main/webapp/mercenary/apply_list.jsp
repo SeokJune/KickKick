@@ -25,12 +25,17 @@
 	font-family: 'NanumSquareNeoBold';
 }
 
+.container{
+	width: 70%;
+}
+
 .btn {
 	border: none;
 }
 </style>
 </head>
 <body>
+<div class="container fluid">
 	<div class="row header1">
 		<div>
 			<input type="hidden" id="code" name="code" readonly>
@@ -77,17 +82,17 @@
 			</tr>
 		</tbody>
 	</table>
+	</div>
 	<script>
 		function set_team_info(c, lp, l, n, mn, mp) {
 			document.getElementById("code").value = c;
 			document.getElementById("name").value = n;
 		}
-
-		function set_match_info(crc, ckc, ckn, ckh, la, lo, cd) {
+		function set_match_info(crc,ckc,ckn,ckh,la,lo,cd,dft) {
 			document.getElementById("competition_registration_code").value = crc;
 			document.getElementById("latirude").value = la;
 			document.getElementById("longitude").value = lo;
-			document.getElementById("competition_date").value = cd;
+			document.getElementById("competition_date").value = dft;
 		}
 
 		$("#team_select").on(
@@ -102,8 +107,28 @@
 						function() {
 							window.open("/match_check.mercenary?code="
 									+ $("#code").val(), "",
-									"width=600px,height=300px");
+									"width=800px,height=600px");
 						});
+		
+		
+		// 받은 위도, 경도에 따라 위치 구하는 함수
+		survey('#latirude,#longitude', function() {
+			var latirude = document.getElementById("latirude").value;
+			var longitude = document.getElementById("longitude").value;
+			
+			var geocoder = new kakao.maps.services.Geocoder();
+
+			var coord = new kakao.maps.LatLng(latirude,longitude);
+			var callback = function(result, status) {
+				if (status === kakao.maps.services.Status.OK) {
+					var mp = result[0].address.address_name
+					document.getElementById("match_place").value = result[0].address.address_name;
+				}
+			};
+
+			geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+			
+		});
 		
 		survey('#competition_registration_code', function() {
 			$.ajax(
@@ -119,9 +144,10 @@
 				resp = JSON.parse(resp);
 				document.getElementById("apply_list").value = resp;
 				console.log(resp.length);
+				if()
 				for(var i=0;i < resp.length;i++){
 				var row;
-					row += '<tr>';
+					row += '<tr id='+ i +'>';
 					row += '<th scope="row">' + '</th>';
 					row += '<td>' + resp[0].name + '</td>';
 					row += '<td>';

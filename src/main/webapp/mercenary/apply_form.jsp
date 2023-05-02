@@ -6,7 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>ApplyForm</title>
-<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+<link
+	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
+	rel="stylesheet">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -17,12 +19,14 @@
 	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a47338e87e3d914e6d508799cd4f4e17&libraries=services"></script>
 <style>
-*{font-family: 'NanumSquareNeoBold';}
-div {
-	border: 1px solid black;
+* {
+	font-family: 'NanumSquareNeoBold';
 }
-
+.container{
+	width: 70%;
+}
 .header>div {
 	float: left;
 }
@@ -42,8 +46,10 @@ div {
 
 			<div class="row header">
 				<div class="col-xs-12 col-md-4 col-xl-4 text-center">
-					<input type="hidden" id="logo_path" name="logo_path" value="${team_info.logo_path}" readonly>
-					<input type="hidden" id="logo" name="logo" value="${team_info.logo}" readonly>
+					<input type="hidden" id="logo_path" name="logo_path"
+						value="${team_info.logo_path}" readonly> <input
+						type="hidden" id="logo" name="logo" value="${team_info.logo}"
+						readonly>
 					<c:choose>
 						<c:when test="${team_info.logo.equals('')}">
 							<div>${team_info.logo_path}</div>
@@ -90,8 +96,8 @@ div {
 						</div>
 					</div>
 					<div class="col-12 col-md-6 col-xl-6">
-					<input type="hidden" id="mercenary_registration_code" name="mercenary_registration_code"
-							value="${code}" readonly>
+						<input type="hidden" id="mercenary_registration_code"
+							name="mercenary_registration_code" value="${code}" readonly>
 						<input type="hidden" id="ability_code" name="ability_code"
 							value="${ability_code}" readonly>
 						<div class="input-group mb-3">
@@ -112,21 +118,38 @@ div {
 				</div>
 				<div class="box">
 					<div class="col-12 col-md-6 col-xl-6">
-						<input type="hidden" id="latirude" readonly>
+						<input type="hidden" id="latirude" value="${match_info.latirude}"
+							readonly>
 						<!-- 위도 -->
-						<input type="hidden" id="longitude" readonly>
+						<input type="hidden" id="longitude"
+							value="${match_info.longitude}" readonly>
 						<!-- 경도 -->
 						<div class="input-group mb-3">
 							<span class="input-group-text">장소</span> <input type="text"
 								class="form-control" id="match_place" name="match_place"
 								readonly>
+								<script>
+								var geocoder = new kakao.maps.services.Geocoder();
+
+								var coord = new kakao.maps.LatLng(${match_info.latirude},${match_info.longitude});
+								var callback = function(result, status) {
+									if (status === kakao.maps.services.Status.OK) {
+										console.log(result[0].address.address_name);
+										document.getElementById("match_place").value = result[0].address.address_name;
+									}
+								};
+
+								geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+								</script>
 						</div>
 					</div>
 					<div class="col-12 col-md-6 col-xl-6">
 						<div class="input-group mb-3">
+						<%@page import="commons.DateCalculationUtils"%>
 							<span class="input-group-text">일시</span> <input type="text"
 								class="form-control" name="match_date"
-								value="${match_info.competition_date}" readonly>
+								value="${DateCalculationUtils.date_format_timestamp(match_info.competition_date)}" readonly>
+								
 						</div>
 					</div>
 				</div>
@@ -154,7 +177,7 @@ div {
 					<div class="input-group">
 						<span class="input-group-text">소개글</span>
 						<textarea class="form-control" name="content" id="content"
-							placeholder="간단한 소개를 적어주세요."></textarea>
+							placeholder="간단한 소개를 적어주세요." required></textarea>
 					</div>
 				</div>
 			</div>
@@ -168,45 +191,7 @@ div {
 		</div>
 	</form>
 	<script>
-		survey('#latirude', function() {
-			var latirude = document.getElementById("latirude");
-			var longitude = document.getElementById("longitude");
-			var geocoder = new kakao.maps.services.Geocoder();
 	
-			var coord = new kakao.maps.LatLng(latirude, longitude);
-			var callback = function(result, status) {
-			    if (status === kakao.maps.services.Status.OK) {
-			        console.log(result[0].address.address_name);
-			        document.getElementById("match_place").innerHTML=result[0].address.address_name;
-			    }
-			};
-
-			geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-		})
-		/*
-		survey('#ability_code', function() {
-			var ability = document.getElementById("ability").value;
-			if(document.getElementById("ability_code").value == 1003){
-				ability = "하";
-			}else if(document.getElementById("ability_code").value == 1002){
-				ability = "중";
-			}else {
-				ability = "상";
-			}
-		});
-		*/
-		function survey(selector, callback) {
-			var input = $(selector);
-			var oldvalue = input.val();
-			setInterval(function() {
-				if (input.val() != oldvalue) {
-					oldvalue = input.val();
-					callback();
-				}
-			}, 100);
-		}
-		
-		
 		
 	</script>
 </body>
