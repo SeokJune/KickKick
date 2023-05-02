@@ -198,5 +198,17 @@ public class MemberDAO {
 			return result;
 		}
 	}
+	
+	//회원 탈퇴
+			public int delete_member(String id) throws Exception{
+				String sql = "delete from member where id = ?";
+				try (Connection con = this.getConnection(); 
+						PreparedStatement pstat = con.prepareStatement(sql);) {
+					pstat.setString(1, id);
+					int result = pstat.executeUpdate();
+					con.commit();
+					return result;
+				}
+			}
 
 }
