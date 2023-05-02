@@ -352,8 +352,6 @@ div {
 				<div>
 					<strong id="word_count"></strong> <small id="limit_check"></small>
 				</div>
-				<!-- <div id="word_count"></div> -->
-				<!-- <div class="col-10" id="limit_check" style="font-size: small;">test</div> -->
 
 			</div>
 			<div class="row footer p-2">
@@ -479,7 +477,11 @@ div {
 					});
 				
 				$("#post").on("click",function(){
-					if($("#board").val()==""||$("#headline").val()==""||$("#title").val()==""||$("#editor").html()==""){
+					console.log($("#board").val());
+					console.log($("#headline").val());
+					console.log($("#title").val());
+					console.log($(".ck-content").html());
+					if($("#board").val()==""||$("#headline").val()==""||$("#title").val()==""||$(".ck-content").html()==""){
 						alert("내용을 모두 입력해주세요.");
 						return false;
 					}

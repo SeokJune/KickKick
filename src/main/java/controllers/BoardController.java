@@ -152,7 +152,9 @@ public class BoardController extends HttpServlet {
 				
 				int board_kind_code = headline_dto.getBoard_kind_code();
 				int board_headline_code = headline_dto.getCode();
-				int member_code = (int)request.getSession().getAttribute("member_code");
+				//int member_code = (int)request.getSession().getAttribute("member_code");
+				//회원가입, 로그인 완성되기 전까지 임시 멤버코드 사용
+				int member_code = 1;
 				String title = request.getParameter("title");
 				String content = request.getParameter("content");
 				BoardDTO bdto = new BoardDTO(0,board_kind_code,board_headline_code,member_code,title,content,0,0,null,null,null);
@@ -199,17 +201,21 @@ public class BoardController extends HttpServlet {
 			}
 			else if(cmd.equals("/update.board")) {
 				int cpage = Integer.parseInt(request.getParameter("cpage"));
+				int b_c = 0;
 				
 				String board_kind_name = request.getParameter("board");
 				String board_table_name="";
 				if(board_kind_name.equals("공지사항")) {
 					board_table_name="announcement";
+					b_c=1002;
 				}
 				else if(board_kind_name.equals("자유게시판")) {
 					board_table_name="free";
+					b_c=1003;
 				}
 				else if(board_kind_name.equals("홍보게시판")) {
 					board_table_name="promotion";
+					b_c=1004;
 				}
 				int code = Integer.parseInt(request.getParameter("code"));
 				String headline_name = request.getParameter("headline");
@@ -218,7 +224,7 @@ public class BoardController extends HttpServlet {
 				BoardDTO bdto = new BoardDTO(code,headline_name,title,content);
 				int result = bdao.update_post(board_table_name, bdto);
 				if(result>0) {
-					response.sendRedirect("/select_post.board?b_c=?&c="+code+"&cpage="+cpage);
+					response.sendRedirect("/select_post.board?b_c="+b_c+"&c="+code+"&cpage="+cpage);
 				}
 			}
 			else if(cmd.equals("/delete.board")) {

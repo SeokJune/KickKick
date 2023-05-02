@@ -318,18 +318,13 @@
 						<div class="col-12" style="padding-top: 50px">
 							<h2>글 수정하기</h2>
 						</div>
-						<!--        <div class="col-12" style="text-align: right; padding-bottom: 0;">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    비밀글 쓰기
-                </label>
-            </div> -->
 					</div>
 					<div class="row body">
 						<div class="col-12 col-md-8 p-1 p-md-2" style="padding-top: 0">
-							<select class="form-select" aria-label="Default select example" name="board" id="board"
-								onchange="boardKindChange(this)" required>
-								<option value="" selected>게시판 선택</option>
+						<input type="hidden" name="board" value="${board_kind_name}">
+							<select class="form-select" aria-label="Default select example" 
+								id="board" onchange="boardKindChange(this)" required>
+								<option value="">게시판 선택</option>
 								<c:forEach var="board" items="${board_list}">
 									<option value="${board}">${board}</option>
 								</c:forEach>
@@ -338,7 +333,7 @@
 						<div class="col-12 col-md-4 p-1 p-md-2" style="padding-top: 0">
 							<select class="form-select" aria-label="Default select example" name="headline"
 								id="headline" disabled required>
-								<option value="" selected>카테고리 선택</option>
+								<option value="">카테고리 선택</option>
 							</select>
 						</div>
 						<div class="col-12 p-2">
@@ -352,8 +347,6 @@
 						<div>
 							<strong id="word_count"></strong> <small id="limit_check"></small>
 						</div>
-						<!-- <div id="word_count"></div> -->
-						<!-- <div class="col-10" id="limit_check" style="font-size: small;">test</div> -->
 
 					</div>
 					<div class="row footer p-2">
@@ -370,8 +363,9 @@
 			<script>
 				window.onload = function () {
 					//게시판은 수정할 수 없음. 말머리는 수정 가능
-					$("#board").val("${board_kind_name}").prop("selected", true);
+					$("#board").val("${board_kind_name}").attr("selected", true);
 					$("#board").prop("disabled",true);
+					console.log($("#board").val());
 
 					<c:forEach var="board" items="${board_list}">
 						var ${board} = [];

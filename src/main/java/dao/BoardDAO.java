@@ -58,7 +58,7 @@ public class BoardDAO {
 				while(rs.next()) {
 					result.setBoard_kind_code(rs.getInt("board_code"));
 					result.setBoard_name(rs.getString("board_name"));
-					result.setCode(rs.getInt(rs.getInt("headline_code")));
+					result.setCode(rs.getInt("headline_code"));
 					result.setName(rs.getString("headline_name"));
 				}
 				return result;
