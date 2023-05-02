@@ -41,9 +41,9 @@ public class MemberController extends HttpServlet {
 				System.out.println("로그인 성공여부 : " + result);
 				if(result == true) {
 					//닉네임 가져오기
-					String nickName = dao.get_nickName_by_id(id);
+					String nickname = dao.get_nickname_by_id(id);
 			        HttpSession session = request.getSession();
-			        session.setAttribute("nickName", nickName);
+			        session.setAttribute("nickname", nickname);
 					
 			        //login & logout 용 아이디 세션에 저장 & 비번 변경
 			        session.setAttribute("id", id);

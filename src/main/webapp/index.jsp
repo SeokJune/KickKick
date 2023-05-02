@@ -147,7 +147,7 @@
 					</a>
 					<img src="/image/login_img/ball_icon.png" alt="MyIcon" class="center-block mb-4" style="width: 80px; height: 80px;">
 					<!-- 유저이름 -->
-					<h3 class="nick_name text-center mb-3">${sessionScope.nickName}</h3>
+					<h3 class="nick_name text-center mb-3">${sessionScope.nickname}</h3>
 					<!-- 알림 -->
 					<div class="counter d-flex justify-content-center">
 						<div class="col d-flex justify-content-center">
