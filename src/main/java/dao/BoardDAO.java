@@ -31,6 +31,20 @@ public class BoardDAO {
 		return ds.getConnection();
 	}
 	
+	public String set_table(String board_kind_name) {
+		if(board_kind_name.equals("공지사항")) {
+			return "ANNOUNCEMENT";
+		}
+		else if(board_kind_name.equals("자유게시판")) {
+			return "FREE";
+		}
+		else if(board_kind_name.equals("홍보게시판")) {
+			return "PROMOTION";
+		}
+		//문의하기 게시판은 컬럼이 다르니까 따로 처리하자
+		return "";
+	}
+	
 	public List<BoardHeadlineDTO> select_board_headline_list() throws Exception{
 		String sql = "select h.code, h.name, b.code as \"board_kind_code\", b.name as \"board_name\" from board_kind b join board_headline h on b.code=h.board_kind_code";
 		try(Connection con = this.getConnection();

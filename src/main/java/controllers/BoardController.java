@@ -32,24 +32,14 @@ public class BoardController extends HttpServlet {
 				int b_c = Integer.parseInt(request.getParameter("b_c"));
 				String board_kind_name = bdao.select_board_name(b_c);
 				request.setAttribute("board_kind_name", board_kind_name);
-				String board_table_name="";
-				if(board_kind_name.equals("공지사항")) {
-					board_table_name="announcement";
-				}
-				else if(board_kind_name.equals("자유게시판")) {
-					board_table_name="free";
-				}
-				else if(board_kind_name.equals("홍보게시판")) {
-					board_table_name="promotion";
-				}
-				else if(board_kind_name.equals("문의하기")) {
-					board_table_name="inquire";
-				}
+				String board_table_name=bdao.set_table(board_kind_name);
+
 				//게시판 코드 그대로 유지 -> 세션에 넣는게 좋을까? 세션이 만료되면?
 				request.setAttribute("b_c", b_c);
 
 				//현재 페이지 설정
 				int current_page = Integer.parseInt(request.getParameter("cpage"));
+				request.setAttribute("cpage", current_page);
 
 				//검색 옵션(제목/내용/작성자) 설정
 				String search_option = request.getParameter("search_optin");
@@ -102,17 +92,7 @@ public class BoardController extends HttpServlet {
 				//게시판 종류 설정
 				String board_kind_name = bdao.select_board_name(Integer.parseInt(request.getParameter("b_c")));
 				request.setAttribute("board_kind_name", board_kind_name);
-				String board_table_name="";
-				if(board_kind_name.equals("공지사항")) {
-					board_table_name="announcement";
-				}
-				else if(board_kind_name.equals("자유게시판")) {
-					board_table_name="free";
-				}
-				else if(board_kind_name.equals("홍보게시판")) {
-					board_table_name="promotion";
-				}
-				//문의하기 게시판은 컬럼이 다르니까 따로 처리하자
+				String board_table_name=bdao.set_table(board_kind_name);
 
 				//게시판 코드 그대로 유지
 				request.setAttribute("b_c", request.getParameter("b_c"));
@@ -135,16 +115,7 @@ public class BoardController extends HttpServlet {
 			}
 			else if(cmd.equals("/insert.board")) {
 				String board_kind_name = request.getParameter("board");
-				String board_table_name="";
-				if(board_kind_name.equals("공지사항")) {
-					board_table_name="announcement";
-				}
-				else if(board_kind_name.equals("자유게시판")) {
-					board_table_name="free";
-				}
-				else if(board_kind_name.equals("홍보게시판")) {
-					board_table_name="promotion";
-				}
+				String board_table_name = bdao.set_table(board_kind_name);
 
 				String board_headline_name = request.getParameter("headline");
 				BoardHeadlineDTO headline_dto = bdao.select_board_headline(board_headline_name);
@@ -163,7 +134,6 @@ public class BoardController extends HttpServlet {
 				}
 			}
 			else if(cmd.equals("/to_update_form.board")) {
-				int cpage = Integer.parseInt(request.getParameter("cpage"));
 
 				//게시판 헤드라인 목록 넣어주고
 				List<BoardHeadlineDTO> board_headline = bdao.select_board_headline_list();
@@ -176,22 +146,17 @@ public class BoardController extends HttpServlet {
 				}
 				request.setAttribute("board_list", board_name);
 				request.setAttribute("headline_list", board_headline);
+				
+				//게시판 코드 그대로 유지
+				int b_c = Integer.parseInt(request.getParameter("b_c"));
+				request.setAttribute("b_c", b_c);
 
 				//게시판 코드로 게시판 이름 get
-				String board_kind_name = bdao.select_board_name(Integer.parseInt(request.getParameter("b_c")));
+				String board_kind_name = bdao.select_board_name(b_c);
 				request.setAttribute("board_kind_name", board_kind_name);
 
 				//게시판 table명과 글코드로 글 정보 get
-				String board_table_name="";
-				if(board_kind_name.equals("공지사항")) {
-					board_table_name="announcement";
-				}
-				else if(board_kind_name.equals("자유게시판")) {
-					board_table_name="free";
-				}
-				else if(board_kind_name.equals("홍보게시판")) {
-					board_table_name="promotion";
-				}
+				String board_table_name=bdao.set_table(board_kind_name);
 				int board_code = Integer.parseInt(request.getParameter("code"));
 				BoardDTO bdto = bdao.select_board(board_table_name, board_code);
 				request.setAttribute("board", bdto);
@@ -200,22 +165,10 @@ public class BoardController extends HttpServlet {
 			}
 			else if(cmd.equals("/update.board")) {
 				int cpage = Integer.parseInt(request.getParameter("cpage"));
-				int b_c = 0;
+				int b_c = Integer.parseInt(request.getParameter("b_c"));
 
 				String board_kind_name = request.getParameter("board");
-				String board_table_name="";
-				if(board_kind_name.equals("공지사항")) {
-					board_table_name="announcement";
-					b_c=1002;
-				}
-				else if(board_kind_name.equals("자유게시판")) {
-					board_table_name="free";
-					b_c=1003;
-				}
-				else if(board_kind_name.equals("홍보게시판")) {
-					board_table_name="promotion";
-					b_c=1004;
-				}
+				String board_table_name=bdao.set_table(board_kind_name);
 				int code = Integer.parseInt(request.getParameter("code"));
 				String headline_name = request.getParameter("headline");
 				String title = request.getParameter("title");
@@ -233,17 +186,15 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("board_kind_name", board_kind_name);
 				String board_table_name="";
 				if(board_kind_name.equals("공지사항")) {
-					board_table_name="announcement";
+					board_table_name="ANNOUNCEMENT";
 				}
 				else if(board_kind_name.equals("자유게시판")) {
-					board_table_name="free";
+					board_table_name="FREE";
 				}
 				else if(board_kind_name.equals("홍보게시판")) {
-					board_table_name="promotion";
+					board_table_name="PROMOTION";
 				}
-				else if(board_kind_name.equals("문의하기")) {
-					board_table_name="inquire";
-				}
+
 				int code = Integer.parseInt(request.getParameter("code"));
 				int result = bdao.delete_post(board_table_name,code);
 				if(result>0) {

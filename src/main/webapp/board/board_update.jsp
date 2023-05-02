@@ -51,8 +51,9 @@ div {
 
 	<div class="container">
 		<form class="row g-3" action="/update.board" method="post">
-			<input type="hidden" name="code" value="${board.code}"> <input
-				type="hidden" name="cpage" value="${cpage}">
+			<input type="hidden" name="code" value="${board.code}"> 
+			<input type="hidden" name="cpage" value="${cpage}">
+			<input type="hidden" name="b_c" value="${b_c}">
 			<div class="row header">
 				<div class="col-12" style="padding-top: 50px">
 					<h2>글 수정하기</h2>
