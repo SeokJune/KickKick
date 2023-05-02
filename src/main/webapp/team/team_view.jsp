@@ -35,12 +35,12 @@
 			</div>
 			<div class="col-xs-12 col-md-9 col-xl-8">
 				<div class="row">
-					<div class="col-12 col-md-12 col-xl-6">팀명</div>
-					<div class="col-12 col-md-12 col-xl-6">연고지</div>
-					<div class="col-12 col-md-12 col-xl-6">팀장이름</div>
-					<div class="col-12 col-md-12 col-xl-6">연락처</div>
+					<div class="col-12 col-md-12 col-xl-6">${team_info.name}</div>
+					<div class="col-12 col-md-12 col-xl-6">${team_info.hometown_name}</div>
+					<div class="col-12 col-md-12 col-xl-6">${team_info.member_name}</div>
+					<div class="col-12 col-md-12 col-xl-6">${team_info.member_phone}</div>
 					<div class="col-12 col-md-12 col-xl-6">승무패</div>
-					<div class="col-12 col-md-12 col-xl-6">간략 소개글</div>
+					<div class="col-12 col-md-12 col-xl-6">${team_info.outline}</div>
 				</div>
 			</div>
 			<div class="col-xl-2"></div>
@@ -52,7 +52,7 @@
 
 		<div class="row team_info2">
 			<div class="col-xl-3"></div>
-			<div class="col-md-12 col-xl-6" style="height: 150px">소개글</div>
+			<div class="col-md-12 col-xl-6" style="height: 150px">${team_info.content}</div>
 			<div class="col-xl-3"></div>
 
 		</div>

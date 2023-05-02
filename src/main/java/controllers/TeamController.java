@@ -53,11 +53,9 @@ public class TeamController extends HttpServlet {
 				if(!realPathFile.exists()) {
 					realPathFile.mkdir();
 				}
-				System.out.println("1");
 				
 				MultipartRequest multi = new MultipartRequest(request, real_path, 1024*1024*50, "utf8", new DefaultFileRenamePolicy());
 				  
-				System.out.println("2");
 				
 				
 				
@@ -70,21 +68,15 @@ public class TeamController extends HttpServlet {
 				int hometown_code = Integer.parseInt(multi.getParameter("hometown_code"));
 				String outline = multi.getParameter("outline");
 				String content = multi.getParameter("content");
-				System.out.println("3");
 				
 				File target = new File(real_path + "\\" + sysname);
-				System.out.println("4");
 				target.renameTo(new File(real_path + "\\" + team_name + ".png"));
-				System.out.println("5");
 				
 				
 				
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();				
-				System.out.println("6");
 				TeamDTO teamdto = new TeamDTO(0, Settings.LOGO_PATH_CODE, team_name+".png", team_name, 10000001, hometown_code, outline, content, null, null, null);
-				System.out.println("7");
 				dao.insert_team(teamdto);
-				System.out.println("8");
 				
 				response.sendRedirect("/list.team?cpage=1"); 
 				
@@ -100,14 +92,16 @@ public class TeamController extends HttpServlet {
 				
 				List<TeamDTO> teamlist_arr = dao.select_team();
 				String page_navi = dao.get_page_navi(current_page);
-				
 				request.setAttribute("teamlist_arr", teamlist_arr);
 				request.setAttribute("navi", page_navi);
 				request.getRequestDispatcher("/team/team_list.jsp").forward(request, response); 
 			}
 			else if(cmd.equals("/page.team")) {
 				int team_code = Integer.parseInt(request.getParameter("team_code"));
-				response.sendRedirect("/team/team_view.jsp?team_code" + team_code);
+				CreateTeamDAO dao = CreateTeamDAO.getInstance();
+				TeamDTO team_info = dao.team_info(team_code);
+				request.setAttribute("team_info", team_info);
+				request.getRequestDispatcher("/team/team_view.jsp").forward(request, response); 
 			}
 		}
 		catch(Exception e) {
