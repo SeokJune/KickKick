@@ -31,7 +31,7 @@
 	<div class="container-fluid">
 		<div class="row team_info1">
 			<div class="col-xs-12 col-md-3 col-xl-2" style="text-align: center;">
-				<img src="세터.png" style="width: 80px; height: 80px;">
+				<img src="${team_info.logo_path}${team_info.logo}" style="width: 80px; height: 80px;">
 			</div>
 			<div class="col-xs-12 col-md-9 col-xl-8">
 				<div class="row">
