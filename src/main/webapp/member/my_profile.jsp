@@ -17,6 +17,8 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
 	crossorigin="anonymous"></script>
+<!-- 폰트 -->	
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 html {
@@ -25,12 +27,13 @@ html {
 
 body {
 	background-color: #76b852;
+	font-family: 'NanumSquareNeo';
 }
 
 .container {
 	border: 1px solid black;
-	width: 600px;
-	height: 900px;
+	width: 700px;
+	height: max-content;
 	padding: 32px;
 	margin-top: 5%;
 	margin-bottom: 5%;
@@ -39,6 +42,21 @@ body {
 	border-radius: 1rem;
 	box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0
 		rgba(0, 0, 0, 0.19);
+}
+.label,.nav-link,.label{
+font-family: 'NanumSquareNeoExtraBold';
+font-size:large;
+}
+#btn_verify_pw{
+width:100%;
+align:center;
+}
+.verify_pw{
+position:relative;
+margin-top:5%;
+}
+.verify_pw>.row{
+height:50px;
 }
 #profile_view{
 display:none;
@@ -56,25 +74,50 @@ display:none;
 }
 
 label {
-	font-size: small
+	font-size: small;
 }
-
-.btn {
-	border: none;
+#password-alert *{
+font-size: x-small;
+}
+.valid-feedback,.invalid-feedback{
+font-size: small;
+}
+.btn{
+border:none;
+}
+.btn comp {
+	width:80%;
+}
+.nav{
+position:relative;
+text-align:center;
 }
 </style>
 </head>
 <body>
+
 	<div class="container my_page_container">
+	
+		<ul class="nav nav-tabs">
+			<li class="nav-item">
+		    	<a class="nav-link" aria-current="page" href="#">대시보드</a>
+			</li>
+		  	<li class="nav-item">
+		    	<a class="nav-link" aria-current="page" href="#">My Profile</a>
+			</li>
+		</ul>
 		
 		<div class="wrapper verify_pw" id="verify_pw_view">
 			<div class="row">
-				<span>비밀번호를 입력해주세요.</span>
-				<input type="password" id="verify_pw" name="verify_pw" required>
+				<p><span class="label">ID    : </span>${profile.id}</p>
+			</div>		
+			<div class="row ">	
+				<span class="label">PW  : <input type="password" id="verify_pw" name="verify_pw" required></span>
+			</div>
+			<div class="row">
 				<button id="btn_verify_pw">확인</button> 
 			</div>
 		</div>
-		
 		
 			<div class="wrapper profile_view" id="profile_view">
 				<form action="/modify_member_profile.member" method="post" onsubmit="return confirm('프로필을 수정하시겠습니까?');">
@@ -102,29 +145,66 @@ label {
 					<div class="row" id="edit_pw">
 						<div class="col">
 							<div class="row label">
-									<label for="member_pw">비밀번호</label>
+									<label>비밀번호</label>
 							</div>
 					<!-- '비밀번호 변경'버튼 -->		
 							<div class="row">
-									<button class="btn btn-primary" type="button" id="edit_pw_btn">비밀번호
+									<button class="btn btn-primary comp" type="button" id="edit_pw_btn">비밀번호
 										변경</button>
 							</div>
 						</div>
 					</div>
 					<!-- 비밀번호 입력창 :  '비밀번호 변경'버튼 클릭시 보여짐-->
-					<div class="row input" id="edit_pw_fadeIn">
-						<div class="col">
-							<!-- 새 비밀번호 입력창 -->
-							<input type="password" class="form-control" id="member_new_pw"
-								name="member_new_pw" minlength="8" maxlength="20"
-								pattern="^(?=.*[a-zA-Z])(?=.*[~.!@#$%^&*()_+={}>;<:,.?/\-\[\]\\\|])(?=.*[0-9]).{8,20}$"
-								placeholder="새 비밀번호">
-						</div>		
-								<!-- 비밀번호 보기&숨기기 버튼 -->
-						<div class="col md-3">
-							<button class="btn btn-light btn-sm" id="view_pw" type="button">보기</button>
+					 <div class="row" id="edit_pw_fadeIn">
+		                <div class="col">
+		               		<div class="row input"> 
+		               			<div class="col">
+			                        <input type="password" class="form-control rounded mt-1"
+			                        	id="member_confirm_pw" name="member_confirm_pw" 
+			                            placeholder=" 기존 비밀번호"  value="${profile.pw}"
+			                            aria-describedby="password" class="password" />
+			                    </div>
+			                    <div class="col">       
+			                        <button class="btn btn-light btn-sm" id="confirm_pw" type="button">확인</button>  
+			                    </div>        
+		           			</div>
+							<div class="row input" >
+								<div class="col">
+									<input type="password" class="form-control rounded mt-1"
+										id="member_new_pw" name="member_new_pw" 
+										placeholder=" 새 비밀번호"
+										pattern="^(?=.*[A-Z])(?=.*[~.!@#$%^&*()_+={}>;<:,.?/\-\[\]\\\|])(?=.*[0-9]).{8,20}$"
+										aria-describedby="password" class="password" 
+										maxlength="20">
+									<div class="valid-feedback">Good</div>
+									<div class="invalid-feedback">Wrong</div>
+									<div class="alert px-3 py-3 mb-0 d-none" role="alert"
+									data-mdb-color="warning" id="password-alert">
+										<ul class="list-unstyled mb-0">
+											<li class="requirements leng"><i
+												class="bi bi-check text-success me-2"></i> <i
+												class="bi bi-x text-danger me-3"></i> 8자 이상</li>
+											<li class="requirements big-letter"><i
+												class="bi bi-check text-success me-2"></i> <i
+												class="bi bi-x text-danger me-3"></i> 하나 이상의 알파벳 대문자를 포함</li>
+											<li class="requirements num"><i
+												class="bi bi-check text-success me-2"></i> <i
+												class="bi bi-x text-danger me-3"></i> 숫자 하나 이상 포함</li>
+											<li class="requirements special-char"><i
+												class="bi bi-check text-success me-2"></i> <i
+												class="bi bi-x text-danger me-3"></i> 특수문자가 하나 이상 포함</li>
+										</ul>
+									</div>	
+								</div>
+							<!-- 비밀번호 보기&숨기기 버튼 -->
+		                    	<div class="col">
+									<button class="btn btn-light btn-sm" id="view_pw" type="button">보기</button>
+								</div>
+								
+							</div>
 						</div>
 					</div>
+	
 	
 					<!-- 이름 : 변경 불가 -->
 					<div class="row" style="height: 85px;">
@@ -210,6 +290,7 @@ label {
 										minlength="4" maxlength="4" required readonly 
 										style="width: 100px;">
 								</div>
+								<div class="col">년</div>
 								<div class="col">
 									<input type="text" class="form-control" id="member_birth_month"
 										name="member_birth_month" pattern="^(0[1-9]|1[0-2])$"
@@ -217,6 +298,7 @@ label {
 										minlength="2" maxlength="2" required readonly
 										style="width: 100px;"> 
 								</div>
+								<div class="col">월</div>
 								<div class="col">
 									<input type="text" class="form-control" id="member_birth_day"
 										name="member_birth_day" pattern="^(0[1-9]|[12][0-9]|3[01])$"
@@ -224,6 +306,7 @@ label {
 										minlength="2" maxlength="2" required readonly
 										style="width: 100px;"> 
 								</div>
+								<div class="col">일</div>
 							</div>
 						</div>
 					</div>
@@ -283,44 +366,64 @@ label {
 					</div>
 	
 				<!-- '수정하기' 버튼 클릭시 '수정완료'버튼과 '취소'버튼 보여지고 '수정하기'버튼 숨겨짐 -->	
-					<div class="row">
+					<div class="row" id="edit">
 					<!-- 수정 버튼 -->
-						<button class="btn btn-secondary" id="edit" type="button"
+						<button class="btn btn-secondary comp" id="btn_edit" type="button"
 							style="background-color: #76b852;">수정하기</button>
+						<button class="btn btn-secondary comp" id="btn_delete" type="button"
+							style="background-color: #76b852;">탈퇴신청</button>
+					</div>	
+					<div class="row" id="edit_complete">	
 					<!-- 수정완료,취소 버튼 -->		
-						<button class="btn btn-secondary" id="edit_complete" 
+						<button class="btn btn-secondary" id="btn_edit_complete" 
 							style="background-color: #76b852;">수정완료</button>
-						<button class="btn btn-secondary" id="edit_cancel" type="button"
-							onClick="window.redo()"
-							style="background-color: #76b852;">취소</button>
 					</div>
 					
 				</form>
 			</div>
-	</div>
+			
+		<!-- 탈퇴신청 버튼 클릭시 보여짐 -->	
+			<div class="wrapper delete_member" id="delete_member_view">
+				<form action="/delete_member.member" method="post" onsubmit="return confirm('정말 탈퇴 하시겠습니까?');">
+					<div class="row">
+						<h3>탈퇴하시겠습니까?</h3>
+						<h6>탈퇴시 계정복구가 어렵습니다.</h6>
+						<button>네</button>
+						<button type="button" onClick="window.history.back()">아니오</button>
+					</div>
+				</form>
+			</div>
+			
+		</div>
 
 
 	<script>
 			$("#btn_verify_pw").on("click",function(){
-				$.ajax({
-					url: "/verify_pw.member",
-					type: "post",
-					data:{
-						id: "${param.member_id}",
-						verify_pw: $("#verify_pw").val()
-					},
-					dataType:"json" ,
-					error:function() {
-						alert("서버 요청 실패");
-					}
-				}).done(function(resp){
-						if(resp){
-							$("#verify_pw_view").hide();
-							$("#profile_view").fadeIn();
-						}else{
-							alert("비밀번호가 일치하지 않습니다.");
+				if($("#verify_pw").val()==""){
+					alert("비밀번호를 입력해주세요.");
+					return false;
+				}else{
+					$.ajax({
+						url: "/verify_pw.member",
+						type: "post",
+						data:{
+							id: "${param.member_id}",
+							verify_pw: $("#verify_pw").val()
+						},
+						dataType:"json" ,
+						error:function() {
+							alert("서버 요청 실패");
 						}
-				})
+					}).done(function(resp){
+							if(resp){
+								$(".container").css({"height":"max-content"});
+								$("#verify_pw_view").hide();
+								$("#profile_view").fadeIn();
+							}else{
+								alert("비밀번호가 일치하지 않습니다.");
+							}
+					})
+				}
 			})
 	</script>
 
@@ -330,37 +433,38 @@ label {
 		$("#edit_phone_btn").hide();
 		$("#edit_complete").hide();
 		$("#edit_cancel").hide();
+		$("#edit_pw_fadeIn").hide();
+		$("#delete_member_view").hide();
 
 		//수정하기 버튼 :클릭시 비밀번호,전화번호 수정 버튼 & 수정 취소 버튼 보여짐
-		$("#edit").on("click",function() {
+		$("#btn_edit").on("click",function() {
 			$("#edit").hide();
 			$("#edit_pw").fadeIn();
 			$("#edit_phone_btn").fadeIn();
 			$("#edit_complete").fadeIn();
-			$("#edit_cancel").fadeIn();
 			$("#member_birth_year,#member_birth_month,#member_birth_day,#member_email,#member_nickname").removeAttr("readonly");
 		})
 		
-		
-		
 
 		//비밀번호 변경 버튼
-		$("#edit_pw_fadeIn").hide();
 		$("#edit_pw_btn").on("click", function() {
 			if ($("#edit_pw_fadeIn").css("display") == "none") {
 				$("#edit_pw_fadeIn").fadeIn();
-				$("#edit_pw_btn").html("비밀번호 변경 취소");
+				$("#edit_pw_btn").text("비밀번호 변경 취소");
+				$("#member_confirm_pw").val("").removeAttr("disabled").removeAttr("readonly").attr("required","true");
+				$("#confirm_pw").removeAttr("disabled").html("확인");
+				$("#member_new_pw").val("").attr("disabled","true");
 			} else {
 				$("#edit_pw_fadeIn").hide();
-				$("#edit_pw_btn").html("비밀번호 변경");
-				$("#member_pw").val("");
-				$("#member_new_pw").val("")
+				$("#edit_pw_btn").text("비밀번호 변경");
+				$("#member_confirm_pw").val("${profile.pw}");
+				$("#member_new_pw").val("").removeAttr("required").removeAttr("disabled");
 			}
 		})
 
 		//비밀번호 보기&숨기기 버튼
 		$("#view_pw").on("click", function() {
-			let password_field = $("#member_pw");
+			let password_field = $("#member_confirm_pw");
 			let new_password_field = $("#member_new_pw");
 			let password_field_type = password_field.attr("type");
 			let new_password_field_type = new_password_field.attr("type");
@@ -377,6 +481,149 @@ label {
 
 		})
 
+	//비밀번호 변경 : 기존 비밀번호 비동기 검사
+	let confirm_pw = true;
+		$("#confirm_pw").on("click",function(){
+				$.ajax({
+					url: "/verify_pw.member",
+					type: "post",
+					data:{
+						id: "${id}",
+						verify_pw: $("#member_confirm_pw").val()
+					},
+					dataType:"json" ,
+					error:function() {
+						alert("서버 요청 실패");
+					}
+				}).done(function(resp){
+						if(resp){
+							$("#member_confirm_pw").attr("readonly","true");
+							$("#member_new_pw").removeAttr("disabled").attr("required","true");
+							$("#confirm_pw").html("확인 완료").attr("disabled","true")
+							 confirm_pw = true;
+							 
+						}else{
+							alert("기존 비밀번호 입력이 잘못되었습니다.");
+							confirm_pw = false;
+						}
+				})
+			})
+		
+		//pw 유효성 검사
+				let lengBoolean, bigLetterBoolean, numBoolean, specialCharBoolean;
+				addEventListener("DOMContentLoaded", (event) => {
+					const password = document.getElementById("member_new_pw");
+					const passwordAlert = document.getElementById("password-alert");
+					const requirements = document.querySelectorAll(".requirements");
+					let leng = document.querySelector(".leng");
+					let bigLetter = document.querySelector(".big-letter");
+					let num = document.querySelector(".num");
+					let specialChar = document.querySelector(".special-char");
+					const specialChars = "!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?`~";
+					const numbers = "0123456789";
+
+					requirements.forEach((element) => element.classList.add("wrong"));
+
+					password.addEventListener("focus", () => {
+						passwordAlert.classList.remove("d-none");
+						if (!password.classList.contains("is-valid")) {
+							password.classList.add("is-invalid");
+						}
+					});
+
+					password.addEventListener("input", () => {
+						let value = password.value;
+						if (value.length < 8) {
+							lengBoolean = false;
+						} else if (value.length > 7) {
+							lengBoolean = true;
+						}
+
+						if (value.toLowerCase() == value) {
+							bigLetterBoolean = false;
+						} else {
+							bigLetterBoolean = true;
+						}
+
+						numBoolean = false;
+						for (let i = 0; i < value.length; i++) {
+							for (let j = 0; j < numbers.length; j++) {
+								if (value[i] == numbers[j]) {
+									numBoolean = true;
+								}
+							}
+						}
+
+						specialCharBoolean = false;
+						for (let i = 0; i < value.length; i++) {
+							for (let j = 0; j < specialChars.length; j++) {
+								if (value[i] == specialChars[j]) {
+									specialCharBoolean = true;
+								}
+							}
+						}
+
+						if (lengBoolean == true && bigLetterBoolean == true && numBoolean == true && specialCharBoolean == true) {
+							password.classList.remove("is-invalid");
+							password.classList.add("is-valid");
+
+							requirements.forEach((element) => {
+								element.classList.remove("wrong");
+								element.classList.add("good");
+							});
+							passwordAlert.classList.remove("alert-warning");
+							passwordAlert.classList.add("alert-success");
+						} else {
+							password.classList.remove("is-valid");
+							password.classList.add("is-invalid");
+
+							passwordAlert.classList.add("alert-warning");
+							passwordAlert.classList.remove("alert-success");
+
+							if (lengBoolean == false) {
+								leng.classList.add("wrong");
+								leng.classList.remove("good");
+							} else {
+								leng.classList.add("good");
+								leng.classList.remove("wrong");
+							}
+
+							if (bigLetterBoolean == false) {
+								bigLetter.classList.add("wrong");
+								bigLetter.classList.remove("good");
+							} else {
+								bigLetter.classList.add("good");
+								bigLetter.classList.remove("wrong");
+							}
+
+							if (numBoolean == false) {
+								num.classList.add("wrong");
+								num.classList.remove("good");
+							} else {
+								num.classList.add("good");
+								num.classList.remove("wrong");
+							}
+
+							if (specialCharBoolean == false) {
+								specialChar.classList.add("wrong");
+								specialChar.classList.remove("good");
+							} else {
+								specialChar.classList.add("good");
+								specialChar.classList.remove("wrong");
+							}
+						}
+					});
+
+					password.addEventListener("blur", () => {
+						passwordAlert.classList.add("d-none");
+					});
+				});
+				
+				
+				
+				
+				
+				
 		//전화번호 중복 체크
 		let phone_valid = true;
 		let regex_phone = /^[0-9]{10,11}$/;
@@ -495,13 +742,21 @@ label {
 				
 			}
 		})
+		
+		
+				
 
 
 		//submit전 전화번호,이메일 중복 검사
-		$("#edit_complete").on("click", function() {
+		$("#btn_edit_complete").on("click", function() {
 
 			if (!phone_valid) {
 				alert("전화번호 중복 여부를 확인하세요.");
+				return false;
+			}
+			
+			if(!confirm_pw){
+				alert("기존 비밀번호가 일치하지 않아 비밀번호 변경이 불가능합니다.다시 확인해주세요.");
 				return false;
 			}
 
@@ -520,5 +775,11 @@ label {
 		
 	</script>
 
+	<script>
+		$("#btn_delete").on("click",function(){
+			$("#profile_view").hide();
+			$("#delete_member_view").fadeIn();
+		})
+	</script>
 </body>
 </html>

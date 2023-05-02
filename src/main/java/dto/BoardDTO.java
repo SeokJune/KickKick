@@ -50,6 +50,14 @@ public class BoardDTO {
 		this.reg_date = reg_date;
 		this.mod_date = mod_date;
 	}
+	
+	//수정용
+	public BoardDTO(int code, String board_headline_name, String title, String content) {
+		this.code = code;
+		this.board_headline_name = board_headline_name;
+		this.title = title;
+		this.content = content;
+	}
 
 	public int getCode() {
 		return code;

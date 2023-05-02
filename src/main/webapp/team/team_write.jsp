@@ -19,6 +19,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
 	integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
 	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+	
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <style>
@@ -26,11 +28,13 @@
  	margin: 0;
  	padding: 0;
 	box-sizing: border-box;
-	border: 1px solid black;
+}
+div {
+	font-family: 'NanumSquareNeoBold';
 }
 
-.container {
-	max-width: 800px;
+.container-fluid{
+	background-color: whitesmoke;	
 }
 
 #logo {
@@ -40,6 +44,17 @@
 #imgChange {
 	width: 100px;
 	height: 100px;
+}
+button {
+	font-weight: 600;
+	color: whitesmoke;
+	background-color: #76b852;
+	border: none;
+	padding: 5px;
+	border-radius: 3px;
+}
+#edi {
+	background-color: #FFFFFF;
 }
 </style>
 </head>
@@ -89,7 +104,7 @@
 					<div class="row">
 						<div class="col-md-3"></div>
 						<div class="col-12 col-md-6" style="margin: auto;">
-							<input type="text" placeholder="팀장명(MEMBER_CODE_FK FOREIGN KEY)"
+							<input type="text" value="${id}"
 								class="w-100" name="captain_name" readonly>
 						</div>
 						<div class="col-md-3"></div>
@@ -99,7 +114,7 @@
 						<div class="col-md-3"></div>
 						<div class="col-12 col-md-6" style="margin: auto;">
 							<input type="text"
-								placeholder="팀장 연락처(MEMBER_CODE_FK FOREIGN KEY)" class="w-100"
+								value="${phone}" class="w-100"
 								name="captain_phone" readonly>
 						</div>
 						<div class="col-md-3"></div>
@@ -183,18 +198,25 @@
 
 		// 생성하기 눌렀을 시
 		$("#frm").on("submit", function() {
-			console.log($("#outline").val())
-			console.log($("#edi").val())
+
 			if (team_name_regex.test(team_name.val()) == false) {
 				alert("팀명을 다시 입력하세요.");
 				return false;
-			} else if (team_name_ValidFlag == false) {
+			}
+			else if ($("#imgUpload").val() == "") {
+				alert("이미지를 업로드 하세요.")
+				return false;
+			}
+			
+			 else if (team_name_ValidFlag == false) {
 				alert("중복도 검사를 다시 하세요.")
 				return false;
-			} else if ($("#outline").val().trim() == "") {
+			}
+			 else if ($("#outline").val().trim() == "") {
 				alert("간략소개글을 입력하세요.");
 				return false;
-			} else if ($("#edi").html().trim() == "") {
+			}
+			 else if ($("#edi").html().trim() == "") {
 				alert("게시글을 입력하세요.");
 				return false;
 			}
@@ -211,7 +233,6 @@
 			  reader.addEventListener(
 			    "load",
 			    () => {
-			      // convert image file to base64 string
 			      preview.src = reader.result;
 			    },
 			    false

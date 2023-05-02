@@ -18,6 +18,7 @@
 	crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/ckeditor5/build/ckeditor.js"></script>
+
 <link
 	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
 	rel="stylesheet">
@@ -343,7 +344,7 @@ div {
 				</div>
 				<div class="col-12 p-2">
 					<input type="text" placeholder="제목" style="width: 100%"
-						name="title">
+						name="title" required id="title">
 				</div>
 				<div class="col-12 p-2" id="editorBox">
 					<textarea id="editor" name="content" placeholder="1300자 이내로 작성해주세요"></textarea>
@@ -351,8 +352,6 @@ div {
 				<div>
 					<strong id="word_count"></strong> <small id="limit_check"></small>
 				</div>
-				<!-- <div id="word_count"></div> -->
-				<!-- <div class="col-10" id="limit_check" style="font-size: small;">test</div> -->
 
 			</div>
 			<div class="row footer p-2">
@@ -436,6 +435,8 @@ div {
 				const charactersBox = document.querySelector( '#word_count' );
 				const sendButton = document.querySelector('#post');
 				
+        //에디터 설정
+		
 				ClassicEditor
 					.create(document.querySelector('#editor'), {
 						language: 'ko',
@@ -459,6 +460,10 @@ div {
 						simpleUpload: {
                     		uploadUrl: "http://localhost/to_write_form.board",
                     		withCredentials: true,
+                        	headers: {
+                          		'X-CSRF-TOKEN': 'CSRF-Token',
+                          		Authorization: 'Bearer <JSON Web Token>'
+                        	},
                 		},
 					})
 					.then(editor => {
@@ -472,8 +477,17 @@ div {
 					});
 				
 				$("#post").on("click",function(){
-					console.log($("#board").prop("required"));
-					console.log($("#headline").prop("required"));
+					console.log($("#board").val());
+					console.log($("#headline").val());
+					console.log($("#title").val());
+					console.log($(".ck-content").html());
+					if($("#board").val()==""||$("#headline").val()==""||$("#title").val()==""||$(".ck-content").html()==""){
+						alert("내용을 모두 입력해주세요.");
+						return false;
+					}
+					else{
+						alert("등록되었습니다.");
+					}
 				});
 				
 				$("#cancel").on("click", function () {
