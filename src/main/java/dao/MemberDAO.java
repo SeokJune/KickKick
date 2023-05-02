@@ -168,7 +168,6 @@ public class MemberDAO {
 			}
 		}
 
-	//닉네임 가져오기
 	public MemberDTO get_info_by_id(String id) throws Exception {
 		String sql = "select code, nickname from member where id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -198,5 +197,17 @@ public class MemberDAO {
 			return result;
 		}
 	}
+	
+	//회원 탈퇴
+			public int delete_member(String id) throws Exception{
+				String sql = "delete from member where id = ?";
+				try (Connection con = this.getConnection(); 
+						PreparedStatement pstat = con.prepareStatement(sql);) {
+					pstat.setString(1, id);
+					int result = pstat.executeUpdate();
+					con.commit();
+					return result;
+				}
+			}
 
 }
