@@ -203,6 +203,9 @@ public class CompetitionDAO {
 
 
 
+
+
+
 	public List<StatusDTO> status() throws Exception{
 		String sql = "select * from status" ;
 		try(Connection con = this.getConnection();
@@ -256,9 +259,23 @@ public class CompetitionDAO {
 	}
 
 
-
+	//리스트에 출력 - 등록 관련
 	public List<CompetitionListDTO> selectlist() throws Exception{
-		String sql = "select * from competition_registration" ;
+		String sql = "select\r\n"
+				+ "    tv.name team_name,\r\n"
+				+ "    tv.member_name,\r\n"
+				+ "    tv.member_phone,\r\n"
+				+ "    cr.latirude, \r\n"
+				+ "    cr.longitude, \r\n"
+				+ "    cr.competition_date,\r\n"
+				+ "    cr.STATUS_CODE,\r\n"
+				+ "    st.name status_name,\r\n"
+				+ "    ck.name kind_name\r\n"
+				+ "from \r\n"
+				+ "    competition_registration cr join team_view tv on (cr.team_code=tv.code) \r\n"
+				+ "    join status st on (cr.status_code = st.code)\r\n"
+				+ "    join competition_kind ck on (cr.competition_kind_code = ck.code)\r\n"
+				+ " where cr.status_code = 1101 and cr.competition_date >= sysdate" ;
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();)
@@ -266,16 +283,51 @@ public class CompetitionDAO {
 			List<CompetitionListDTO> list = new ArrayList<>();
 
 			while(rs.next()) {
-				
-				String content = rs.getString("content");
+				String team_name = 	rs.getString("team_name");
+				String member_name = rs.getString("member_name");
+				String member_phone = rs.getString("member_phone");
+				double latirude = rs.getDouble("latirude");
+				double longitude = rs.getDouble("longitude");
 				Timestamp competition_date = rs.getTimestamp("competition_date");
+				int status_code = rs.getInt("status_code");
+				String status_name = rs.getString("status_name");
+				String kind_name = rs.getString("kind_name");
 
-				CompetitionListDTO dto = new CompetitionListDTO(content,competition_date);
+
+				CompetitionListDTO dto = new CompetitionListDTO(team_name,member_name,member_phone,latirude,longitude,competition_date,status_code,status_name,kind_name);
 				list.add(dto);
 			}
 			return list;
 		}
 	}
+
+	//	//리스트에 출력 - 팀관련
+	//	public List<TeamDTO> selectlist_Team() throws Exception{
+	//		String sql = "select t.name , t.member_name , t.member_phone  from  competition_registration c\r\n"
+	//				+ "left join team_view t\r\n"
+	//				+ "on c.team_code = t.code" ;
+	//
+	//		try(Connection con = this.getConnection();
+	//				PreparedStatement pstat = con.prepareStatement(sql);
+	//				ResultSet rs = pstat.executeQuery();)
+	//		{
+	//			List<TeamDTO> list = new ArrayList<>();
+	//
+	//			while(rs.next()) {
+	//
+	//				String name = rs.getString("name");
+	//				String member_name = rs.getString("member_name");
+	//				String member_phone = rs.getString("member_phone");
+	//
+	//
+	//				TeamDTO dto = new TeamDTO(name,member_name,member_phone);
+	//
+	//
+	//				list.add(dto);
+	//			}
+	//			return list;
+	//		}
+	//	}
 
 
 

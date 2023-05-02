@@ -66,11 +66,14 @@ public class CompetitionController extends HttpServlet {
 
 			}else if(cmd.equals("/list.competition")) {
 
+				List<CompetitionListDTO> list= CompetitionDAO.getinstance().selectlist();
 
-//				List<CompetitionListDTO> list = CompetitionDAO.getinstance().selectlist();
+				System.out.println(list);
+				request.setAttribute("list", list);
 
-//				TeamDTO team = CompetitionDAO.getinstance().team();
 
+
+				request.getRequestDispatcher("/matching/competition_list.jsp").forward(request, response);
 
 			}else if(cmd.equals("/send.competition")) {
 
@@ -131,7 +134,7 @@ public class CompetitionController extends HttpServlet {
 				CompetitionDAO.getinstance().insertreg(dto);
 
 
-				response.sendRedirect("/matching/competition_list.jsp");
+				response.sendRedirect("/list.competition");
 
 
 			}else if(cmd.equals("/choose.competition")) {
