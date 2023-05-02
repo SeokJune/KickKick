@@ -85,7 +85,7 @@ public class CreateTeamDAO {
 		String sql = "select * from team where name=?";
 
 		try(Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql)) {
+				PreparedStatement pstat = con.prepareStatement(sql);) {
 
 			pstat.setString(1, team_name);
 			try(ResultSet rs = pstat.executeQuery()) {
