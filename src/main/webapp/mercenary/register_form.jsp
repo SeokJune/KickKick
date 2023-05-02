@@ -85,8 +85,21 @@ div {
 					<input type="hidden" id="latirude" readonly> <!-- 위도 -->
 					<input type="hidden" id="longitude" readonly> <!-- 경도 -->
 						<div class="input-group mb-3">
+						<script>
+						var geocoder = new kakao.maps.services.Geocoder();
+
+						var coord = new kakao.maps.LatLng(${"#latirude"},${"#longitude"});
+						var callback = function(result, status) {
+							if (status === kakao.maps.services.Status.OK) {
+								console.log(result[0].address.address_name);
+								document.getElementById("match_place_"+${"#code"}).innerHTML = result[0].address.address_name;
+							}
+						};
+
+						geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+						</script>
 							<span class="input-group-text">장소</span> <input type="text"
-								class="form-control" id="match_place" name="match_place"
+								class="form-control" id="match_place_"${"#code"} name="match_place"
 								readonly>
 						</div>
 					</div>
@@ -193,21 +206,7 @@ div {
 				objSel.options.add(objOption4);
 			}
 		});
-		survey('#latirude', function() {
-			var latirude = document.getElementById("latirude");
-			var longitude = document.getElementById("longitude");
-			var geocoder = new kakao.maps.services.Geocoder();
-	
-			var coord = new kakao.maps.LatLng(latirude, longitude);
-			var callback = function(result, status) {
-			    if (status === kakao.maps.services.Status.OK) {
-			        console.log(result[0].address.address_name);
-			        document.getElementById("match_place").innerHTML=result[0].address.address_name;
-			    }
-			};
-
-			geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-		})
+		
 		function survey(selector, callback) {
 			var input = $(selector);
 			var oldvalue = input.val();
@@ -230,7 +229,7 @@ div {
 				function() {
 					window.open("/match_check.mercenary?code="
 							+ $("#code").val(), "",
-							"width=600px,height=300px");
+							"width=800px,height=600px");
 				})
 	</script>
 </body>

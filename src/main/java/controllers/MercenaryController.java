@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import dao.MercenaryDAO;
 import dto.ApplyInfoDTO;
 import dto.CompetitionDTO;
@@ -25,6 +27,7 @@ public class MercenaryController extends HttpServlet {
 		
 		String cmd = request.getRequestURI();
 		System.out.println(cmd);
+		Gson g = new Gson();
 		
 		try {
 			if(cmd.equals("/to_register_form.mercenary")) {
@@ -65,7 +68,7 @@ public class MercenaryController extends HttpServlet {
 			}else if(cmd.equals("/team_check.mercenary")) {
 				// 로그인 ID에 맞는 팀 선택할 수 있도록
 				// 세션에서 로그인 아이디 받아올 수 있도록 수정
-				String login_id = "agji12";
+				String login_id = "test";
 				List<TeamDTO> team_select_list = MercenaryDAO.getInstance().select_team_by_id(login_id);
 
 				request.getSession().setAttribute("login_id", login_id);
@@ -107,9 +110,9 @@ public class MercenaryController extends HttpServlet {
 				String login_id = "test";
 				int mercenary_registration_code = Integer.parseInt(request.getParameter("mercenary_registration_code"));
 				int ability_code = Integer.parseInt(request.getParameter("ability_code"));
-				String contents = request.getParameter("contents");
-				System.out.println(mercenary_registration_code);
-				int result = MercenaryDAO.getInstance().insert_apply_mercenary(new ApplyInfoDTO(login_id,mercenary_registration_code,0,ability_code,contents));
+				String content = request.getParameter("content");
+				
+				int result = MercenaryDAO.getInstance().insert_apply_mercenary(new ApplyInfoDTO(login_id,mercenary_registration_code,0,ability_code,content));
 				if(result>0) {
 					response.setContentType("text/html; charset=UTF-8");
 					PrintWriter pwriter = response.getWriter();
@@ -117,12 +120,16 @@ public class MercenaryController extends HttpServlet {
 					pwriter.close();
 				}
 			}else if(cmd.equals("/apply_list_ajax.mercenary")) {
+				// 세션에서 로그인 아이디 받아올 수 있도록 수정
+				String login_id = "test";
+				
 				int code = Integer.parseInt(request.getParameter("code"));
 				int competition_registration_code = Integer.parseInt(request.getParameter("competition_registration_code"));
 				
-				System.out.println(code);
-				System.out.println(competition_registration_code);
+				List<ApplyInfoDTO> apply_list = MercenaryDAO.getInstance().select_apply_list(new ApplyInfoDTO(login_id,code,competition_registration_code));
 				
+				String resp = g.toJson(apply_list);
+				response.getWriter().append(resp);
 			}
 			
 			
