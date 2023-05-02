@@ -168,7 +168,6 @@ public class MemberDAO {
 			}
 		}
 
-	//닉네임 가져오기
 	public MemberDTO get_info_by_id(String id) throws Exception {
 		String sql = "select code, nickname from member where id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
