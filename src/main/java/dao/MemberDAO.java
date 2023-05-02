@@ -169,14 +169,15 @@ public class MemberDAO {
 		}
 
 	//닉네임 가져오기
-	public String get_nickName_by_id(String id) throws Exception {
-		String sql = "select nickname from member where id = ?";
+	public MemberDTO get_info_by_id(String id) throws Exception {
+		String sql = "select code, nickname from member where id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, id);
-			String result = "";
+			MemberDTO result = new MemberDTO();
 			try (ResultSet rs = pstat.executeQuery()) {
 				while (rs.next()) {
-					result = rs.getString("nickname");
+					result.setCode(rs.getInt("code"));
+					result.setNick_name(rs.getString("nickname"));;
 				}
 			}
 			return result;
