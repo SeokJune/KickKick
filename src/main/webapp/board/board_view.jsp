@@ -60,8 +60,7 @@ div {
 	background-color: rgba(0, 0, 0, .1);
 	border: solid rgba(0, 0, 0, .15);
 	border-width: 1px 0;
-	box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em
-		rgba(0, 0, 0, .15);
+	box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
 }
 
 .b-example-vr {
@@ -136,7 +135,7 @@ div {
 </head>
 
 <body>
-	<nav class="navbar bg-body-tertiary fixed-top">
+	<nav class="navbar bg-body-tertiary fixed-top p-0">
 		<div class="container-fluid">
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -334,8 +333,7 @@ div {
 				<button type="button" class="btn btn-danger">신고</button>
 				</c:if>
 			</div>
-			<c:if
-				test="${sessionScope.nickname eq board.member_nickname}">
+			<c:if test="${sessionScope.nickname eq board.member_nickname}">
 				<div class="col-12 gap-2 d-flex justify-content-end">
 					<button type="button" class="btn btn-dark" id="to_update">수정</button>
 					<button type="button" class="btn btn-secondary" id="delete">삭제</button>
@@ -376,15 +374,15 @@ div {
 
 									</button>
 									<ul class="dropdown-menu p-0">
-										<c:choose>
-											<c:when test="${sessionScope.nickname eq reply.member_nickname}">
+										<!-- <c:choose>
+											<c:when test="${sessionScope.nickname eq reply.member_nickname}"> -->
 												<li><small><a class="dropdown-item" href="#">수정</a></small></li>
 												<li><small><a class="dropdown-item" href="#">삭제</a></small></li>
-											</c:when>
-											<c:otherwise>
+											<!-- </c:when>
+											<c:otherwise> -->
 												<li><small><a class="dropdown-item" href="#">신고하기</a></small></li>
-											</c:otherwise>
-										</c:choose>
+											<!-- </c:otherwise>
+										</c:choose> -->
 									</ul>
 								</div>
 							</div>
@@ -393,16 +391,14 @@ div {
 						<div class="col-12">${reply.content}</div>
 					</div>
 				</c:forEach>
-				<c:if test="${!sessionScope.code==null}">
 				<div class="row">
 					<div class="col-9">
-						<input type="text" class="form-control" placeholder="댓글입력">
+						<input type="text" class="form-control" placeholder="댓글입력" id="reply_content">
 					</div>
 					<div class="col-3 d-grid gap-2">
-						<button type="button" class="btn btn-primary">등록</button>
+						<button type="button" class="btn btn-primary" id="reply_submit">등록</button>
 					</div>
 				</div>
-				</c:if>
 			</div>
 			<div class="col-12 gap-2 d-flex justify-content-center">
 				<button type="button" class="btn btn-primary" id="to_prev">◁이전글</button>
@@ -437,7 +433,26 @@ div {
 				});
 				$("#delete").on("click", function () {
 					if(confirm("해당 글을 삭제하시겠습니까?")){
-						location.href = "/delete.board?code=${board.code}"
+						location.href = "/delete.board?b_c=${b_c}&code=${board.code}"
+					}
+				});
+				$("#reply_submit").on("click",function(){
+					if($("#reply_content").val().trim()==""){
+						alert("내용을 입력해주세요.");
+					}
+					else{
+						$.ajax({
+							url:"/insert.reply",
+							type:"post",
+							dataType:"json",
+							data:{
+								b_c:${b_c},
+								member_code:${sessionScope.code},
+								content:$("#reply_content").val(),
+							}
+						}).done(function(resp){
+							
+						})
 					}
 				});
 			</script>

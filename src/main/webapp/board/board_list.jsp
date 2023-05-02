@@ -372,12 +372,12 @@ div {
 				</div>
 			</form>
 		</div>
-		<c:if test="${sessionScope.code ne null}">
+		<!-- <c:if test="${sessionScope.code ne null}"> -->
 		<div class="col-12 d-grid justify-content-end">
 			<a class="btn btn-primary"
 				href="/to_write_form.board?b_n=${board_kind_name}" role="button">글쓰기</a>
 		</div>
-		</c:if>
+		<!-- </c:if> -->
 	</div>
 </body>
 </html>
