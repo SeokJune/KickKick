@@ -470,7 +470,7 @@ body {
 				
 				AuthTimer = new $ComTimer();
 				// 제한 시간
-				AuthTimer.comSecond = 30; 
+				AuthTimer.comSecond = 180; 
 				// 제한 시간 만료 메세지
 				AuthTimer.fnCallback = function () { alert("다시인증을 시도해주세요.") };
 				AuthTimer.timer = setInterval(function () { AuthTimer.fnTimer() }, 1000);

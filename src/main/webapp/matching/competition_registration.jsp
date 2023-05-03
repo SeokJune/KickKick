@@ -243,8 +243,10 @@
 
                                 <div class="col-xs-12 col-md-2">
                                     <div class="row">
-                                        <div class="col-xs-12 col-md-12 h-50" style="border: 1px solid red; display:none;">
-                                            ${status[0].name}</div>
+                                        <div class="col-xs-12 col-md-12 " >
+                                     		<input type="hidden" name="status" style="width:100%" value="${status[0].code}">
+                                     	</div>
+                                       
                                     </div>
                                 </div>
 
@@ -257,7 +259,7 @@
 
 
                                                 <c:forEach var="t" items="${teamname}">
-                                                    <option value="${t.name}">${t.name}</option>
+                                                    <option value="${t.code}">${t.name}</option>
                                                 </c:forEach>
 
                                             </select>
@@ -321,10 +323,7 @@
 
 
                                             <br>
-                                            <input style="width:300px;" name="latlng" id="clickLatlng">
-
- 
-
+                                            <input type="hidden" style="width:300px;" name="latlng" id="clickLatlng">
 
 
                                             <div class="map_wrap">

@@ -33,6 +33,9 @@
 				#title {
 					font-family: 'NanumSquareNeoExtraBold';
 				}
+				.dropdown-menu>li{
+					cursor:pointer;
+				}
 			</style>
 			<!-- gbn css -->
 			<link href="/css/gbn.css" rel="stylesheet" type="text/css">
@@ -56,16 +59,12 @@
 					<div class="col-12" style="height: 500px;">${board.content}</div>
 					<div class="col text-center">
 						<button type="button" class="btn btn-primary">좋아요</button>
-						<c:if test="${sessionScope.nickname ne board.member_nickname}">
 							<button type="button" class="btn btn-danger">신고</button>
-						</c:if>
 					</div>
-					<c:if test="${sessionScope.nickname eq board.member_nickname}">
 						<div class="col-12 gap-2 d-flex justify-content-end">
 							<button type="button" class="btn btn-dark" id="to_update">수정</button>
 							<button type="button" class="btn btn-secondary" id="delete">삭제</button>
 						</div>
-					</c:if>
 				</div>
 				<div class="row footer">
 					<div>
@@ -76,6 +75,7 @@
 
 						<c:forEach var="reply" items="${reply_list}">
 							<div class="row reply_box">
+							<input type="hidden" class="r_code" value="${reply.code}">
 								<div class="col-12 d-flex justify-content-between p-0 info">
 									<div class="col left d-block d-md-flex p-1">
 										<div class="nickname p-0 align-self-center" style="margin-left: 5px">
@@ -97,12 +97,11 @@
 										<div class="btn-group p-0">
 											<button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
 												data-bs-toggle="dropdown" aria-expanded="false">
-
 											</button>
 											<ul class="dropdown-menu p-0">
-												<li><small><a class="dropdown-item" href="#">수정</a></small></li>
-												<li><small><a class="dropdown-item" href="#">삭제</a></small></li>
-												<li><small><a class="dropdown-item" href="#">신고하기</a></small></li>
+												<li><small><a class="dropdown-item reply_update">수정</a></small></li>
+												<li><small><a class="dropdown-item reply_delete">삭제</a></small></li>
+												<li><small><a class="dropdown-item reply_report">신고하기</a></small></li>
 											</ul>
 										</div>
 									</div>
@@ -138,9 +137,11 @@
 					location.href = "/select_post.board?b_c=${b_c}&c=${code_list[1]}&cpage=${cpage}";
 				}
     			});
+
 				$("#to_list").on("click", function () {
 					location.href = "/list.board?b_c=${b_c}&cpage=${cpage}";
 				});
+
 				$("#to_next").on("click", function () {
 					if (${ code_list[2] == 0 }){
 					alert("다음글이 없습니다.");
@@ -149,14 +150,17 @@
 					location.href = "/select_post.board?b_c=${b_c}&c=${code_list[2]}&cpage=${cpage}";
 				}
         		});
+
 				$("#to_update").on("click", function () {
 					location.href = "/to_update_form.board?b_c=${b_c}&code=${board.code}&cpage=${cpage}";
 				});
+
 				$("#delete").on("click", function () {
 					if (confirm("해당 글을 삭제하시겠습니까?")) {
 						location.href = "/delete.board?b_c=${b_c}&code=${board.code}"
 					}
 				});
+
 				function calculateTime(reg_date) {
 					const SEC = 60;
 					const MIN = 60;
@@ -205,8 +209,8 @@
 							dataType: "json",
 							data: {
 								b_c: ${ b_c },
-							code: ${ board.code },
-							content: $("#input_reply").val(),
+								code: ${ board.code },
+								content: $("#input_reply").val(),
 							},
 				}).done(function (resp) {
 					$("#input_reply").val("");
@@ -222,7 +226,35 @@
 					}
 				});	
 			};
-		});		
+		});	
+		
+				$("#replies_box").on("click",".reply_delete",function(){
+					if(confirm("해당 댓글을 삭제하시겠습니까?")){
+						let r_code = $(this).closest(".reply_box").find(".r_code").val();
+						$.ajax({
+							url:"/delete.reply",
+							type:"post",
+							dataType:"json",
+							data:{
+								b_c:${b_c},
+								code:r_code,
+								board_code:${board.code},
+								cpage:${cpage}
+							},
+						}).done(function(resp){
+							$("#reply_count").text("댓글 " + resp.length + "개");
+							let reply_box = $(".reply_box").last().clone();
+							$("#replies_box").html("");
+							for (let i = 0; i < resp.length; i++) {
+								$("#replies_box").append(reply_box.clone());
+								$(".r_nickname").last().text(resp[i].member_nickname);
+								$(".r_date").last().text(calculateTime(resp[i].reg_date));
+								$(".r_like").last().text("👍🏻" + resp[i].like_count);
+								$(".r_content").last().text(resp[i].content);
+							}
+						});
+					}
+				});
 			</script>
 		</body>
 

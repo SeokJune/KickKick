@@ -28,6 +28,7 @@ public class TeamDTO {
 		this.code = code;
 		this.name = name;
 	}
+	
 
 	public TeamDTO(int code, String logo_path, String logo, String name, String member_name, String member_phone) {
 		super();

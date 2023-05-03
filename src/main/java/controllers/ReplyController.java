@@ -43,7 +43,7 @@ public class ReplyController extends HttpServlet {
 				int board_code = Integer.parseInt(request.getParameter("code"));
 //				int member_code = (int)request.getSession().getAttribute("code");
 				//일단 임시로 멤버코드 설정
-				int member_code = 1;
+				int member_code = 2;
 				String content = request.getParameter("content");
 				
 				//새로운 댓글을 등록하는데 성공하면
@@ -52,9 +52,22 @@ public class ReplyController extends HttpServlet {
 				if(result>0) {
 					//해당 글의 모든 댓글 리스트를 담아 보낸다
 					List<ReplyDTO> return_rlist = rdao.select_reply_list(board_table_name, board_code);
-					for(ReplyDTO dto:return_rlist) {
-						System.out.println(dto.getCode());
-					}
+					Gson g = new Gson();
+					String resp = g.toJson(return_rlist);
+					response.getWriter().append(resp);
+				}
+			}
+			else if(cmd.equals("/delete.reply")) {
+				int b_c = Integer.parseInt(request.getParameter("b_c"));
+				int code = Integer.parseInt(request.getParameter("code"));
+				String board_table_name = bdao.set_table(bdao.select_board_name(b_c));
+				int board_code = Integer.parseInt(request.getParameter("board_code"));
+				
+				//댓글을 삭제하는데 성공하면
+				int result = rdao.delete_reply(board_table_name,code);
+				if(result>0) {
+					//해당 글의 모든 댓글 리스트를 담아 보낸다
+					List<ReplyDTO> return_rlist = rdao.select_reply_list(board_table_name, board_code);
 					Gson g = new Gson();
 					String resp = g.toJson(return_rlist);
 					response.getWriter().append(resp);
