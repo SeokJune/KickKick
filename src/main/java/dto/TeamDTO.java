@@ -14,7 +14,7 @@ public class TeamDTO {
 	private String member_name;
 	private String member_phone;
 	private int hometown_code;
-	private String homtown_name;
+	private String hometown_name;
 	private String outline;
 	private String content;
 	private Timestamp reg_date;
@@ -29,7 +29,15 @@ public class TeamDTO {
 		this.name = name;
 	}
 	
-
+	public TeamDTO(int code, String logo_path, String logo, String name, String hometown_name) {
+		super();
+		this.code = code;
+		this.logo_path = logo_path;
+		this.logo = logo;
+		this.name = name;
+		this.hometown_name = hometown_name;
+	}
+	
 	public TeamDTO(int code, String logo_path, String logo, String name, String member_name, String member_phone) {
 		super();
 		this.code = code;
@@ -56,7 +64,7 @@ public class TeamDTO {
 
 
 
-	public TeamDTO(int code, int logo_path_code, String logo_path, String logo_name, String logo, String name, int member_code, String member_name, String member_phone, int hometown_code, String homtown_name, String outline, String content, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
+	public TeamDTO(int code, int logo_path_code, String logo_path, String logo_name, String logo, String name, int member_code, String member_name, String member_phone, int hometown_code, String hometown_name, String outline, String content, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
 		super();
 		this.code = code;
 		this.logo_path_code = logo_path_code;
@@ -68,7 +76,7 @@ public class TeamDTO {
 		this.member_name = member_name;
 		this.member_phone = member_phone;
 		this.hometown_code = hometown_code;
-		this.homtown_name = homtown_name;
+		this.hometown_name = hometown_name;
 		this.outline = outline;
 		this.content = content;
 		this.reg_date = reg_date;
@@ -207,11 +215,11 @@ public class TeamDTO {
 	}
 
 	public String getHomtown_name() {
-		return homtown_name;
+		return hometown_name;
 	}
 
-	public void setHomtown_name(String homtown_name) {
-		this.homtown_name = homtown_name;
+	public void setHomtown_name(String hometown_name) {
+		this.hometown_name = hometown_name;
 	}
 
 	public String getFormedDate() {

@@ -3,12 +3,15 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import dto.MemberDTO;
+import dto.TeamDTO;
 
 public class MemberDAO {
 
@@ -102,29 +105,28 @@ public class MemberDAO {
 		}
 	}// insert_new_member
 
-	
-	//내정보 조회
-		public MemberDTO select_member(String member_id) throws Exception{
-			String sql = "select * from member where id = ?";
-			try( Connection con = this.getConnection();
-					PreparedStatement pstat = con.prepareStatement(sql);){
-				pstat.setString(1,member_id);
-				
-				try(ResultSet rs = pstat.executeQuery();){
-					rs.next();
-					String id = rs.getString("id");
-					String pw = rs.getString("pw");
-					String name = rs.getString("name");
-					String phone = rs.getString("phone");
-					String birthdate = rs.getString("birthdate");
-					String email = rs.getString("email");
-					String nickname = rs.getString("nickname");
-					
-					MemberDTO dto = new MemberDTO(0,0,id,pw,name,nickname,birthdate,phone,email,null,0,null,null,null);
-					return	dto;
-				}
+	// 내정보 조회
+	public MemberDTO select_member(String member_id) throws Exception {
+		String sql = "select * from member where id = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, member_id);
+
+			try (ResultSet rs = pstat.executeQuery();) {
+				rs.next();
+				String id = rs.getString("id");
+				String pw = rs.getString("pw");
+				String name = rs.getString("name");
+				String phone = rs.getString("phone");
+				String birthdate = rs.getString("birthdate");
+				String email = rs.getString("email");
+				String nickname = rs.getString("nickname");
+
+				MemberDTO dto = new MemberDTO(0, 0, id, pw, name, nickname, birthdate, phone, email, null, 0, null,
+						null, null);
+				return dto;
 			}
 		}
+	}
 
 	public String get_id_by_phone(String phone) throws Exception {
 		String sql = "select id from member where phone = ?";
@@ -151,22 +153,21 @@ public class MemberDAO {
 		}
 	}
 
-	//내정보 수정
-		public int modify_member(MemberDTO dto) throws Exception{
-			String sql = "update member set pw=? , nickname=?, birthdate=?, phone=?, email=?, mod_date=sysdate where id=?";
-			try( Connection con = this.getConnection();
-					PreparedStatement pstat = con.prepareStatement(sql);){
-				pstat.setString(1, dto.getPw());
-				pstat.setString(2, dto.getNick_name());
-				pstat.setString(3, dto.getBirth_date());
-				pstat.setString(4, dto.getPhone());
-				pstat.setString(5, dto.getEmail());
-				pstat.setString(6, dto.getId());
-				int result = pstat.executeUpdate();
-				con.commit();
-				return result;
-			}
+	// 내정보 수정
+	public int modify_member(MemberDTO dto) throws Exception {
+		String sql = "update member set pw=? , nickname=?, birthdate=?, phone=?, email=?, mod_date=sysdate where id=?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, dto.getPw());
+			pstat.setString(2, dto.getNick_name());
+			pstat.setString(3, dto.getBirth_date());
+			pstat.setString(4, dto.getPhone());
+			pstat.setString(5, dto.getEmail());
+			pstat.setString(6, dto.getId());
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
 		}
+	}
 
 	public MemberDTO get_info_by_id(String id) throws Exception {
 		String sql = "select code, nickname from member where id = ?";
@@ -176,14 +177,15 @@ public class MemberDAO {
 			try (ResultSet rs = pstat.executeQuery()) {
 				while (rs.next()) {
 					result.setCode(rs.getInt("code"));
-					result.setNick_name(rs.getString("nickname"));;
+					result.setNick_name(rs.getString("nickname"));
+					;
 				}
 			}
 			return result;
 		}
 	}
 
-	//멤버코드 가져오기
+	// 멤버코드 가져오기
 	public String get_memberCode_by_id(String id) throws Exception {
 		String sql = "select code from member where id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
@@ -197,17 +199,38 @@ public class MemberDAO {
 			return result;
 		}
 	}
-	
-	//회원 탈퇴
-			public int delete_member(String id) throws Exception{
-				String sql = "delete from member where id = ?";
-				try (Connection con = this.getConnection(); 
-						PreparedStatement pstat = con.prepareStatement(sql);) {
-					pstat.setString(1, id);
-					int result = pstat.executeUpdate();
-					con.commit();
-					return result;
-				}
-			}
 
+	// 회원 탈퇴
+	public int delete_member(String id) throws Exception {
+		String sql = "delete from member where id = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setString(1, id);
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
+
+	// 내 팀 리스트 가져오기 -> teamcontrollerfh
+	public List<TeamDTO> my_team_list(String member_code) throws Exception {
+		String sql = "select * from team where code = " + "(select team_code from team_memeber where member_code= ?);";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
+			pstat.setString(1, member_code);
+			try (ResultSet rs = pstat.executeQuery()) {
+
+				List<TeamDTO> list = new ArrayList<TeamDTO>();
+				while (rs.next()) {
+					int team_code = rs.getInt("code");
+					String logo_path = rs.getString("logo_path");
+					String logo = rs.getString("logo");
+					String team_name = rs.getString("name");
+					String hometown_name = rs.getString("hometown_name");
+					TeamDTO dto = new TeamDTO(team_code, logo_path, logo, team_name, hometown_name);
+					list.add(dto);
+				}
+				return list;
+			}
+		}
+
+	}
 }
