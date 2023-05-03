@@ -176,6 +176,7 @@ body {
 #tooltip[data-popper-placement^='right']>#arrow {
 	left: -4px;
 }
+
 </style>
 </head>
 
@@ -192,6 +193,9 @@ body {
 						<div class="KickKick_logo text-center d-md-block d-none">
 							<h1 class="mb-4">⚽KickKick</h1>
 							<h3>킥킥에 돌아오신걸 환영해요!</h3>
+						</div>
+						<div class="d-md-none d-block d-flex justify-content-end">
+							<button type="button" class="btn-close" id="btn_to_back" aria-label="Close"></button>
 						</div>
 						<form action="/login.member" method="post" id="form_login">
 							<div class="form-group mb-4">
@@ -668,6 +672,10 @@ body {
 					name: 'offset',
 					options: { offset: [0, 8] }
 			}],
+		});
+		
+		$("#btn_to_back").on("click",function(){
+			location.href="/index.jsp";			
 		});
 	</script>
 </body>
