@@ -19,9 +19,15 @@
 <link
 	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
 	rel="stylesheet">
+<!-- awesome font -icon--->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- Bootstrap - icon -->
+<link
+   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+   rel="stylesheet">
 <style>
 div {
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	padding: 10px;
 	box-sizing: border-box;
 	font-family: 'NanumSquareNeoBold';
@@ -58,7 +64,7 @@ div {
 	</c:import>
   
 	<div class="container">
-		<div class="row header">
+		<div class="row header" style="border-bottom: 1px solid #d2d4d6;">
 			<div class="col-12" id="title">
 				<h2>${board_kind_name}</h2>
 			</div>
@@ -73,10 +79,10 @@ div {
 				</c:choose>
 			</div>
 		</div>
-		<div class="row body">
+		<div class="row body" style="border-bottom: 1px solid #d2d4d6;">
 			<div class="list-group" style="border-radius: 0;">
 				<a href="#"
-					class="list-group-item list-group-item-action list-group-item-primary">
+					class="list-group-item list-group-item-action list-group-item-primary p-0">
 					<div class="col-12">
 						<div class="col title_box">
 							<b>[말머리]</b> <span class="title">필독 제목 공지사항 샘플</span> <span
@@ -90,7 +96,7 @@ div {
 				</a>
 				<c:forEach var="post" items="${list}">
 					<a href="/select_post.board?b_c=${b_c}&c=${post.code}&cpage=${cpage}"
-						class="list-group-item list-group-item-action">
+						class="list-group-item list-group-item-action p-0">
 						<div class="col-12">
 							<div class="col title_box">
 								<b>[${post.board_headline_name}]</b> <span class="title">${post.title}</span> <span
@@ -113,8 +119,8 @@ div {
 				</nav>
 			</div>
 		</div>
-		<div class="row footer">
-			<form class="d-flex" action="/list.board" method="get">
+		<div class="row footer pb-4">
+			<form class="d-flex p-0" action="/list.board" method="get">
 				<div class="col-3">
 					<input type="hidden" name="cpage" value="1"> <input
 						type="hidden" name="b_c" value="${b_c}"> <select
@@ -135,12 +141,12 @@ div {
 				</div>
 			</form>
 		</div>
-		<!-- <c:if test="${sessionScope.code ne null}"> -->
+		<c:if test="${sessionScope.code ne null}">
 		<div class="col-12 d-grid justify-content-end">
 			<a class="btn btn-primary"
 				href="/to_write_form.board?b_n=${board_kind_name}" role="button">글쓰기</a>
 		</div>
-		<!-- </c:if> -->
+		</c:if>
 	</div>
 </body>
 </html>

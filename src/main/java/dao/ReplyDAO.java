@@ -106,4 +106,16 @@ public class ReplyDAO {
 			return result;
 		}
 	}
+	
+	public int update_reply(String board_table_name, ReplyDTO dto) throws Exception{
+		String sql = "update reply_"+board_table_name+" set content=?, mod_date=sysdate where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setString(1, dto.getContent());
+			pstat.setInt(2, dto.getCode());
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
 }

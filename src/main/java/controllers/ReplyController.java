@@ -41,9 +41,7 @@ public class ReplyController extends HttpServlet {
 				request.setAttribute("b_c", b_c);
 				
 				int board_code = Integer.parseInt(request.getParameter("code"));
-//				int member_code = (int)request.getSession().getAttribute("code");
-				//일단 임시로 멤버코드 설정
-				int member_code = 2;
+				int member_code = (int)request.getSession().getAttribute("code");
 				String content = request.getParameter("content");
 				
 				//새로운 댓글을 등록하는데 성공하면
@@ -72,6 +70,16 @@ public class ReplyController extends HttpServlet {
 					String resp = g.toJson(return_rlist);
 					response.getWriter().append(resp);
 				}
+			}
+			else if(cmd.equals("/update.reply")) {
+				int b_c = Integer.parseInt(request.getParameter("b_c"));
+				int code = Integer.parseInt(request.getParameter("code"));
+				String board_table_name = bdao.set_table(bdao.select_board_name(b_c));
+				String content = request.getParameter("content");
+				
+				int result = rdao.update_reply(board_table_name, new ReplyDTO(code,content));
+				if(result>0) {
+					response.getWriter().append(""+result);			}
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
