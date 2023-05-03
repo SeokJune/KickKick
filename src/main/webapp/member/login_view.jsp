@@ -317,7 +317,7 @@ body {
 			<div class="wrapper_change_pw justify-content-center" id="to_change_pw_fadeIn" style="display: none">
 				<div class="KickKick_logo text-center d-md-block mb-5">
 					<h1 class="mb-4">⚽KickKick</h1>
-					<h3>'${sessionScope.search_id}'님!</h3>
+					<h3 id="search_id"></h3>
 					<h3>이제 진짜 진짜 얼마 안남았어요!</h3>
 				</div>
 				<div class="row d-flex justify-content-center">
@@ -476,12 +476,13 @@ body {
 				dataType: "json",
 				data: { code: $("#phone_auth_code").val() }
 			}).done(function name(resp) {
-				if (resp) {
+				if (resp.success) {
 					AuthTimer.fnStop();
 					$("#login_view_fadeOut").hide();
 					$("#find_member_fadeIn").hide();
 					$("#to_phone_authentication_fadeIn").hide();
 					$("#to_change_pw_fadeIn").fadeIn();
+					$("#search_id").text(resp.search_id + " 님!");
 				} else {
 					alert("인증번호를 다시 입력해주세요");
 					$("#phone_auth_code").val("");
@@ -633,7 +634,7 @@ body {
 				$.ajax({
 					url: "/change_pw.member",
 					type: "post",
-					data: { password: $("#password").val() }
+					data: { id: $("#search_id").text().split(" ")[0] , password: $("#password").val() }
 				}).done(function () {
 					location.reload();
 				});
