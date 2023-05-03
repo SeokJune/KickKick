@@ -49,6 +49,12 @@ public class ReplyDTO {
 		this.member_code = member_code;
 		this.content = content;
 	}
+	
+	//댓글 수정할 때 사용할 생성자
+	public ReplyDTO(int code, String content) {
+		this.code = code;
+		this.content = content;
+	}
 
 	public int getCode() {
 		return code;
