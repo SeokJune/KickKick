@@ -19,6 +19,12 @@
 	crossorigin="anonymous"></script>
 <!-- 폰트 -->	
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+<!-- awesome font -icon--->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- Bootstrap - icon -->
+<link
+   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+   rel="stylesheet">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 html {
@@ -30,12 +36,11 @@ body {
 	font-family: 'NanumSquareNeo';
 }
 
-.container {
-	border: 1px solid black;
-	width: 700px;
+.my_page_container {
+	min-width: 478px;
+	width:80%;
 	height: max-content;
-	padding: 32px;
-	margin-top: 5%;
+	padding: 8%;
 	margin-bottom: 5%;
 	position: relative;
 	background-color: whitesmoke;
@@ -43,38 +48,43 @@ body {
 	box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0
 		rgba(0, 0, 0, 0.19);
 }
-.label,.nav-link,.label{
-font-family: 'NanumSquareNeoExtraBold';
-font-size:large;
-}
-#btn_verify_pw{
-width:100%;
-align:center;
-}
-.verify_pw{
-position:relative;
-margin-top:5%;
-}
-.verify_pw>.row{
-height:50px;
-}
-#profile_view{
-display:none;
+.info,.label,.nav-link{
+    font-family: 'NanumSquareNeoExtraBold';
+    font-size:large;
 }
 .wrapper {
-	position: relative;
-	padding-left: 25px;
-	padding-right: 25px;
-	padding-top: 20px;
+    position: relative;
 }
-
-.row input {
-	height: 40px;
-	width: 250px;
+.btn{
+border:none;
+}
+/*-------------------------------------------------------------------------------------------*/
+#btn_verify_pw{
+height:80px;
+width:80px;
+background-color: none;
+border:none;
+border-radius: 3rem;
+transition-duration: 0.5s;
+}
+#verify_pw{
+background-color: white;
+border:none;
+}
+#btn_verify_pw:hover{
+    background-color:black;
+    color:aliceblue;
+}
+/*-------------------------------------------------------------------------------------------------*/
+#profile_view{
+display:none;
 }
 
 label {
 	font-size: small;
+}
+.label{
+	padding:1%;
 }
 #password-alert *{
 font-size: x-small;
@@ -82,320 +92,381 @@ font-size: x-small;
 .valid-feedback,.invalid-feedback{
 font-size: small;
 }
-.btn{
-border:none;
-}
 .btn comp {
 	width:80%;
 }
-.nav{
-position:relative;
-text-align:center;
-}
 </style>
+<!-- gbn css -->
+<link href="/css/gbn.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+	<div class="navi">
+		<c:import url="/commons/gbn.jsp">
+		</c:import>
+	</div>
 
-	<div class="container my_page_container">
-	
-		<ul class="nav nav-tabs">
-			<li class="nav-item">
-		    	<a class="nav-link" aria-current="page" href="#">대시보드</a>
-			</li>
-		  	<li class="nav-item">
-		    	<a class="nav-link" aria-current="page" href="#">My Profile</a>
-			</li>
+	<div class="container py-4">
+
+		<ul class="nav nav-tabs mt-5">
+			<li class="nav-item"><a class="nav-link text-dark"
+				aria-current="page" href="#">내 팀</a></li>
+			<li class="nav-item"><a class="nav-link text-dark"
+				aria-current="page" href="#">내 경기</a></li>
+			<li class="nav-item"><a class="nav-link active"
+				aria-current="page" href="/my_profile.member">내 정보</a></li>
 		</ul>
-		
-		<div class="wrapper verify_pw" id="verify_pw_view">
-			<div class="row">
-				<p><span class="label">ID    : </span>${profile.id}</p>
-			</div>		
-			<div class="row ">	
-				<span class="label">PW  : <input type="password" id="verify_pw" name="verify_pw" required></span>
-			</div>
-			<div class="row">
-				<button id="btn_verify_pw">확인</button> 
-			</div>
-		</div>
-		
-			<div class="wrapper profile_view" id="profile_view">
-				<form action="/modify_member_profile.member" method="post" onsubmit="return confirm('프로필을 수정하시겠습니까?');">
 
-					<!-- 아이디 : 변경 불가-->
-					<div class="row" style="height: 85px;">
-						<!--아이디 출력창 -->
-						<div class="col">
-							<div class="row label">
-								<div class="col md-9">
-									<label for="member_id">아이디</label>
-								</div>
+		<div class="container my_page_container">
+
+			<!-- 비밀번호 확인 -->
+			<div class="wrapper verify_pw_view p-4 " id="verify_pw_view">
+				<div class="row d-flex p-1 justify-content-center ">
+					<div class="col-8 col-lg-7 col-xl-8">
+						<div class="row">
+							<div class="col-4 col-md-4 col-lg-5">
+								<p class="info text-end">ID :</p>
 							</div>
-							<div class="row input">
-								<div class="col md-9">
-									<input type="text" class="form-control" id="member_id"
-										value="${profile.id}"
-										name="member_id" readonly>
-								</div>
+							<div class="col-8 col-md-8 col-lg-5">${profile.id}</div>
+						</div>
+						<div class="row">
+							<div class="col-4 col-md-4 col-lg-5 mt-2">
+								<p class="info text-end">PW :</p>
+							</div>
+							<div class="col-8 col-md-7 col-lg-6">
+								<input type="password" id="verify_pw" name="verify_pw"
+									class="form-control" required>
 							</div>
 						</div>
 					</div>
-	
-					<!-- 비밀번호 : 수정하기 버튼 클릭시 보여짐-->
-					<div class="row" id="edit_pw">
-						<div class="col">
-							<div class="row label">
-									<label>비밀번호</label>
-							</div>
-					<!-- '비밀번호 변경'버튼 -->		
-							<div class="row">
-									<button class="btn btn-primary comp" type="button" id="edit_pw_btn">비밀번호
-										변경</button>
-							</div>
-						</div>
+					<div class="col-4 col-lg-3 col-xl-2">
+						<button id="btn_verify_pw">확인</button>
 					</div>
-					<!-- 비밀번호 입력창 :  '비밀번호 변경'버튼 클릭시 보여짐-->
-					 <div class="row" id="edit_pw_fadeIn">
-		                <div class="col">
-		               		<div class="row input"> 
-		               			<div class="col">
-			                        <input type="password" class="form-control rounded mt-1"
-			                        	id="member_confirm_pw" name="member_confirm_pw" 
-			                            placeholder=" 기존 비밀번호"  value="${profile.pw}"
-			                            aria-describedby="password" class="password" />
-			                    </div>
-			                    <div class="col">       
-			                        <button class="btn btn-light btn-sm" id="confirm_pw" type="button">확인</button>  
-			                    </div>        
-		           			</div>
-							<div class="row input" >
-								<div class="col">
-									<input type="password" class="form-control rounded mt-1"
-										id="member_new_pw" name="member_new_pw" 
-										placeholder=" 새 비밀번호"
-										pattern="^(?=.*[A-Z])(?=.*[~.!@#$%^&*()_+={}>;<:,.?/\-\[\]\\\|])(?=.*[0-9]).{8,20}$"
-										aria-describedby="password" class="password" 
-										maxlength="20">
-									<div class="valid-feedback">Good</div>
-									<div class="invalid-feedback">Wrong</div>
-									<div class="alert px-3 py-3 mb-0 d-none" role="alert"
-									data-mdb-color="warning" id="password-alert">
-										<ul class="list-unstyled mb-0">
-											<li class="requirements leng"><i
-												class="bi bi-check text-success me-2"></i> <i
-												class="bi bi-x text-danger me-3"></i> 8자 이상</li>
-											<li class="requirements big-letter"><i
-												class="bi bi-check text-success me-2"></i> <i
-												class="bi bi-x text-danger me-3"></i> 하나 이상의 알파벳 대문자를 포함</li>
-											<li class="requirements num"><i
-												class="bi bi-check text-success me-2"></i> <i
-												class="bi bi-x text-danger me-3"></i> 숫자 하나 이상 포함</li>
-											<li class="requirements special-char"><i
-												class="bi bi-check text-success me-2"></i> <i
-												class="bi bi-x text-danger me-3"></i> 특수문자가 하나 이상 포함</li>
-										</ul>
-									</div>	
-								</div>
-							<!-- 비밀번호 보기&숨기기 버튼 -->
-		                    	<div class="col">
-									<button class="btn btn-light btn-sm" id="view_pw" type="button">보기</button>
-								</div>
-								
-							</div>
-						</div>
-					</div>
-	
-	
-					<!-- 이름 : 변경 불가 -->
-					<div class="row" style="height: 85px;">
-						<!-- 이름 출력창 -->
-						<div class="col">
-							<div class="row label">
-								<div class="col">
-									<label for="member_name">이름</label>
-								</div>
-							</div>
-							<div class="row input">
-								<div class="col md-9">
-									<input type="text" class="form-control" id="member_name"
-										value="${profile.name}"
-										name="member_name" readonly>
-								</div>
-							</div>
-						</div>
-					</div>
-	
-					<!-- 전화번호 : 인증 후 변경 가능 -->
-					<div class="row" style="height: 85px;">
-						<!-- 전화번호1,2,3 입출력창 -->
-						<div class="col">
-							<div class="row label">
-								<label for="member__phone">전화번호</label>
-							</div>
-							<div class="row input">
-								<div class="col">
-									<input type="text" class="form-control" id="member_phone"
-										name="member_phone" pattern="^0+\d{9,10}$"
-										value="${profile.phone}"
-										minlength="10" maxlength="11" style="width: 200px;" required readonly>
-								</div>
-								
-							<!-- 전화번호 변경 버튼 : 수정하기 버튼 클릭시 보여짐 -->
-								<div class="col">
-									<button type="button" class="btn btn-primary btn-sm"
-										id="edit_phone_btn" style="-bs-btn-font-size: .75rem;">변경</button>
-								</div>
-							</div>
-							<!-- 전화번호 중복 메세지 -->
-							<div class="row checking">
-								<h9 id="phone_checking"></h9>
-							</div>
-						</div>
-					</div>
-	
-				<!-- 전화번호 변경 버튼 클릭시 보여짐 -->
-					<!-- 인증번호 -->
-					<div class="row" id="veri_code" style="height: 85px;">
-						<!-- 인증번호 입력창 -->
-						<div class="col">
-							<div class="row label">
-								<label for="member_pin">인증번호</label>
-							</div>
-							<div class="row input">
-								<div class="col">
-									<input type="text" class="form-control" id="member_pin"
-										name="member_pin">
-								</div>
-								<!-- 인증완료 버튼 -->
-								<div class="col">
-									<button type="button" class="btn btn-primary btn-sm">인증번호
-										전송</button>
-								</div>
-							</div>
-						</div>
-					</div>
-	
-					<!-- 생년월일 -->
-					<div class="row" style="height: 85px;">
-						<!-- 생년월일 입출력창 -->
-						<div class="col">
-							<div class="row label">
-								<label for="member_birth">생년월일</label>
-							</div>
-							<div class="row input">
-								<div class="col">
-									<input type="text" class="form-control" id="member_birth_year"
-										name="member_birth_year" pattern="^(19[0-9][0-9]|20[0-2][0-3])$" 
-										value="${profile.birth_date.substring(0,4)}"
-										minlength="4" maxlength="4" required readonly 
-										style="width: 100px;">
-								</div>
-								<div class="col">년</div>
-								<div class="col">
-									<input type="text" class="form-control" id="member_birth_month"
-										name="member_birth_month" pattern="^(0[1-9]|1[0-2])$"
-										value="${profile.birth_date.substring(4,6)}"
-										minlength="2" maxlength="2" required readonly
-										style="width: 100px;"> 
-								</div>
-								<div class="col">월</div>
-								<div class="col">
-									<input type="text" class="form-control" id="member_birth_day"
-										name="member_birth_day" pattern="^(0[1-9]|[12][0-9]|3[01])$"
-										value="${profile.birth_date.substring(6,8)}"
-										minlength="2" maxlength="2" required readonly
-										style="width: 100px;"> 
-								</div>
-								<div class="col">일</div>
-							</div>
-						</div>
-					</div>
-	
-					<!-- 이메일 -->
-					<div class="row insert" style="height: 85px;">
-						<!-- 이메일 입출력창 -->
-						<div class="col">
-							<div class="row label">
-								<div class="col">
-									<label for="member_email"> E-mail</label>
-								</div>
-							</div>
-							<div class="row input">
-								<div class="col md-9">
-									<input type="email" class="form-control" id="member_email"
-										value="${profile.email}"
-										name="member_email"
-										pattern="^([a-z]{1}[a-z0-9_+.-]+@)([a-zA-Z0-9]+\.)([a-z0-9]{2,4})$"
-										readonly>
-								</div>
-							</div>
-							<!-- 이메일 중복 확인 메세지 -->
-							<div class="row checking">
-								<div class="col md-3">
-									<h9 id="email_checking"> </h9>
-								</div>
-							</div>
-						</div>
-					</div>
-	
-					<!-- 닉네임 -->
-					<div class="row insert" style="height: 85px;">
-						<!-- 닉네임 입출력창 -->
-						<div class="col">
-							<div class="row label">
-								<div class="col">
-									<label for="member_nickname"> 닉네임</label>
-								</div>
-							</div>
-							<div class="row input">
-								<div class="col md-9">
-									<input type="text" class="form-control" id="member_nickname"
-										value="${profile.nick_name}"
-										name="member_nickname" pattern="^[가-힣a-zA-Z0-9]{2,10}$"
-										minlength="2" maxlength="10" readonly
-										style="width: 255px;">
-								</div>
-							</div>
-							<!-- 닉네임 중복 확인 메세지 -->
-							<div class="row checking">
-								<div class="col md-3">
-									<h9 id="nickname_checking"> </h9>
-								</div>
-							</div>
-						</div>
-					</div>
-	
-				<!-- '수정하기' 버튼 클릭시 '수정완료'버튼과 '취소'버튼 보여지고 '수정하기'버튼 숨겨짐 -->	
-					<div class="row" id="edit">
-					<!-- 수정 버튼 -->
-						<button class="btn btn-secondary comp" id="btn_edit" type="button"
-							style="background-color: #76b852;">수정하기</button>
-						<button class="btn btn-secondary comp" id="btn_delete" type="button"
-							style="background-color: #76b852;">탈퇴신청</button>
-					</div>	
-					<div class="row" id="edit_complete">	
-					<!-- 수정완료,취소 버튼 -->		
-						<button class="btn btn-secondary" id="btn_edit_complete" 
-							style="background-color: #76b852;">수정완료</button>
-					</div>
-					
-				</form>
+				</div>
 			</div>
-			
-		<!-- 탈퇴신청 버튼 클릭시 보여짐 -->	
-			<div class="wrapper delete_member" id="delete_member_view">
-				<form action="/delete_member.member" method="post" onsubmit="return confirm('정말 탈퇴 하시겠습니까?');">
+
+			<!-- 내정보 조회 -->
+			<div class="wrapper profile_view p-2" id="profile_view">
+				<form action="/modify_member_profile.member" method="post"
+					onsubmit="return confirm('프로필을 수정하시겠습니까?');">
 					<div class="row">
-						<h3>탈퇴하시겠습니까?</h3>
-						<h6>탈퇴시 계정복구가 어렵습니다.</h6>
-						<button>네</button>
-						<button type="button" onClick="window.history.back()">아니오</button>
+						<div class="col col-lg2"></div>
+						<!-- 아이디 : 변경 불가-->
+						<div class="col-12 col-lg-10">
+							<div class="row" style="height: max-content;">
+								<!--아이디 출력창 -->
+								<div class="col">
+									<div class="row label">
+										<div class="col-md-9">
+											<label for="member_id">아이디</label>
+										</div>
+									</div>
+									<div class="row input">
+										<div class="col-12 col-md-8">
+											<input type="text" class="form-control" id="member_id"
+												value="${profile.id}" name="member_id" readonly>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+
+							<!-- 비밀번호 : 수정하기 버튼 클릭시 보여짐-->
+							<div class="row" id="edit_pw" style="height: max-content;">
+								<div class="col md-9">
+									<div class="row label">
+										<label>비밀번호</label>
+									</div>
+									<!-- '비밀번호 변경'버튼 -->
+									<div class="row">
+										<div class="col-12 col-md-8">
+											<button class="btn btn-primary comp w-100" type="button"
+												id="edit_pw_btn">비밀번호 변경</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 비밀번호 입력창 :  '비밀번호 변경'버튼 클릭시 보여짐-->
+							<div class="row" id="edit_pw_fadeIn" style="height: max-content;">
+								<div class="col">
+									<div class="row input">
+										<div class="col-9 col-md-8">
+											<input type="password" class="form-control rounded mt-1"
+												id="member_confirm_pw" name="member_confirm_pw"
+												placeholder=" 기존 비밀번호" value="${profile.pw}"
+												aria-describedby="password" class="password" />
+										</div>
+										<div class="col-3 mt-2">
+											<button class="btn btn-light btn-sm" id="confirm_pw"
+												type="button">확인</button>
+										</div>
+									</div>
+									<div class="row input">
+										<div class="col-9 col-md-8">
+											<input type="password" class="form-control rounded mt-1"
+												id="member_new_pw" name="member_new_pw"
+												placeholder=" 새 비밀번호"
+												pattern="^(?=.*[A-Z])(?=.*[~.!@#$%^&*()_+={}>;<:,.?/\-\[\]\\\|])(?=.*[0-9]).{8,20}$"
+												aria-describedby="password" class="password" maxlength="20">
+											<div class="valid-feedback">Good</div>
+											<div class="invalid-feedback">Wrong</div>
+											<div class="alert px-1 py-1 mb-0 d-none" role="alert"
+												data-mdb-color="warning" id="password-alert">
+												<ul class="list-unstyled mb-0">
+													<li class="requirements leng"><i
+														class="bi bi-check text-success me-2"></i> <i
+														class="bi bi-x text-danger me-3"></i> 8자 이상</li>
+													<li class="requirements big-letter"><i
+														class="bi bi-check text-success me-2"></i> <i
+														class="bi bi-x text-danger me-3"></i> 하나 이상의 알파벳 대문자를 포함</li>
+													<li class="requirements num"><i
+														class="bi bi-check text-success me-2"></i> <i
+														class="bi bi-x text-danger me-3"></i> 숫자 하나 이상 포함</li>
+													<li class="requirements special-char"><i
+														class="bi bi-check text-success me-2"></i> <i
+														class="bi bi-x text-danger me-3"></i> 특수문자가 하나 이상 포함</li>
+												</ul>
+											</div>
+										</div>
+										<!-- 비밀번호 보기&숨기기 버튼 -->
+										<div class="col-3 mt-2">
+											<button class="btn btn-light btn-sm" id="view_pw"
+												type="button">보기</button>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+
+							<!-- 이름 : 변경 불가 -->
+							<div class="row" style="height: max-content;">
+								<!-- 이름 출력창 -->
+								<div class="col">
+									<div class="row label">
+										<div class="col md-9">
+											<label for="member_name">이름</label>
+										</div>
+									</div>
+									<div class="row input">
+										<div class="col-12 col-md-8">
+											<input type="text" class="form-control" id="member_name"
+												value="${profile.name}" name="member_name" readonly>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- 전화번호 : 인증 후 변경 가능 -->
+							<div class="row" style="height: max-content;">
+								<!-- 전화번호 입출력창 -->
+								<div class="col">
+									<div class="row label">
+										<div class="col-md-9">
+											<label for="member_phone">전화번호</label>
+										</div>
+									</div>
+									<div class="row input">
+										<div class="col-10 col-md-8">
+											<input type="text" class="form-control" id="member_phone"
+												name="member_phone" pattern="^0+\d{9,10}$"
+												value="${profile.phone}" minlength="10" maxlength="11"
+												required readonly>
+										</div>
+
+										<!-- 전화번호 변경 버튼 : 수정하기 버튼 클릭시 보여짐 -->
+										<div class="col-2 col-md-4 mt-1">
+											<button type="button" class="btn btn-primary btn-sm"
+												id="edit_phone_btn" style="-bs-btn-font-size: .75rem;">변경</button>
+										</div>
+									</div>
+									<!-- 전화번호 중복 메세지 -->
+									<div class="row checking px-1 py-1">
+										<div class="col">
+											<h9 id="phone_checking"></h9>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- 전화번호 변경 버튼 클릭시 보여짐 -->
+							<!-- 인증번호 -->
+							<div class="row" id="veri_code" style="height: max-content;">
+								<!-- 인증번호 입력창 -->
+								<div class="col">
+									<div class="row label">
+										<label for="member_pin">인증번호</label>
+									</div>
+									<div class="row input">
+										<div class="col-6 col-md-4">
+											<input type="text" class="form-control" id="member_pin"
+												name="member_pin">
+										</div>
+										<!-- 인증완료 버튼 -->
+										<div class="col-6  col-md-4 mt-1">
+											<button type="button" class="btn btn-primary btn-sm">인증번호
+												전송</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- 생년월일 -->
+							<div class="row" style="height: max-content;">
+								<!-- 생년월일 입출력창 -->
+								<div class="col">
+									<div class="row label">
+										<div class="col col-md-9">
+											<label for="member_birth">생년월일</label>
+										</div>
+									</div>
+									<div class="row input text-start ">
+										<div class="col-3">
+											<input type="text" class="form-control fs-6"
+												id="member_birth_year" name="member_birth_year"
+												pattern="^(19[0-9][0-9]|20[0-2][0-3])$"
+												value="${profile.birth_date.substring(0,4)}" minlength="4"
+												maxlength="4" required readonly>
+										</div>
+										<p class="col-1 mt-2">년</p>
+										<div class="col-3">
+											<input type="text" class="form-control fs-6"
+												id="member_birth_month" name="member_birth_month"
+												pattern="^(0[1-9]|1[0-2])$"
+												value="${profile.birth_date.substring(4,6)}" minlength="2"
+												maxlength="2" required readonly>
+										</div>
+										<div class="col-1 mt-2">월</div>
+										<div class="col-3">
+											<input type="text" class="form-control fs-6"
+												id="member_birth_day" name="member_birth_day"
+												pattern="^(0[1-9]|[12][0-9]|3[01])$"
+												value="${profile.birth_date.substring(6,8)}" minlength="2"
+												maxlength="2" required readonly>
+										</div>
+										<div class="col-1 mt-2">일</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- 이메일 -->
+							<div class="row insert" style="height: max-content;">
+								<!-- 이메일 입출력창 -->
+								<div class="col">
+									<div class="row label">
+										<div class="col col-md-9">
+											<label for="member_email"> E-mail</label>
+										</div>
+									</div>
+									<div class="row input">
+										<div class="col-12 col-md-8">
+											<input type="email" class="form-control" id="member_email"
+												value="${profile.email}" name="member_email"
+												pattern="^([a-z]{1}[a-z0-9_+.-]+@)([a-zA-Z0-9]+\.)([a-z0-9]{2,4})$"
+												readonly>
+										</div>
+									</div>
+									<!-- 이메일 중복 확인 메세지 -->
+									<div class="row checking px-1 py-1">
+										<div class="col">
+											<h9 id="email_checking"> </h9>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- 닉네임 -->
+							<div class="row insert" style="height: max-content;">
+								<!-- 닉네임 입출력창 -->
+								<div class="col">
+									<div class="row label">
+										<div class="col">
+											<label for="member_nickname"> 닉네임</label>
+										</div>
+									</div>
+									<div class="row input">
+										<div class="col-12 col-md-8">
+											<input type="text" class="form-control" id="member_nickname"
+												value="${profile.nick_name}" name="member_nickname"
+												pattern="^[가-힣a-zA-Z0-9]{2,10}$" minlength="2"
+												maxlength="10" readonly>
+										</div>
+									</div>
+									<!-- 닉네임 중복 확인 메세지 -->
+									<div class="row checking px-1 py-1">
+										<div class="col">
+											<h9 id="nickname_checking"> </h9>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- '수정하기' 버튼 클릭시 '수정완료'버튼과 '취소'버튼 보여지고 '수정하기'버튼 숨겨짐 -->
+							<div class="row p-3" id="edit">
+								<div class="col-12 col-md-8">
+									<!-- 수정 버튼 -->
+									<div class="row">
+										<button class="btn btn-secondary comp" id="btn_edit"
+											type="button" style="background-color: #76b852;">수정하기</button>
+									</div>
+									<div class="row mt-2">
+										<button class="btn btn-secondary comp" id="btn_delete"
+											type="button">탈퇴신청</button>
+									</div>
+								</div>
+							</div>
+							<div class="row p-3" id="edit_complete">
+								<div class="col-12 col-md-8">
+									<div class="row">
+										<!-- 수정완료 버튼 -->
+										<button class="btn btn-secondary" id="btn_edit_complete"
+											style="background-color: #76b852;">수정완료</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>	
+				</form>
+			</div>
+
+
+
+			<!-- 탈퇴신청 버튼 클릭시 보여짐 -->
+			<div class="wrapper delete_member" id="delete_member_view">
+				<form action="/delete_member.member" method="post"
+					onsubmit="return confirm('정말 탈퇴 하시겠습니까?');">
+					<div class="row">
+						<div class="col-12 d-flex justify-content-center">
+							<p style="font-size: 50px;">
+								<i class="fa-solid fa-user-xmark fa-flip-horizontal fa-2xl"></i>
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col text-center mt-2">
+							<p class="h3">정말 탈퇴하시겠습니까?</p>
+							<p class="h6 text-danger">
+								<strong>탈퇴시 계정복구가 어렵습니다.</strong>
+							</p>
+						</div>
+					</div>
+					<div class="row m-3">
+						<div class="col-6 d-flex justify-content-end">
+							<button class="btn btn-secondary">탈퇴하기</button>
+						</div>
+						<div class="col-6 d-flex justify-content-start">
+							<button type="button" class="btn btn-primary"
+								onClick="window.location.href='/my_profile.member'">돌아가기</button>
+						</div>
 					</div>
 				</form>
 			</div>
-			
-		</div>
 
+
+
+
+
+		</div>
+	</div>
 
 	<script>
 			$("#btn_verify_pw").on("click",function(){
@@ -429,12 +500,7 @@ text-align:center;
 
 
 	<script>
-		$("#edit_pw").hide();
-		$("#edit_phone_btn").hide();
-		$("#edit_complete").hide();
-		$("#edit_cancel").hide();
-		$("#edit_pw_fadeIn").hide();
-		$("#delete_member_view").hide();
+		$("#edit_pw,#edit_phone_btn,#edit_complete,#edit_cancel,#edit_pw_fadeIn,#delete_member_view").hide();
 
 		//수정하기 버튼 :클릭시 비밀번호,전화번호 수정 버튼 & 수정 취소 버튼 보여짐
 		$("#btn_edit").on("click",function() {
@@ -661,7 +727,7 @@ text-align:center;
 						$("#veri_code").fadeIn();
 						$("#member_phone")
 								.removeAttr("readonly");
-						$("#edit_phone_btn").html("변경 취소");
+						$("#edit_phone_btn").html("취소");
 					} else {
 						$("#veri_code").hide();
 						$("#member_phone").attr("readonly", "true").val("${profile.phone}");
@@ -744,9 +810,6 @@ text-align:center;
 		})
 		
 		
-				
-
-
 		//submit전 전화번호,이메일 중복 검사
 		$("#btn_edit_complete").on("click", function() {
 
@@ -771,7 +834,6 @@ text-align:center;
 			}
 
 		})
-
 		
 	</script>
 
@@ -781,5 +843,6 @@ text-align:center;
 			$("#delete_member_view").fadeIn();
 		})
 	</script>
+	
 </body>
 </html>
