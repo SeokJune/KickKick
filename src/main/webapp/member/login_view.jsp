@@ -58,8 +58,7 @@ body {
 	padding: 32px;
 	background: whitesmoke;
 	border-radius: 1rem;
-	box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0
-		rgba(0, 0, 0, 0.19);
+	box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 	animation-duration: 5s;
 }
 
@@ -176,7 +175,6 @@ body {
 #tooltip[data-popper-placement^='right']>#arrow {
 	left: -4px;
 }
-
 </style>
 </head>
 
@@ -184,7 +182,7 @@ body {
 	<div class="container login_container align-self-center">
 		<div class="wrapper mx-auto position-relative">
 			<div class="position-absolute top-10 end-0 me-5">
-				<button type="button" class="btn-close visually-hidden" id="btn_close" aria-label="Close"></button>
+				<button type="button" class="btn-close visually-hidden" id="btn_close" aria-label="Close" onclick="location.reload();"></button>
 			</div>
 			<div class="wrapper_login" id="login_view_fadeOut">
 				<div class="row d-flex justify-content-center mx-auto p-0 loginForm">
@@ -195,7 +193,7 @@ body {
 							<h3>킥킥에 돌아오신걸 환영해요!</h3>
 						</div>
 						<div class="d-md-none d-block d-flex justify-content-end">
-							<button type="button" class="btn-close" id="btn_to_back" aria-label="Close"></button>
+							<button type="button" class="btn-close" id="btn_to_back" aria-label="Close" onclick="location.href='/';"></button>
 						</div>
 						<form action="/login.member" method="post" id="form_login">
 							<div class="form-group mb-4">
@@ -238,7 +236,7 @@ body {
 								메인으로!
 								<div id="arrow" data-popper-arrow></div>
 							</div>
-							<img src="/image/login_img/ball_icon.png" class="mx-auto d-block" id="to_main_ball_img" alt="메인으로" style="height: 50%; width: 50%;">
+							<img src="/image/login_img/ball_icon.png" class="mx-auto d-block" id="to_main_ball_img" alt="메인으로" onclick="location.href = '/'" style="height: 50%; width: 50%;">
 						</div>
 						<div class="form-group text-center">
 							<h5>SNS으로 로그인하기</h5>
@@ -319,7 +317,7 @@ body {
 			<div class="wrapper_change_pw justify-content-center" id="to_change_pw_fadeIn" style="display: none">
 				<div class="KickKick_logo text-center d-md-block mb-5">
 					<h1 class="mb-4">⚽KickKick</h1>
-					<h3>'${sessionScope.id}'님!</h3>
+					<h3>'${sessionScope.search_id}'님!</h3>
 					<h3>이제 진짜 진짜 얼마 안남았어요!</h3>
 				</div>
 				<div class="row d-flex justify-content-center">
@@ -379,14 +377,6 @@ body {
 		</div>
 	</div>
 	<script>
-		// 닫기 버튼
-		$("#btn_close").on("click", function () {
-			location.reload();
-		});
-		// 메인으로 버튼 - 축구공 이미지
-		$("#to_main_ball_img").on("click", function () {
-			location.href = "/";
-		});
 		// 아이디/비밀번호 확인
 		$($(".site_login")[0]).on("click", function (evt) {
 			evt.preventDefault();
@@ -421,10 +411,8 @@ body {
 			$("#to_phone_authentication_fadeIn").fadeIn();
 			$("#btn_close").removeClass("visually-hidden");
 		});
-		// 타이머 구현_daldal
-		function $ComTimer() {
-			//prototype extend
-		}
+		// 타이머 구현
+		function $ComTimer() { }
 		$ComTimer.prototype = {
 			comSecond: "",
 			fnCallback: function () { },
@@ -447,7 +435,7 @@ body {
 			},
 			fnStop: function () { clearInterval(this.timer); }
 		}
-		// 인증 시간
+		// 인증번호 받기 버튼 이벤트
 		$("#phone_auth").on("click", function (evt) {
 			// 전화번호 check 및 인증번호 발송
 			$.ajax({
@@ -455,16 +443,13 @@ body {
 				type: "post",
 				dataType: "json",
 				data: { phone: $("#phone").val() }
-			}).done(function (str) {
-				rand_code = str;
-				
+			}).done(function (resp) {
 				// 전화번호 check
-				if (rand_code == "") {
+				if (resp == "") {
 					$("#phone").val("");
 					alert("전화번호를 확인해주세요.");
 					return false;
 				}
-				
 				// 인증번호 받기 버튼 비활성화
 				$("#phone_auth").attr("disabled", true);
 				
@@ -477,31 +462,31 @@ body {
 				AuthTimer.domId = document.getElementById("timeLimit");
 			});
 		});
-		// 인증 버튼
+		// 인증 버튼 이벤트
 		$("#phone_auth_ok").on("click", function () {
 			//입력 안했을 경우
 			if(!$("#phone_auth_code").val()){
 				alert("인증번호를 입력해주세요");
 				return false;
 			}
-			// 틀린 경우 다시 입력
-			if($("#phone_auth_code").val() != rand_code ){
-				alert("인증번호를 다시 입력해주세요");
-				$("#phone_auth_code").val("");
-				return false;
-			}else{
-				$.ajax({
-					url: "/phone_auth_ok.member",
-					type: "post",
-					data: { rand: rand_code, code: $("#phone_auth_code").val() }
-				}).done(function name() {
+			// 인증 체크
+			$.ajax({
+				url: "/phone_auth_ok.member",
+				type: "post",
+				dataType: "json",
+				data: { code: $("#phone_auth_code").val() }
+			}).done(function name(resp) {
+				if (resp) {
 					AuthTimer.fnStop();
 					$("#login_view_fadeOut").hide();
 					$("#find_member_fadeIn").hide();
 					$("#to_phone_authentication_fadeIn").hide();
 					$("#to_change_pw_fadeIn").fadeIn();
-				});
-			}
+				} else {
+					alert("인증번호를 다시 입력해주세요");
+					$("#phone_auth_code").val("");
+				}
+			});
 		});
 		//pw 유효성 검사
 		addEventListener("DOMContentLoaded", (event) => {
@@ -640,12 +625,11 @@ body {
 				}
 			});
 		});
-		//pw 빈칸 체크
+		//pw 변경
 		$("#btn_change_pw").on("click", function () {
 			let password = $("#password").val();
 			let password_check = $("#password_check").val();
 			if (password == password_check && password != "") {
-				alert("로그인페이지로 이동합니다");
 				$.ajax({
 					url: "/change_pw.member",
 					type: "post",
@@ -672,10 +656,6 @@ body {
 					name: 'offset',
 					options: { offset: [0, 8] }
 			}],
-		});
-		
-		$("#btn_to_back").on("click",function(){
-			location.href="/index.jsp";			
 		});
 	</script>
 </body>
