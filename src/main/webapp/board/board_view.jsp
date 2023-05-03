@@ -35,6 +35,11 @@ div {
 	font-family: 'NanumSquareNeoBold';
 	/* border:1px dotted pink; */
 }
+.container-fluid{
+	padding:0;
+	padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+}
 .r_nickname{
 	font-family: 'NanumSquareNeoExtraBold';
 }
@@ -84,8 +89,8 @@ div {
 		<div class="row body" style="border-bottom: 1px solid #d2d4d6;">
 			<div class="col-12" style="height: 500px;">${board.content}</div>
 			<div class="col text-center">
-				<button type="button" class="btn btn-primary">좋아요</button>
 				<c:if test="${sessionScope.nickname ne board.member_nickname}">
+				<button type="button" class="btn btn-primary">좋아요</button>
 				<button type="button" class="btn btn-danger" id="to_report">신고</button>
 				</c:if>
 			</div>
@@ -428,8 +433,7 @@ div {
 					window.open("/to_report_form.report?b_c=${b_c}&board_code=${board.code}","","width=500px,height=660px");
 				});
 				$("#replies_box").on("click", ".reply_report", function () {
-					let r_code = $(this).closest(".r_update_box").prev(".reply_box").find(".r_code").val();
-					console.log(r_code);
+					let r_code = $(this).closest(".reply_box").find(".r_code").val();
 					window.open("/to_report_form.report?b_c=${b_c}&reply_code="+r_code,"","width=500px,height=660px");
 				});
 			</script>

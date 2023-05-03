@@ -35,6 +35,11 @@ div {
 .container{
 	padding-top:70px;
 }
+.container-fluid{
+	padding:0;
+	padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+}
 .list-group {
 	padding: 10px;
 }

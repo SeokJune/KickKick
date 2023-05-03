@@ -32,6 +32,11 @@
 div {
 	font-family: 'NanumSquareNeoBold';
 }
+.container-fluid{
+	padding:0;
+	padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+}
 
 .container {
 	padding-top: 70px;
