@@ -2,8 +2,6 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,9 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import commons.DateCalculationUtils;
 import dao.MercenaryDAO;
-import dto.ApplyInfoDTO;
+import dto.ApplyDTO;
 import dto.CompetitionDTO;
 import dto.RegisterInfoDTO;
 import dto.TeamDTO;
@@ -47,21 +44,12 @@ public class MercenaryController extends HttpServlet {
 			}else if(cmd.equals("/to_apply_form.mercenary")) {
 				// 나 용병할래요 신청하는 폼으로
 				MercenaryDAO dao = MercenaryDAO.getInstance();
+				
 				int code = Integer.parseInt(request.getParameter("code"));
-				int team_code = Integer.parseInt(request.getParameter("team_code"));
-				int competition_result_code = Integer.parseInt(request.getParameter("competition_result_code")); // 매치 코드
-				String name = request.getParameter("name");
-				String ability_code = request.getParameter("ability_code");
+				ApplyDTO apply_info = dao.select_apply_form_info(code);
 				
-				TeamDTO team_info = dao.select_team_info(team_code, competition_result_code);
-				CompetitionDTO match_info = dao.select_match_info(team_code, competition_result_code);
-				String opponent_team = dao.select_opponent_team(team_code, competition_result_code, name);
-				
-				request.setAttribute("team_info", team_info);
-				request.setAttribute("match_info", match_info);
 				request.setAttribute("code", code);
-				request.setAttribute("opponent_team", opponent_team);
-				request.setAttribute("ability_code", ability_code);
+				request.setAttribute("apply_info", apply_info);
 				request.getRequestDispatcher("/mercenary/apply_form.jsp").forward(request, response);
 				
 			}else if(cmd.equals("/to_apply_list.mercenary")) {
@@ -114,37 +102,40 @@ public class MercenaryController extends HttpServlet {
 			}else if(cmd.equals("/to_mercenary_apply.mercenary")) {
 				// DB에 용병 신청하기
 				// 세션에서 로그인 아이디 받아올 수 있도록 수정
-				String login_id = "test";
-				int mercenary_registration_code = Integer.parseInt(request.getParameter("mercenary_registration_code"));
+				String login_id = "agji12";
+				
+				int code = Integer.parseInt(request.getParameter("mercenary_registration_code"));
 				int ability_code = Integer.parseInt(request.getParameter("ability_code"));
 				String content = request.getParameter("content");
 				
-				int result = MercenaryDAO.getInstance().insert_apply_mercenary(new ApplyInfoDTO(login_id,mercenary_registration_code,0,ability_code,content));
+				int result = MercenaryDAO.getInstance().insert_apply_mercenary(new ApplyDTO(code,ability_code,login_id,content));
 				if(result>0) {
 					response.setContentType("text/html; charset=UTF-8");
 					PrintWriter pwriter = response.getWriter();
 					pwriter.println("<script>alert('용병 신청 완료!'); location.href='/index.jsp';</script>"); 
 					pwriter.close();
 				}
-			}else if(cmd.equals("/apply_list_ajax.mercenary")) {
-				// 세션에서 로그인 아이디 받아올 수 있도록 수정
-				String login_id = "test";
 				
-				int code = Integer.parseInt(request.getParameter("code"));
+			}else if(cmd.equals("/register_btn_ajax.mercenary")){
+				// 용병을 이미 등록했는지 확인
+				int team_code = Integer.parseInt(request.getParameter("code"));
+				int competition_registration_code = Integer.parseInt(request.getParameter("competition_registration_code"));
+
+				boolean result = MercenaryDAO.getInstance().is_exist_mercenary_register(team_code, competition_registration_code);
+				
+				String resp = g.toJson(result);
+				response.getWriter().append(resp);
+				
+			}else if(cmd.equals("/apply_list_ajax.mercenary")) {
+				// apply_list 해당하는 데이터 추출
+				int team_code = Integer.parseInt(request.getParameter("code"));
 				int competition_registration_code = Integer.parseInt(request.getParameter("competition_registration_code"));
 				
-				List<ApplyInfoDTO> apply_list = MercenaryDAO.getInstance().select_apply_list(new ApplyInfoDTO(login_id,code,competition_registration_code));
+				List<ApplyDTO> apply_list = MercenaryDAO.getInstance().select_apply_list(new ApplyDTO(team_code,competition_registration_code));
 				
 				String resp = g.toJson(apply_list);
 				response.getWriter().append(resp);
 				
-			}else if(cmd.equals("/date_format_ajax.mercenary")) {
-				String competition_date = request.getParameter("competition_date");
-				System.out.println(competition_date);
-				String strDate = DateCalculationUtils.date_format_string(competition_date);
-				
-				String resp = g.toJson(strDate);
-				response.getWriter().append(resp);
 			}
 			
 			

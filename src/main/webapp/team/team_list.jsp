@@ -77,18 +77,20 @@ a {
 		<div class="row search">
 			<div class="col-md-4"></div>
 
+			<!-- 
 			<div class=" col-3 col-md-1" style="text-align: right; line-height: 58px;">
 				<select>
 					<option>팀명</option>
 					<option>랭킹</option>
 				</select>
 			</div>
+			 -->
 
-			<div class="col-9 col-md-3">
+			<div class="col-9 col-md-4">
 				<nav class="navbar navbar-light">
 					<form class="d-flex" style="margin: auto;">
-						<input class="form-control me-2" type="search"
-							placeholder="Search" aria-label="Search">
+						<input id="input_team_name" class="form-control me-2" type="search"
+							placeholder="팀명" aria-label="Search">
 						<button class="btn btn-outline-success search_btn" type="submit">Search</button>
 					</form>
 				</nav>
@@ -138,7 +140,7 @@ a {
 						<div class="col-1 col-md-2 col-xl-2"></div>
 						<div class="col-10 col-12 col-md-8 col-xl-8">
 							<div class="row team_info">
-								<div class="col-4 col-md-2 col-xl-1"><a href="/view.team?team_code=${i.code}"><img src="${i.logo_path}${i.logo}" style="width: 100%; height: 100%;"></a></div>
+								<div class="col-4 col-md-2 col-xl-1"><a href="/view.team?team_code=${i.code}"><img src="${i.logo_path}${i.logo}" style="width: 50px; height: 50px; border-radius: 25px"></a></div>
 								<div class="col-4 col-md-2 col-xl-2"><a href="/view.team?team_code=${i.code}">${i.name}</a></div>
 								<div class="col-xl-1 d-none d-xl-block">${i.hometown_name}</div>
 								<div class="col-4 col-md-4 col-xl-3">${i.outline}</div>
@@ -187,6 +189,9 @@ a {
 	</div>
 
 
+	<script>
+		
+	</script>
 </body>
 
 </html>

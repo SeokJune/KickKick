@@ -1,6 +1,8 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -67,24 +69,26 @@ public class MemberController extends HttpServlet {
 				String rand = (String) request.getSession().getAttribute("rand");
 				String code = (String) request.getParameter("code");
 
+				Map<String, Object> result = new HashMap<String, Object>();
+				result.put("success", false);
+				
 				// 인증번호 == 입력번호
 				if (rand.equals(code)) {
 					// id가져오는 메서드 -> 세션에 저장된 phone 으로 찾기
 					String phone = (String) request.getSession().getAttribute("phone");
 					String id = dao.get_id_by_phone(phone);
-					request.getSession().setAttribute("search_id", id);
-
+					result.put("search_id", id);
+					result.put("success", true);
+					
 					// 세션에서 정보 삭제 : rand, phone
 					request.getSession().removeAttribute("rand");
 					request.getSession().removeAttribute("phone");
-
-					response.getWriter().append(g.toJson(true));
-				} else {
-					response.getWriter().append(g.toJson(false));
 				}
+				
+				response.getWriter().append(g.toJson(result));
 			} else if (cmd.equals("/change_pw.member")) { // 비밀번호 변경 [login_view.jsp]
-				String id = (String) request.getSession().getAttribute("id");
-				String pw = request.getParameter("password");
+				String id = request.getParameter("id");
+				String pw = EncryptionUtils.sha512(request.getParameter("password"));
 
 				dao.update_pw(pw, id);
 			} else if (cmd.equals("/insert_new_member.member")) { // 회원가입 [join_form.jsp]
