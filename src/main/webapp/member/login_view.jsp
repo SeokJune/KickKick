@@ -435,7 +435,7 @@ body {
 			},
 			fnStop: function () { clearInterval(this.timer); }
 		}
-		// 인증 시간
+		// 인증번호 받기 버튼 이벤트
 		$("#phone_auth").on("click", function (evt) {
 			// 전화번호 check 및 인증번호 발송
 			$.ajax({
@@ -462,7 +462,7 @@ body {
 				AuthTimer.domId = document.getElementById("timeLimit");
 			});
 		});
-		// 인증 버튼
+		// 인증 버튼 이벤트
 		$("#phone_auth_ok").on("click", function () {
 			//입력 안했을 경우
 			if(!$("#phone_auth_code").val()){
