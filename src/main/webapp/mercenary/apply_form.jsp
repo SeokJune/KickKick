@@ -6,27 +6,42 @@
 <head>
 <meta charset="UTF-8">
 <title>ApplyForm</title>
+<!-- JQuery-->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- Bootstrap - CSS only -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous">
+<!-- Bootstrap - JavaScript Bundle with Popper -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
+<!-- Bootstrap - icon -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+	rel="stylesheet">
+<!-- Font 기본 : {font-family: 'NanumSquareNeoBold'}-->
 <link
 	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
 	rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-	crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a47338e87e3d914e6d508799cd4f4e17&libraries=services"></script>
+
+<!-- gbn css -->
+<link href="/css/gbn.css" rel="stylesheet" type="text/css">
+<!-- kakao api -->
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a47338e87e3d914e6d508799cd4f4e17&libraries=services"></script>
 <style>
 * {
 	font-family: 'NanumSquareNeoBold';
 }
-.container{
+
+.container {
 	width: 70%;
 }
+
 .header>div {
 	float: left;
 }
@@ -42,44 +57,46 @@
 </head>
 <body>
 	<form action="/to_mercenary_apply.mercenary" method="post">
-		<div class="container fluid">
-
+		<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
+			<h2 style="text-align: center;">용병 신청</h2>
+			<br>
+			<br>
 			<div class="row header">
 				<div class="col-xs-12 col-md-4 col-xl-4 text-center">
 					<input type="hidden" id="logo_path" name="logo_path"
-						value="${team_info.logo_path}" readonly> <input
-						type="hidden" id="logo" name="logo" value="${team_info.logo}"
+						value="${apply_info.logo_path}" readonly> <input
+						type="hidden" id="logo" name="logo" value="${apply_info.logo}"
 						readonly>
 					<c:choose>
-						<c:when test="${team_info.logo.equals('')}">
-							<div>${team_info.logo_path}</div>
+						<c:when test="${apply_info.logo.equals('')}">
+							<div>${apply_info.logo_path}</div>
 						</c:when>
 						<c:otherwise>
-							<div>${team_info.logo_path}\${team_info.logo}</div>
+							<div>${apply_info.logo_path}\${apply_info.logo}</div>
 						</c:otherwise>
 					</c:choose>
 				</div>
 				<div class="col-xs-12 col-md-8 col-xl-8">
 					<input type="hidden" id="team_code" name="team_code"
-						value="${team_info.code}" readonly>
+						value="${apply_info.team_code}" readonly>
 					<div class="input-group mb-3">
 						<span class="input-group-text">팀명</span> <input type="text"
 							class="form-control" id="team_name" name="team_name"
-							value="${team_info.name}" readonly>
+							value="${apply_info.team_name}" readonly>
 					</div>
 					<div class="box">
 						<div class="col-12 col-md-6 col-xl-6">
 							<div class="input-group mb-3">
 								<span class="input-group-text">팀장</span> <input type="text"
-									class="form-control" id="name" value="${team_info.member_name}"
-									readonly>
+									class="form-control" id="name"
+									value="${apply_info.member_name}" readonly>
 							</div>
 						</div>
 						<div class="col-12 col-md-6 col-xl-6">
 							<div class="input-group mb-3">
 								<span class="input-group-text">연락처</span> <input type="text"
 									class="form-control" id="phone"
-									value="${team_info.member_phone}" readonly>
+									value="${apply_info.member_phone}" readonly>
 							</div>
 						</div>
 					</div>
@@ -92,21 +109,21 @@
 						<div class="input-group mb-3">
 							<span class="input-group-text">상대 팀명</span> <input type="text"
 								class="form-control" name="opponent_team"
-								value="${opponent_team}" readonly>
+								value="${apply_info.opposing_team_name}" readonly>
 						</div>
 					</div>
 					<div class="col-12 col-md-6 col-xl-6">
 						<input type="hidden" id="mercenary_registration_code"
-							name="mercenary_registration_code" value="${code}" readonly>
-						<input type="hidden" id="ability_code" name="ability_code"
-							value="${ability_code}" readonly>
+							name="mercenary_registration_code" value="${apply_info.code}"
+							readonly> <input type="hidden" id="ability_code"
+							name="ability_code" value="${apply_info.ability_code}" readonly>
 						<div class="input-group mb-3">
 							<span class="input-group-text">요구 실력</span>
 							<c:choose>
-								<c:when test="${ability_code == 1003}">
+								<c:when test="${apply_info.ability_code == 1003}">
 									<input type="text" class="form-control" value="하" readonly>
 								</c:when>
-								<c:when test="${ability_code == 1002}">
+								<c:when test="${apply_info.ability_code == 1002}">
 									<input type="text" class="form-control" value="중" readonly>
 								</c:when>
 								<c:otherwise>
@@ -118,20 +135,20 @@
 				</div>
 				<div class="box">
 					<div class="col-12 col-md-6 col-xl-6">
-						<input type="hidden" id="latirude" value="${match_info.latirude}"
+						<input type="hidden" id="latirude" value="${apply_info.latirude}"
 							readonly>
 						<!-- 위도 -->
 						<input type="hidden" id="longitude"
-							value="${match_info.longitude}" readonly>
+							value="${apply_info.longitude}" readonly>
 						<!-- 경도 -->
 						<div class="input-group mb-3">
 							<span class="input-group-text">장소</span> <input type="text"
 								class="form-control" id="match_place" name="match_place"
 								readonly>
-								<script>
+							<script>
 								var geocoder = new kakao.maps.services.Geocoder();
 
-								var coord = new kakao.maps.LatLng(${match_info.latirude},${match_info.longitude});
+								var coord = new kakao.maps.LatLng(${apply_info.latirude},${apply_info.longitude});
 								var callback = function(result, status) {
 									if (status === kakao.maps.services.Status.OK) {
 										console.log(result[0].address.address_name);
@@ -145,11 +162,12 @@
 					</div>
 					<div class="col-12 col-md-6 col-xl-6">
 						<div class="input-group mb-3">
-						<%@page import="commons.DateCalculationUtils"%>
+							<%@page import="commons.DateCalculationUtils"%>
 							<span class="input-group-text">일시</span> <input type="text"
 								class="form-control" name="match_date"
-								value="${DateCalculationUtils.date_format_timestamp(match_info.competition_date)}" readonly>
-								
+								value="${DateCalculationUtils.date_format_timestamp(apply_info.competition_date)}"
+								readonly>
+
 						</div>
 					</div>
 				</div>
@@ -159,14 +177,14 @@
 							<span class="input-group-text">종목</span> <input type="text"
 								class="form-control" id="competition_kind_name"
 								name="competition_kind_name"
-								value="${match_info.competition_kind_name}" readonly>
+								value="${apply_info.competition_kind_name}" readonly>
 						</div>
 					</div>
 					<div class="col-12 col-md-6 col-xl-6">
 						<div class="input-group mb-3">
 							<span class="input-group-text">총 인원수</span> <input type="text"
 								class="form-control" name="competition_kind_headcount"
-								value="${match_info.competition_kind_headcount}" readonly>
+								value="${apply_info.competition_kind_headcount}" readonly>
 						</div>
 					</div>
 				</div>
@@ -181,6 +199,7 @@
 					</div>
 				</div>
 			</div>
+			<br>
 			<div class="footer">
 				<div class="col-xl-12 col-md-12 col-xs-12 text-center">
 					<a><input type="submit" value="신청" class="btn btn-primary"></a>
