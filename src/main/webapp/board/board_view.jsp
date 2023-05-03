@@ -14,6 +14,10 @@
 				crossorigin="anonymous"></script>
 			<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 			<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+			<!-- awesome font -icon--->
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+				integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+				crossorigin="anonymous" referrerpolicy="no-referrer" />
 			<style>
 				div {
 					border: 1px solid black;
@@ -33,8 +37,9 @@
 				#title {
 					font-family: 'NanumSquareNeoExtraBold';
 				}
-				.dropdown-menu>li{
-					cursor:pointer;
+
+				.dropdown-menu>li {
+					cursor: pointer;
 				}
 			</style>
 			<!-- gbn css -->
@@ -59,23 +64,21 @@
 					<div class="col-12" style="height: 500px;">${board.content}</div>
 					<div class="col text-center">
 						<button type="button" class="btn btn-primary">좋아요</button>
-							<button type="button" class="btn btn-danger">신고</button>
+						<button type="button" class="btn btn-danger">신고</button>
 					</div>
-						<div class="col-12 gap-2 d-flex justify-content-end">
-							<button type="button" class="btn btn-dark" id="to_update">수정</button>
-							<button type="button" class="btn btn-secondary" id="delete">삭제</button>
-						</div>
+					<div class="col-12 gap-2 d-flex justify-content-end">
+						<button type="button" class="btn btn-dark" id="to_update">수정</button>
+						<button type="button" class="btn btn-secondary" id="delete">삭제</button>
+					</div>
 				</div>
 				<div class="row footer">
 					<div>
 						<b id="reply_count">댓글 ${reply_list.size()}개</b>
 					</div>
 					<div class="col-12" id="replies_box">
-
-
 						<c:forEach var="reply" items="${reply_list}">
 							<div class="row reply_box">
-							<input type="hidden" class="r_code" value="${reply.code}">
+								<input type="hidden" class="r_code" value="${reply.code}">
 								<div class="col-12 d-flex justify-content-between p-0 info">
 									<div class="col left d-block d-md-flex p-1">
 										<div class="nickname p-0 align-self-center" style="margin-left: 5px">
@@ -107,6 +110,27 @@
 									</div>
 								</div>
 								<div class="col-12 r_content">${reply.content}</div>
+							</div>
+							<div class="row r_update_box d-none">
+								<input type="hidden" class="r_code" value="${reply.code}">
+								<div class="col-12 d-flex justify-content-between p-0 info">
+									<div class="col left d-block d-md-flex p-1">
+										<div class="nickname p-0 align-self-center" style="margin-left: 5px">
+											<b class="r_nickname">${reply.member_nickname}</b>
+										</div>
+									</div>
+									<div class="right d-flex p-0">
+										<div class="p-0" style="margin-right: 5px">
+											<button type="button" class="btn btn-primary r_update_cancel">취소</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-9">
+									<input type="text" class="form-control" placeholder="댓글수정" value="${reply.content}">
+								</div>
+								<div class="col-3 d-grid gap-2">
+									<button type="button" class="btn btn-primary r_update_btn">수정</button>
+								</div>
 							</div>
 						</c:forEach>
 					</div>
@@ -209,8 +233,8 @@
 							dataType: "json",
 							data: {
 								b_c: ${ b_c },
-								code: ${ board.code },
-								content: $("#input_reply").val(),
+							code: ${ board.code },
+							content: $("#input_reply").val(),
 							},
 				}).done(function (resp) {
 					$("#input_reply").val("");
@@ -226,34 +250,52 @@
 					}
 				});	
 			};
-		});	
-		
-				$("#replies_box").on("click",".reply_delete",function(){
-					if(confirm("해당 댓글을 삭제하시겠습니까?")){
+		});
+
+				$("#replies_box").on("click", ".reply_delete", function () {
+					if (confirm("해당 댓글을 삭제하시겠습니까?")) {
 						let r_code = $(this).closest(".reply_box").find(".r_code").val();
 						$.ajax({
-							url:"/delete.reply",
-							type:"post",
-							dataType:"json",
-							data:{
-								b_c:${b_c},
-								code:r_code,
-								board_code:${board.code},
-								cpage:${cpage}
+							url: "/delete.reply",
+							type: "post",
+							dataType: "json",
+							data: {
+								b_c: ${ b_c },
+							code: r_code,
+							board_code: ${ board.code },
+							cpage: ${ cpage }
 							},
-						}).done(function(resp){
-							$("#reply_count").text("댓글 " + resp.length + "개");
-							let reply_box = $(".reply_box").last().clone();
-							$("#replies_box").html("");
-							for (let i = 0; i < resp.length; i++) {
-								$("#replies_box").append(reply_box.clone());
-								$(".r_nickname").last().text(resp[i].member_nickname);
-								$(".r_date").last().text(calculateTime(resp[i].reg_date));
-								$(".r_like").last().text("👍🏻" + resp[i].like_count);
-								$(".r_content").last().text(resp[i].content);
-							}
-						});
+				}).done(function (resp) {
+					$("#reply_count").text("댓글 " + resp.length + "개");
+					let reply_box = $(".reply_box").last().clone();
+					$("#replies_box").html("");
+					for (let i = 0; i < resp.length; i++) {
+						$("#replies_box").append(reply_box.clone());
+						$(".r_nickname").last().text(resp[i].member_nickname);
+						$(".r_date").last().text(calculateTime(resp[i].reg_date));
+						$(".r_like").last().text("👍🏻" + resp[i].like_count);
+						$(".r_content").last().text(resp[i].content);
 					}
+				});
+					}
+				});
+
+				$("#replies_box").on("click", ".reply_update", function () {
+					$(this).closest(".reply_box").css("display", "none");
+					$(this).closest(".reply_box").next(".r_update_box").css("display", "block");
+				});
+
+				$("#replies_box").on("click", ".r_update_cancel", function () {
+					$(this).closest(".reply_box").css("display", "block");
+					$(this).closest(".reply_box").next(".r_update_box").css("display", "none");
+				});
+
+				$("#replies_box").on("click", ".r_update_btn", function () {
+					$.ajax({
+
+					}).done(function (resp) {
+
+					});
 				});
 			</script>
 		</body>
