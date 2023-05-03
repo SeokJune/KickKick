@@ -692,11 +692,9 @@ x-small
 				type: "post",
 				dataType: "json",
 				data: { phone: $("#member_phone").val() }
-			}).done(function (str) {
-				rand_code = str;
-				
+			}).done(function (resp) {
 				// 전화번호 check
-				if (rand_code == "") {
+				if (resp == "") {
 					$("#member_phone").val("");
 					alert("전화번호를 확인해주세요.");
 					return false;
@@ -721,23 +719,23 @@ x-small
 				alert("인증번호를 입력해주세요");
 				return false;
 			}
-			// 틀린 경우 다시 입력
-			if($("#phone_auth_code").val() != rand_code ){
-				alert("인증번호를 다시 입력해주세요");
-				$("#phone_auth_code").val("");
-				return false;
-			}else{
-				$.ajax({
-					url: "/phone_auth_ok.member",
-					type: "post",
-					data: { rand: rand_code, code: $("#phone_auth_code").val() }
-				}).done(function name() {
+			// 인증 체크
+			$.ajax({
+				url: "/phone_auth_ok.member",
+				type: "post",
+				dataType: "json",
+				data: { code: $("#phone_auth_code").val() }
+			}).done(function name(resp) {
+				if (resp) {
 					AuthTimer.fnStop();
 					$("#timeLimit").text("인증 성공!🎉");
 					$("#pAuth button").attr("disabled", true);
 					$("#pAuth input").attr("readonly", true);
-				});
-			}
+				} else {
+					alert("인증번호를 다시 입력해주세요");
+					$("#phone_auth_code").val("");
+				}
+			});
 		});
 		// 생년월일 select option setting
 		$(document).ready(function () {
