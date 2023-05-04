@@ -215,19 +215,12 @@ public class TeamDTO {
 		this.member_phone = member_phone;
 	}
 
-<<<<<<< HEAD
 	public String getHomtown_name() {
 		return hometown_name;
 	}
 
 	public void setHomtown_name(String hometown_name) {
-=======
-	public String gethometown_name() {
-		return hometown_name;
-	}
 
-	public void sethometown_name(String hometown_name) {
->>>>>>> 0f96900edadf39e425b20c9a7774852adec19907
 		this.hometown_name = hometown_name;
 	}
 
