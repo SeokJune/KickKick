@@ -36,6 +36,25 @@ public class CompetitionDTO {
 		this.competition_date = competition_date;
 	}
 
+	public CompetitionDTO(int competition_registration_code, int competition_kind_code, String competition_kind_name,
+			int competition_kind_headcount, double latirude, double longitude, Timestamp competition_date,int registration_team_code, String registration_team_name,int registration_team_score,int application_team_code,String application_team_name,int application_team_score,int status_code,String status_name) {
+		super();
+		this.competition_registration_code = competition_registration_code;
+		this.competition_kind_code = competition_kind_code;
+		this.competition_kind_name = competition_kind_name;
+		this.competition_kind_headcount = competition_kind_headcount;
+		this.latirude = latirude;
+		this.longitude = longitude;
+		this.competition_date = competition_date;
+		this.registration_team_code = registration_team_code;
+		this.registration_team_name = registration_team_name;
+		this.registration_team_score = registration_team_score;
+		this.application_team_code = application_team_code;
+		this.application_team_name = application_team_name;
+		this.application_team_score = application_team_score;
+		this.status_code = status_code;
+		this.status_name = status_name;
+	}
 
 	public int getCompetition_registration_code() {
 		return competition_registration_code;

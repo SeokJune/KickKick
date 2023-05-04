@@ -29,7 +29,7 @@ body {
 .my_match_container {
 	min-width: 478px;
 	width:80%;
-	height: max-content;
+	height: 100%;
 	padding: 32px;
 	margin-top: 5%;
 	margin-bottom: 5%;
@@ -105,7 +105,7 @@ width:50px;
 			<div class="container my_match_container">
 			
 				<div class="row height d-flex justify-content-center align-items-center">
-					<div class="col-md-8">
+					<div class="col-md-10">
 						<div class="search">
 							<i class="fa fa-search"></i> <input type="text"
 								class="form-control" placeholder="찾을 팀을 검색해보세요">
@@ -116,11 +116,29 @@ width:50px;
 				<hr>
 				
 				<div class="row match position-relative">
-					<div class="col-12 ">
-						<div class="card position-absolute top-50 start-50 translate-middle" style="width: 35rem;">
+					<c:forEach var="m" items="${match_list}">
+						<div class="col-12 col-w-80 col-lg-6 col-md-w-50 p-2 ">
+							<div class="card top-50 start-50 translate-middle" >
+								<div class="card-header">
+						    		<span>2023년 5월 03일 18:00</span>
+						    	</div>
+						  		<div class="card-body text-center">
+						    		<h5 class="card-title">
+						    			<span class="my_team">${m.registration_team_name}</span>   
+						    			<span class="vs"> VS </span>   
+						    			<span class="other_team">${m.application_team_name}</span>
+						    		</h5>
+						  		</div>
+							</div>
+						</div>
+					</c:forEach>
+				
+				
+				
+					<div class="col-12 col-w-80 col-lg-6 col-md-w-50 p-2 ">
+						<div class="card top-50 start-50 translate-middle" >
 							<div class="card-header">
 					    		<span>2023년 5월 03일 18:00</span>
-					    		 <a href="#" class="btn btn-sm btn-outline-secondary">자세히</a>
 					    	</div>
 					  		<div class="card-body text-center">
 					    		<h5 class="card-title">
@@ -131,11 +149,9 @@ width:50px;
 					  		</div>
 						</div>
 					</div>
-				</div>
 				
-				<div class="row match position-relative">
-					<div class="col-12 ">
-						<div class="card position-absolute top-50 start-50 translate-middle" style="width: 35rem;">
+					<div class="col-12 col-w-80 col-lg-6 col-md-w-50 p-2">
+						<div class="card top-50 start-50 translate-middle" >
 							<div class="card-header">
 					    		2023년 5월 03일 18:00
 					    	</div>
@@ -148,15 +164,45 @@ width:50px;
 					  		</div>
 						</div>
 					</div>
+					
+					<div class="col-12 col-w-80 col-lg-6 col-md-w-50 p-2">
+						<div class="card top-50 start-50 translate-middle" >
+							<div class="card-header">
+					    		2023년 5월 03일 18:00
+					    	</div>
+					  		<div class="card-body text-center">
+					    		<h5 class="card-title">
+					    			<span class="my_team">내팀명</span>   
+					    			<span class="vs"> VS </span>   
+					    			<span class="other_team">상대팀명</span>
+					    		</h5>
+					  		</div>
+						</div>
+					</div>
+					
+					<div class="col-12 col-w-80 col-lg-6 col-md-w-50 p-2">
+						<div class="card top-50 start-50 translate-middle" >
+							<div class="card-header">
+					    		2023년 5월 03일 18:00
+					    	</div>
+					  		<div class="card-body text-center">
+					    		<h5 class="card-title">
+					    			<span class="my_team">내팀명</span>   
+					    			<span class="vs"> VS </span>   
+					    			<span class="other_team">상대팀명</span>
+					    		</h5>
+					  		</div>
+						</div>
+					</div>
+					
 				</div>
+			
+			
+			
+			
 			</div>	
-	
-	
-			
-			
-			
-			
 		</div>	
+		
 	</main>
 	<script>
 		

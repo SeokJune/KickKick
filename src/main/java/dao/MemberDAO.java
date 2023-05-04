@@ -223,4 +223,44 @@ public class MemberDAO {
 			}
 		}
 	}
+	
+	//내 경기 일정 조회
+	public List<CompetitionDTO> my_match_list(int member_code) throws Exception{
+		String sql = "select \r\n"
+				+ "* \r\n"
+				+ "from \r\n"
+				+ "COMPETITION_VIEW\r\n"
+				+ "where \r\n"
+				+ "(REGISTRATION_TEAM_CODE IN (SELECT TEAM_CODE FROM TEAM_MEMBER WHERE MEMBER_CODE = ?) OR\r\n"
+				+ "APPLICATION_TEAM_CODE IN (SELECT TEAM_CODE FROM TEAM_MEMBER WHERE MEMBER_CODE = ?)) \r\n"
+				+ "and STATUS_CODE = 1301;";
+		try(Connection con = this.getConnection();
+			PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1,member_code);
+			pstat.setInt(2,member_code);
+			try(ResultSet rs = pstat.executeQuery();){
+				List<CompetitionDTO> list = new ArrayList<CompetitionDTO>();
+				while(rs.next()){	
+					int competition_registration_code = rs.getInt("competition_registration_code");
+					int competition_kind_code = rs.getInt("competition_kind_code");
+					String competition_kind_name = rs.getString("competition_kind_name");
+					int competition_kind_headcount = rs.getInt("competition_kind_headcount");
+					double latirude = rs.getDouble("latirude");
+					double longitude = rs.getDouble("longitude");
+					Timestamp competition_date = rs.getTimestamp("competition_date");
+					int registration_team_code = rs.getInt("registration_team_code");
+					String registration_team_name = rs.getString("registration_team_name");
+					int registration_team_score = rs.getInt("registration_team_score");
+					int application_team_code = rs.getInt("application_team_code");
+					String application_team_name = rs.getString("application_team_name");
+					int application_team_score = rs.getInt("application_team_score");
+					int status_code = rs.getInt("status_code");
+					String status_name = rs.getString("status_name");
+					CompetitionDTO dto = new CompetitionDTO(competition_registration_code,competition_kind_code,competition_kind_name,competition_kind_headcount,latirude,longitude,competition_date,registration_team_code,registration_team_name,registration_team_score,application_team_code,application_team_name,application_team_score,status_code,status_name); 
+					list.add(dto);
+				}
+				return list;
+			}
+		}
+	}
 }
