@@ -69,11 +69,11 @@ div {
 }
 </style>
 <!-- gbn css -->
-<link href="/css/gbn.css" rel="stylesheet" type="text/css">
+<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-	<c:import url="/commons/gbn.jsp">
+	<c:import url="/commons/gnb.jsp">
 	</c:import>
 
 	<div class="container">
@@ -116,7 +116,7 @@ div {
 								</div>
 								<div class="counts p-0 align-self-center"
 									style="margin-left: 5px">
-									<small><span class="r_date"></span><span class="r_mod"></span>
+									<small><span class="r_date"></span>
 									<span class="badge rounded-pill text-bg-success r_like">👍🏻${reply.like_count}</span></small>
 								</div>
 							</div>
@@ -179,8 +179,8 @@ div {
 								</div>
 								<div class="counts p-0 align-self-center"
 									style="margin-left: 5px">
-									<small><span class="r_date">${reply.calculated_date}
-										<span class="r_mod"><c:if test="${reply.mod_date ne null}">(수정됨)</c:if></span></span> · <span class="badge rounded-pill text-bg-success r_like">👍🏻${reply.like_count}</span></small>
+									<small><span class="r_date">${reply.calculated_date}</span>
+										<c:if test="${reply.mod_date ne null}">(수정됨) · </c:if><span class="badge rounded-pill text-bg-success r_like">👍🏻${reply.like_count}</span></small>
 								</div>
 							</div>
 							<c:if test="${sessionScope.code ne null}">
@@ -307,15 +307,15 @@ div {
 					let msg = null;
 					if (diffTime < SEC) {
 						// sec
-						msg = Math.floor(diffTime) + "초전";
+						msg = Math.ceil(diffTime) + "초전";
 					}
 					else if ((diffTime /= SEC) < MIN) {
 						// min
-						msg = Math.floor(diffTime) + "분전";
+						msg = Math.ceil(diffTime) + "분전";
 					}
 					else if ((diffTime /= MIN) < HOUR) {
 						// hour
-						msg = Math.floor(diffTime) + "시간전";
+						msg = Math.ceil(diffTime) + "시간전";
 					}
 					//				    else if ((diffTime /= HOUR) < DAY) {
 					//				        // day
@@ -335,6 +335,8 @@ div {
 						alert("내용을 입력해주세요.");
 					}
 					else {
+						let reply_box = $("#sample_box").children().clone();
+
 						$.ajax({
 							url: "/insert.reply",
 							type: "post",
@@ -345,34 +347,33 @@ div {
 							content: $("#input_reply").val(),
 							},
 				}).done(function (resp) {
+					console.log(resp);
 					$("#input_reply").val("");
 					$("#reply_count").text("댓글 " + resp.length + "개");
 					$("#replies_box").html("");
 					for (let i = 0; i < resp.length; i++) {
-						let reply_box = $("#sample_box").children().clone();
 						$("#replies_box").append(reply_box);
-						reply_box.find(".r_code").val(resp[i].code);
-						reply_box.find(".r_nickname").text(resp[i].member_nickname);
-						reply_box.find(".r_date").text(calculateTime(resp[i].reg_date)+" · ");
+						$(".r_code").last().val(resp[i].code);
+						$(".r_nickname").last().text(resp[i].member_nickname);
+						$(".r_date").last().text(calculateTime(resp[i].reg_date));
 						if(resp[i].mod_date){
-							reply_box.find(".r_mod").append("(수정됨)");
+							$(".r_date").last().append("(수정됨) · ")
 						};
 						$(".r_like").last().text("👍🏻" + resp[i].like_count);
 						if(${sessionScope.code eq null}){
-							reply_box.find(".right").remove();
+							$(".right").last().remove()
 						}
 						else{
-							let session_nickname = "${sessionScope.nickname}";
-							let reply_nickname = resp[i].member_nickname;
-							if(session_nickname == reply_nickname){
-								reply_box.find(".reply_report").remove();
+							let nickname = resp[i].member_nickname;
+							if(${sessionScope.nickname eq nickname}){
+								$(".reply_report").last().remove();
 							}
 							else{
-								reply_box.find(".reply_update").remove();
-								reply_box.find(".reply_delete").remove();
+								$(".reply_update").last().remove();
+								$(".reply_delete").last().remove();
 							}
 						};
-						reply_box.find(".r_content").text(resp[i].content);
+						$(".r_content").last().text(resp[i].content);
 					}
 				});	
 			};
@@ -433,7 +434,6 @@ div {
 						if(resp==1){
 						reply_box.css("display", "block");
 						reply_box.find(".r_content").html(r_content);
-						reply_box.find(".r_mod").text("(수정됨)");
 						update_box.css("display", "none");
 						}
 					});
