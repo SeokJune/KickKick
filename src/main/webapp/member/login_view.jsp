@@ -25,10 +25,7 @@
 	font-family: 'NanumSquareNeoBold';
 }
 
-html {
-	background-color: #76b852;
-}
-
+html,
 body {
 	background-color: #76b852;
 }
@@ -38,9 +35,9 @@ body {
 	-bs-gutter-y: 0;
 	display: flex;
 	flex-wrap: wrap;
-	margin-top: calc(var(- -bs-gutter-y)* -1);
-	margin-right: calc(var(- -bs-gutter-x)* -.5);
-	margin-left: calc(var(- -bs-gutter-x)* -.5);
+	margin-top: calc(var(--bs-gutter-y)* -1);
+	margin-right: calc(var(--bs-gutter-x)* -.5);
+	margin-left: calc(var(--bs-gutter-x)* -.5);
 }
 
 .login_container {
@@ -446,8 +443,7 @@ body {
 				}
 			}).done(function (chk_result) {
 				if (!chk_result) {
-					$("#id").val("");
-					$("#pw").val("");
+					location.reload();
 					alert("올바른 사용자 아이디와 비밀번호를 입력해주세요.");
 				} else {
 					$("#form_login").submit();
