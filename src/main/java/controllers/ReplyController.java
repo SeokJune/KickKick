@@ -61,14 +61,12 @@ public class ReplyController extends HttpServlet {
 				String board_table_name = bdao.set_table(bdao.select_board_name(b_c));
 				int board_code = Integer.parseInt(request.getParameter("board_code"));
 				
-				//댓글을 삭제하는데 성공하면
+				//댓글 삭제가 완료되면
 				int result = rdao.delete_reply(board_table_name,code);
 				if(result>0) {
-					//해당 글의 모든 댓글 리스트를 담아 보낸다
-					List<ReplyDTO> return_rlist = rdao.select_reply_list(board_table_name, board_code);
-					Gson g = new Gson();
-					String resp = g.toJson(return_rlist);
-					response.getWriter().append(resp);
+					//남은 댓글 갯수만 return
+					int resp = rdao.count_reply(board_table_name,board_code);
+					response.getWriter().append(""+resp);
 				}
 			}
 			else if(cmd.equals("/update.reply")) {
