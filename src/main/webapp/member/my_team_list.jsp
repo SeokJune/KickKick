@@ -81,6 +81,11 @@
 .card {
 	margin-bottom: 1rem;
 }
+<!-- 990px 이상 -->
+@media (min-width: 990px){
+	.card{
+	}
+}
 </style>
 </head>
 <body>
@@ -138,25 +143,29 @@
 			<div class="body">
 				<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
 					<c:forEach var="team" items="${team_list}">
-						<div class="col">
-							<div class="card radius-15">
-								<div class="p-4 border radius-15">
-									<img src="/image/login_img/ball_icon.png" width="110"
-										height="110" class="rounded-circle shadow" alt="">
-									<h5 class="team-name mb-0 mt-5">${team.name}</h5>
-									<p class="team-hometown mb-3">${team.hometown_code}</p>
-									<p class="team-reader">팀장 : ${team.member_code}</p>
-									<div class="go-to-team d-grid">
-										<!-- 서블릿 : /goto_my_team -->
-										<a href="#" class="btn btn-outline-primary radius-15">팀
-											게시판으로</a>
+						<form action="#">
+						<!-- 서블릿 : /goto_my_team.member -->
+							<div class="col">
+								<div class="card radius-15" style="width: 43.375rem;">
+									<div class="p-4 border radius-15">
+										<img src="/image/login_img/ball_icon.png" width="110"
+											height="110" class="rounded-circle shadow" alt="">
+										<h5 class="team-name mb-0 mt-5">${team.name}</h5>
+										<p class="team-hometown mb-3">${team.hometown_code}</p>
+										<p class="team-reader">팀장 : ${team.member_code}</p>
+										<input type="text" class="d-none" name="team_code"
+											value="${team.code}">
+										<div class="go-to-team d-grid">
+											<a href="#" class="btn btn-outline-primary radius-15">팀
+												페이지로</a>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+						</form>
 					</c:forEach>
 					<div class="col">
-						<div class="card radius-15">
+						<div class="card radius-15" style="width: 43.375rem;">
 							<div class="card-body text-center">
 								<div class="p-4 border radius-15">
 									<img src="/image/login_img/ball_icon.png" width="110"
@@ -164,6 +173,8 @@
 									<h5 class="team-name mb-0 mt-5">Team Name1</h5>
 									<p class="team-hometown mb-3">서울특별시</p>
 									<p class="team-reader">팀장 : 김리더</p>
+									<input type="text" class="d-none" name="team_code"
+										value="${team.code}">
 									<div class="d-grid">
 										<a href="#" class="btn btn-outline-primary radius-15">팀
 											게시판으로</a>
@@ -173,7 +184,7 @@
 						</div>
 					</div>
 					<div class="col">
-						<div class="card radius-15">
+						<div class="card radius-15" style="width: 43.375rem;">
 							<div class="card-body text-center">
 								<div class="p-4 border radius-15">
 									<img src="/image/login_img/ball_icon.png" width="110"
@@ -190,7 +201,7 @@
 						</div>
 					</div>
 					<div class="col">
-						<div class="card radius-15">
+						<div class="card radius-15" style="width: 43.375rem;">
 							<div class="card-body text-center">
 								<div class="p-4 border radius-15">
 									<img src="/image/login_img/ball_icon.png" width="110"
@@ -207,82 +218,14 @@
 						</div>
 					</div>
 					<div class="col">
-						<div class="card radius-15">
+						<div class="card radius-15" style="width: 43.375rem;">
 							<div class="card-body text-center">
 								<div class="p-4 border radius-15">
 									<img src="/image/login_img/ball_icon.png" width="110"
 										height="110" class="rounded-circle shadow" alt="">
 									<h5 class="team-name mb-0 mt-5">Team Name4</h5>
 									<p class="team-hometown mb-3">인천광역시</p>
-									<p class="team-reader">팀장 :  인리더</p>
-									<div class="d-grid">
-										<a href="#" class="btn btn-outline-primary radius-15">팀
-											게시판으로</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col">
-						<div class="card radius-15">
-							<div class="card-body text-center">
-								<div class="p-4 border radius-15">
-									<img src="/image/login_img/ball_icon.png" width="110"
-										height="110" class="rounded-circle shadow" alt="">
-									<h5 class="team-name mb-0 mt-5">Team Name5</h5>
-									<p class="team-hometown mb-3">대전광역시</p>
-									<p class="team-reader">팀장 : 전리더</p>
-									<div class="d-grid">
-										<a href="#" class="btn btn-outline-primary radius-15">팀
-											게시판으로</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col">
-						<div class="card radius-15">
-							<div class="card-body text-center">
-								<div class="p-4 border radius-15">
-									<img src="/image/login_img/ball_icon.png" width="110"
-										height="110" class="rounded-circle shadow" alt="">
-									<h5 class="team-name mb-0 mt-5">Team Name6</h5>
-									<p class="team-hometown mb-3">광주광역시</p>
-									<p class="team-reader">팀장 : 광리더</p>
-									<div class="d-grid">
-										<a href="#" class="btn btn-outline-primary radius-15">팀
-											게시판으로</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col">
-						<div class="card radius-15">
-							<div class="card-body text-center">
-								<div class="p-4 border radius-15">
-									<img src="/image/login_img/ball_icon.png" width="110"
-										height="110" class="rounded-circle shadow" alt="">
-									<h5 class="team-name mb-0 mt-5">Team Name7</h5>
-									<p class="team-hometown mb-3">울산광역시</p>
-									<p class="team-reader">팀장 : 박리더</p>
-									<div class="d-grid">
-										<a href="#" class="btn btn-outline-primary radius-15">팀
-											게시판으로</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col">
-						<div class="card radius-15">
-							<div class="card-body text-center">
-								<div class="p-4 border radius-15">
-									<img src="/image/login_img/ball_icon.png" width="110"
-										height="110" class="rounded-circle shadow" alt="">
-									<h5 class="team-name mb-0 mt-5">Team Name8</h5>
-									<p class="team-hometown mb-3">제주특별자치도</p>
-									<p class="team-reader">팀장 : 정리더</p>
+									<p class="team-reader">팀장 : 인리더</p>
 									<div class="d-grid">
 										<a href="#" class="btn btn-outline-primary radius-15">팀
 											게시판으로</a>

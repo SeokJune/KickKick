@@ -180,6 +180,11 @@ public class MemberController extends HttpServlet {
 					response.sendRedirect("/error.html");
 				}
 
+			} else if (cmd.equals("/my_team_list.member")) {
+				String member_code = (String) request.getSession().getAttribute("code");
+				
+			} else if (cmd.equals("/goto_my_team.member")) {
+				String team_code = request.getParameter("team_code");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

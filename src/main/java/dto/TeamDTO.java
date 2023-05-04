@@ -28,6 +28,16 @@ public class TeamDTO {
 		this.code = code;
 		this.name = name;
 	}
+	
+	public TeamDTO(int code, String logo_path, String logo, String name, String hometown_name) {
+		super();
+		this.code = code;
+		this.logo_path = logo_path;
+		this.logo = logo;
+		this.name = name;
+		this.hometown_name = hometown_name;
+	}
+	
 
 	public TeamDTO(int code, String logo_path, String logo, String name, String member_name, String member_phone) {
 		super();
@@ -205,11 +215,12 @@ public class TeamDTO {
 		this.member_phone = member_phone;
 	}
 
-	public String gethometown_name() {
+	public String getHomtown_name() {
 		return hometown_name;
 	}
 
-	public void sethometown_name(String hometown_name) {
+	public void setHomtown_name(String hometown_name) {
+
 		this.hometown_name = hometown_name;
 	}
 
