@@ -16,6 +16,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import commons.Settings;
 import dao.CreateTeamDAO;
+import dao.TeamDAO;
 import dto.HometownDTO;
 import dto.TeamDTO;
 
@@ -104,9 +105,26 @@ public class TeamController extends HttpServlet {
 				TeamDTO team_info = dao.team_info(team_code);
 				request.setAttribute("team_info", team_info);
 				request.getRequestDispatcher("/team/team_view.jsp").forward(request, response); 
+			} else if (cmd.equals("/my_team_list.team")) {
+				
+				int member_code = Integer.parseInt(request.getParameter("code"));
+				TeamDAO dao = TeamDAO.getInstance();
+				List<TeamDTO> list = dao.my_team_list(member_code);
+				request.setAttribute("team_list", list);
+				request.getRequestDispatcher("/member/my_team_list.jsp").forward(request, response);
+				
+			}else if(cmd.equals("/search.team")) {
+				
+				String search_team = request.getParameter("search_team");
+				TeamDAO dao = TeamDAO.getInstance();
+				List<TeamDTO> team_list = dao.search_team_list(search_team);
+				
+
+				
+			} else {
+				response.sendRedirect("/error.jsp");
 			}
-		}
-		catch(Exception e) {
+		}catch(Exception e) {
 			e.printStackTrace();
 			response.sendRedirect("/error.jsp");
 		}
