@@ -17,6 +17,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import commons.Settings;
 import dao.CreateTeamDAO;
 import dao.MemberDAO;
+import dao.TeamDAO;
 import dto.HometownDTO;
 import dto.MemberDTO;
 import dto.TeamDTO;
@@ -28,9 +29,11 @@ public class TeamController extends HttpServlet {
 	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String cmd = request.getRequestURI();
 		response.setContentType("text/html; charset=utf8"); // response의 한글패치
 		request.setCharacterEncoding("utf-8"); // request의 한글패치 
+		
+		String cmd = request.getRequestURI();
+		System.out.println(cmd);
 		
 		Gson g = new Gson();
 		String member_id = (String) request.getSession().getAttribute("id");
@@ -69,7 +72,6 @@ public class TeamController extends HttpServlet {
 				}
 				
 				MultipartRequest multi = new MultipartRequest(request, real_path, 1024*1024*50, "utf8", new DefaultFileRenamePolicy());
-				  			
 				
 //				String oriname = multi.getOriginalFileName("file");
 				String sysname = multi.getFilesystemName("file");
@@ -116,7 +118,26 @@ public class TeamController extends HttpServlet {
 				TeamDTO team_info = dao.team_info(team_code);
 				request.setAttribute("team_info", team_info);
 				request.getRequestDispatcher("/team/team_view.jsp").forward(request, response); 
-			}
+			} else if (cmd.equals("/my_team_list.team")) {
+				
+//				int member_code = 10000001;
+				int member_code = (int) request.getSession().getAttribute("code");
+				System.out.println(member_code);
+				TeamDAO dao = TeamDAO.getInstance();
+				List<TeamDTO> team_list = dao.my_team_list(member_code);
+				request.setAttribute("team_list", team_list);
+				request.getRequestDispatcher("/member/my_team_list.jsp").forward(request, response);
+				
+			}else if(cmd.equals("/search.team")) {
+				
+				String search_team = request.getParameter("search_team");
+				TeamDAO dao = TeamDAO.getInstance();
+				List<TeamDTO> team_list = dao.search_team_list(search_team);
+				request.setAttribute("team_list", team_list);
+				request.getRequestDispatcher("/member/my_team_list.jsp").forward(request, response);
+
+				
+			} 
 			// 팀 리스트에서 팀명 검색 
 			else if(cmd.equals("/search_team_name.team")) {
 				String team_name = request.getParameter("team_name");

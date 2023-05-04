@@ -57,6 +57,18 @@ public class ReplyDAO {
 		
 	}
 	
+	public int count_reply(String board_table_name, int board_code) throws Exception{
+		String sql = "select count(*) reply_count from reply_"+board_table_name+" where board_"+board_table_name+"_code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, board_code);
+			try(ResultSet rs = pstat.executeQuery()){
+				rs.next();
+				return rs.getInt("reply_count");
+			}
+		}
+	}
+	
 	//댓글 하나의 정보 담아보내기
 	public ReplyDTO select_reply(String board_table_name, int code) throws Exception{
 		String sql = "select r.code, r.board_"+board_table_name+"_code board_code, "
