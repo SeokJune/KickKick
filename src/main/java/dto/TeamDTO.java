@@ -205,11 +205,11 @@ public class TeamDTO {
 		this.member_phone = member_phone;
 	}
 
-	public String gethometown_name() {
+	public String getHometown_name() {
 		return hometown_name;
 	}
 
-	public void sethometown_name(String hometown_name) {
+	public void setHometown_name(String hometown_name) {
 		this.hometown_name = hometown_name;
 	}
 
