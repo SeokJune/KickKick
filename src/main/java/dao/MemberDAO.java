@@ -231,6 +231,18 @@ public class MemberDAO {
 				return list;
 			}
 		}
+	}
 
+	// 중복 체크
+	public boolean checksum(String colName, String value) throws Exception {
+		String sql = "SELECT * FROM MEMBER WHERE " + colName + " = ?";
+		try (Connection conn = this.getConnection();) {
+			try (PreparedStatement pstat = conn.prepareStatement(sql);) {
+				pstat.setString(1, value);
+				try (ResultSet rs = pstat.executeQuery();) {
+					return rs.next();
+				}
+			}
+		}
 	}
 }

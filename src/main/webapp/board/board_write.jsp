@@ -22,6 +22,12 @@
 <link
 	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
 	rel="stylesheet">
+<!-- awesome font -icon--->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- Bootstrap - icon -->
+<link
+   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+   rel="stylesheet">
 <style>
 div {
 	font-family: 'NanumSquareNeoBold';
@@ -91,7 +97,7 @@ div {
 				</div>
 
 			</div>
-			<div class="row footer p-2">
+			<div class="row footer p-3 pb-5">
 				<div class="col-6 d-grid">
 					<button type="submit" class="btn btn-primary" id="post">등록</button>
 				</div>

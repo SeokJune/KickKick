@@ -79,7 +79,23 @@ label {
 
 
 
+
+
+
+
+
+
+
+
  
+
+
+
+
+
+
+
+
 
 
 
@@ -91,7 +107,23 @@ label {
 
 
 
+
+
+
+
+
+
+
+
  
+
+
+
+
+
+
+
+
 
 
 
@@ -104,7 +136,23 @@ nbsp
 
 
 
+
+
+
+
+
+
+
+
  
+
+
+
+
+
+
+
+
 
 
 
@@ -112,6 +160,22 @@ nbsp
 
 ;{
 font-size
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -133,7 +197,39 @@ font-size
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 x-small
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -174,6 +270,10 @@ x-small
 	padding: 0.375rem 0 0.375rem 0;
 	background-size: 8px 8px;
 	font-size: 0.75rem;
+}
+
+.form-select::-webkit-scrollbar {
+	display: none;
 }
 
 @media ( min-width :@screen-sm-min) {
@@ -362,7 +462,7 @@ x-small
 										<input type="text" class="form-control" id="member_phone" name="member_phone" onkeyup="checksum(this, 'A');" pattern="^010[0-9]{8}$" title="010으로 시작하는 11자리 번화번호" maxlength="11" placeholder="(-) 제외" required>
 									</div>
 									<div class="col-4 mt-1 d-flex justify-content-center">
-										<button type="button" class="btn btn-outline-success text-wrap" id="phone_auth">인증번호 받기</button>
+										<button type="button" class="btn btn-outline-success text-wrap" id="phone_auth" disabled="disabled">인증번호 받기</button>
 									</div>
 								</div>
 								<!-- 전화번호 중복 메세지 -->
@@ -375,16 +475,16 @@ x-small
 								<!-- 인증번호 입력창 -->
 								<div class="row input">
 									<div class="col-12">
-										<input type="text" id="phone_auth_code" class="form-control">
+										<input type="text" id="phone_auth_code" class="form-control" readonly="readonly">
 									</div>
 								</div>
 								<!-- 인증 시간 & 인증 버튼 -->
 								<div class="row justify-content-end">
-									<div class="col-auto timer mx-3 p-1">
+									<div class="col-auto timer mx-3 mt-1 p-">
 										<div id="timeLimit">03분00초</div>
 									</div>
-									<div class="col-auto">
-										<button type="button" class="btn btn-outline-success" id="phone_auth_ok">인증</button>
+									<div class="col-auto mt-1">
+										<button type="button" class="btn btn-outline-success" id="phone_auth_ok" disabled="disabled">인증</button>
 									</div>
 								</div>
 							</div>
@@ -410,7 +510,9 @@ x-small
 										월
 									</div>
 									<div class="col-4 d-flex align-items-center">
-										<input type="text" class="form-control m-1 ps-1" id="member_birth_day" name="member_birth_day" onkeyup="checksum(this, 'R');" pattern="^(0[1-9]|[12][0-9]|3[01])$" title="두자리로 입력" minlength="2" maxlength="2" required>
+										<select class="form-select m-1 ps-1" id="member_birth_day" name="member_birth_day">
+											<option>01</option>
+										</select>
 										일
 									</div>
 								</div>
@@ -472,7 +574,12 @@ x-small
 	</div>
 
 	<script type="text/javascript">
-		// 정규식 & 중복 체크 - 아이디 & 닉네임 & 이메일
+		$("#member_phone").on("keydown", function () {
+			$("#phone_auth").attr("disabled", true);
+			$("#phone_auth_code").attr("readonly", true);
+			$("#phone_auth_ok").attr("disabled", true);
+		});
+		// 정규식 & 중복 체크 - 아이디 & 닉네임 & 이메일 ...
 		let valid = new Map();
 		function checksum(evt, type) {
 			let id = $(evt).attr("id");
@@ -484,8 +591,7 @@ x-small
 			}
 			// 정규식 체크
 			if (!regex.exec(value)) {
-				$("#" + id + "_checking").html($(evt).attr("title")).css(
-						"color", "red");
+				$("#" + id + "_checking").html($(evt).attr("title")).css("color", "red");
 				valid.set(id, false);
 				return false;
 			} else {
@@ -499,25 +605,27 @@ x-small
 				type : "post",
 				dataType : "json",
 				data : {
-					param : value
+					key: id.split("_")[1].toUpperCase(),
+					value: value
 				},
 				error : function() {
 					alert("서버 요청 실패");
 				}
-			}).done(
-					function(resp) {
-						if (resp) {
-							$("#" + id + "_checking").html(
-									"중복된 " + id.split("_")[1].toUpperCase())
-									.css("color", "red");
-							valid.set(id, false);
-						} else {
-							$("#" + id + "_checking").html(
-									"사용가능한 " + id.split("_")[1].toUpperCase())
-									.css("color", "red");
-							valid.set(id, true);
-						}
-					});
+			}).done(function(resp) {
+				if (resp) {
+					$("#" + id + "_checking").html("중복된 " + id.split("_")[1].toUpperCase()).css("color", "red");
+					valid.set(id, false);
+				} else {
+					$("#" + id + "_checking").html("사용가능한 " + id.split("_")[1].toUpperCase()).css("color", "red");
+					valid.set(id, true);
+					if (id == "member_phone") {
+						$("#phone_auth").attr("disabled", false);
+						$("#phone_auth_code").attr("readonly", false);
+						$("#phone_auth_ok").attr("disabled", false);
+						valid.set("auth", false);
+					}
+				}
+			});
 		}
 		// PW 유효성 검사
 		addEventListener("DOMContentLoaded", (event) => {
@@ -656,10 +764,6 @@ x-small
 				}
 			});
         });
-		// 휴대폰 인증하기 버튼
-		$("#btn-check-outlined").on("click", function () {
-			$("#btn_close").removeClass("visually-hidden");
-		});
 		// 타이머 구현
 		function $ComTimer() { }
 		$ComTimer.prototype = {
@@ -691,7 +795,7 @@ x-small
 				url: "/phone_auth.member",
 				type: "post",
 				dataType: "json",
-				data: { phone: $("#member_phone").val() }
+				data: { phone: $("#member_phone").val(), type: "JOIN" }
 			}).done(function (resp) {
 				// 전화번호 check
 				if (resp == "") {
@@ -726,18 +830,20 @@ x-small
 				dataType: "json",
 				data: { code: $("#phone_auth_code").val() }
 			}).done(function name(resp) {
-				if (resp) {
+				if (resp.success) {
 					AuthTimer.fnStop();
 					$("#timeLimit").text("인증 성공!🎉");
 					$("#pAuth button").attr("disabled", true);
 					$("#pAuth input").attr("readonly", true);
+					
+					valid.set("auth", true);
 				} else {
 					alert("인증번호를 다시 입력해주세요");
 					$("#phone_auth_code").val("");
 				}
 			});
 		});
-		// 생년월일 select option setting
+		// 생년월일 select option setting - 년 / 일
 		$(document).ready(function () {
 			var now = new Date();
 			var year = now.getFullYear();
@@ -754,7 +860,17 @@ x-small
 			}
 			$("#member_birth_month>option[value=" + mon + "]").attr("selected", "true");
 		});
-		
+		// 생년월일 select option setting - 월
+		$("#member_birth_day").on("click", function () {
+			let last = (new Date($("#member_birth_year").val(), $("#member_birth_month").val() - 0, 0)).getDate();
+			// 월별 selectbox 만들기
+			$('#member_birth_day').html("");
+			for (var i = 1; i <= last; i++) {
+			    var dd = i > 9 ? i : "0" + i;
+			    $('#member_birth_day').append('<option value="' + dd + '">' + dd + '</option>');
+			}
+			$("#member_birth_day>option[value='01']").attr("selected", "true");
+		});
 		// 비밀번호 보기
 		$("#view_pw").on("click", function() {
 			let password_field = $("#member_pw");
