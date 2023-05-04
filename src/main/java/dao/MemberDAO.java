@@ -3,12 +3,15 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import dto.MemberDTO;
+import dto.TeamDTO;
 
 public class MemberDAO {
 
@@ -118,7 +121,8 @@ public class MemberDAO {
 				String email = rs.getString("email");
 				String nickname = rs.getString("nickname");
 
-				MemberDTO dto = new MemberDTO(0, 0, id, pw, name, nickname, birthdate, phone, email, null, 0, null, null, null);
+				MemberDTO dto = new MemberDTO(0, 0, id, pw, name, nickname, birthdate, phone, email, null, 0, null,
+						null, null);
 				return dto;
 			}
 		}

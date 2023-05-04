@@ -21,7 +21,8 @@ import dto.MemberDTO;
 @WebServlet("*.member")
 public class MemberController extends HttpServlet {
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 
 		String cmd = request.getRequestURI();
@@ -52,9 +53,9 @@ public class MemberController extends HttpServlet {
 
 				// 이미 가입된 전화번호가 있으면 -> member table에 전화번호 있으면 -> MemberDAO에 class OK
 				boolean result = dao.phone_over_check(phone);
-				
+
 				String msg = "";
-				
+
 				if ((type.equals("") && result) || (!type.equals("") && !result)) { // 전화번호 O
 					String code = new SensUtils().sendSMS(phone);
 					// 세션에 정보 저장 : rand, phone
@@ -71,7 +72,7 @@ public class MemberController extends HttpServlet {
 
 				Map<String, Object> result = new HashMap<String, Object>();
 				result.put("success", false);
-				
+
 				// 인증번호 == 입력번호
 				if (rand.equals(code)) {
 					// id가져오는 메서드 -> 세션에 저장된 phone 으로 찾기
@@ -79,12 +80,12 @@ public class MemberController extends HttpServlet {
 					String id = dao.get_id_by_phone(phone);
 					result.put("search_id", id);
 					result.put("success", true);
-					
+
 					// 세션에서 정보 삭제 : rand, phone
 					request.getSession().removeAttribute("rand");
 					request.getSession().removeAttribute("phone");
 				}
-				
+
 				response.getWriter().append(g.toJson(result));
 			} else if (cmd.equals("/change_pw.member")) { // 비밀번호 변경 [login_view.jsp]
 				String id = request.getParameter("id");
@@ -96,12 +97,14 @@ public class MemberController extends HttpServlet {
 				String member_pw = EncryptionUtils.sha512(request.getParameter("member_pw"));
 				String member_name = request.getParameter("member_name");
 				String member_nickname = request.getParameter("member_nickname");
-				String member_birth_date = request.getParameter("member_birth_year") + request.getParameter("member_birth_month") + request.getParameter("member_birth_day");
+				String member_birth_date = request.getParameter("member_birth_year")
+						+ request.getParameter("member_birth_month") + request.getParameter("member_birth_day");
 				String member_phone = request.getParameter("member_phone");
 				String member_email = request.getParameter("member_email");
 				String member_agree = request.getParameter("member_agree");
 
-				MemberDTO dto = new MemberDTO(0, 0, member_id, member_pw, member_name, member_nickname, member_birth_date, member_phone, member_email, member_agree, 0, null, null, null);
+				MemberDTO dto = new MemberDTO(0, 0, member_id, member_pw, member_name, member_nickname,
+						member_birth_date, member_phone, member_email, member_agree, 0, null, null, null);
 				int result = MemberDAO.getInstance().insert_new_member(dto);
 				if (result > 0) {
 					request.setAttribute("member_name", member_name);
@@ -112,7 +115,7 @@ public class MemberController extends HttpServlet {
 			} else if (cmd.equals("/checksum.member")) { // 중복 체크 [join_form.jsp]
 				String key = request.getParameter("key");
 				String value = request.getParameter("value");
-				
+
 				response.getWriter().append(g.toJson(dao.checksum(key, value)));
 			} else if (cmd.equals("/id_over_check.member")) {
 				String member_id = request.getParameter("member_id");
@@ -147,11 +150,13 @@ public class MemberController extends HttpServlet {
 				}
 
 				String member_nickname = request.getParameter("member_nickname");
-				String member_birth_date = request.getParameter("member_birth_year") + request.getParameter("member_birth_month") + request.getParameter("member_birth_day");
+				String member_birth_date = request.getParameter("member_birth_year")
+						+ request.getParameter("member_birth_month") + request.getParameter("member_birth_day");
 				String member_phone = request.getParameter("member_phone");
 				String member_email = request.getParameter("member_email");
 
-				MemberDTO dto = new MemberDTO(0, 0, member_id, member_pw, null, member_nickname, member_birth_date, member_phone, member_email, null, 0, null, null, null);
+				MemberDTO dto = new MemberDTO(0, 0, member_id, member_pw, null, member_nickname, member_birth_date,
+						member_phone, member_email, null, 0, null, null, null);
 				int result = dao.modify_member(dto);
 
 				if (result > 0) {
@@ -180,6 +185,8 @@ public class MemberController extends HttpServlet {
 					response.sendRedirect("/error.html");
 				}
 
+			} else {
+				response.sendRedirect("/error.html");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -187,7 +194,8 @@ public class MemberController extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 }

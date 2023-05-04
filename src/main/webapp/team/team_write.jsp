@@ -31,27 +31,13 @@
 }
 div {
 	font-family: 'NanumSquareNeoBold';
-	outline-color: red;
 }
 input {
 	border-radius: 5px;
 	box-shadow: 5px 2px 3px;
 }
 .container-fluid{
-	background:
-      repeating-linear-gradient(190deg, rgba(255, 0, 0, 0.5) 40px,
-        rgba(255, 153, 0, 0.5) 80px, rgba(255, 255, 0, 0.5) 120px,
-        rgba(0, 255, 0, 0.5) 160px, rgba(0, 0, 255, 0.5) 200px,
-        rgba(75, 0, 130, 0.5) 240px, rgba(238, 130, 238, 0.5) 280px,
-        rgba(255, 0, 0, 0.5) 300px),
-      repeating-linear-gradient(-190deg, rgba(255, 0, 0, 0.5) 30px,
-        rgba(255, 153, 0, 0.5) 60px, rgba(255, 255, 0, 0.5) 90px,
-        rgba(0, 255, 0, 0.5) 120px, rgba(0, 0, 255, 0.5) 150px,
-        rgba(75, 0, 130, 0.5) 180px, rgba(238, 130, 238, 0.5) 210px,
-        rgba(255, 0, 0, 0.5) 230px),
-      repeating-linear-gradient(23deg, red 50px, orange 100px,
-        yellow 150px, green 200px, blue 250px,
-        indigo 300px, violet 350px, red 370px);	
+	background: whitesmoke;
 }
 
 #logo {
@@ -70,7 +56,7 @@ input {
 	padding: 3px;
 	border-radius: 3px;
 	font-size: 13px;
-	background: linear-gradient(red, yellow, blue, orange);
+	background: linear-gradient(to right, #76b852, #3ADF00);
 }
 #dup_check {
 	font-size: 12px;
@@ -79,7 +65,7 @@ input {
 #create_team {
 	font-weight: 500;
 	color: whitesmoke;
-	background: linear-gradient(red, yellow, blue, orange);
+	background: linear-gradient(to right, #76b852, #3ADF00);
 	border: none;
 	margin-top: 4px;
 	margin-bottom: 4px;
@@ -90,7 +76,7 @@ input {
 #cancel_team {
 	font-weight: 500;
 	color: whitesmoke;
-	background: linear-gradient(red, yellow, blue, orange);	
+	background: linear-gradient(to right, #76b852, #3ADF00);
 	border: none;
 	margin-top: 4px;
 	margin-bottom: 4px;
@@ -166,7 +152,7 @@ input {
 					<div class="row">
 						<div class="col-md-3"></div>
 						<div class="col-12 col-md-6" style="margin: auto;">
-							<input type="text" value="${id}"
+							<input type="text" value="${member_info.id}"
 								class="w-100" name="captain_name" readonly>
 						</div>
 						<div class="col-md-3"></div>
@@ -176,7 +162,7 @@ input {
 						<div class="col-md-3"></div>
 						<div class="col-12 col-md-6" style="margin: auto;">
 							<input type="text"
-								value="${phone}" class="w-100"
+								value="${member_info.phone}" class="w-100"
 								name="captain_phone" readonly>
 						</div>
 						<div class="col-md-3"></div>

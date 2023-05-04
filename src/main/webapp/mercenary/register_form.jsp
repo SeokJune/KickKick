@@ -191,7 +191,6 @@ div {
 					competition_registration_code:document.getElementById("competition_registration_code").value
 				}
 			}).done(function(resp) {
-				console.log(resp);
 				if(resp){
 					alert("이미 용병을 등록하셨습니다!");
 					location.reload();

@@ -18,17 +18,23 @@
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 <!-- awesome font -icon--->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<!-- gbn css -->
-<link href="/css/gbn.css" rel="stylesheet" type="text/css">
+<!-- gnb css -->
+<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
+
 <style>
 * {
 	font-family: 'NanumSquareNeoBold';
+}
+
+html, body {
+	background-color: #76b852;
 }
 </style>
 </head>
 
 <body>
-	<c:import url="/commons/gbn.jsp">
+	<!-- Global Navi Bar -->
+	<c:import url="/commons/gnb.jsp">
 	</c:import>
 </body>
 
