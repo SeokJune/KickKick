@@ -173,9 +173,10 @@ public class CompetitionDAO {
 
 				int code = 	rs.getInt("code");
 				int logo_path_code = rs.getInt("logo_path_code");
-				String logo_path = rs.getString("logo_path");
-				String logo_name = rs.getString("logo_name");
-				String logo = rs.getString("logo");
+				String logo_path = rs.getString("logo_path"); //로고 이미 이름 전까지 
+				
+				String logo_name = rs.getString("logo_name"); 
+				String logo = rs.getString("logo"); //사진 이름
 				String name = rs.getString("name");
 				int member_code = rs.getInt("member_code");
 				String member_name = rs.getString("member_name");
@@ -261,21 +262,22 @@ public class CompetitionDAO {
 
 	//리스트에 출력 - 등록 관련
 	public List<CompetitionListDTO> selectlist() throws Exception{
-		String sql = "select\r\n"
-				+ "    tv.name team_name,\r\n"
-				+ "    tv.member_name,\r\n"
-				+ "    tv.member_phone,\r\n"
-				+ "    cr.latirude, \r\n"
-				+ "    cr.longitude, \r\n"
-				+ "    cr.competition_date,\r\n"
-				+ "    cr.STATUS_CODE,\r\n"
-				+ "    st.name status_name,\r\n"
-				+ "    ck.name kind_name\r\n"
+		String sql = "select tv.name team_name,\r\n"
+				+ "tv.member_name,\r\n"
+				+ "tv.member_phone,\r\n"
+				+ "tv.logo_path,\r\n"
+				+ "tv.logo,\r\n"
+				+ "cr.latirude,\r\n"
+				+ "cr.longitude,\r\n"
+				+ "cr.competition_date,\r\n"
+				+ "cr.STATUS_CODE,\r\n"
+				+ "st.name status_name,\r\n"
+				+ "ck.name kind_name\r\n"
 				+ "from \r\n"
-				+ "    competition_registration cr join team_view tv on (cr.team_code=tv.code) \r\n"
-				+ "    join status st on (cr.status_code = st.code)\r\n"
-				+ "    join competition_kind ck on (cr.competition_kind_code = ck.code)\r\n"
-				+ " where cr.status_code = 1101 and cr.competition_date >= sysdate" ;
+				+ "competition_registration cr join team_view tv on (cr.team_code=tv.code)\r\n"
+				+ "join status st on (cr.status_code = st.code)\r\n"
+				+ "join competition_kind ck on (cr.competition_kind_code = ck.code)\r\n"
+				+ "where cr.status_code = 1101 and cr.competition_date >= sysdate" ;
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery();)
@@ -286,6 +288,8 @@ public class CompetitionDAO {
 				String team_name = 	rs.getString("team_name");
 				String member_name = rs.getString("member_name");
 				String member_phone = rs.getString("member_phone");
+				String logo_path = rs.getString("logo_path");
+				String logo = rs.getString("logo");
 				double latirude = rs.getDouble("latirude");
 				double longitude = rs.getDouble("longitude");
 				Timestamp competition_date = rs.getTimestamp("competition_date");
@@ -294,7 +298,7 @@ public class CompetitionDAO {
 				String kind_name = rs.getString("kind_name");
 
 
-				CompetitionListDTO dto = new CompetitionListDTO(team_name,member_name,member_phone,latirude,longitude,competition_date,status_code,status_name,kind_name);
+				CompetitionListDTO dto = new CompetitionListDTO(team_name,member_name,member_phone,logo_path,logo,latirude,longitude,competition_date,status_code,status_name,kind_name);
 				list.add(dto);
 			}
 			return list;
