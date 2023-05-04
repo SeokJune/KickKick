@@ -5,7 +5,7 @@
 
 		<head>
 			<meta charset="UTF-8">
-			<title>Insert title here</title>
+			<title>KickKick Report</title>
 			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
 				integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
 				crossorigin="anonymous">
@@ -29,16 +29,12 @@
 				}
 
 				#content_box {
-					display: flex;
 					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+
 				}
 
-				#content {
-					display: block;
-					white-space: nowrap;
-					overflow: hidden;
-					text-overflow: ellipsis;
-				}
 			</style>
 		</head>
 
@@ -59,37 +55,44 @@
 							<div class="row contents_box p-0 m-1" style="border:1px solid #d2d4d6">
 								<input type="hidden" value="${target.code}" name="target_code">
 								<div class="col-12">작성자 : ${target.member_nickname}</div>
-								<div class="col-12" id="content_box">내용 : <span style="padding-left:5px;" id="content">${target.content}</span></div>
+								<div class="col-12" id="content_box">내용 : ${target.content}</div>
 							</div>
 						</div>
 						<div class="col-12 reason_box">
 							<h4>신고 사유</h4>
 							<ul class="list-group">
 								<li class="list-group-item">
-									<input class="form-check-input me-1" type="radio" name="listGroupRadio" value=""
+									<input class="form-check-input me-1" type="radio" name="report_kind" value="1001"
 										id="firstRadio" checked>
 									<label class="form-check-label" for="firstRadio">스팸홍보/도배글입니다.</label>
 								</li>
 								<li class="list-group-item">
-									<input class="form-check-input me-1" type="radio" name="listGroupRadio" value=""
+									<input class="form-check-input me-1" type="radio" name="report_kind" value="1002"
 										id="secondRadio">
 									<label class="form-check-label" for="secondRadio">불법정보를 포함하고 있습니다.</label>
 								</li>
 								<li class="list-group-item">
-									<input class="form-check-input me-1" type="radio" name="listGroupRadio" value=""
+									<input class="form-check-input me-1" type="radio" name="report_kind" value="1003"
 										id="thirdRadio">
 									<label class="form-check-label" for="thirdRadio">음란물입니다.</label>
 								</li>
 								<li class="list-group-item">
-									<input class="form-check-input me-1" type="radio" name="listGroupRadio" value=""
-										id="thirdRadio">
-									<label class="form-check-label" for="thirdRadio">불쾌한 표현이 있습니다.</label>
+									<input class="form-check-input me-1" type="radio" name="report_kind" value="1004"
+										id="fourthRadio">
+									<label class="form-check-label" for="fourthRadio">불쾌한 표현이 있습니다.</label>
 								</li>
 								<li class="list-group-item">
-									<input class="form-check-input me-1" type="radio" name="listGroupRadio" value=""
+									<input class="form-check-input me-1" type="radio" name="report_kind" value="1005"
 										id="thirdRadio">
-									<label class="form-check-label" for="thirdRadio">기타</label>
-									<input type="text" name="reason_etc" placeholder="신고사유를 입력해주세요">
+									<label class="form-check-label" for="fifthRadio">개인정보가 노출되었습니다.</label>
+								</li>
+								<li class="list-group-item">
+									<input class="form-check-input me-1" type="radio" name="report_kind" value="1006"
+										id="thirdRadio">
+									<label class="form-check-label" for="sixthRadio">기타</label>
+									<div class="row">
+									<input type="text" name="detail" placeholder="신고사유를 입력해주세요" id="detail">
+									</div>
 								</li>
 							</ul>
 						</div>
@@ -102,9 +105,21 @@
 							<button type="button" class="btn btn-secondary" id="cancel">취소</button>
 						</div>
 					</div>
-
 				</form>
 			</div>
+			<script>
+				$(".form-check-input").on("click",function(){
+					if($(this).val()=="1006"){
+						$("#detail").disabled = false;
+					}
+					else{
+						$("#detail").disabled = true;
+					}
+				});
+				$("#cancel").on("click",function(){
+					window.close();
+				});
+			</script>
 		</body>
 
 		</html>
