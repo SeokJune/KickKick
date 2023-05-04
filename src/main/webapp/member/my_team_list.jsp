@@ -109,25 +109,27 @@
 					<!--col end-->
 				</div>
 				<!-- row end-->
+				<form action="/search.team">
 				<div
 					class="row height d-flex justify-content-center align-items-center">
-					<form action="#">
+					
 					<!-- /search.team -->
 						<div class="col-md-8">
 							<div class="search mb-4 mt-3">
 								<i class="fa fa-search"></i> <input type="text"
-									class="form-control" id="search_team"
+									class="form-control" id="search_team" name="search_team"
 									placeholder="찾을 팀을 검색해보세요">
 								<button class="btn btn-primary" id="btn_search_team">찾기</button>
 							</div>
 						</div>
-					</form>
+					
 				</div>
+				</form>
 				<!-- header -->
 				<div class="body">
 					<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4 d-flex">
 						<c:forEach var="team" items="${team_list}">
-							<form action="#">
+							<form action="/view.team">
 								<!-- 서블릿 : /view.team -->
 								<div class="col col-md-w-50">
 									<div class="card radius-15">
@@ -148,80 +150,11 @@
 								</div>
 							</form>
 						</c:forEach>
-						<div class="col col-md-w-50">
-							<div class="card radius-15">
-								<div class="card-body text-center">
-									<div class=" p-4 border radius-15">
-										<img src="/image/login_img/ball_icon.png" width="110"
-											height="110" class="rounded-circle shadow" alt="">
-										<h5 class="team-name mb-0 mt-5">Team Name1</h5>
-										<p class="team-hometown mb-3">서울특별시</p>
-										<p class="team-reader">팀장 : 김리더</p>
-										<input type="text" class="d-none" name="team_code"
-											value="${team.code}">
-										<div class="d-grid">
-											<a href="#" class="btn btn-outline-primary radius-15">팀
-												게시판으로</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col col-md-w-50">
-							<div class="card radius-15">
-								<div class="card-body text-center">
-									<div class="p-4 border radius-15">
-										<img src="/image/login_img/ball_icon.png" width="110"
-											height="110" class="rounded-circle shadow" alt="">
-										<h5 class="team-name mb-0 mt-5">Team Name2</h5>
-										<p class="team-hometown mb-3">부산광역시</p>
-										<p class="team-reader">팀장 : 이리더</p>
-										<div class="d-grid">
-											<a href="#" class="btn btn-outline-primary radius-15">팀
-												게시판으로</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col col-md-w-50">
-							<div class="card radius-15">
-								<div class="card-body text-center">
-									<div class="p-4 border radius-15">
-										<img src="/image/login_img/ball_icon.png" width="110"
-											height="110" class="rounded-circle shadow" alt="">
-										<h5 class="team-name mb-0 mt-5">Team Name3</h5>
-										<p class="team-hometown mb-3">대구광역시</p>
-										<p class="team-reader">팀장 : 대리더</p>
-										<div class="d-grid">
-											<a href="#" class="btn btn-outline-primary radius-15">팀
-												게시판으로</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col col-md-w-50">
-							<div class="card radius-15">
-								<div class="card-body text-center">
-									<div class="p-4 border radius-15">
-										<img src="/image/login_img/ball_icon.png" width="110"
-											height="110" class="rounded-circle shadow" alt="">
-										<h5 class="team-name mb-0 mt-5">Team Name4</h5>
-										<p class="team-hometown mb-3">인천광역시</p>
-										<p class="team-reader">팀장 : 인리더</p>
-										<div class="d-grid">
-											<a href="#" class="btn btn-outline-primary radius-15">팀
-												게시판으로</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 					<!-- body -->
 				</div>
 			</div>
+		</div>
 	</main>
 </body>
 </html>

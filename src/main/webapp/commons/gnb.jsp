@@ -75,7 +75,7 @@
 										<a href="/member/my_profile.jsp" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 정보 보기</a>
 									</li>
 									<li class="login">
-										<a href="/member/my_team_list.jsp" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀 보기</a>
+										<a href="/my_team_list.team" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀 보기</a>
 									</li>
 								</ul>
 							</div>

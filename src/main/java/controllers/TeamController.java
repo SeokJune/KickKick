@@ -26,7 +26,7 @@ public class TeamController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String cmd = request.getRequestURI();
-		
+		System.out.println(cmd);
 		Gson g = new Gson();
 
 		try {	
@@ -57,9 +57,6 @@ public class TeamController extends HttpServlet {
 				}
 				
 				MultipartRequest multi = new MultipartRequest(request, real_path, 1024*1024*50, "utf8", new DefaultFileRenamePolicy());
-				  
-				
-				
 				
 //				String oriname = multi.getOriginalFileName("file");
 				String sysname = multi.getFilesystemName("file");
@@ -107,10 +104,12 @@ public class TeamController extends HttpServlet {
 				request.getRequestDispatcher("/team/team_view.jsp").forward(request, response); 
 			} else if (cmd.equals("/my_team_list.team")) {
 				
-				int member_code = Integer.parseInt(request.getParameter("code"));
+//				int member_code = 10000001;
+				int member_code = (int) request.getSession().getAttribute("code");
+				System.out.println(member_code);
 				TeamDAO dao = TeamDAO.getInstance();
-				List<TeamDTO> list = dao.my_team_list(member_code);
-				request.setAttribute("team_list", list);
+				List<TeamDTO> team_list = dao.my_team_list(member_code);
+				request.setAttribute("team_list", team_list);
 				request.getRequestDispatcher("/member/my_team_list.jsp").forward(request, response);
 				
 			}else if(cmd.equals("/search.team")) {
@@ -118,7 +117,8 @@ public class TeamController extends HttpServlet {
 				String search_team = request.getParameter("search_team");
 				TeamDAO dao = TeamDAO.getInstance();
 				List<TeamDTO> team_list = dao.search_team_list(search_team);
-				
+				request.setAttribute("team_list", team_list);
+				request.getRequestDispatcher("/member/my_team_list.jsp").forward(request, response);
 
 				
 			} else {
