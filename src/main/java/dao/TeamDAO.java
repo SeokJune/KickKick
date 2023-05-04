@@ -31,7 +31,7 @@ public class TeamDAO {
 
 	// 내 팀 리스트 가져오기
 	public List<TeamDTO> my_team_list(int member_code) throws Exception {
-		String sql = "select * from team where code in (select team_code from team_member where member_code= ?)";
+		String sql = "select team.*, (select path from logo_path where logo_path.code = team.logo_path_code) logo_path, (select name from hometown where hometown.code = team.hometown_code) hometown_name from team where code in (select team_code from team_member where member_code= ?)";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setInt(1, member_code);
 			try (ResultSet rs = pstat.executeQuery()) {
