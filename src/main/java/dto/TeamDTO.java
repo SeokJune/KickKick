@@ -75,7 +75,15 @@ public class TeamDTO {
 		this.del_date = del_date;
 	}
 	
-	
+	public TeamDTO(int code, String logo_path, String logo, String name, String hometown_name) {
+		super();
+		this.code = code;
+		this.logo_path = logo_path;
+		this.logo = logo;
+		this.name = name;
+		this.hometown_name = hometown_name;
+	}
+
 	public String getContent() {
 		return content;
 	}
