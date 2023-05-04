@@ -90,7 +90,7 @@ public class MercenaryController extends HttpServlet {
 				int ability_code = Integer.parseInt(request.getParameter("ability")); 
 				int people_count = Integer.parseInt(request.getParameter("people_count"));
 
-				RegisterInfoDTO r = new RegisterInfoDTO(0,competition_registration_code,team_code,ability_code,people_count,1202,null,0,0,null);
+				RegisterInfoDTO r = new RegisterInfoDTO(0,competition_registration_code,team_code,ability_code,people_count,2101,null,0,0,null);
 				
 				int result = MercenaryDAO.getInstance().insert_register_mercenary(r);
 				if(result>0) {
