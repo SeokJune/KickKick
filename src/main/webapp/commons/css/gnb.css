@@ -1,5 +1,17 @@
 @charset "UTF-8";
 
+* {
+	font-family: 'NanumSquareNeoBold';
+}
+
+html {
+	background-color: #76b852;
+}
+
+body {
+	background-color: #76b852;
+}
+
 .bd-placeholder-img {
 	font-size: 1.125rem;
 	text-anchor: middle;
@@ -62,7 +74,7 @@
 	z-index: 1500;
 }
 
-.navbar { 
+.navbar {
 	--bs-navbar-padding-y: 0;
 }
 
