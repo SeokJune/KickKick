@@ -99,6 +99,9 @@ public class BoardController extends HttpServlet {
 
 				//글 코드 get
 				int code = Integer.parseInt(request.getParameter("c"));
+				//조회수 증가
+				bdao.add_view_count(board_table_name, code);
+				//글 정보 get
 				BoardDTO board_contents = bdao.select_board(board_table_name, code);
 				request.setAttribute("board", board_contents);
 
@@ -122,9 +125,7 @@ public class BoardController extends HttpServlet {
 
 				int board_kind_code = headline_dto.getBoard_kind_code();
 				int board_headline_code = headline_dto.getCode();
-				//int member_code = (int)request.getSession().getAttribute("code");
-				//회원가입, 로그인 완성되기 전까지 임시 멤버코드 사용
-				int member_code = 1;
+				int member_code = (int)request.getSession().getAttribute("code");
 				String title = request.getParameter("title");
 				String content = request.getParameter("content");
 				BoardDTO bdto = new BoardDTO(0,board_kind_code,board_headline_code,member_code,title,content,0,0,null,null,null);
@@ -175,6 +176,8 @@ public class BoardController extends HttpServlet {
 				String content = request.getParameter("content");
 				BoardDTO bdto = new BoardDTO(code,headline_name,title,content);
 				int result = bdao.update_post(board_table_name, bdto);
+				//업데이트 할때는 조회수 늘리지 않기
+				bdao.substract_view_count(board_table_name, code);
 				if(result>0) {
 					response.sendRedirect("/select_post.board?b_c="+b_c+"&c="+code+"&cpage="+cpage);
 				}

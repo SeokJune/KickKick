@@ -6,20 +6,21 @@
 <head>
 <meta charset="UTF-8">
 <title>RegisterForm</title>
-<!-- 폰트 -->
+<!-- JQuery-->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- Bootstrap - CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<!-- Bootstrap - JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<!-- Bootstrap - icon -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+<!-- Font 기본 : {font-family: 'NanumSquareNeoBold'}-->
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
-<!-- Bootstrap -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-	crossorigin="anonymous"></script>
-<!-- JQuery -->
-<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+
+<!-- gbn css -->
+<link href="/css/gbn.css" rel="stylesheet" type="text/css">
+<!-- awesome font -icon--->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- kakao api -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a47338e87e3d914e6d508799cd4f4e17&libraries=services"></script>
 <style>
@@ -30,11 +31,9 @@ div {
 
 .container{
 	width: 70%;
-	background:white;
-	
 }
 
-.header2>div {
+.team2>div {
 	float: left;
 }
 
@@ -48,18 +47,19 @@ div {
 </style>
 </head>
 <body>
-	<form action="/to_mercenary_register.mercenary" method="post">
+	<form id="form" action="/to_mercenary_register.mercenary" method="post">
 		<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
+		<h2 style="text-align:center;">용병 등록</h2>
 			<br>
-			<div class="row header1">
-				<div>
+			<br>
+			<div class="row team1">
+				<div class="mb-3">
 					<button type="button" id="team_select"
-						class="btn btn-primary btn-sm" style="background-color: #0455BF;">팀
+						class="btn btn-primary">팀
 						선택</button>
 				</div>
 			</div>
-			<br>
-			<div class="row header2">
+			<div class="row team2">
 				<div class="col-xs-12 col-md-4 col-xl-4 text-center" style="border:1px solid black;">
 					<div id="team_logo">img</div>
 				</div>
@@ -87,18 +87,16 @@ div {
 				</div>
 			</div>
 			<br>
-			<div class="row body1">
-				<div>
+			<div class="row match1">
+				<div class="mb-3">
 					<button type="button" id="match_select"
-						class="btn btn-primary btn-sm">경기 선택</button>
+						class="btn btn-primary">경기 선택</button>
 				</div>
 				<div class="box">
-				<br>
 					<div class="col-12 col-md-6 col-xl-6">
 					<input type="hidden" id="latirude" readonly> <!-- 위도 -->
 					<input type="hidden" id="longitude" readonly> <!-- 경도 -->
 						<div class="input-group mb-3">
-						
 							<span class="input-group-text">장소</span> <input type="text"
 								class="form-control" id="match_place" name="match_place"
 								required readonly>
@@ -128,7 +126,7 @@ div {
 				</div>
 			</div>
 			<br>
-			<div class="row body2">
+			<div class="row match2">
 				<div class="box">
 					<div class="col-12 col-md-6 col-xl-6 text-center">
 						실력 <select class="form-select" name="ability" required>
@@ -147,9 +145,9 @@ div {
 				</div>
 			</div>
 			<br>
-			<div class="footer">
+			<div class="buttons">
 				<div class="col-xl-12 col-md-12 col-xs-12 text-center">
-					<a><input type="submit" value="등록" class="btn btn-primary"></a>
+					<a><input type="button" value="등록" id="register_btn" class="btn btn-primary" onclick="valid_register(this)"></a>
 					<a href="/index.jsp"><input type="button" value="취소"
 						class="btn btn-primary"></a>
 				</div>
@@ -179,6 +177,28 @@ div {
 			document.getElementById("longitude").value = lo;
 			document.getElementById("competition_date").value = dft;
 
+		}
+		
+		// 용병 등록 중복 검사
+		function valid_register(evt){
+			$.ajax({
+				url:"/register_btn_ajax.mercenary",
+				async: false,
+				type:"post",
+				dataType: "json",
+				data:{
+					code:document.getElementById("code").value,
+					competition_registration_code:document.getElementById("competition_registration_code").value
+				}
+			}).done(function(resp) {
+				console.log(resp);
+				if(resp){
+					alert("이미 용병을 등록하셨습니다!");
+					location.reload();
+				}else{
+					$("#form").submit();
+				}
+			})
 		}
 		
 		// 받은 위도, 경도에 따라 위치 구하는 함수

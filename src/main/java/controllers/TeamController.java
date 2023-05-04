@@ -97,6 +97,7 @@ public class TeamController extends HttpServlet {
 				request.setAttribute("navi", page_navi);
 				request.getRequestDispatcher("/team/team_list.jsp").forward(request, response); 
 			}
+			// 팀 페이지
 			else if(cmd.equals("/view.team")) {
 				int team_code = Integer.parseInt(request.getParameter("team_code"));
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
