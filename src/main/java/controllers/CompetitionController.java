@@ -65,11 +65,12 @@ public class CompetitionController extends HttpServlet {
 
 
 			}else if(cmd.equals("/list.competition")) {
-
+				//리스트 출력 값
 				List<CompetitionListDTO> list= CompetitionDAO.getinstance().selectlist();
-
-				System.out.println(list);
 				request.setAttribute("list", list);
+				//지역 선택필터	
+				List<HometownDTO> hometown = CompetitionDAO.getinstance().hometown();
+				request.setAttribute("hometown", hometown);
 
 
 
@@ -147,12 +148,18 @@ public class CompetitionController extends HttpServlet {
 
 				TeamDTO team = CompetitionDAO.getinstance().team(t);
 
+				String logo_path = team.getLogo_path();
+				String logo = team.getLogo();
+				String pic = logo_path+logo; //사진 경로
+
+
 				List<String> list = new ArrayList<>(); //자바서의 배열이므로 자바스크립트가 알아볼수있게 데이터를 재조립해줘야한다
 
 				list.add(team.getName()); 
 				list.add(team.getMember_name());
 				list.add(team.getMember_phone());
-
+				list.add(pic);
+				System.out.println(list);
 
 				Gson g = new Gson(); //gson사용할려고 인스턴스 생성
 				String glist = g.toJson(list); //자동직렬화 -> 그래야 데이터가 넘어감?  -> 데이터가 넘어가는 방식이 자동직렬화

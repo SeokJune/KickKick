@@ -6,6 +6,8 @@ public class CompetitionListDTO {
 private String team_name;
 private String member_name;
 private String member_phone;
+private String logo_path;
+private String logo;
 private double latirude;
 private double longitude;
 private Timestamp competition_date;
@@ -13,12 +15,14 @@ private int status_code;
 private String status_name;
 private String kind_name;
 public CompetitionListDTO() {} ;
-public CompetitionListDTO(String team_name, String member_name, String member_phone, double latirude, double longitude,
+public CompetitionListDTO(String team_name, String member_name, String member_phone, String logo_path, String logo, double latirude, double longitude,
 		Timestamp competition_date, int status_code, String status_name, String kind_name) {
 	super();
 	this.team_name = team_name;
 	this.member_name = member_name;
 	this.member_phone = member_phone;
+	this.logo_path = logo_path;
+	this.logo = logo;
 	this.latirude = latirude;
 	this.longitude = longitude;
 	this.competition_date = competition_date;
@@ -43,6 +47,18 @@ public String getMember_phone() {
 }
 public void setMember_phone(String member_phone) {
 	this.member_phone = member_phone;
+}
+public String getLogo_path() {
+	return logo_path;
+}
+public void setLogo_path(String logo_path) {
+	this.logo_path = logo_path;
+}
+public String getLogo() {
+	return logo;
+}
+public void setLogo(String logo) {
+	this.logo = logo;
 }
 public double getLatirude() {
 	return latirude;
@@ -80,4 +96,6 @@ public String getKind_name() {
 public void setKind_name(String kind_name) {
 	this.kind_name = kind_name;
 }
+
+
 }
