@@ -44,6 +44,7 @@ public class TeamDAO {
 				+ "left join member m on m.code = t.member_code\r\n"
 				+ "where t.code in   \r\n"
 				+ "(select team_code from team_member where member_code = ?)\r\n";
+
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
 			pstat.setInt(1, member_code);
 			try (ResultSet rs = pstat.executeQuery()) {
