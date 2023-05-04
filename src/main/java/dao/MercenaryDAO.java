@@ -244,7 +244,8 @@ public class MercenaryDAO {
 	
 	// apply_list : 용병 신청 리스트 출력
 	public List<ApplyDTO> select_apply_list(ApplyDTO d) throws Exception {
-		String sql = "select ma.code, ma.mercenary_registration_code,(select name from member where code = ma.member_code) mer_name, ma.content, mrv.team_code, cv.competition_registration_code, cv.competition_date "
+		String sql = "select ma.code, ma.mercenary_registration_code,(select name from member where code = ma.member_code) mer_name, "
+				+ "ma.content, mrv.team_code, cv.competition_registration_code, cv.competition_date "
 				+ "from mercenary_application ma "
 				+ "join mercenary_registration_view mrv on ma.mercenary_registration_code = mrv.code "
 				+ "join competition_view cv on mrv.competition_result_code = cv.competition_registration_code "
@@ -257,12 +258,15 @@ public class MercenaryDAO {
 			try(ResultSet rs = pstat.executeQuery();){
 				List<ApplyDTO> list = new ArrayList<>();
 				while(rs.next()) {
+					int mercenary_registration_code = rs.getInt("mercenary_registration_code");
+					int team_code = rs.getInt("team_code");
 					String member_name = rs.getString("mer_name");
 					Timestamp competition_date = rs.getTimestamp("competition_date");
 					String content = rs.getString("content");
 					int competition_registration_code = rs.getInt("competition_registration_code");
+					int mercenary_application_code = rs.getInt("code");
 					
-					list.add(new ApplyDTO(member_name,competition_date,content,competition_registration_code));
+					list.add(new ApplyDTO(mercenary_registration_code,team_code,member_name,competition_date,content,competition_registration_code,mercenary_application_code));
 				}
 				return list;
 			}
