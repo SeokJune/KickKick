@@ -199,6 +199,10 @@ body {
 							<div class="form-group mb-4">
 								<label class="control-label font-weight-bold font-size-7pt">아이디</label>
 								<span>*</span>
+								<div class="form-check float-end">
+									<input class="form-check-input" type="checkbox" value="save_id" id="save_id">
+									<label class="form-check-label" for="save_id" style="font-size: x-small;">아이디 저장</label>
+								</div>
 								<input type="text" class="form-control" id="id" name="id" required />
 							</div>
 							<div class="form-group">
@@ -324,8 +328,8 @@ body {
 					<div class="col-12 col-md-6 mb-1">
 						<div class="input-group d-flex">
 							<input type="password" class="form-control rounded mt-1" placeholder="새 비밀번호" aria-label="password" aria-describedby="password" id="password" class="password" />
-							<div class="valid-feedback" style="font-size:x-small;">Good</div>
-							<div class="invalid-feedback" style="font-size:x-small;">Wrong</div>
+							<div class="valid-feedback" style="font-size: x-small;">Good</div>
+							<div class="invalid-feedback" style="font-size: x-small;">Wrong</div>
 						</div>
 					</div>
 				</div>
@@ -333,8 +337,8 @@ body {
 					<div class="col-12 col-md-6 mt-1">
 						<div class="input-group d-flex">
 							<input type="password" class="form-control rounded mt-1" placeholder="새 비밀번호" aria-label="password" aria-describedby="password_check" id="password_check" class="password_check" />
-							<div class="valid-feedback" style="font-size:x-small;">Good</div>
-							<div class="invalid-feedback" style="font-size:x-small;">Wrong</div>
+							<div class="valid-feedback" style="font-size: x-small;">Good</div>
+							<div class="invalid-feedback" style="font-size: x-small;">Wrong</div>
 						</div>
 					</div>
 					<br>
@@ -377,6 +381,58 @@ body {
 		</div>
 	</div>
 	<script>
+		// 쿠키 저장 함수
+		function setCookie(cookieName, value, exdays) {
+			let exdate = new Date();
+			exdate.setDate(exdate.getDate() + exdays);
+			let cookieValue = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toGMTString());
+			document.cookie = cookieName + "=" + cookieValue;
+		}
+		// 쿠키 삭제 함수
+		function deleteCookie(cookieName) {
+			var expireDate = new Date();
+			expireDate.setDate(expireDate.getDate() - 1);
+			document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+		}
+		// 쿠키 가져오기
+		function getCookie(cookieName) {
+			cookieName = cookieName + '=';
+			var cookieData = document.cookie;
+			var start = cookieData.indexOf(cookieName);
+			var cookieValue = '';
+			if (start != -1) { // 쿠키가 존재하면
+				start += cookieName.length;
+				var end = cookieData.indexOf(';', start);
+				if (end == -1) // 쿠키 값의 마지막 위치 인덱스 번호 설정 
+					end = cookieData.length;
+				cookieValue = cookieData.substring(start, end);
+			}
+			return unescape(cookieValue);
+		}
+		// 아이디 저장
+		$(document).ready(function name() {
+			// 쿠키에 저장된 id 값 가져와서 세팅
+			let save_id = getCookie("save_id");
+			$("#id").val(save_id);
+			// 체크 박스 값 세팅
+			if($("#id").val() != "") {
+				$("#save_id").attr("checked", true);
+			}
+			// 체크박스 변화 유무에 따른 쿠키 저장 - 7일 저장
+			$("#save_id").change(function () {
+				if($("#save_id").is(":checked")) {
+					setCookie("save_id", $("#id").val(), 7);
+				} else {
+					deleteCookie("save_id");
+				}
+			});
+			// 체크 상태에서 ID 입력한 경우 - 7일 저장
+			$("#id").keyup(function () {
+				if($("#save_id").is(":checked")) {
+					setCookie("save_id", $("#id").val(), 7);
+				}
+			});
+		});
 		// 아이디/비밀번호 확인
 		$($(".site_login")[0]).on("click", function (evt) {
 			evt.preventDefault();
