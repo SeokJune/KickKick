@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,54 +130,54 @@ public class CreateTeamDAO {
 	//		
 	//	}
 
-//	public List<TeamDTO> select_team() throws Exception {
-//		String sql = "select * from team_view"; 
-//		try(Connection con = this.getConnection();
-//				PreparedStatement pstat = con.prepareStatement(sql);
-//				ResultSet rs = pstat.executeQuery();) {
-//
-//			List<TeamDTO> arr = new ArrayList<>();
-//
-//			while(rs.next()) {
-//				int code = rs.getInt("code");
-//				int logo_path_code = rs.getInt("logo_path_code");
-//				String logo_path = rs.getString("logo_path");
-//				String logo_name = rs.getString("logo_name");
-//				String logo = rs.getString("logo");
-//				String name = rs.getString("name");
-//				int member_code = rs.getInt("member_code");
-//				String member_name = rs.getString("member_name");
-//				String member_phone = rs.getString("member_phone");
-//				int hometown_code = rs.getInt("hometown_code");
-//				String hometown_name = rs.getString("hometown_name");
-//				String outline = rs.getString("outline");
-//				String content = rs.getString("content");
-//				Timestamp reg_date = rs.getTimestamp("reg_date");
-//				Timestamp mod_date = rs.getTimestamp("mod_date");
-//				Timestamp del_date = rs.getTimestamp("del_date");
-//
-//
-//				TeamDTO dto = new TeamDTO(code, logo_path_code, logo_path, logo_name, logo, name, member_code, member_name, member_phone, hometown_code, hometown_name, outline, content, reg_date, mod_date, del_date);
-//				arr.add(dto);
-//			}
-//			return arr;
-//		}
-//	}
-	
+	//	public List<TeamDTO> select_team() throws Exception {
+	//		String sql = "select * from team_view"; 
+	//		try(Connection con = this.getConnection();
+	//				PreparedStatement pstat = con.prepareStatement(sql);
+	//				ResultSet rs = pstat.executeQuery();) {
+	//
+	//			List<TeamDTO> arr = new ArrayList<>();
+	//
+	//			while(rs.next()) {
+	//				int code = rs.getInt("code");
+	//				int logo_path_code = rs.getInt("logo_path_code");
+	//				String logo_path = rs.getString("logo_path");
+	//				String logo_name = rs.getString("logo_name");
+	//				String logo = rs.getString("logo");
+	//				String name = rs.getString("name");
+	//				int member_code = rs.getInt("member_code");
+	//				String member_name = rs.getString("member_name");
+	//				String member_phone = rs.getString("member_phone");
+	//				int hometown_code = rs.getInt("hometown_code");
+	//				String hometown_name = rs.getString("hometown_name");
+	//				String outline = rs.getString("outline");
+	//				String content = rs.getString("content");
+	//				Timestamp reg_date = rs.getTimestamp("reg_date");
+	//				Timestamp mod_date = rs.getTimestamp("mod_date");
+	//				Timestamp del_date = rs.getTimestamp("del_date");
+	//
+	//
+	//				TeamDTO dto = new TeamDTO(code, logo_path_code, logo_path, logo_name, logo, name, member_code, member_name, member_phone, hometown_code, hometown_name, outline, content, reg_date, mod_date, del_date);
+	//				arr.add(dto);
+	//			}
+	//			return arr;
+	//		}
+	//	}
+
 	public List<TeamDTO> select_team(int start, int end) throws Exception{
 		String sql = "select * from\r\n"
 				+ "(select team_view.*, row_number() over(order by code desc) rn \r\n"
 				+ "from team_view)\r\n"
 				+ "where rn between ? and ?"; 
-		
+
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
-			
+
 			pstat.setInt(1, start);
 			pstat.setInt(2, end);
-			
+
 			try(ResultSet rs = pstat.executeQuery()) {
-				
+
 				List<TeamDTO> list = new ArrayList();
 				while(rs.next()) {
 					int code = rs.getInt("code");
@@ -195,8 +196,8 @@ public class CreateTeamDAO {
 					Timestamp reg_date = rs.getTimestamp("reg_date");
 					Timestamp mod_date = rs.getTimestamp("mod_date");
 					Timestamp del_date = rs.getTimestamp("del_date");
-	
-	
+
+
 					TeamDTO dto = new TeamDTO(code, logo_path_code, logo_path, logo_name, logo, name, member_code, member_name, member_phone, hometown_code, hometown_name, outline, content, reg_date, mod_date, del_date);
 					list.add(dto);
 				}
@@ -204,6 +205,8 @@ public class CreateTeamDAO {
 			}
 		}
 	}
+	
+	
 
 	public TeamDTO team_info(int team_code) throws Exception {
 		String sql = "select * from team_view where code = ?"; 
@@ -214,7 +217,7 @@ public class CreateTeamDAO {
 
 			try(ResultSet rs = pstat.executeQuery();) {
 
-				
+
 				rs.next();
 				int code = rs.getInt("code");
 				int logo_path_code = rs.getInt("logo_path_code");
@@ -232,12 +235,54 @@ public class CreateTeamDAO {
 				Timestamp reg_date = rs.getTimestamp("reg_date");
 				Timestamp mod_date = rs.getTimestamp("mod_date");
 				Timestamp del_date = rs.getTimestamp("del_date");
-				
-				
+
+
 				return new TeamDTO
 						(code, logo_path_code, logo_path, logo_name, logo, name, member_code, 
 								member_name, member_phone, hometown_code,  hometown_name, outline,
 								content, reg_date, mod_date, del_date);
+			}
+		}
+	}
+
+	public List<TeamDTO> search_team_name(String team_name) throws Exception {
+		String sql = "select * from team_view where name like ? "; 
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+
+			pstat.setString(1, "%"+team_name+"%");
+
+			try(ResultSet rs = pstat.executeQuery();) {
+
+				List<TeamDTO> list = new ArrayList();
+				while(rs.next()) {
+					int code = rs.getInt("code");
+					int logo_path_code = rs.getInt("logo_path_code");
+					String logo_path = rs.getString("logo_path");
+					String logo_name = rs.getString("logo_name");
+					String logo = rs.getString("logo");
+					String name = rs.getString("name");
+					int member_code = rs.getInt("member_code");
+					String member_name = rs.getString("member_name");
+					String member_phone = rs.getString("member_phone");
+					int hometown_code = rs.getInt("hometown_code");
+					String hometown_name = rs.getString("hometown_name");
+					String outline = rs.getString("outline");
+					String content = rs.getString("content");
+					Timestamp reg_date = rs.getTimestamp("reg_date");
+					Timestamp mod_date = rs.getTimestamp("mod_date");
+					Timestamp del_date = rs.getTimestamp("del_date");
+
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+					String form_date = sdf.format(reg_date);
+
+					TeamDTO dto = new TeamDTO
+							(code, logo_path_code, logo_path, logo_name, logo, name, member_code, 
+									member_name, form_date, hometown_code,  hometown_name, outline,
+									content, reg_date, mod_date, del_date);
+					list.add(dto);
+				}
+				return list;
 			}
 		}
 	}

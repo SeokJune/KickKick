@@ -16,25 +16,37 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import commons.Settings;
 import dao.CreateTeamDAO;
-import dao.TeamDAO;
+import dao.MemberDAO;
 import dto.HometownDTO;
+import dto.MemberDTO;
 import dto.TeamDTO;
 
 
 @WebServlet("*.team")
 public class TeamController extends HttpServlet {
+	
+	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String cmd = request.getRequestURI();
+		response.setContentType("text/html; charset=utf8"); // response의 한글패치
+		request.setCharacterEncoding("utf-8"); // request의 한글패치 
 		
 		Gson g = new Gson();
-
+		String member_id = (String) request.getSession().getAttribute("id");
+		
 		try {	
-			// 팀 생성 시 연고지 목록 가져오기
+			// 팀 생성 시 연고지 목록, 회원 정보 가져오기
 			if(cmd.equals("/hometown.team")) {
-				CreateTeamDAO dao = CreateTeamDAO.getInstance();
-				List<HometownDTO> hometown_arr = dao.select_hometown();
-
+				
+				
+				CreateTeamDAO cdao = CreateTeamDAO.getInstance();
+				List<HometownDTO> hometown_arr = cdao.select_hometown();
+				
+				MemberDAO mdao = MemberDAO.getInstance();
+				MemberDTO member_info = mdao.select_member(member_id);
+				
+				request.setAttribute("member_info", member_info);
 				request.setAttribute("hometown_arr", hometown_arr);
 				request.getRequestDispatcher("/team/team_write.jsp").forward(request, response);
 			}
@@ -57,9 +69,7 @@ public class TeamController extends HttpServlet {
 				}
 				
 				MultipartRequest multi = new MultipartRequest(request, real_path, 1024*1024*50, "utf8", new DefaultFileRenamePolicy());
-				  
-				
-				
+				  			
 				
 //				String oriname = multi.getOriginalFileName("file");
 				String sysname = multi.getFilesystemName("file");
@@ -94,6 +104,7 @@ public class TeamController extends HttpServlet {
 				
 				List<TeamDTO> teamlist_arr = dao.select_team(start, end);
 				String page_navi = dao.get_page_navi(current_page);
+				System.out.println(teamlist_arr);
 				request.setAttribute("teamlist_arr", teamlist_arr);
 				request.setAttribute("navi", page_navi);
 				request.getRequestDispatcher("/team/team_list.jsp").forward(request, response); 
@@ -105,26 +116,20 @@ public class TeamController extends HttpServlet {
 				TeamDTO team_info = dao.team_info(team_code);
 				request.setAttribute("team_info", team_info);
 				request.getRequestDispatcher("/team/team_view.jsp").forward(request, response); 
-			} else if (cmd.equals("/my_team_list.team")) {
-				
-				int member_code = Integer.parseInt(request.getParameter("code"));
-				TeamDAO dao = TeamDAO.getInstance();
-				List<TeamDTO> list = dao.my_team_list(member_code);
-				request.setAttribute("team_list", list);
-				request.getRequestDispatcher("/member/my_team_list.jsp").forward(request, response);
-				
-			}else if(cmd.equals("/search.team")) {
-				
-				String search_team = request.getParameter("search_team");
-				TeamDAO dao = TeamDAO.getInstance();
-				List<TeamDTO> team_list = dao.search_team_list(search_team);
-				
-
-				
-			} else {
-				response.sendRedirect("/error.jsp");
 			}
-		}catch(Exception e) {
+			// 팀 리스트에서 팀명 검색 
+			else if(cmd.equals("/search_team_name.team")) {
+				String team_name = request.getParameter("team_name");
+				CreateTeamDAO dao = CreateTeamDAO.getInstance();
+				
+				
+				List<TeamDTO> team_info = dao.search_team_name(team_name);
+				String resp = g.toJson(team_info);
+				System.out.println(resp);
+				response.getWriter().append(resp);	
+			}
+		}
+		catch(Exception e) {
 			e.printStackTrace();
 			response.sendRedirect("/error.jsp");
 		}
