@@ -90,7 +90,7 @@ div {
 					class="list-group-item list-group-item-action list-group-item-primary p-0">
 					<div class="col-12">
 						<div class="col title_box">
-							<b>[말머리]</b> <span class="title">필독 제목 공지사항 샘플</span> <span
+							 <span class="title"><b>[말머리]</b>필독 제목 공지사항 샘플</span> <span
 								class="badge rounded-pill text-bg-light align-self-center p-1">💬댓글수</span>
 						</div>
 						<div class="col" style="font-size: small;">
@@ -104,7 +104,7 @@ div {
 						class="list-group-item list-group-item-action p-0">
 						<div class="col-12">
 							<div class="col title_box">
-								<b>[${post.board_headline_name}]</b> <span class="title">${post.title}</span> <span
+								<span class="title"><b>[${post.board_headline_name}] </b> ${post.title}</span> <span
 									class="badge rounded-pill text-bg-light align-self-center p-1">💬${post.reply_count}</span>
 							</div>
 							<div class="col" style="font-size: small;">
