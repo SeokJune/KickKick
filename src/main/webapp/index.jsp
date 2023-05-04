@@ -28,7 +28,7 @@
 </head>
 
 <body>
-	<c:import url="/commons/gbn.jsp">
+	<c:import url="/commons/gnb.jsp">
 	</c:import>
 </body>
 
