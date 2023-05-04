@@ -211,28 +211,6 @@ public class MemberDAO {
 		}
 	}
 
-	// 내 팀 리스트 가져오기 -> teamcontrollerfh
-	public List<TeamDTO> my_team_list(String member_code) throws Exception {
-		String sql = "select * from team where code = " + "(select team_code from team_memeber where member_code= ?);";
-		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)) {
-			pstat.setString(1, member_code);
-			try (ResultSet rs = pstat.executeQuery()) {
-
-				List<TeamDTO> list = new ArrayList<TeamDTO>();
-				while (rs.next()) {
-					int team_code = rs.getInt("code");
-					String logo_path = rs.getString("logo_path");
-					String logo = rs.getString("logo");
-					String team_name = rs.getString("name");
-					String hometown_name = rs.getString("hometown_name");
-					TeamDTO dto = new TeamDTO(team_code, logo_path, logo, team_name, hometown_name);
-					list.add(dto);
-				}
-				return list;
-			}
-		}
-	}
-
 	// 중복 체크
 	public boolean checksum(String colName, String value) throws Exception {
 		String sql = "SELECT * FROM MEMBER WHERE " + colName + " = ?";
