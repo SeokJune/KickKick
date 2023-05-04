@@ -198,14 +198,14 @@ label {
 								<div class="row input">
 									<div class="col-12">
 										<input type="password" class="password form-control rounded" aria-label="password" aria-describedby="password" id="member_pw" name="member_pw" maxlength="20" />
-										<div class="valid-feedback">Good</div>
-										<div class="invalid-feedback">Wrong</div>
+										<div class="valid-feedback" style="font-size:x-small;">Good</div>
+										<div class="invalid-feedback" style="font-size:x-small;">Wrong</div>
 									</div>
 								</div>
 								<!-- 아이디 중복 & 정규식 확인 메세지 -->
 								<div class="row d-flex justify-content-center">
 									<div class="col-10 mt-xxl-0 w-auto h-auto">
-										<div class="alert px-4 py-3 mb-0 d-none" role="alert" data-mdb-color="warning" id="password-alert">
+										<div class="alert px-4 py-3 mb-0 alert-warning d-none" role="alert" data-mdb-color="warning" id="password-alert">
 											<ul class="list-unstyled mb-0">
 												<li class="requirements leng">
 													<i class="bi bi-check text-success me-2"></i>
@@ -235,8 +235,8 @@ label {
 								<div class="row input">
 									<div class="col-12">
 										<input type="password" class="password_check form-control rounded mt-1" aria-label="password" aria-describedby="password_check" id="password_check" maxlength="20" />
-										<div class="valid-feedback">Good</div>
-										<div class="invalid-feedback">Wrong</div>
+										<div class="valid-feedback" style="font-size:x-small;">Good</div>
+										<div class="invalid-feedback" style="font-size:x-small;">Wrong</div>
 									</div>
 								</div>
 							</div>
@@ -415,7 +415,6 @@ label {
 			</form>
 		</div>
 	</div>
-
 	<script type="text/javascript">
 		$("#member_phone").on("keydown", function () {
 			$("#phone_auth").attr("disabled", true);
@@ -462,7 +461,7 @@ label {
 					$("#" + id + "_checking").html("중복된 " + id.split("_")[1].toUpperCase()).css("color", "red");
 					valid.set(id, false);
 				} else {
-					$("#" + id + "_checking").html("사용가능한 " + id.split("_")[1].toUpperCase()).css("color", "dodgerblue");
+					$("#" + id + "_checking").html("사용가능한 " + id.split("_")[1].toUpperCase()).css("color", "#198754");
 					valid.set(id, true);
 					if (id == "member_phone") {
 						$("#phone_auth").attr("disabled", false);
@@ -488,6 +487,7 @@ label {
 			
 			requirements.forEach((element) => element.classList.add("wrong"));
 			
+			
 			password.addEventListener("focus", () => {
 				passwordAlert.classList.remove("d-none");
 				if (!password.classList.contains("is-valid")) {
@@ -497,6 +497,7 @@ label {
 			
 			password.addEventListener("input", () => {
 				let value = password.value;
+				
 				if (value.length < 8) {
 				    lengBoolean = false;
 				} else if (value.length > 7) {
@@ -580,6 +581,9 @@ label {
 			
 			password.addEventListener("blur", () => {
 				passwordAlert.classList.add("d-none");
+				if (password.value == "") {
+					password.classList.remove("is-invalid");
+				}
 			});
 		});
 		// PW 일치 검사
@@ -607,6 +611,12 @@ label {
 					});
 					passwordAlert.classList.remove("alert-warning");
 					passwordAlert.classList.add("alert-success");
+				}
+			});
+			
+			password.addEventListener("blur", () => {
+				if (password.value == "") {
+					password.classList.remove("is-invalid");
 				}
 			});
         });
