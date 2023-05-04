@@ -126,6 +126,30 @@ public class MercenaryController extends HttpServlet {
 				String resp = g.toJson(result);
 				response.getWriter().append(resp);
 				
+			}else if(cmd.equals("/apply_same_team_ajax.mercenary")) {
+				// 로그인 ID의 팀 코드와 신청하려는 팀 코드가 같은지 검사
+				// 세션에서 로그인 아이디 받아올 수 있도록 수정
+				String login_id = "agji12";
+				
+				int team_code = Integer.parseInt(request.getParameter("team_code"));
+
+				boolean result = MercenaryDAO.getInstance().is_apply_same_team(login_id, team_code);
+
+				String resp = g.toJson(result);
+				response.getWriter().append(resp);
+				
+			}else if(cmd.equals("/apply_btn_ajax.mercenary")) {
+				// 로그인 ID의 팀 코드와 신청하려는 팀 코드가 같은지 검사
+				// 세션에서 로그인 아이디 받아올 수 있도록 수정
+				String login_id = "agji12";
+				
+				int competition_result_code = Integer.parseInt(request.getParameter("competition_result_code"));
+				
+				boolean result = MercenaryDAO.getInstance().is_exist_mercenary_apply(login_id, competition_result_code);
+				
+				String resp = g.toJson(result);
+				response.getWriter().append(resp);
+				
 			}else if(cmd.equals("/apply_list_ajax.mercenary")) {
 				// apply_list 해당하는 데이터 추출
 				int team_code = Integer.parseInt(request.getParameter("code"));

@@ -125,6 +125,9 @@ td {
 					</tr>
 				</thead>
 				<tbody id="table_body">
+				<c:forEach var="i" items="">
+					
+				</c:forEach>
 					<tr>
 						<td colspan=4 align=center><a href="/index.jsp"><input
 								type="button" value="뒤로가기" class="btn btn-primary"></a></td>
@@ -185,6 +188,7 @@ td {
 					{
 						url : "/apply_list_ajax.mercenary",
 						type : "post",
+						dataType: "json",
 						data : {
 							"code" : $("#code").val(),
 							"competition_registration_code" : $(
@@ -194,6 +198,7 @@ td {
 				resp = JSON.parse(resp);
 				document.getElementById("apply_list").value = resp;
 				console.log(resp.length);
+				/*
 				for(var i=0;i < resp.length;i++){
 				var row;
 					row += '<tr id='+ i +'>';
@@ -212,6 +217,7 @@ td {
 					
 					$("#table_body").prepend(row);
 				}
+				*/
 			});
 		});
 
