@@ -20,13 +20,13 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
-html {
-	background-color: #76b852;
+* {
+	font-family: 'NanumSquareNeoBold';
 }
 
+html,
 body {
 	background-color: #76b852;
-	font-family: 'NanumSquareNeo';
 }
 
 .container {
