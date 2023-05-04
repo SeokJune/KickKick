@@ -267,7 +267,7 @@
                                         </div>
 
                                         <div class="col-xs-12 col-md-12 h-75">
-                                            <img class="h-100" src="/image/competition_img/team_logo.png">
+                                            <img id="pic" class="h-100" src="/image/competition_img/team_logo.png">
                                         </div>
 
                                     </div>
@@ -890,6 +890,14 @@
                         $("#t1").val("팀명 : " + resp[0]);
                         $("#t2").val("팀장 이름 : " + resp[1]);
                         $("#t3").val("팀장 번호 : " + resp[2]);
+                        $("#pic").attr("src",resp[3]); //사진
+                        
+                      
+                    
+                 
+                    
+                    
+                    
                     })
                 });
                 
