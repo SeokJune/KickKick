@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<nav class="navbar bg-body-tertiary fixed-top" id="gnb">
+<nav class="navbar bg-body-tertiary fixed-top">
 	<div class="container-fluid">
 		<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -72,7 +72,7 @@
 										<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 활동 관리</a>
 									</li>
 									<li class="login">
-										<a href="/member/my_profile.jsp" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 정보 보기</a>
+										<a href="/my_profile.member" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 정보 보기</a>
 									</li>
 									<li class="login">
 										<a href="/my_team_list.team" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀 보기</a>
