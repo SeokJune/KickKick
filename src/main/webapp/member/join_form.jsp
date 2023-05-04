@@ -73,173 +73,10 @@ label {
 	font-size: small;
 }
 
-#password-alert
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-*
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-&
-nbsp
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-;{
-font-size
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-x-small
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;
+#password-alert * {
+	font-size: x-small;
 }
+
 .wrong .bi-check {
 	display: none;
 }
@@ -331,7 +168,7 @@ x-small
 										<input type="text" class="form-control" id="member_id" name="member_id" onkeyup="checksum(this, 'A');" pattern="^[a-z](?=.*[0-9])[0-9a-z]{4,19}$" title="영소문자와 숫자 포함 5자 이상 20자 이하" maxlength="20" required>
 									</div>
 								</div>
-								<!-- 아이디 중복확인 메세지 -->
+								<!-- 아이디 중복 & 정규식 확인 메세지 -->
 								<div class="row checking">
 									<div class="col-12">
 										<h9 id="member_id_checking" style="font-size:x-small;"></h9>
@@ -361,14 +198,14 @@ x-small
 								<div class="row input">
 									<div class="col-12">
 										<input type="password" class="password form-control rounded" aria-label="password" aria-describedby="password" id="member_pw" name="member_pw" maxlength="20" />
-										<div class="valid-feedback">Good</div>
-										<div class="invalid-feedback">Wrong</div>
+										<div class="valid-feedback" style="font-size:x-small;">Good</div>
+										<div class="invalid-feedback" style="font-size:x-small;">Wrong</div>
 									</div>
 								</div>
-								<!-- 아이디 중복 확인 메세지 -->
+								<!-- 아이디 중복 & 정규식 확인 메세지 -->
 								<div class="row d-flex justify-content-center">
 									<div class="col-10 mt-xxl-0 w-auto h-auto">
-										<div class="alert px-4 py-3 mb-0 d-none" role="alert" data-mdb-color="warning" id="password-alert">
+										<div class="alert px-4 py-3 mb-0 alert-warning d-none" role="alert" data-mdb-color="warning" id="password-alert">
 											<ul class="list-unstyled mb-0">
 												<li class="requirements leng">
 													<i class="bi bi-check text-success me-2"></i>
@@ -398,8 +235,8 @@ x-small
 								<div class="row input">
 									<div class="col-12">
 										<input type="password" class="password_check form-control rounded mt-1" aria-label="password" aria-describedby="password_check" id="password_check" maxlength="20" />
-										<div class="valid-feedback">Good</div>
-										<div class="invalid-feedback">Wrong</div>
+										<div class="valid-feedback" style="font-size:x-small;">Good</div>
+										<div class="invalid-feedback" style="font-size:x-small;">Wrong</div>
 									</div>
 								</div>
 							</div>
@@ -420,6 +257,12 @@ x-small
 										<input type="text" class="form-control" id="member_name" name="member_name" onkeyup="checksum(this, 'R');" pattern="^[가-힣]{2,5}$" title="2자 이상 5자 이내의 한글" minlength="2" maxlength="5" required>
 									</div>
 								</div>
+								<!-- 이름 정규식 확인 메세지 -->
+								<div class="row checking">
+									<div class="col-12">
+										<h9 id="member_name_checking" style="font-size:x-small;"></h9>
+									</div>
+								</div>
 							</div>
 						</div>
 						<!-- 닉네임 -->
@@ -438,7 +281,7 @@ x-small
 										<input type="text" class="form-control" id="member_nickname" name="member_nickname" onkeyup="checksum(this, 'A');" pattern="^[가-힣a-zA-Z0-9]{2,10}$" title="2자 이상 10자 이내로 한글, 영대소문자, 숫자 중 1개 이상 포함 " minlength="2" maxlength="10">
 									</div>
 								</div>
-								<!-- 닉네임 중복 확인 메세지 -->
+								<!-- 닉네임 중복 & 정규식 확인 메세지 -->
 								<div class="row checking">
 									<div class="col-12">
 										<h9 id="member_nickname_checking" style="font-size:x-small;"></h9>
@@ -465,7 +308,7 @@ x-small
 										<button type="button" class="btn btn-outline-success text-wrap" id="phone_auth" disabled="disabled">인증번호 받기</button>
 									</div>
 								</div>
-								<!-- 전화번호 중복 메세지 -->
+								<!-- 전화번호 중복 & 정규식 메세지 -->
 								<div class="row checking">
 									<div class="col-12">
 										<h9 id="member_phone_checking" style="font-size:x-small;"></h9>
@@ -534,7 +377,7 @@ x-small
 										<input type="email" class="form-control" id="member_email" name="member_email" onkeyup="checksum(this, 'A');" pattern="^([a-z]{1}[a-z0-9_+.-]+@)([a-zA-Z0-9]+\.)([a-z0-9]{2,4})$" title="abc@abc.com 형식으로 입력">
 									</div>
 								</div>
-								<!-- 이메일 중복 확인 메세지 -->
+								<!-- 이메일 중복 & 정규식 확인 메세지 -->
 								<div class="row checking">
 									<div class="col-12">
 										<h9 id="member_email_checking" style="font-size:x-small;"></h9>
@@ -572,7 +415,6 @@ x-small
 			</form>
 		</div>
 	</div>
-
 	<script type="text/javascript">
 		$("#member_phone").on("keydown", function () {
 			$("#phone_auth").attr("disabled", true);
@@ -591,7 +433,10 @@ x-small
 			}
 			// 정규식 체크
 			if (!regex.exec(value)) {
-				$("#" + id + "_checking").html($(evt).attr("title")).css("color", "red");
+				if (value == "")
+					$("#" + id + "_checking").html("");
+				else
+					$("#" + id + "_checking").html($(evt).attr("title")).css("color", "red");
 				valid.set(id, false);
 				return false;
 			} else {
@@ -616,7 +461,7 @@ x-small
 					$("#" + id + "_checking").html("중복된 " + id.split("_")[1].toUpperCase()).css("color", "red");
 					valid.set(id, false);
 				} else {
-					$("#" + id + "_checking").html("사용가능한 " + id.split("_")[1].toUpperCase()).css("color", "red");
+					$("#" + id + "_checking").html("사용가능한 " + id.split("_")[1].toUpperCase()).css("color", "#198754");
 					valid.set(id, true);
 					if (id == "member_phone") {
 						$("#phone_auth").attr("disabled", false);
@@ -642,6 +487,7 @@ x-small
 			
 			requirements.forEach((element) => element.classList.add("wrong"));
 			
+			
 			password.addEventListener("focus", () => {
 				passwordAlert.classList.remove("d-none");
 				if (!password.classList.contains("is-valid")) {
@@ -651,6 +497,7 @@ x-small
 			
 			password.addEventListener("input", () => {
 				let value = password.value;
+				
 				if (value.length < 8) {
 				    lengBoolean = false;
 				} else if (value.length > 7) {
@@ -734,6 +581,9 @@ x-small
 			
 			password.addEventListener("blur", () => {
 				passwordAlert.classList.add("d-none");
+				if (password.value == "") {
+					password.classList.remove("is-invalid");
+				}
 			});
 		});
 		// PW 일치 검사
@@ -761,6 +611,12 @@ x-small
 					});
 					passwordAlert.classList.remove("alert-warning");
 					passwordAlert.classList.add("alert-success");
+				}
+			});
+			
+			password.addEventListener("blur", () => {
+				if (password.value == "") {
+					password.classList.remove("is-invalid");
 				}
 			});
         });

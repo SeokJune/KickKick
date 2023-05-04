@@ -178,7 +178,7 @@ public class BoardDAO {
 				+ "r.*, b.reg_date, b.mod_date from board_"+board_table_name+" b left join (select board_"
 				+board_table_name+"_code,count(code) reply_count from reply_"+board_table_name
 				+" group by board_"+board_table_name+"_code) r on b.code=r.board_"+board_table_name
-				+"_code join (select code, id, nickname from member) m on b.member_code=m.code join "
+				+"_code left join (select code, id, nickname from member) m on b.member_code=m.code join "
 				+ "(select code, name from board_headline) h on b.board_headline_code=h.code) t where "
 				+search_option+" like ?) where rnk between ? and ?";
 		

@@ -135,7 +135,10 @@ public class BoardController extends HttpServlet {
 				}
 			}
 			else if(cmd.equals("/to_update_form.board")) {
-
+				//cpage 유지시키기
+				int cpage = Integer.parseInt(request.getParameter("cpage"));
+				request.setAttribute("cpage", cpage);
+				
 				//게시판 헤드라인 목록 넣어주고
 				List<BoardHeadlineDTO> board_headline = bdao.select_board_headline_list();
 				//게시판 종류도 따로 분리해서 넣어주기

@@ -52,8 +52,9 @@
 					<div class="col-xs-8 col-md-8">
 						<select size="1" class="h-100 w-100" style="border-radius: 10px;">
 							<option selected>지역선택</option>
-							<option>노원구</option>
-							<option>도봉구</option>
+					<c:forEach var="h" items="${hometown}">
+							<option>${h.name}</option>
+					</c:forEach>
 						</select>
 					</div>
 					<div class="col-xs-2 col-md-2"></div>
@@ -91,12 +92,12 @@
 				<div class="col-xs-1 col-md-1"></div>
 
 				<div class="col-xs-10 col-md-10"
-					style="border: 2px solid rgb(56, 56, 87); border-radius: 5px;">
+					style="border: 3px solid rgb(56, 56, 87); border-radius: 5px;">
 					<div class="row">
 						<div class="col-xs-12 col-md-1">
 							<div class="row">
 								<div class="col-12"
-									style="border: 3px solid red; font-size: 10px;">${l.kind_name}</div>
+									style="color:red; font-weight:bold ; font-size: 14px;">${l.kind_name}</div>
 							</div>
 						</div>
 						<div class="col-xs-12 col-md-3" style="border: 1px solid black;">
@@ -118,16 +119,17 @@
 									</div>
 								</div>
 
-								<div class="col-12 h-25"
-									style="border: 1px solid black; padding: 2%;">${l.status_name}</div>
+								<div class="place col-12 h-25" style="border: 1px solid black; padding: 2%;"></div>					
 								<div class="col-12 h-25">
 									<div class="row h-100">
 										<div class="lat col-3"
 											style="border: 1px solid black; padding: 2%; display: none;">${l.latirude}</div>
 										<div class="lng col-3"
 											style="border: 1px solid black; padding: 2%; display: none;">${l.longitude}</div>
-										<div class="place col-6"
-											style="border: 1px solid black; padding: 2%;"></div>
+									
+											
+											
+											<div class="col-6" style="border: 1px solid black; padding: 2%;">${l.status_name}</div>
 										<div class="col-6"
 											style="border: 1px solid black; padding: 2%;">${l.competition_date}</div>
 									</div>
@@ -142,7 +144,6 @@
 
 				<div class="col-xs-1 col-md-1"></div>
 
-				<br>
 			</c:forEach>
 
 
@@ -166,11 +167,10 @@
 	<script>
 		var lat = document.getElementsByClassName("lat");
 		var lng = document.getElementsByClassName("lng");
-		var name;
+		
 		var geocoder = new kakao.maps.services.Geocoder();
 		
-		for (var i = 0; i < lat.length; i++) {
-
+		for (let i = 0; i < lat.length; i++) { 	
 			var coord = new kakao.maps.LatLng(lat[i].innerHTML,
 					lng[i].innerHTML);
 			var place = document.getElementsByClassName("place");
@@ -180,13 +180,12 @@
 
 				if (status === kakao.maps.services.Status.OK) {
 
-					name = result[0].address.address_name;
-
+					place[i].innerHTML = result[0].address.address_name;
 					console.log(name);
 				}
 				
 			}
-			place[i].innerHTML = name;
+			
 			geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
 			
 		}
