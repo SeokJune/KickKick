@@ -28,16 +28,8 @@ public class TeamDTO {
 		this.code = code;
 		this.name = name;
 	}
-
-	public TeamDTO(int code, String logo_path, String logo, String name, String member_name, String member_phone) {
-		super();
-		this.code = code;
-		this.logo_path = logo_path;
-		this.logo = logo;
-		this.name = name;
-		this.member_name = member_name;
-		this.member_phone = member_phone;
-	}
+	
+	
 
 	public TeamDTO(int code, int logo_path_code, String logo, String name, int member_code, int hometown_code, String outline, String content, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
 		this.code = code;
@@ -53,7 +45,15 @@ public class TeamDTO {
 		this.del_date = del_date;
 	}
 
-
+	public TeamDTO(int code, String logo_path, String logo, String name, String member_name, String hometown_name) {
+		super();
+		this.code = code;
+		this.logo_path = logo_path;
+		this.logo = logo;
+		this.name = name;
+		this.member_name = member_name;
+		this.hometown_name = hometown_name;
+	}
 
 	public TeamDTO(int code, int logo_path_code, String logo_path, String logo_name, String logo, String name, int member_code, String member_name, String member_phone, int hometown_code, String hometown_name, String outline, String content, Timestamp reg_date, Timestamp mod_date, Timestamp del_date) {
 		super();
