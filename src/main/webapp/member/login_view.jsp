@@ -324,8 +324,8 @@ body {
 					<div class="col-12 col-md-6 mb-1">
 						<div class="input-group d-flex">
 							<input type="password" class="form-control rounded mt-1" placeholder="새 비밀번호" aria-label="password" aria-describedby="password" id="password" class="password" />
-							<div class="valid-feedback">Good</div>
-							<div class="invalid-feedback">Wrong</div>
+							<div class="valid-feedback" style="font-size:x-small;">Good</div>
+							<div class="invalid-feedback" style="font-size:x-small;">Wrong</div>
 						</div>
 					</div>
 				</div>
@@ -333,14 +333,14 @@ body {
 					<div class="col-12 col-md-6 mt-1">
 						<div class="input-group d-flex">
 							<input type="password" class="form-control rounded mt-1" placeholder="새 비밀번호" aria-label="password" aria-describedby="password_check" id="password_check" class="password_check" />
-							<div class="valid-feedback">Good</div>
-							<div class="invalid-feedback">Wrong</div>
+							<div class="valid-feedback" style="font-size:x-small;">Good</div>
+							<div class="invalid-feedback" style="font-size:x-small;">Wrong</div>
 						</div>
 					</div>
 					<br>
 					<div class="row d-flex justify-content-center">
 						<div class="col-6 mt-4 mt-xxl-0 w-auto h-auto">
-							<div class="alert px-4 py-3 mb-0 d-none" role="alert" data-mdb-color="warning" id="password-alert">
+							<div class="alert px-4 py-3 mb-0 alert-warning d-none" role="alert" data-mdb-color="warning" id="password-alert">
 								<ul class="list-unstyled mb-0">
 									<li class="requirements leng">
 										<i class="bi bi-check text-success me-2"></i>
@@ -596,6 +596,9 @@ body {
 
 			password.addEventListener("blur", () => {
 				passwordAlert.classList.add("d-none");
+				if (password.value == "") {
+					password.classList.remove("is-invalid");
+				}
 			});
 		});
 		//pw 일치 검사
@@ -623,6 +626,12 @@ body {
 					});
 					passwordAlert.classList.remove("alert-warning");
 					passwordAlert.classList.add("alert-success");
+				}
+			});
+			
+			password.addEventListener("blur", () => {
+				if (password.value == "") {
+					password.classList.remove("is-invalid");
 				}
 			});
 		});
