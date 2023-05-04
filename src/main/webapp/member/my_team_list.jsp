@@ -41,7 +41,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- gbn css -->
-<link href="/css/gbn.css" rel="stylesheet" type="text/css">
+<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
 <title>Insert title here</title>
 <style>
 * {
@@ -92,7 +92,7 @@
 </head>
 <body>
 	<header>
-		<c:import url="/commons/gbn.jsp">
+		<c:import url="/commons/gnb.jsp">
 		</c:import>
 	</header>
 	<main style="height: auto !important; margin-top: 100px;">
