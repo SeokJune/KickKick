@@ -12,6 +12,8 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import dto.AbilityDTO;
+import dto.CompetitionApplicationDTO;
+import dto.CompetitionApplyFormDTO;
 import dto.CompetitionKindDTO;
 import dto.CompetitionListDTO;
 import dto.CompetitionRegistrationDTO;
@@ -174,7 +176,7 @@ public class CompetitionDAO {
 				int code = 	rs.getInt("code");
 				int logo_path_code = rs.getInt("logo_path_code");
 				String logo_path = rs.getString("logo_path"); //로고 이미 이름 전까지 
-				
+
 				String logo_name = rs.getString("logo_name"); 
 				String logo = rs.getString("logo"); //사진 이름
 				String name = rs.getString("name");
@@ -302,6 +304,69 @@ public class CompetitionDAO {
 				list.add(dto);
 			}
 			return list;
+		}
+	}
+
+	//신청할때 출력해주는 것
+	public CompetitionApplyFormDTO show_applyform(String date) throws Exception{
+		String sql = "select tv.name team_name , tv.member_name, tv.member_phone,\r\n"
+				+ "cr.competition_date , cr.latirude, cr.longitude , cr.content, cr.code registration_code,\r\n"
+				+ "ck.name competition_name , t.member_code,t.code apply_teamcode , ck.headcount , ab.name ability_name\r\n"
+				+ "from competition_registration cr join  team_view tv on (cr.team_code=tv.code)\r\n"
+				+ "join competition_kind ck on (cr.competition_kind_code = ck.code)\r\n"
+				+ "join ability ab on (cr.ability_code = ab.code)\r\n"
+				+ "join team t on (cr.team_code= t.code)\r\n"
+				+ "where cr.competition_date >= sysdate and cr.competition_date = ?" ;
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);)
+				
+		{
+			pstat.setString(1, date);
+
+			try(ResultSet rs = pstat.executeQuery();){
+
+
+				rs.next();
+
+				String team_name = 	rs.getString("team_name");
+				String member_name = rs.getString("member_name");
+				String member_phone = rs.getString("member_phone");
+				Timestamp competition_date = rs.getTimestamp("competition_date");
+				double latirude = rs.getDouble("latirude");
+				double longitude = rs.getDouble("longitude");
+				String content = rs.getString("content");
+				int registration_code = rs.getInt("registration_code");
+				String competition_name = rs.getString("competition_name");
+				int headcount = rs.getInt("headcount");
+				String ability_name = rs.getString("ability_name");
+				int member_code = rs.getInt("member_code");
+				int apply_teamcode = rs.getInt("apply_teamcode");
+
+				CompetitionApplyFormDTO dto = new CompetitionApplyFormDTO(team_name,member_name,member_phone,competition_date,latirude,longitude,content,registration_code,competition_name,headcount,ability_name,member_code,apply_teamcode);
+				return dto;
+			}
+		}
+	}
+
+	public void apply(CompetitionApplicationDTO dto) throws Exception{
+		String sql = "insert into competition_application values(competition_application_code.nextval,?,?,?,?,?,sysdate,?,?)";
+
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);)
+
+		{
+		
+			pstat.setInt(1, dto.getCompetition_registration_code());
+			pstat.setInt(2, dto.getTeam_code());
+			pstat.setInt(3,dto.getAbility_code());
+			pstat.setString(4, dto.getContent());
+			pstat.setInt(5, dto.getStatus_code());
+			pstat.setTimestamp(6, dto.getMod_date());
+			pstat.setTimestamp(7, dto.getDel_date());
+			
+			pstat.executeUpdate();
+			con.commit();
+
 		}
 	}
 

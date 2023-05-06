@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 
 import dao.CompetitionDAO;
 import dto.AbilityDTO;
+import dto.CompetitionApplicationDTO;
+import dto.CompetitionApplyFormDTO;
 import dto.CompetitionKindDTO;
 import dto.CompetitionListDTO;
 import dto.CompetitionRegistrationDTO;
@@ -164,6 +166,58 @@ public class CompetitionController extends HttpServlet {
 				Gson g = new Gson(); //gson사용할려고 인스턴스 생성
 				String glist = g.toJson(list); //자동직렬화 -> 그래야 데이터가 넘어감?  -> 데이터가 넘어가는 방식이 자동직렬화
 				response.getWriter().append(glist); // append를 사용하려면  get writer를 사용할수밖에 없다 이떄 append는 string형밖에 못다룸
+
+			}else if(cmd.equals("/applyform.competition")) {
+				String date = request.getParameter("date");
+
+				//				SimpleDateFormat sdf = SimpleDateFormat("YYYY-MM-DD HH-MI-SS");
+				//				Date d = sdf.parse(date);
+				//				new Timestamp(d.getYear(); string형 날짜를 timestamp로 변환하는 과정
+
+
+				System.out.println(date);
+				CompetitionApplyFormDTO form = CompetitionDAO.getinstance().show_applyform(date);
+				request.setAttribute("form", form);
+
+				//로그인할때의 code의 세션값을 가져옴
+				int code = (int) request.getSession().getAttribute("code");
+				request.setAttribute("code", code);
+
+				//신청하는 팀의 실력 선택
+				List<AbilityDTO> ability = CompetitionDAO.getinstance().ability();
+				request.setAttribute("ability", ability);
+
+				//상태정보가져오기
+				List<StatusDTO> status = CompetitionDAO.getinstance().status();
+				request.setAttribute("status", status);
+
+				request.getRequestDispatcher("/matching/competition_application.jsp").forward(request, response);
+			}else if(cmd.equals("/apply.competition")){
+				String status1 = request.getParameter("status");
+				int status = Integer.parseInt(status1);
+				
+				String rcode1 = request.getParameter("rcode");
+				int rcode = Integer.parseInt(rcode1);
+				
+				String tcode1 = request.getParameter("tcode");
+				int tcode = Integer.parseInt(tcode1);
+				
+				String ability1 = request.getParameter("ability");
+				int ability = Integer.parseInt(ability1);
+				
+				String content = request.getParameter("content");
+				
+				System.out.println(status);
+				System.out.println(rcode);
+				System.out.println(tcode);
+				System.out.println(ability);
+				System.out.println(content);
+
+				CompetitionApplicationDTO dto = new CompetitionApplicationDTO(0,rcode,tcode,ability,content,status,null,null,null);
+				CompetitionDAO.getinstance().apply(dto);
+				
+				response.sendRedirect("/matching/competition_list.jsp");
+
 			}
 
 
@@ -171,6 +225,15 @@ public class CompetitionController extends HttpServlet {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+
+
+
+
+	private SimpleDateFormat SimpleDateFormat(String string) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
