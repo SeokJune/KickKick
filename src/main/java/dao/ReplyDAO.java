@@ -34,7 +34,7 @@ public class ReplyDAO {
 		String sql = "select r.code, r.board_"+board_table_name
 				+"_code \"board_code\", m.nickname \"member_nickname\", r.content, "
 				+ "r.like_count, r.reg_date, r.mod_date from reply_"+board_table_name
-				+" r join member m on r.member_code=m.code where r.board_"+board_table_name
+				+" r left join member m on r.member_code=m.code where r.board_"+board_table_name
 				+"_code=? order by r.reg_date";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql)){
@@ -57,12 +57,24 @@ public class ReplyDAO {
 		
 	}
 	
+	public int count_reply(String board_table_name, int board_code) throws Exception{
+		String sql = "select count(*) reply_count from reply_"+board_table_name+" where board_"+board_table_name+"_code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, board_code);
+			try(ResultSet rs = pstat.executeQuery()){
+				rs.next();
+				return rs.getInt("reply_count");
+			}
+		}
+	}
+	
 	//댓글 하나의 정보 담아보내기
 	public ReplyDTO select_reply(String board_table_name, int code) throws Exception{
 		String sql = "select r.code, r.board_"+board_table_name+"_code board_code, "
 				+ "m.nickname member_nickname, r.content, r.like_count, r.reg_date, "
 				+ "r.mod_date from reply_"+board_table_name
-				+" r join member m on r.member_code=m.code where r.code=?";
+				+" r left join member m on r.member_code=m.code where r.code=?";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setInt(1, code);

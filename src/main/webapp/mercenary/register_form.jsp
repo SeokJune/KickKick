@@ -49,9 +49,7 @@ div {
 <body>
 	<form id="form" action="/to_mercenary_register.mercenary" method="post">
 		<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
-		<h2 style="text-align:center;">용병 등록</h2>
-			<br>
-			<br>
+		<h2 class="mb-5" style="text-align:center;">용병 등록</h2>
 			<div class="row team1">
 				<div class="mb-3">
 					<button type="button" id="team_select"
@@ -60,8 +58,12 @@ div {
 				</div>
 			</div>
 			<div class="row team2">
-				<div class="col-xs-12 col-md-4 col-xl-4 text-center" style="border:1px solid black;">
-					<div id="team_logo">img</div>
+				<div class="col-xs-12 col-md-4 col-xl-4 text-center">
+				<input type="hidden" id="logo_path" name="logo_path" required readonly>
+				<input type="hidden" id="logo" name="logo" readonly>
+					<div id="team_logo">
+						
+					</div>
 				</div>
 				<div class="col-xs-12 col-md-8 col-xl-8">
 					<input type="hidden" id="code" name="code" required readonly>
@@ -159,11 +161,8 @@ div {
 		function set_team_info(c, lp, l, n, mn, mp) {
 			document.getElementById("code").value = c;
 			
-			if(l == ''){
-				document.getElementById("team_logo").innerHTML = lp;
-			}else{
-				document.getElementById("team_logo").innerHTML = lp+"\\"+l;
-			}
+			document.getElementById("logo_path").value = lp;
+			document.getElementById("logo").value = l;
 			
 			document.getElementById("name").value = n;
 			document.getElementById("member_name").value = mn;
@@ -191,7 +190,6 @@ div {
 					competition_registration_code:document.getElementById("competition_registration_code").value
 				}
 			}).done(function(resp) {
-				console.log(resp);
 				if(resp){
 					alert("이미 용병을 등록하셨습니다!");
 					location.reload();
@@ -200,6 +198,25 @@ div {
 				}
 			})
 		}
+		
+		// 받은 logo_path에 따라 이미지 추가
+		survey('#logo_path', function() {
+			var team_logo = document.getElementById("team_logo");
+			
+			var logo_path = document.getElementById("logo_path").value;
+			var logo = document.getElementById("logo").value;
+			
+			console.log(logo_path);
+			console.log(logo);
+
+			var img = document.createElement("img");
+			img.src = "../image/"+logo_path+"/"+logo;
+			img.width = "100";
+			img.height = "100";
+			
+			console.log(img.src);
+			team_logo.appendChild(img);
+		});
 		
 		// 받은 위도, 경도에 따라 위치 구하는 함수
 		survey('#latirude,#longitude', function() {

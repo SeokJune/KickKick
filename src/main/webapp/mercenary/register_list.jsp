@@ -62,9 +62,7 @@ td {
 
 <body>
 	<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
-	<h2 style="text-align:center;">용병 등록 리스트</h2>
-	<br>
-	<br>
+	<h2 class="mb-5" style="text-align:center;">용병 등록 리스트</h2>
 		<div class="table-responsive">
 			<table class="table">
 				<thead>
@@ -101,7 +99,6 @@ td {
 						var coord = new kakao.maps.LatLng(${i.latirude},${i.longitude});
 						var callback = function(result, status) {
 							if (status === kakao.maps.services.Status.OK) {
-								console.log(result[0].address.address_name);
 								document.getElementById("match_place_"+${i.code}).innerHTML = result[0].address.address_name;
 							}
 						};
@@ -121,8 +118,8 @@ td {
 								</c:otherwise>
 							</c:choose>
 							<td>${i.headcount}명</td>
-							<td><a href="/to_apply_form.mercenary?code=${i.code}"> <input
-									type="button" value="신청" class="btn btn-primary btn-sm"></a>
+							<td>
+								<button type="button" class="btn btn-primary btn-sm" onclick="valid_same_team(${i.code},${i.team_code});valid_apply(${i.code},${i.competition_result_code})">신청</button>
 							</td>
 						</tr>
 					</c:forEach>
@@ -134,5 +131,54 @@ td {
 			</table>
 		</div>
 	</div>
+	<script>
+	var flag = true;
+	
+	// 로그인 ID의 팀 코드와 신청하려는 팀 코드가 같은지 검사
+	function valid_same_team(code,team_code){
+			$.ajax({
+				url:"/apply_same_team_ajax.mercenary",
+				async: false,
+				type:"post",
+				dataType: "json",
+				data:{
+					team_code:team_code
+				}
+			}).done(function(resp) {
+				if(resp){
+					console.log(resp);
+					alert("같은 팀에는 용병 신청을 하실 수 없습니다!");
+					location.reload();
+					flag = false;
+					return false;
+				}
+			})
+	}
+	
+	// 로그인 ID의 팀 코드와 신청하려는 팀 코드가 같은지 검사
+	function valid_apply(code,competition_result_code){
+		if(!flag){
+			return false;
+		}
+		$.ajax({
+			url:"/apply_btn_ajax.mercenary",
+			async: false,
+			type:"post",
+			dataType: "json",
+			data:{
+				competition_result_code:competition_result_code
+			}
+		}).done(function(resp) {
+			console.log(resp);
+			if(resp){
+				alert("이미 선택하신 매치에 용병 신청을 하셨습니다!");
+				location.reload();
+				return false;
+			}else{
+				window.location.href = "/to_apply_form.mercenary?code="+code;
+			}
+		})
+	}
+	</script>
 </body>
 </html>

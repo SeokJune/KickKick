@@ -6,33 +6,22 @@
 <head>
 <meta charset="UTF-8">
 <title>KickKick - 마이페이지</title>
-<!-- 부트스트랩 CSS CDN -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-	crossorigin="anonymous">
-<!-- 부트스트랩 JQ , JS CDN -->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-	crossorigin="anonymous"></script>
-<!-- 폰트 -->	
+	<!-- 부트스트랩 CSS CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<!-- 부트스트랩 JQ , JS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+	<!-- 폰트 -->	
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
-<!-- awesome font -icon--->
+	<!-- awesome font -icon--->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<!-- Bootstrap - icon -->
-<link
-   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
-   rel="stylesheet">
+	<!-- Bootstrap - icon -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+	<!-- sweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<!-- JQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
-html {
-	background-color: #76b852;
-}
-
 body {
-	background-color: #76b852;
 	font-family: 'NanumSquareNeo';
 }
 
@@ -55,31 +44,45 @@ body {
 .wrapper {
     position: relative;
 }
-.btn{
+.btn-primary,#btn_verify_pw{
 border:none;
+}
+.btn-outline-secondary{
+background-color:white;
 }
 /*-------------------------------------------------------------------------------------------*/
-#btn_verify_pw{
-height:80px;
-width:80px;
-background-color: none;
-border:none;
-border-radius: 3rem;
-transition-duration: 0.5s;
-}
 #verify_pw{
 background-color: white;
 border:none;
 }
+#btn_verify_pw{
+height:80px;
+width:80px;
+background-color: white;
+border: 2px solid gainsboro;
+border-radius: 3rem;
+box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2), 0 9px 30px 0
+		rgba(0, 0, 0, 0.19);
+transition-duration: 0.3s;
+}
 #btn_verify_pw:hover{
-    background-color:black;
-    color:aliceblue;
+    background-color:gainsboro;
+    color:white;
 }
 /*-------------------------------------------------------------------------------------------------*/
 #profile_view{
 display:none;
 }
-
+.wrong .bi-check {
+   display: none;
+}
+.good .bi-x {
+   display: none;
+}
+.valid-feedback, .invalid-feedback {
+   margin-left: 0.5rem;
+   font-size: small;
+}
 label {
 	font-size: small;
 }
@@ -89,19 +92,16 @@ label {
 #password-alert *{
 font-size: x-small;
 }
-.valid-feedback,.invalid-feedback{
-font-size: small;
-}
 .btn comp {
 	width:80%;
 }
 </style>
 <!-- gbn css -->
-<link href="/css/gbn.css" rel="stylesheet" type="text/css">
+<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="navi">
-		<c:import url="/commons/gbn.jsp">
+		<c:import url="/commons/gnb.jsp">
 		</c:import>
 	</div>
 
@@ -139,7 +139,7 @@ font-size: small;
 						</div>
 					</div>
 					<div class="col-4 col-lg-3 col-xl-2">
-						<button id="btn_verify_pw">확인</button>
+						<button class="btn" id="btn_verify_pw">확인</button>
 					</div>
 				</div>
 			</div>
@@ -179,7 +179,7 @@ font-size: small;
 									<!-- '비밀번호 변경'버튼 -->
 									<div class="row">
 										<div class="col-12 col-md-8">
-											<button class="btn btn-primary comp w-100" type="button"
+											<button class="btn btn-outline-secondary comp w-100" type="button"
 												id="edit_pw_btn">비밀번호 변경</button>
 										</div>
 									</div>
@@ -196,15 +196,15 @@ font-size: small;
 												aria-describedby="password" class="password" />
 										</div>
 										<div class="col-3 mt-2">
-											<button class="btn btn-light btn-sm" id="confirm_pw"
+											<button class="btn btn-outline-secondary btn-sm" id="confirm_pw"
 												type="button">확인</button>
 										</div>
 									</div>
 									<div class="row input">
 										<div class="col-9 col-md-8">
-											<input type="password" class="form-control rounded mt-1"
+											<input type="password" class="password form-control rounded mt-1"
 												id="member_new_pw" name="member_new_pw"
-												placeholder=" 새 비밀번호"
+												placeholder=" 새 비밀번호" aria-label="password"
 												pattern="^(?=.*[A-Z])(?=.*[~.!@#$%^&*()_+={}>;<:,.?/\-\[\]\\\|])(?=.*[0-9]).{8,20}$"
 												aria-describedby="password" class="password" maxlength="20">
 											<div class="valid-feedback">Good</div>
@@ -212,24 +212,32 @@ font-size: small;
 											<div class="alert px-1 py-1 mb-0 d-none" role="alert"
 												data-mdb-color="warning" id="password-alert">
 												<ul class="list-unstyled mb-0">
-													<li class="requirements leng"><i
-														class="bi bi-check text-success me-2"></i> <i
-														class="bi bi-x text-danger me-3"></i> 8자 이상</li>
-													<li class="requirements big-letter"><i
-														class="bi bi-check text-success me-2"></i> <i
-														class="bi bi-x text-danger me-3"></i> 하나 이상의 알파벳 대문자를 포함</li>
-													<li class="requirements num"><i
-														class="bi bi-check text-success me-2"></i> <i
-														class="bi bi-x text-danger me-3"></i> 숫자 하나 이상 포함</li>
-													<li class="requirements special-char"><i
-														class="bi bi-check text-success me-2"></i> <i
-														class="bi bi-x text-danger me-3"></i> 특수문자가 하나 이상 포함</li>
+													<li class="requirements leng">
+														<i class="bi bi-check text-success me-2"></i> 
+														<i class="bi bi-x text-danger me-3"></i> 
+														8자 이상
+													</li>
+													<li class="requirements big-letter">
+														<i class="bi bi-check text-success me-2"></i> 
+														<i class="bi bi-x text-danger me-3"></i> 
+														하나 이상의 알파벳 대문자를 포함
+													</li>
+													<li class="requirements num">
+														<i class="bi bi-check text-success me-2"></i> 
+														<i class="bi bi-x text-danger me-3"></i> 
+														숫자 하나 이상 포함
+													</li>
+													<li class="requirements special-char">
+														<i class="bi bi-check text-success me-2"></i> 
+														<i class="bi bi-x text-danger me-3"></i> 
+														특수문자가 하나 이상 포함
+													</li>
 												</ul>
 											</div>
 										</div>
 										<!-- 비밀번호 보기&숨기기 버튼 -->
 										<div class="col-3 mt-2">
-											<button class="btn btn-light btn-sm" id="view_pw"
+											<button class="btn btn-outline-secondary btn-sm" id="view_pw"
 												type="button">보기</button>
 										</div>
 
@@ -266,7 +274,7 @@ font-size: small;
 										</div>
 									</div>
 									<div class="row input">
-										<div class="col-10 col-md-8">
+										<div class="col-9 col-md-8">
 											<input type="text" class="form-control" id="member_phone"
 												name="member_phone" pattern="^0+\d{9,10}$"
 												value="${profile.phone}" minlength="10" maxlength="11"
@@ -274,8 +282,8 @@ font-size: small;
 										</div>
 
 										<!-- 전화번호 변경 버튼 : 수정하기 버튼 클릭시 보여짐 -->
-										<div class="col-2 col-md-4 mt-1">
-											<button type="button" class="btn btn-primary btn-sm"
+										<div class="col-3 col-md-4 mt-1">
+											<button type="button" class="btn btn-outline-secondary btn-sm"
 												id="edit_phone_btn" style="-bs-btn-font-size: .75rem;">변경</button>
 										</div>
 									</div>
@@ -405,8 +413,8 @@ font-size: small;
 								<div class="col-12 col-md-8">
 									<!-- 수정 버튼 -->
 									<div class="row">
-										<button class="btn btn-secondary comp" id="btn_edit"
-											type="button" style="background-color: #76b852;">수정하기</button>
+										<button class="btn btn-primary comp" id="btn_edit"
+											type="button">수정하기</button>
 									</div>
 									<div class="row mt-2">
 										<button class="btn btn-secondary comp" id="btn_delete"
@@ -418,8 +426,7 @@ font-size: small;
 								<div class="col-12 col-md-8">
 									<div class="row">
 										<!-- 수정완료 버튼 -->
-										<button class="btn btn-secondary" id="btn_edit_complete"
-											style="background-color: #76b852;">수정완료</button>
+										<button class="btn btn-primary" id="btn_edit_complete">수정완료</button>
 									</div>
 								</div>
 							</div>
@@ -575,117 +582,144 @@ font-size: small;
 				})
 			})
 		
-		//pw 유효성 검사
-				let lengBoolean, bigLetterBoolean, numBoolean, specialCharBoolean;
-				addEventListener("DOMContentLoaded", (event) => {
-					const password = document.getElementById("member_new_pw");
-					const passwordAlert = document.getElementById("password-alert");
-					const requirements = document.querySelectorAll(".requirements");
-					let leng = document.querySelector(".leng");
-					let bigLetter = document.querySelector(".big-letter");
-					let num = document.querySelector(".num");
-					let specialChar = document.querySelector(".special-char");
-					const specialChars = "!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?`~";
-					const numbers = "0123456789";
-
-					requirements.forEach((element) => element.classList.add("wrong"));
-
-					password.addEventListener("focus", () => {
-						passwordAlert.classList.remove("d-none");
-						if (!password.classList.contains("is-valid")) {
-							password.classList.add("is-invalid");
-						}
-					});
-
-					password.addEventListener("input", () => {
-						let value = password.value;
-						if (value.length < 8) {
-							lengBoolean = false;
-						} else if (value.length > 7) {
-							lengBoolean = true;
-						}
-
-						if (value.toLowerCase() == value) {
-							bigLetterBoolean = false;
-						} else {
-							bigLetterBoolean = true;
-						}
-
-						numBoolean = false;
-						for (let i = 0; i < value.length; i++) {
-							for (let j = 0; j < numbers.length; j++) {
-								if (value[i] == numbers[j]) {
-									numBoolean = true;
-								}
-							}
-						}
-
-						specialCharBoolean = false;
-						for (let i = 0; i < value.length; i++) {
-							for (let j = 0; j < specialChars.length; j++) {
-								if (value[i] == specialChars[j]) {
-									specialCharBoolean = true;
-								}
-							}
-						}
-
-						if (lengBoolean == true && bigLetterBoolean == true && numBoolean == true && specialCharBoolean == true) {
-							password.classList.remove("is-invalid");
-							password.classList.add("is-valid");
-
-							requirements.forEach((element) => {
-								element.classList.remove("wrong");
-								element.classList.add("good");
-							});
-							passwordAlert.classList.remove("alert-warning");
-							passwordAlert.classList.add("alert-success");
-						} else {
-							password.classList.remove("is-valid");
-							password.classList.add("is-invalid");
-
-							passwordAlert.classList.add("alert-warning");
-							passwordAlert.classList.remove("alert-success");
-
-							if (lengBoolean == false) {
-								leng.classList.add("wrong");
-								leng.classList.remove("good");
-							} else {
-								leng.classList.add("good");
-								leng.classList.remove("wrong");
-							}
-
-							if (bigLetterBoolean == false) {
-								bigLetter.classList.add("wrong");
-								bigLetter.classList.remove("good");
-							} else {
-								bigLetter.classList.add("good");
-								bigLetter.classList.remove("wrong");
-							}
-
-							if (numBoolean == false) {
-								num.classList.add("wrong");
-								num.classList.remove("good");
-							} else {
-								num.classList.add("good");
-								num.classList.remove("wrong");
-							}
-
-							if (specialCharBoolean == false) {
-								specialChar.classList.add("wrong");
-								specialChar.classList.remove("good");
-							} else {
-								specialChar.classList.add("good");
-								specialChar.classList.remove("wrong");
-							}
-						}
-					});
-
-					password.addEventListener("blur", () => {
-						passwordAlert.classList.add("d-none");
-					});
-				});
+		// PW 유효성 검사
+		addEventListener("DOMContentLoaded", (event) => {
+			const password = document.getElementById("member_new_pw");
+			const passwordAlert = document.getElementById("password-alert");
+			const requirements = document.querySelectorAll(".requirements");
+			let lengBoolean, bigLetterBoolean, numBoolean, specialCharBoolean;
+			let leng = document.querySelector(".leng");
+			let bigLetter = document.querySelector(".big-letter");
+			let num = document.querySelector(".num");
+			let specialChar = document.querySelector(".special-char");
+			const specialChars = "!@#$%^&*()-_=+[{]}\\|;:'\",<.>/?`~";
+			const numbers = "0123456789";
+			
+			requirements.forEach((element) => element.classList.add("wrong"));
+			
+			password.addEventListener("focus", () => {
+				passwordAlert.classList.remove("d-none");
+				if (!password.classList.contains("is-valid")) {
+					password.classList.add("is-invalid");
+				}
+			});
+			
+			password.addEventListener("input", () => {
+				let value = password.value;
+				if (value.length < 8) {
+				    lengBoolean = false;
+				} else if (value.length > 7) {
+				    lengBoolean = true;
+				}
 				
+				if (value.toLowerCase() == value) {
+				    bigLetterBoolean = false;
+				} else {
+				    bigLetterBoolean = true;
+				}
 				
+				numBoolean = false;
+				for (let i = 0; i < value.length; i++) {
+				    for (let j = 0; j < numbers.length; j++) {
+				        if (value[i] == numbers[j]) {
+				            numBoolean = true;
+				        }
+				    }
+				}
+				
+				specialCharBoolean = false;
+				for (let i = 0; i < value.length; i++) {
+				    for (let j = 0; j < specialChars.length; j++) {
+				        if (value[i] == specialChars[j]) {
+				            specialCharBoolean = true;
+				        }
+				    }
+				}
+				
+				if (lengBoolean == true && bigLetterBoolean == true && numBoolean == true && specialCharBoolean == true) {
+					password.classList.remove("is-invalid");
+					password.classList.add("is-valid");
+					
+					requirements.forEach((element) => {
+						element.classList.remove("wrong");
+						element.classList.add("good");
+					});
+					passwordAlert.classList.remove("alert-warning");
+					passwordAlert.classList.add("alert-success");
+				} else {
+					password.classList.remove("is-valid");
+					password.classList.add("is-invalid");
+					
+					passwordAlert.classList.add("alert-warning");
+					passwordAlert.classList.remove("alert-success");
+					
+					if (lengBoolean == false) {
+						leng.classList.add("wrong");
+						leng.classList.remove("good");
+					} else {
+						leng.classList.add("good");
+						leng.classList.remove("wrong");
+					}
+					
+					if (bigLetterBoolean == false) {
+						bigLetter.classList.add("wrong");
+						bigLetter.classList.remove("good");
+					} else {
+						bigLetter.classList.add("good");
+						bigLetter.classList.remove("wrong");
+					}
+					
+					if (numBoolean == false) {
+						num.classList.add("wrong");
+						num.classList.remove("good");
+					} else {
+						num.classList.add("good");
+						num.classList.remove("wrong");
+					}
+					
+					if (specialCharBoolean == false) {
+						specialChar.classList.add("wrong");
+						specialChar.classList.remove("good");
+					} else {
+						specialChar.classList.add("good");
+						specialChar.classList.remove("wrong");
+					}
+				}
+			});
+			
+			password.addEventListener("blur", () => {
+				passwordAlert.classList.add("d-none");
+			});
+		});
+				
+		// PW 일치 검사
+		addEventListener("DOMContentLoaded", (event) => {
+			const password = document.getElementById("password_check");
+			const passwordAlert = document.getElementById("password-alert");
+			const requirements = document.querySelectorAll(".requirements");
+			
+			password.addEventListener("focus", () => {
+				if (!password.classList.contains("is-valid")) {
+					password.classList.add("is-invalid");
+				}
+			});
+			requirements.forEach((element) => element.classList.add("wrong"));
+			
+			password.addEventListener("input", () => {
+				let value = password.value;
+				if (value == document.getElementById("member_new_pw").value) {
+					password.classList.remove("is-invalid");
+					password.classList.add("is-valid");
+					
+					requirements.forEach((element) => {
+						element.classList.remove("wrong");
+						element.classList.add("good");
+					});
+					passwordAlert.classList.remove("alert-warning");
+					passwordAlert.classList.add("alert-success");
+				}
+			});
+        });		
 				
 				
 				

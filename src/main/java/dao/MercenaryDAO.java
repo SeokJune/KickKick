@@ -132,11 +132,10 @@ public class MercenaryDAO {
 	
 	// register_list : 용병 등록한 리스트 출력
 	public List<RegisterInfoDTO> select_register_list() throws Exception {
-		String sql = "select mre.code, mre.competition_result_code, mre.team_code, mre.ability_code, mre.headcount, "
-				+ "mre.status_code, t.name, cv.latirude, cv.longitude, cv.competition_date "
-				+ "from competition_view cv "
-				+ "left join mercenary_registration mre on cv.competition_registration_code = mre.competition_result_code "
-				+ "left join team t on mre.team_code = t.code";
+		String sql = "select mrv.code, mrv.competition_result_code, mrv.team_code, mrv.ability_code, mrv.headcount, "
+				+ "mrv.status_code, mrv.team_name, cv.latirude, cv.longitude, cv.competition_date "
+				+ "from mercenary_registration_view mrv "
+				+ "join competition_view cv on mrv.competition_result_code = cv.competition_registration_code";
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
@@ -149,7 +148,7 @@ public class MercenaryDAO {
 				int ability_code = rs.getInt("ability_code");
 				int headcount = rs.getInt("headcount");
 				int status_code = rs.getInt("status_code");
-				String name = rs.getString("name");
+				String name = rs.getString("team_name");
 				double latirude = rs.getDouble("latirude");
 				double longitude = rs.getDouble("longitude");
 				Timestamp competition_date = rs.getTimestamp("competition_date");
@@ -157,6 +156,37 @@ public class MercenaryDAO {
 				list.add(new RegisterInfoDTO(code,competition_result_code,team_code,ability_code,headcount,status_code,name,latirude,longitude,competition_date));
 			}
 			return list;
+		}
+	}
+	
+	// register_list : 로그인 ID의 팀 코드와 신청하려는 팀 코드가 같은지 검사
+	public boolean is_apply_same_team(String login_id, int team_code) throws Exception {
+		String sql = "select * from member m "
+				+ "join team_member tm on m.code = tm.member_code "
+				+ "where m.id = ? and tm.team_code = ?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setString(1,login_id);
+			pstat.setInt(2,team_code);
+			try(ResultSet rs = pstat.executeQuery();){
+				return rs.next(); // 같은 팀이면 true 반환
+			}
+		}
+	}
+	
+	// register_list : 매치에 이미 용병 등록되어있는지 검사
+	public boolean is_exist_mercenary_apply(String login_id, int competition_result_code) throws Exception {
+		String sql = "select ma.*,mr.competition_result_code from mercenary_application ma join mercenary_registration mr on ma.mercenary_registration_code = mr.code "
+				+ "where member_code = (select code from member where id=?) and competition_result_code=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setString(1,login_id);
+			pstat.setInt(2,competition_result_code);
+			try(ResultSet rs = pstat.executeQuery();){
+				return rs.next(); // 이미 신청 했으면 true 반환
+			}
 		}
 	}
 	
@@ -214,11 +244,12 @@ public class MercenaryDAO {
 	
 	// apply_list : 용병 신청 리스트 출력
 	public List<ApplyDTO> select_apply_list(ApplyDTO d) throws Exception {
-		String sql = "select cv.competition_registration_code, cv.competition_date, (select name from member where code = ma.member_code) mer_name, ma.content "
-				+ "from competition_view cv "
-				+ "left join mercenary_registration_view mrv on cv.competition_registration_code = mrv.competition_result_code "
-				+ "left join mercenary_application ma on mrv.code = ma.mercenary_registration_code "
-				+ "where mrv.team_code=? and cv.competition_registration_code=?";
+		String sql = "select ma.code, ma.mercenary_registration_code,(select name from member where code = ma.member_code) mer_name, "
+				+ "ma.content, mrv.team_code, cv.competition_registration_code, cv.competition_date "
+				+ "from mercenary_application ma "
+				+ "join mercenary_registration_view mrv on ma.mercenary_registration_code = mrv.code "
+				+ "join competition_view cv on mrv.competition_result_code = cv.competition_registration_code "
+				+ "where mrv.team_code = ? and cv.competition_registration_code = ?";
 		try(
 				Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);){
@@ -227,12 +258,15 @@ public class MercenaryDAO {
 			try(ResultSet rs = pstat.executeQuery();){
 				List<ApplyDTO> list = new ArrayList<>();
 				while(rs.next()) {
+					int mercenary_registration_code = rs.getInt("mercenary_registration_code");
+					int team_code = rs.getInt("team_code");
 					String member_name = rs.getString("mer_name");
 					Timestamp competition_date = rs.getTimestamp("competition_date");
 					String content = rs.getString("content");
 					int competition_registration_code = rs.getInt("competition_registration_code");
+					int mercenary_application_code = rs.getInt("code");
 					
-					list.add(new ApplyDTO(member_name,competition_date,content,competition_registration_code));
+					list.add(new ApplyDTO(mercenary_registration_code,team_code,member_name,competition_date,content,competition_registration_code,mercenary_application_code));
 				}
 				return list;
 			}

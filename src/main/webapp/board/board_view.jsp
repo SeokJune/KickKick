@@ -35,6 +35,11 @@ div {
 	font-family: 'NanumSquareNeoBold';
 	/* border:1px dotted pink; */
 }
+.container-fluid{
+	padding:0;
+	padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+}
 .r_nickname{
 	font-family: 'NanumSquareNeoExtraBold';
 }
@@ -64,11 +69,11 @@ div {
 }
 </style>
 <!-- gbn css -->
-<link href="/css/gbn.css" rel="stylesheet" type="text/css">
+<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-	<c:import url="/commons/gbn.jsp">
+	<c:import url="/commons/gnb.jsp">
 	</c:import>
 
 	<div class="container">
@@ -82,11 +87,11 @@ div {
 			</div>
 		</div>
 		<div class="row body" style="border-bottom: 1px solid #d2d4d6;">
-			<div class="col-12" style="height: 500px;">${board.content}</div>
+			<div class="col-12 pb-4" style="height: auto;min-height:500px;">${board.content}</div>
 			<div class="col text-center">
-				<button type="button" class="btn btn-primary">좋아요</button>
 				<c:if test="${sessionScope.nickname ne board.member_nickname}">
-				<button type="button" class="btn btn-danger">신고</button>
+				<button type="button" class="btn btn-primary">좋아요</button>
+				<button type="button" class="btn btn-danger" id="to_report">신고</button>
 				</c:if>
 			</div>
 			<c:if test="${sessionScope.nickname eq board.member_nickname}">
@@ -100,6 +105,68 @@ div {
 			<div>
 				<b id="reply_count">댓글 ${reply_list.size()}개</b>
 			</div>
+			<div id="sample_box" style="display:none;">
+			<div class="row reply_box">
+						<input type="hidden" class="r_code" value="">
+						<div class="col-12 d-flex justify-content-between p-0 info">
+							<div class="col left d-block d-md-flex p-1">
+								<div class="nickname p-0 align-self-center"
+									style="margin-left: 5px">
+									<b class="r_nickname"></b>
+								</div>
+								<div class="counts p-0 align-self-center"
+									style="margin-left: 5px">
+									<small><span class="r_date"></span>
+									<span class="badge rounded-pill text-bg-success r_like">👍🏻${reply.like_count}</span></small>
+								</div>
+							</div>
+							<div class="right d-flex p-0">
+								<div class="p-0" style="margin-right: 5px">
+									<small>답글달기</small>
+								</div>
+								<div class="p-0" style="margin-right: 5px">
+									<small>👍추천</small>
+								</div>
+								<div class="btn-group p-0">
+									<button class="btn btn-secondary btn-sm dropdown-toggle"
+										type="button" data-bs-toggle="dropdown" aria-expanded="false">
+									</button>
+									<ul class="dropdown-menu p-0">
+										<li><small><a class="dropdown-item reply_update">수정</a></small></li>
+										<li><small><a class="dropdown-item reply_delete">삭제</a></small></li>
+										<li><small><a class="dropdown-item reply_report">신고하기</a></small></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 r_content"></div>
+					</div>
+					<div class="row r_update_box" style="display: none;">
+						<input type="hidden" class="r_code" value="${reply.code}">
+						<div class="col-12 d-flex justify-content-between p-0 info">
+							<div class="col left d-block d-md-flex p-1">
+								<div class="nickname p-0 align-self-center"
+									style="margin-left: 5px">
+									<b class="r_nickname">${reply.member_nickname}</b>
+								</div>
+							</div>
+							<div class="right d-flex p-0">
+								<div class="p-0" style="margin-right: 5px">
+									<button type="button" class="btn btn-secondary r_update_cancel">취소</button>
+								</div>
+							</div>
+						</div>
+						<div class="row m-0" style="padding:10px 0px;">
+							<div class="col-10" style="padding:0; padding-right:10px">
+								<input type="text" class="form-control r_update_content" placeholder="댓글수정"
+									value="${reply.content}">
+							</div>
+							<div class="col-2 d-grid gap-2 p-0">
+								<button type="button" class="btn btn-primary r_update_btn">수정</button>
+							</div>
+						</div>
+					</div>
+					</div>
 			<div class="col-12" id="replies_box">
 				<c:forEach var="reply" items="${reply_list}">
 					<div class="row reply_box">
@@ -268,6 +335,8 @@ div {
 						alert("내용을 입력해주세요.");
 					}
 					else {
+						let reply_box = $("#sample_box").children().clone();
+
 						$.ajax({
 							url: "/insert.reply",
 							type: "post",
@@ -278,15 +347,32 @@ div {
 							content: $("#input_reply").val(),
 							},
 				}).done(function (resp) {
+					console.log(resp);
 					$("#input_reply").val("");
 					$("#reply_count").text("댓글 " + resp.length + "개");
-					let reply_box = $(".reply_box").last().clone();
 					$("#replies_box").html("");
 					for (let i = 0; i < resp.length; i++) {
-						$("#replies_box").append(reply_box.clone());
+						$("#replies_box").append(reply_box);
+						$(".r_code").last().val(resp[i].code);
 						$(".r_nickname").last().text(resp[i].member_nickname);
 						$(".r_date").last().text(calculateTime(resp[i].reg_date));
+						if(resp[i].mod_date){
+							$(".r_date").last().append("(수정됨) · ")
+						};
 						$(".r_like").last().text("👍🏻" + resp[i].like_count);
+						if(${sessionScope.code eq null}){
+							$(".right").last().remove()
+						}
+						else{
+							let nickname = resp[i].member_nickname;
+							if(${sessionScope.nickname eq nickname}){
+								$(".reply_report").last().remove();
+							}
+							else{
+								$(".reply_update").last().remove();
+								$(".reply_delete").last().remove();
+							}
+						};
 						$(".r_content").last().text(resp[i].content);
 					}
 				});	
@@ -294,6 +380,10 @@ div {
 		});
 
 				$("#replies_box").on("click", ".reply_delete", function () {
+					let reply_box = $(this).closest(".reply_box");
+					let update_box = $(this).closest(".reply_box").next(".r_update_box");
+					console.log(reply_box);
+					console.log(update_box);
 					if (confirm("해당 댓글을 삭제하시겠습니까?")) {
 						let r_code = $(this).closest(".reply_box").find(".r_code").val();
 						$.ajax({
@@ -307,16 +397,9 @@ div {
 							cpage: ${ cpage }
 							},
 				}).done(function (resp) {
-					$("#reply_count").text("댓글 " + resp.length + "개");
-					let reply_box = $(".reply_box").last().clone();
-					$("#replies_box").html("");
-					for (let i = 0; i < resp.length; i++) {
-						$("#replies_box").append(reply_box.clone());
-						$(".r_nickname").last().text(resp[i].member_nickname);
-						$(".r_date").last().text(calculateTime(resp[i].reg_date));
-						$(".r_like").last().text("👍🏻" + resp[i].like_count);
-						$(".r_content").last().text(resp[i].content);
-					}
+					$("#reply_count").text("댓글 " + resp + "개");
+					update_box.remove();
+					reply_box.remove();
 				});
 					}
 				});
@@ -354,6 +437,14 @@ div {
 						update_box.css("display", "none");
 						}
 					});
+				});
+				
+				$("#to_report").on("click",function(){
+					window.open("/to_report_form.report?b_c=${b_c}&board_code=${board.code}","","width=500px,height=750px");
+				});
+				$("#replies_box").on("click", ".reply_report", function () {
+					let r_code = $(this).closest(".reply_box").find(".r_code").val();
+					window.open("/to_report_form.report?b_c=${b_c}&reply_code="+r_code,"","width=500px,height=750px");
 				});
 			</script>
 </body>

@@ -58,24 +58,12 @@
 <body>
 	<form action="/to_mercenary_apply.mercenary" method="post">
 		<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
-			<h2 style="text-align: center;">용병 신청</h2>
-			<br>
-			<br>
+			<h2 class="mb-5" style="text-align: center;">용병 신청</h2>
 			<div class="row header">
 				<div class="col-xs-12 col-md-4 col-xl-4 text-center">
-					<input type="hidden" id="logo_path" name="logo_path"
-						value="${apply_info.logo_path}" readonly> <input
-						type="hidden" id="logo" name="logo" value="${apply_info.logo}"
-						readonly>
-					<c:choose>
-						<c:when test="${apply_info.logo.equals('')}">
-							<div>${apply_info.logo_path}</div>
-						</c:when>
-						<c:otherwise>
-							<div>${apply_info.logo_path}\${apply_info.logo}</div>
-						</c:otherwise>
-					</c:choose>
-				</div>
+					<img src="../image/${apply_info.logo_path}/${apply_info.logo}" class="mb-3"
+						style="width: 100px; height: 100px; border-radius: 40px;">
+					</div>
 				<div class="col-xs-12 col-md-8 col-xl-8">
 					<input type="hidden" id="team_code" name="team_code"
 						value="${apply_info.team_code}" readonly>
@@ -209,9 +197,5 @@
 			</div>
 		</div>
 	</form>
-	<script>
-	
-		
-	</script>
 </body>
 </html>

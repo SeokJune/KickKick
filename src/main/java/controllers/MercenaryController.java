@@ -90,7 +90,7 @@ public class MercenaryController extends HttpServlet {
 				int ability_code = Integer.parseInt(request.getParameter("ability")); 
 				int people_count = Integer.parseInt(request.getParameter("people_count"));
 
-				RegisterInfoDTO r = new RegisterInfoDTO(0,competition_registration_code,team_code,ability_code,people_count,1202,null,0,0,null);
+				RegisterInfoDTO r = new RegisterInfoDTO(0,competition_registration_code,team_code,ability_code,people_count,2101,null,0,0,null);
 				
 				int result = MercenaryDAO.getInstance().insert_register_mercenary(r);
 				if(result>0) {
@@ -122,6 +122,30 @@ public class MercenaryController extends HttpServlet {
 				int competition_registration_code = Integer.parseInt(request.getParameter("competition_registration_code"));
 
 				boolean result = MercenaryDAO.getInstance().is_exist_mercenary_register(team_code, competition_registration_code);
+				
+				String resp = g.toJson(result);
+				response.getWriter().append(resp);
+				
+			}else if(cmd.equals("/apply_same_team_ajax.mercenary")) {
+				// 로그인 ID의 팀 코드와 신청하려는 팀 코드가 같은지 검사
+				// 세션에서 로그인 아이디 받아올 수 있도록 수정
+				String login_id = "agji12";
+				
+				int team_code = Integer.parseInt(request.getParameter("team_code"));
+
+				boolean result = MercenaryDAO.getInstance().is_apply_same_team(login_id, team_code);
+
+				String resp = g.toJson(result);
+				response.getWriter().append(resp);
+				
+			}else if(cmd.equals("/apply_btn_ajax.mercenary")) {
+				// 로그인 ID의 팀 코드와 신청하려는 팀 코드가 같은지 검사
+				// 세션에서 로그인 아이디 받아올 수 있도록 수정
+				String login_id = "agji12";
+				
+				int competition_result_code = Integer.parseInt(request.getParameter("competition_result_code"));
+				
+				boolean result = MercenaryDAO.getInstance().is_exist_mercenary_apply(login_id, competition_result_code);
 				
 				String resp = g.toJson(result);
 				response.getWriter().append(resp);

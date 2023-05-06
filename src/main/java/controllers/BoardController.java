@@ -42,16 +42,18 @@ public class BoardController extends HttpServlet {
 				request.setAttribute("cpage", current_page);
 
 				//검색 옵션(제목/내용/작성자) 설정
-				String search_option = request.getParameter("search_optin");
+				String search_option = request.getParameter("search_option");
 				if(search_option==null) {
 					search_option="title";
 				}
+				request.setAttribute("search_option", search_option);
 
 				//검색어 설정
 				String search_word = request.getParameter("search_word");
 				if(search_word==null) {
 					search_word="";
 				}
+				request.setAttribute("search_word", search_word);
 
 				//페이지네이션 설정
 				String page_navi = bdao.get_page_navi(b_c,board_table_name, current_page,search_option,search_word);
@@ -135,7 +137,10 @@ public class BoardController extends HttpServlet {
 				}
 			}
 			else if(cmd.equals("/to_update_form.board")) {
-
+				//cpage 유지시키기
+				int cpage = Integer.parseInt(request.getParameter("cpage"));
+				request.setAttribute("cpage", cpage);
+				
 				//게시판 헤드라인 목록 넣어주고
 				List<BoardHeadlineDTO> board_headline = bdao.select_board_headline_list();
 				//게시판 종류도 따로 분리해서 넣어주기

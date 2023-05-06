@@ -95,7 +95,13 @@ public class BoardDAO {
 	
 	//검색옵션에 따라 출력되어야 할 게시물 개수 세기
 	private int get_record_count(String board_table_name, String search_option, String search_word) throws Exception{
-		String sql = "select count(*) from board_"+board_table_name+" where "+search_option+" like ?";
+		String sql;
+		if(search_option.equals("member_nickname")) {
+			sql = "select count(*) from board_"+board_table_name+" b left join member m on b.member_code=m.code where nickname like ?";
+		}
+		else {
+			sql = "select count(*) from board_"+board_table_name+" where "+search_option+" like ?";
+		}
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setString(1, "%"+search_word+"%");
@@ -170,7 +176,6 @@ public class BoardDAO {
 	
 	//한 페이지에 띄워야 할 게시물 리스트 반환
 	public List<BoardDTO> select_board_list(String board_table_name, int start, int end, String search_option, String search_word) throws Exception{
-//		String sql = "select * from (select "+board_table_name+".*, row_number() over(order by reg_date desc) rn from "+board_table_name+" where "+search_option+" like ?) where rn between ? and ?";
 		//수정한 쿼리.. 좀 심각하게 길어요
 		String sql = "select * from (select t.*, row_number() over(order by reg_date desc) rnk from "
 				+ "(select b.code, b.board_kind_code, h.name board_headline_name, b.title, b.content, "
@@ -178,10 +183,10 @@ public class BoardDAO {
 				+ "r.*, b.reg_date, b.mod_date from board_"+board_table_name+" b left join (select board_"
 				+board_table_name+"_code,count(code) reply_count from reply_"+board_table_name
 				+" group by board_"+board_table_name+"_code) r on b.code=r.board_"+board_table_name
-				+"_code join (select code, id, nickname from member) m on b.member_code=m.code join "
-				+ "(select code, name from board_headline) h on b.board_headline_code=h.code) t where "
-				+search_option+" like ?) where rnk between ? and ?";
-		
+				+"_code left join (select code, id, nickname from member) m on b.member_code=m.code join "
+				+ "(select code, name from board_headline) h on b.board_headline_code=h.code) t) where "
+				+search_option+" like ? and rnk between ? and ?";
+
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);){
 			pstat.setString(1, "%"+search_word+"%");
