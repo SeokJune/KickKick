@@ -52,11 +52,11 @@ div {
 }
 </style>
 <!-- gbn css -->
-<link href="/css/gbn.css" rel="stylesheet" type="text/css">
+<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-	<c:import url="/commons/gbn.jsp">
+	<c:import url="/commons/gnb.jsp">
 	</c:import>
 
 	<div class="container">

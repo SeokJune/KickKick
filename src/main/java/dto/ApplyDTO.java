@@ -3,7 +3,7 @@ package dto;
 import java.sql.Timestamp;
 
 public class ApplyDTO {
-	private int code;
+	private int code; // mercenary_registration_code
 	private String logo_path;
 	private String logo;
 	private int team_code;
@@ -25,6 +25,8 @@ public class ApplyDTO {
 	private String content;
 	private int competition_registration_code;
 	
+	private int mercenary_application_code;
+	
 	public ApplyDTO() {}
 
 	public ApplyDTO(int team_code, int competition_registration_code) {
@@ -41,13 +43,16 @@ public class ApplyDTO {
 		this.content = content;
 	}
 	
-	public ApplyDTO(String member_name, Timestamp competition_date, String content,
-			int competition_registration_code) {
+	public ApplyDTO(int code, int team_code, String member_name, Timestamp competition_date, String content,
+			int competition_registration_code, int mercenary_application_code) {
 		super();
+		this.code = code;
+		this.team_code = team_code;
 		this.member_name = member_name;
 		this.competition_date = competition_date;
 		this.content = content;
 		this.competition_registration_code = competition_registration_code;
+		this.mercenary_application_code = mercenary_application_code;
 	}
 
 	public ApplyDTO(int code, String logo_path, String logo, int team_code, String team_name, String member_name,
@@ -231,6 +236,14 @@ public class ApplyDTO {
 
 	public void setCompetition_registration_code(int competition_registration_code) {
 		this.competition_registration_code = competition_registration_code;
+	}
+
+	public int getMercenary_application_code() {
+		return mercenary_application_code;
+	}
+
+	public void setMercenary_application_code(int mercenary_application_code) {
+		this.mercenary_application_code = mercenary_application_code;
 	}
 	
 }

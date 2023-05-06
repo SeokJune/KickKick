@@ -26,7 +26,7 @@
 	font-family: 'NanumSquareNeoBold';
 }
 
-html, body {
+html{
 	background-color: #76b852;
 }
 </style>

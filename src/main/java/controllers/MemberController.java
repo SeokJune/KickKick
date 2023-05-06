@@ -184,7 +184,12 @@ public class MemberController extends HttpServlet {
 				} else {
 					response.sendRedirect("/error.html");
 				}
-
+			}else if(cmd.equals("/my_match_list.member")) {		
+				int member_code = (int)request.getSession().getAttribute("code");
+				List<CompetitionDTO> match_list = dao.my_match_list(member_code);
+				request.setAttribute("match_list", match_list);
+				request.getRequestDispatcher("/member/my_match_list.jsp").forward(request, response);
+				
 			} else {
 				response.sendRedirect("/error.html");
 			}
