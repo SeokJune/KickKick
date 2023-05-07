@@ -130,9 +130,10 @@ public class TeamController extends HttpServlet {
 				
 			}else if(cmd.equals("/search.team")) {
 				
+				int member_code = (int) request.getSession().getAttribute("code");
 				String search_team = request.getParameter("search_team");
 				TeamDAO dao = TeamDAO.getInstance();
-				List<TeamDTO> team_list = dao.search_team_list(search_team);
+				List<TeamDTO> team_list = dao.search_team_list(member_code, search_team);
 				request.setAttribute("team_list", team_list);
 				request.getRequestDispatcher("/member/my_team_list.jsp").forward(request, response);
 

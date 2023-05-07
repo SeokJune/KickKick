@@ -67,9 +67,7 @@ td {
 </head>
 <body>
 	<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
-		<h2 style="text-align: center;">용병 신청 리스트</h2>
-		<br>
-		<br>
+		<h2 class="mb-5" style="text-align: center;">용병 신청 리스트</h2>
 		<div class="row team1">
 			<div class="mb-3">
 				<input type="hidden" id="code" name="code" readonly>
@@ -125,14 +123,12 @@ td {
 					</tr>
 				</thead>
 				<tbody id="table_body">
-				<c:forEach var="i" items="">
 					
-				</c:forEach>
-					<tr>
-						<td colspan=4 align=center><a href="/index.jsp"><input
-								type="button" value="뒤로가기" class="btn btn-primary"></a></td>
-					</tr>
 				</tbody>
+				<tr>
+					<td colspan=4 align=center><a href="/index.jsp"><input
+							type="button" value="뒤로가기" class="btn btn-primary"></a></td>
+				</tr>
 			</table>
 		</div>
 	</div>
@@ -195,18 +191,18 @@ td {
 									"#competition_registration_code").val()
 						}
 					}).done(function(resp) {
-				resp = JSON.parse(resp);
+				$("#table_body").empty();
 				document.getElementById("apply_list").value = resp;
 				console.log(resp.length);
-				/*
+				
 				for(var i=0;i < resp.length;i++){
 				var row;
 					row += '<tr id='+ i +'>';
 					row += '<th scope="row">' + '</th>';
-					row += '<td>' + resp[0].name + '</td>';
+					row += '<td>' + resp[i].member_name + '</td>';
 					row += '<td>';
 					row += '<div class="col-12 col-md-12 col-xl-12">' + '<textarea class="form-control" name="contents" id="contents" readonly>'
-					+ resp[0].content + '</textarea>' + '</div>';
+					+ resp[i].content + '</textarea>' + '</div>';
 					row += '</td>';		
 					row += '<td>';
 					row += '<button class="btn btn-primary">' + '수락' + '</button>'
@@ -215,9 +211,9 @@ td {
 					row += '</td>';		
 					row += '</tr>';
 					
-					$("#table_body").prepend(row);
+					$("#table_body").append(row);
 				}
-				*/
+				
 			});
 		});
 
@@ -231,6 +227,17 @@ td {
 				}
 			}, 100);
 		}
+		
+		// 수락 버튼 눌렀을 때
+		function apply_accept() {
+			
+		}
+		
+		// 거절 버튼 눌렀을 때
+		function apply_refuse() {
+			
+		}
+		
 	</script>
 </body>
 </html>

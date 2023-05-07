@@ -62,9 +62,7 @@ td {
 
 <body>
 	<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
-	<h2 style="text-align:center;">용병 등록 리스트</h2>
-	<br>
-	<br>
+	<h2 class="mb-5" style="text-align:center;">용병 등록 리스트</h2>
 		<div class="table-responsive">
 			<table class="table">
 				<thead>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html>
@@ -97,63 +98,76 @@
 	</header>
 	<main style="height: auto !important; margin-top: 100px;">
 		<div class="container">
-			<div class="header">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="section-title text-center">
-							<div class="title-text">
-								<h2>내 팀 리스트</h2>
-							</div>
-						</div>
+			<c:if test="${fn:length(team_list) == 0}">
+				<div class="row text-center d-flex align-self-center border" style="margin-top: 300px; color: grey; padding:100px; border-radius: 1rem;">
+					<div class="col-12">
+						<h1>Oops!...가입한 팀이 없어요</h1>
 					</div>
-					<!--col end-->
+					<div class="col-12">
+						<h3>팀 가입하러 가볼까요?</h3>
+					</div>
+					<div class="col-12">
+						<button class="btn btn-primary btn-lg">가입 하러가기</button>
+					</div>
 				</div>
-				<!-- row end-->
-				<form action="/search.team">
-				<div
-					class="row height d-flex justify-content-center align-items-center">
-					
-					<!-- /search.team -->
-						<div class="col-md-8">
-							<div class="search mb-4 mt-3">
-								<i class="fa fa-search"></i> <input type="text"
-									class="form-control" id="search_team" name="search_team"
-									placeholder="찾을 팀을 검색해보세요">
-								<button class="btn btn-primary" id="btn_search_team">찾기</button>
+			</c:if>
+			<c:if test="${fn:length(team_list) != 0}">
+				<div class="header">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="section-title text-center">
+								<div class="title-text">
+									<h2>내 팀 리스트</h2>
+								</div>
 							</div>
 						</div>
-					
-				</div>
-				</form>
-				<!-- header -->
-				<div class="body">
-					<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4 d-flex">
-						<c:forEach var="team" items="${team_list}">
-							<form action="/view.team">
-								<!-- 서블릿 : /view.team -->
-								<div class="col col-md-w-50">
-									<div class="card radius-15">
-										<div class="p-4 border radius-15">
-											<img src="${team.logo_path}${team.logo}" width="110"
-												height="110" class="rounded-circle shadow" alt="">
-											<h5 class="team-name mb-0 mt-5">${team.name}</h5>
-											<p class="team-hometown mb-3">${team.hometown_code}</p>
-											<p class="team-reader">팀장 : ${team.member_code}</p>
-											<input type="text" class="d-none" name="team_code"
-												value="${team.code}">
-											<div class="go-to-team d-grid">
-												<button class="btn btn-outline-primary radius-15">팀
-													페이지로</button>
+						<!--col end-->
+					</div>
+					<!-- row end-->
+					<form action="/search.team">
+						<div
+							class="row height d-flex justify-content-center align-items-center">
+							<!-- /search.team -->
+							<div class="col-md-8">
+								<div class="search mb-4 mt-3">
+									<i class="fa fa-search"></i> <input type="text"
+										class="form-control" id="search_team" name="search_team"
+										placeholder="찾을 팀을 검색해보세요">
+									<button class="btn btn-primary" id="btn_search_team">찾기</button>
+								</div>
+							</div>
+						</div>
+					</form>
+					<!-- header -->
+					<div class="body text-center">
+						<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4 d-flex">
+							<c:forEach var="team" items="${team_list}">
+								<form action="/view.team">
+									<!-- 서블릿 : /view.team -->
+									<div class="col">
+										<div class="card radius-15">
+											<div class="p-4 border radius-15">
+												<img src="${team.logo_path}${team.logo}" width="110"
+													height="110" class="rounded-circle shadow" alt="">
+												<h5 class="team-name mb-0 mt-5">${team.name}</h5>
+												<p class="team-hometown mb-3">${team.hometown_name}</p>
+												<p class="team-reader">팀장 : ${team.member_name}</p>
+												<input type="text" class="d-none" name="team_code"
+													value="${team.code}">
+												<div class="go-to-team d-grid">
+													<button class="btn btn-outline-primary radius-15">팀
+														페이지로</button>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</form>
-						</c:forEach>
+								</form>
+							</c:forEach>
+						</div>
+						<!-- body -->
 					</div>
-					<!-- body -->
 				</div>
-			</div>
+			</c:if>
 		</div>
 	</main>
 </body>
