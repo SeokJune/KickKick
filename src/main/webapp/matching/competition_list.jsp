@@ -32,6 +32,12 @@
                     box-sizing: border-box;
                     text-align: center;
                 }
+                
+                 #pic {
+                	width: 200px;
+                	height:200px;
+                	border-radius: 100px;
+                }
             </style>
         </head>
 
@@ -102,8 +108,8 @@
                                                     ${l.kind_name}</div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-md-3" style="border: 1px solid black;">
-                                            <img src="team_logo.png" class="h-100">
+                                        <div class="col-xs-12 col-md-3" style="border: 1px solid black; padding: 1% ;">
+                                            <img src="${l.logo_path}${l.logo}" id="pic" style="border:1px solid black;" class="h-100">
                                         </div>
 
                                         <div class="col-xs-12 col-md-7">

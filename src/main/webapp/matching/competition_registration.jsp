@@ -29,7 +29,7 @@
             <style>
                 * {
                     box-sizing: border-box;
-
+				
                     text-align: center;
                 }
 
@@ -227,6 +227,11 @@
                     cursor: default;
                     color: #777;
                 }
+                #pic {
+                	width: 200px;
+                	height:200px;
+                	border-radius: 100px;
+                }
             </style>
         </head>
 
@@ -252,9 +257,9 @@
 
                                 <div class="col-xs-12 col-md-8">
                                     <div class="row h-100">
-                                        <div class="col-xs-12 col-md-12 h-25">
+                                        <div class="col-xs-12 col-md-12">
 
-                                            <select size="1" id="tn" name="teamname" class="w-75 h-100 ajax_team_name">
+                                            <select size="1" id="tn" name="teamname" class="w-75 h-100 ajax_team_name" style="padding: 2%;">
                                                 <option selected value="">팀명선택</option>
 
 
@@ -266,8 +271,8 @@
 
                                         </div>
 
-                                        <div class="col-xs-12 col-md-12 h-75">
-                                            <img id="pic" class="h-100" src="/image/competition_img/team_logo.png">
+                                        <div class="col-xs-12 col-md-12" style="padding: 1%;">
+                                            <img id="pic" class="h-100" style="border:1px solid black;" src="/image/competition_img/team_logo.png">
                                         </div>
 
                                     </div>

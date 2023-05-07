@@ -44,6 +44,15 @@
                     width: 70px;
                     color: #ffffff;
                 }
+                
+                
+                
+                 #pic {
+                	width: 200px;
+                	height:200px;
+                	border-radius: 100px;
+                }
+                
             </style>
         </head>
 
@@ -53,8 +62,6 @@
             <c:choose>
                 <c:when test="${code != form.member_code }">
 
-<form id="frm" action="/apply.competition" method="get">
-                    <div class="container-fluid  " style="background-color: whitesmoke;">
 
                         <div class="row header">
 
@@ -62,7 +69,7 @@
                             <div class="col-xs-10 col-md-10">
                                 <div class="row">
                                     <div class="col-12" style="color:red;">${status[2].name}</div>
-                                     <div class="col-12"><input type="hidden" name="status" value="${status[2].code}"></div>
+                                    
                                       <div class="col-12" style=" display:none; " id="lat" >${form.latirude }</div>
                                      <div class="col-12" style=" display:none; " id="long" >${form.longitude }</div>
                                      <div class="col-12" ><input type="hidden" name="rcode" value="${form.registration_code }"></div>
@@ -70,8 +77,8 @@
                                     <div class="col-12">
                                         <br>
                                         <div class="row">
-                                            <div class="col-xs-5 col-md-5">
-                                                <img class="h-100" src="team_logo.png">
+                                            <div class="col-xs-5 col-md-5" style="padding:1%;">
+                                                <img id="pic" style="border:1px solid black;" class="h-100" src=" ${form.logo_path }${form.logo}">
                                             </div>
                                             <div class="col-xs-1 col-md-1"></div>
                                             <div class="col-xs-6 col-md-6">
@@ -176,12 +183,14 @@
                                             <div class="col-xs-12 col-md-3"><input class="w-100"
                                                     value="실력 : ${form.ability_name}" disabled></div>
                                             <div class="col-xs-12 col-md-3">
-                                                <select size="1" id="ability" name="ability" class="w-100" style="padding-bottom: 4px;">
+                                                
+                                                <select size="1" id="ability" name="ab" class="w-100" style="padding-bottom: 4px;">
 
                                                      <option selected value="">실력선택</option>
                                                   
                                                 <c:forEach var="a" items="${ability}">
                                                     <option value="${a.code}">${a.name}</option>
+                                                    
                                                 </c:forEach>
 
                                                   </select>
@@ -195,7 +204,7 @@
                                     </div>
 
                                     <div class="col-12">
-                                        <textarea name="content" style="width:100%; height:200px;" placeholder="소개글작성(선택)"></textarea>
+                                        <textarea id="tx" name="content" style="width:100%; height:200px;" placeholder="소개글작성(선택)"></textarea>
                                     </div>
 
                                 </div>
@@ -213,7 +222,7 @@
                                         <div class="row">
                                             <div class="col-2"></div>
                                             <div class="col-10">
-                                                <br> <button type="submit" id="request"
+                                                <br> <button type="button" id="request"
                                                     style="float: right;">신청</button>
                                             </div>
                                         </div>
@@ -236,23 +245,30 @@
                         </div>
                     </div>
 
-</form>
+
 
 <script>
+
+
 $("#request").on("click",function(){
 
 	if ($("#ability").val() == "") {
-		console.log("sdfjsnfjdsnfjs");
-        alert("실력을 선택하십시오!");
+		alert("실력을 선택하십시오");
         return false;
+	
+	}
+	else {																																
+		location.href="/apply.competition?status="+${status[2].code}+"&rcode="+${form.registration_code}+"&tcode="+${form.apply_teamcode}+"&ability="+ $("select[name=ab] option:selected").val()+"&content="+$("#tx").val();
+		window.close(); //팝업창 닫는거
+	
+	}
 	
 })
 
-}
 	
 
 </script>
-                </c:when>
+ </c:when>
 
                 <c:otherwise>
 

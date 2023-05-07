@@ -309,7 +309,7 @@ public class CompetitionDAO {
 
 	//신청할때 출력해주는 것
 	public CompetitionApplyFormDTO show_applyform(String date) throws Exception{
-		String sql = "select tv.name team_name , tv.member_name, tv.member_phone,\r\n"
+		String sql = "select tv.name team_name , tv.member_name, tv.member_phone, tv.logo_path, tv.logo ,\r\n"
 				+ "cr.competition_date , cr.latirude, cr.longitude , cr.content, cr.code registration_code,\r\n"
 				+ "ck.name competition_name , t.member_code,t.code apply_teamcode , ck.headcount , ab.name ability_name\r\n"
 				+ "from competition_registration cr join  team_view tv on (cr.team_code=tv.code)\r\n"
@@ -331,6 +331,8 @@ public class CompetitionDAO {
 				String team_name = 	rs.getString("team_name");
 				String member_name = rs.getString("member_name");
 				String member_phone = rs.getString("member_phone");
+				String logo_path = rs.getString("logo_path");
+				String logo = rs.getString("logo");
 				Timestamp competition_date = rs.getTimestamp("competition_date");
 				double latirude = rs.getDouble("latirude");
 				double longitude = rs.getDouble("longitude");
@@ -342,7 +344,7 @@ public class CompetitionDAO {
 				int member_code = rs.getInt("member_code");
 				int apply_teamcode = rs.getInt("apply_teamcode");
 
-				CompetitionApplyFormDTO dto = new CompetitionApplyFormDTO(team_name,member_name,member_phone,competition_date,latirude,longitude,content,registration_code,competition_name,headcount,ability_name,member_code,apply_teamcode);
+				CompetitionApplyFormDTO dto = new CompetitionApplyFormDTO(team_name,member_name,member_phone,logo_path,logo, competition_date,latirude,longitude,content,registration_code,competition_name,headcount,ability_name,member_code,apply_teamcode);
 				return dto;
 			}
 		}
