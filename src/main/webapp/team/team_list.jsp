@@ -212,14 +212,14 @@ a {
 		}
 		else {
 			$(".close").children().remove();
-			$(".navi").parent().remove();
+			$(".navi").children().remove();
 			$.ajax({
 				url : "/search_team_name.team",
 				dataType : "json",
 				data : {
 					team_name : $("#input_team_name").val()
 				}
-			}).done(function(resp) {
+			}).done(function(resp, resp2) {
 				if(resp.length == 0) {
 					let read1=$('<div class="col-md-1 col-xl-2"></div><div class="col-12 col-md-10 col-xl-8"><br></div><div class="col-md-1 col-xl-2"></div>');
 					let read2=$('<div class="col-md-1 col-xl-2"></div><div class="col-12 col-md-10 col-xl-8" style="text-align: center">검색된 팀이 없습니다.</div><div class="col-md-1 col-xl-2"></div>');
@@ -230,14 +230,12 @@ a {
 					let read1=$('<div class="col-md-2"></div><div class="col-12 col-md-8"><hr></div><div class="col-md-2"></div>')
 					let read2=$('<div class="col-md-2 col-xl-2"></div><div class="col-12 col-md-8 col-xl-8"><div class="row team_info"><div class="col-4 col-md-2 col-xl-1"><a href="/view.team?team_code='+resp[i].code+'"><img src="'+resp[i].logo_path+''+resp[i].logo+'" style="width: 50px; height: 50px; border-radius: 25px"></a></div><div class="col-4 col-md-2 col-xl-2"><a href="/view.team?team_code=${i.code}">'+resp[i].name+'</a></div><div class="col-xl-1 d-none d-xl-block">'+resp[i].hometown_name+'</div><div class="col-4 col-md-4 col-xl-3">'+resp[i].outline+'</div><div class="col-md-2 col-xl-1 d-none d-md-block">랭킹</div><div class="col-md-2 col-xl-2 d-none d-md-block">'+resp[i].member_name+'</div><div class="col-xl-2 d-none d-xl-block">'+resp[i].member_phone+'</div></div></div><div class="col-md-2 col-xl-2"></div>');
 					let read3=$('<div class="col-md-2"></div><div class="col-12 col-md-8"><hr></div><div class="col-md-2"></div>')
-	
+					
+					
 					$(".close").append(read1);
 					$(".close").append(read2);
 					$(".close").append(read3);
-					
-					
-					
-				}
+				}		
 			})
 		}
 	})
