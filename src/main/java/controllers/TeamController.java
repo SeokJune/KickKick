@@ -36,13 +36,13 @@ public class TeamController extends HttpServlet {
 		System.out.println(cmd);
 		
 		Gson g = new Gson();
-		String member_id = (String) request.getSession().getAttribute("id");
 		
 		try {	
 			// 팀 생성 시 연고지 목록, 회원 정보 가져오기
 			if(cmd.equals("/hometown.team")) {
 				
-				
+				String member_id = (String) request.getSession().getAttribute("id");
+
 				CreateTeamDAO cdao = CreateTeamDAO.getInstance();
 				List<HometownDTO> hometown_arr = cdao.select_hometown();
 				
@@ -107,7 +107,6 @@ public class TeamController extends HttpServlet {
 				
 				List<TeamDTO> teamlist_arr = dao.select_team(start, end);
 				String page_navi = dao.get_page_navi(current_page);
-				System.out.println(teamlist_arr);
 				request.setAttribute("teamlist_arr", teamlist_arr);
 				request.setAttribute("navi", page_navi);
 				request.getRequestDispatcher("/team/team_list.jsp").forward(request, response); 
@@ -142,6 +141,7 @@ public class TeamController extends HttpServlet {
 			} 
 			// 팀 리스트에서 팀명 검색 
 			else if(cmd.equals("/search_team_name.team")) {
+
 				String team_name = request.getParameter("team_name");
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
 				
