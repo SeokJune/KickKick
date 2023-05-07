@@ -28,6 +28,7 @@
  	margin: 0;
  	padding: 0;
 	box-sizing: border-box;
+	border: 1px solid black;
 }
 div {
 	font-family: 'NanumSquareNeoBold';
@@ -48,6 +49,7 @@ input {
 	width: 100px;
 	height: 100px;
 	border-radius: 50px;
+	position: relative;
 }
 #dup_btn {
 	font-weight: 500;
@@ -92,7 +94,7 @@ input {
 	border-radius: 10px;
 	box-shadow: 5px 2px 3px;
 }
-#edi {
+#content {
 	background-color: #FFFFFF;
 	width: 70%;
 	height: 150px; 
@@ -114,7 +116,7 @@ input {
 				<div class="col-12 col-md-2" id="logo">
 					<div class="row">
 						<div class="col-md-4 col-xl-4 d-none d-md-block"></div>
-						<div class="col-12 col-md-8 col-xl-8">
+						<div id="pic" class="col-12 col-md-8 col-xl-8" style="display: flex; justify-content: center; align-items: center;">
 							<a href="javascript:void(0);" onclick="$('#imgUpload').trigger('click')" class="imgUploadBtn">
 								<img src="/image/team_img/기본로고.png" id="imgChange" alt="사진 업로드">
 							</a> 
@@ -144,7 +146,7 @@ input {
 					</div>
 					<div class="row">
 						<div class="col-md-3"></div>
-						<div class="col-md-6" id="dup_check">한글,영어만 가능</div>
+						<div class="col-md-6" id="dup_check">한글,영어,숫자만 가능(2글자 이상 15글자 이하)</div>
 						<div class="col-md-3"></div>
 					</div>
 
@@ -153,7 +155,7 @@ input {
 						<div class="col-md-3"></div>
 						<div class="col-12 col-md-6" style="margin: auto;">
 							<input type="text" value="${member_info.id}"
-								class="w-100" name="captain_name" readonly>
+								class="w-100" name="captain_name" disabled>
 						</div>
 						<div class="col-md-3"></div>
 					</div>
@@ -163,7 +165,7 @@ input {
 						<div class="col-12 col-md-6" style="margin: auto;">
 							<input type="text"
 								value="${member_info.phone}" class="w-100"
-								name="captain_phone" readonly>
+								name="captain_phone" disabled>
 						</div>
 						<div class="col-md-3"></div>
 					</div>
@@ -196,7 +198,7 @@ input {
 				<div class="col-md-3 col-xl-3 "></div>
 
 				<div class="col-12 col-md-6">
-					<div contenteditable="true" id="edi"></div>
+					<div contenteditable="true" id="content"></div>
 					<input type="hidden" name="content" id="spy">
 				</div>
 
@@ -221,9 +223,18 @@ input {
 		
 		// 팀명 중복도 및 올바른 형식 
 		let team_name = $("#team_name");
-		let team_name_regex = /^[가-힣a-zA-Z]+$/;
+		let team_name_regex = /^[가-힣a-zA-Z0-9]{2,15}$/;
 		let dup = document.getElementById("dup_btn");
 		let tf;
+		
+		// 간략소개글 최소, 최대 글자수
+		let outline = $("#outline");
+		let outline_regex = /^.{5,20}$/;
+		
+		// 소개글 최소, 최대 글자수
+		let content = $("#content");
+		let content_regex = /^.{20,100}$/;
+		
 
 		var team_name_ValidFlag = false; // 팀명 사용 취소 누를 때 false를 반환해서 생성하기 버튼을 눌렀을 때 데이터 넘어가는 것을 막음.
 
@@ -253,9 +264,9 @@ input {
 				
 
 			} else {
-				swal('사용 불가능한 팀명!', "팀명을 다시 입력하세요.", 'warning');
+				swal('사용 불가능한 팀명!', "한글,영어,숫자만 가능(2글자 이상 15글자 이하)", 'warning');
 				$("#team_name").val("");
-				$("#dup_check").text("한글,영어만 가능").css({
+				$("#dup_check").text("한글,영어,숫자만 가능(2글자 이상 15글자 이하)").css({
 					"color":"#000000", "color":"rgba(0,0,0,0.5)"
 				});
 			}
@@ -269,30 +280,34 @@ input {
 		// 생성하기 눌렀을 시
 		$("#frm").on("submit", function() {
 
-			if (team_name_regex.test(team_name.val().trim()) == false) {
-				alert("팀명을 다시 입력하세요.");
+			if(team_name.val() == "") {
+				swal('팀명을 입력하세요!', "한글,영어,숫자만 가능(2글자 이상 15글자 이하)", 'warning');
+				return false;
+			}
+			else if (team_name_regex.test(team_name.val().trim()) == false) {
+				swal('팀명을 다시 입력하세요!', "한글,영어,숫자만 가능(2글자 이상 15글자 이하)", 'warning');
+				return false;
+			}
+			else if (team_name_ValidFlag == false) {
+				swal('중복도 검사를 실시하세요!', "", 'warning');
 				return false;
 			}
 			else if ($("#imgUpload").val() == "") {
-				alert("이미지를 업로드 하세요.")
+				swal('로고 이미지를 업로드하세요!', "", 'warning');
 				return false;
 			}
+			 else if (outline_regex.test(outline.val().trim()) == false) {
+				swal('간략 소개글을 입력하세요!', "5글자 이상 20글자 이하", 'warning');
+				return false;
+			} 
+			 if (content_regex.test(content.text().trim()) == false) {
+				swal('소개글을 입력하세요!', "20글자 이상 100글자 이하", 'warning');
+				return false;
+			}
+			let i = $("#content").html();
+			$("#spy").val(i);
 			
-			 else if (team_name_ValidFlag == false) {
-				alert("중복도 검사를 다시 하세요.")
-				return false;
-			}
-			 else if ($("#outline").val().trim() == "") {
-				alert("간략소개글을 입력하세요.");
-				return false;
-			}
-			 else if ($("#edi").html().trim() == "") {
-				alert("게시글을 입력하세요.");
-				return false;
-			}
-			let content = $("#edi").html();
-			$("#spy").val(content);
-
+			
 			
 		});
 		
@@ -314,6 +329,32 @@ input {
 			    reader.readAsDataURL(file);
 			  }
 			}
+		
+		// col 사이즈 별 스타일 적용 다르게 하기
+			addEventListener("resize", function (event) {
+			 const bodySize = parseInt($(".container-fluid").css("width"));
+			 if(bodySize<768) {
+				 $("#pic").css("justify-content","center"); 
+				 $("#imgChange").css("left","0px");
+				 
+			}else if(bodySize>=768){
+				$("#pic").css("justify-content","flex-end");
+				 $("#imgChange").css("left","80px");
+			}	 
+		})
+		
+		 $(window).on("load", function() {
+				 const bodySize = parseInt($(".container-fluid").css("width"));
+				 if(bodySize<768) {
+					 $("#pic").css("justify-content","center"); 
+					 $("#imgChange").css("left","0px");
+					 
+				}else if(bodySize>=768){
+					$("#pic").css("justify-content","flex-end");
+					 $("#imgChange").css("left","80px");
+				}
+			})
+		
 	</script>
 
 </body>

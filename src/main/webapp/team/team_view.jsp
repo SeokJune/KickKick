@@ -47,31 +47,32 @@ div {
 #team_introduce {
 	text-align: center;
 }
+
 </style>
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="row team_info1">
-			<div class="col-md-1 col-xl-1"></div>
+			<div class="col-md-1 col-xl-2"></div>
 			
-			<div class="col-xs-12 col-md-2 col-xl-1" style="display: flex; justify-content: center; align-items: flex-end;">
+			<div id="pic" class="col-xs-12 col-md-2 col-xl-1" style="display: flex; justify-content :center; align-items: center;">
 				<img src="${team_info.logo_path}${team_info.logo}"
 					style="width: 80px; height: 80px; border-radius: 40px;">
 			</div>
 			
-			<div class="col-xs-12 col-md-9 col-xl-8" style="text-align: center;">
+			<div id="info" class="col-xs-12 col-md-9 col-xl-8" style="text-align: center;">
 				<div class="row">
 					<div class="col-12 col-md-3 col-xl-3" id="team_name">${team_info.name}</div>
 				</div>
 				<div class="row">
-					<div class="col-12 col-md-3 col-xl-3">${team_info.hometown_name}|${team_info.member_name}</div>
+					<div class="col-12 col-md-3 col-xl-3">${team_info.member_name} | ${team_info.hometown_name}</div>
 				</div>
 				<div class="row">
 					<div class="col-12 col-md-3 col-xl-3">승무패</div>
 				</div>
 			</div>
 			
-			<div class="col-xl-2"></div>
+			<div class="col-xl-1"></div>
 		</div>
 
 		<div class="row empty_place d-none d-md-flex">
@@ -117,5 +118,39 @@ div {
 			<div class="col-md-2 col-xl-2"></div>
 		</div>
 	</div>
+	
+	<script>
+		 $(window).on("load", function() {
+			 const bodySize = parseInt($(".container-fluid").css("width"));
+			 if(bodySize<768) {
+				 $("#pic").css({"justify-content":"center",
+					 "align-items":"center"
+				 }); 
+				 $("#info").css("text-align","center"); 
+				 
+			}else if(bodySize>=768){
+				$("#pic").css({"justify-content":"flex-end",
+					"align-items":"flex-end"
+				});
+				$("#info").css("text-align","left"); 
+			}
+		})
+		addEventListener("resize", function (event) {
+			 const bodySize = parseInt($(".container-fluid").css("width"));
+			 if(bodySize<768) {
+				 $("#pic").css({"justify-content":"center",
+					 "align-items":"center"
+				 }); 
+				 $("#info").css("text-align","center"); 
+				 
+			}else if(bodySize>=768){
+				$("#pic").css({"justify-content":"flex-end",
+					"align-items":"flex-end"
+				});
+				$("#info").css("text-align","left"); 
+			}
+		}) 
+		
+	</script>
 </body>
 </html>
