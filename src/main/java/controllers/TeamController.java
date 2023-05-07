@@ -64,6 +64,7 @@ public class TeamController extends HttpServlet {
 			}
 			// 팀생성 시 입력값 넘어오는 곳
 			else if(cmd.equals("/create.team")) {
+				int member_code = (int)request.getSession().getAttribute("code");
 				String real_path = request.getServletContext().getRealPath("image/team_img/");
 				System.out.println(real_path);
 				File realPathFile = new File(real_path);
@@ -89,7 +90,7 @@ public class TeamController extends HttpServlet {
 				
 				
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();				
-				TeamDTO teamdto = new TeamDTO(0, Settings.LOGO_PATH_CODE, team_name+".png", team_name, 10000001, hometown_code, outline, content, null, null, null);
+				TeamDTO teamdto = new TeamDTO(0, Settings.LOGO_PATH_CODE, team_name+".png", team_name, member_code, hometown_code, outline, content, null, null, null);
 				dao.insert_team(teamdto);
 				
 				response.sendRedirect("/list.team?cpage=1"); 

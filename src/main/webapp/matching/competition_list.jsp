@@ -29,6 +29,7 @@
 
             <style>
                 * {
+
                     box-sizing: border-box;
                     text-align: center;
                 }
@@ -120,10 +121,10 @@
                                                     팀명: ${l.team_name}</div>
                                                 <div class="col-12 h-25">
                                                     <div class="row h-100">
-                                                        <div class="col-4"
+                                                        <div class="col-4 h-100"
                                                             style="border: 1px solid black; padding: 2%;">
                                                             팀장 이름: ${l.member_name}</div>
-                                                        <div class="col-8"
+                                                        <div class="col-8 h-100"
                                                             style="border: 1px solid black; padding: 2%;">
                                                              번호: ${l.member_phone}</div>
                                                     </div>
@@ -132,6 +133,11 @@
                                                 <div class="place col-12 h-25"
                                                     style="border: 1px solid black; padding: 2%;">
                                                 </div>
+                                                
+                                                 <div class="code col-12 h-25" style="display:none" >
+                                                    ${l.code }
+                                                </div>
+                                                
                                                 <div class="col-12 h-25">
                                                     <div class="row h-100">
                                                         <div class="lat col-3"
@@ -143,10 +149,10 @@
 
 
 
-                                                        <div class="col-6"
+                                                        <div class="col-6 h-100"
                                                             style="border: 1px solid black; padding: 2%;">
                                                             경기상태: ${l.status_name}</div>
-                                                        <div class="col-6"
+                                                        <div class="col-6 h-100"
                                                             style="border: 1px solid black; padding: 2%;">
                                                             경기일정: ${l.competition_date}</div>
                                                     </div>
@@ -172,17 +178,14 @@
                                 <div class="col-xs-1 col-md-1"></div>
                             </div>
                             <br>
+                           
                         </c:forEach>
 
 
 
                     </div>
 
-                    <div class="row footer">
-                        <div style="font-size: 15px;" class="col-xs-12 col-md-12 " colspan="5">1 2 3 4 5 6 7 8 9 10
-                        </div>
-
-                    </div>
+                   
 
 
 
@@ -190,9 +193,13 @@
 
                 </div>
 
-            </div>
+                <div class="row footer">
+                    <div style="font-size: 15px;" class="col-xs-12 col-md-12 " colspan="5">1 2 3 4 5 6 7 8 9 10
+                    </div>
 
-            <script>
+                </div>
+                
+                 <script>
                 var lat = document.getElementsByClassName("lat");
                 var lng = document.getElementsByClassName("lng");
 
@@ -219,14 +226,21 @@
 
                 }
                 
+                
+           
                 $(".applywindow").on("click",function(){
 
                     $(this).css("border","solid 3px navy");
-                   window.open("/applyform.competition?date="+$(this).find(".date").text(),
+                   window.open("/applyform.competition?date="+$(this).find(".date").text()+"&code="+$(this).find(".code").text(),
                 		   "","width=900px, height=600px");
                  })
+            
                     
             </script>
+            
+            </div>
+
+           
 
 
 

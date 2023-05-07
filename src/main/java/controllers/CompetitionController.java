@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import dao.CompetitionDAO;
 import dto.AbilityDTO;
 import dto.CompetitionApplicationDTO;
+import dto.CompetitionApplicationListDTO;
 import dto.CompetitionApplyFormDTO;
 import dto.CompetitionKindDTO;
 import dto.CompetitionListDTO;
@@ -39,7 +40,7 @@ public class CompetitionController extends HttpServlet {
 		String cmd =request.getRequestURI();
 
 		try {
-			if(cmd.equals("/registration.competition")) {
+			if(cmd.equals("/registration.competition")) { //매칭등록페이지에 출력해줄것들
 
 				//팀명 선택
 				List<TeamDTO> teamname = CompetitionDAO.getinstance().teamname();
@@ -66,13 +67,13 @@ public class CompetitionController extends HttpServlet {
 				request.getRequestDispatcher("/matching/competition_registration.jsp").forward(request, response);
 
 
-			}else if(cmd.equals("/list.competition")) {
-				
-				
+			}else if(cmd.equals("/list.competition")) { //리스트페이지에 출력해줄것들 
+
+
 				//리스트 출력 값
 				List<CompetitionListDTO> list= CompetitionDAO.getinstance().selectlist();
 				request.setAttribute("list", list);
-				
+
 
 				//지역 선택필터	
 				List<HometownDTO> hometown = CompetitionDAO.getinstance().hometown();
@@ -82,7 +83,8 @@ public class CompetitionController extends HttpServlet {
 
 				request.getRequestDispatcher("/matching/competition_list.jsp").forward(request, response);
 
-			}else if(cmd.equals("/send.competition")) {
+			}else if(cmd.equals("/send.competition")) {//매칭등록했을때 db에넣을것
+
 
 
 				int status = Integer.parseInt(request.getParameter("status"));
@@ -144,7 +146,7 @@ public class CompetitionController extends HttpServlet {
 				response.sendRedirect("/list.competition");
 
 
-			}else if(cmd.equals("/choose.competition")) {
+			}else if(cmd.equals("/choose.competition")) { //매칭등록페이지에서 내가 가입한 팀중 하나를 눌렀을떄 비동기통신으로 해당팀의 값 가져오는것
 
 				System.out.println("비동기통신 확인");
 				//팀명선택-팀명,이름,전화번호
@@ -171,18 +173,16 @@ public class CompetitionController extends HttpServlet {
 				String glist = g.toJson(list); //자동직렬화 -> 그래야 데이터가 넘어감?  -> 데이터가 넘어가는 방식이 자동직렬화
 				response.getWriter().append(glist); // append를 사용하려면  get writer를 사용할수밖에 없다 이떄 append는 string형밖에 못다룸
 
-			}else if(cmd.equals("/applyform.competition")) {
+			}else if(cmd.equals("/applyform.competition")) { //리스트들에 있는 팀들 중 한 팀을 눌렀을때
 				String date = request.getParameter("date");
-
+				String rcode = request.getParameter("code"); //매칭등록했을때 해당 글의 고유의 번호
 				//				SimpleDateFormat sdf = SimpleDateFormat("YYYY-MM-DD HH-MI-SS");
 				//				Date d = sdf.parse(date);
 				//				new Timestamp(d.getYear(); string형 날짜를 timestamp로 변환하는 과정
 
-
-				System.out.println(date);
 				CompetitionApplyFormDTO form = CompetitionDAO.getinstance().show_applyform(date);
 				request.setAttribute("form", form);
-System.out.println(form);
+
 
 				//로그인할때의 code의 세션값을 가져옴
 				int code = (int) request.getSession().getAttribute("code");
@@ -196,37 +196,46 @@ System.out.println(form);
 				List<StatusDTO> status = CompetitionDAO.getinstance().status();
 				request.setAttribute("status", status);
 
+				//로그인한 사람이랑 글쓴 사람이 같을때 리스트에 출력 - 신청받아주거나 거절하거나
+				List<CompetitionApplicationListDTO> match =	CompetitionDAO.getinstance().selectmatch(rcode);
+				request.setAttribute("match", match);
+				
+
 				request.getRequestDispatcher("/matching/competition_application.jsp").forward(request, response);
-			}else if(cmd.equals("/apply.competition")){
+
+			}else if(cmd.equals("/apply.competition")){ //신청하기를 눌렀을때 db에 넣는것
 				String status1 = request.getParameter("status");
 				System.out.println(status1);
 				int status = Integer.parseInt(status1);
-				
+
 				String rcode1 = request.getParameter("rcode");
 				System.out.println(rcode1);
 				int rcode = Integer.parseInt(rcode1);
-				
+
 				String tcode1 = request.getParameter("tcode");
 				System.out.println(tcode1);
 				int tcode = Integer.parseInt(tcode1);
-				
+
 				String ability1 = request.getParameter("ability");
 				System.out.println(ability1);
 				int ability = Integer.parseInt(ability1);
-				
+
 				String content = request.getParameter("content");
 				System.out.println(content);
-				
-				
-			
-				
-				
+
+
 
 				CompetitionApplicationDTO dto = new CompetitionApplicationDTO(0,rcode,tcode,ability,content,status,null,null,null);
 				CompetitionDAO.getinstance().apply(dto);
-				
-				
 
+
+
+			}else if(cmd.equals("/deleteform.competition")) {//신청폼에서 삭제하기를 눌렀을때
+				String delcode = request.getParameter("delcode");
+
+				System.out.println(delcode);
+
+				CompetitionDAO.getinstance().delete_application(delcode);
 			}
 
 

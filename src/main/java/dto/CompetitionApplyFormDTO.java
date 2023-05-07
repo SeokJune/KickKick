@@ -8,6 +8,7 @@ private String member_name;
 private String member_phone;
 private String logo_path;
 private String logo;
+private int member_code;
 private Timestamp competition_date;
 private double latirude;
 private double longitude;
@@ -16,20 +17,21 @@ private int registration_code;
 private String competition_name;
 private int headcount;
 private String ability_name;
-private int member_code;
+
 private int apply_teamcode;
 
 public CompetitionApplyFormDTO() {}
 
 public CompetitionApplyFormDTO(String team_name, String member_name, String member_phone, String logo_path, String logo,
-		Timestamp competition_date, double latirude, double longitude, String content, int registration_code,
-		String competition_name, int headcount, String ability_name, int member_code, int apply_teamcode) {
+		int member_code, Timestamp competition_date, double latirude, double longitude, String content,
+		int registration_code, String competition_name, int headcount, String ability_name, int apply_teamcode) {
 	super();
 	this.team_name = team_name;
 	this.member_name = member_name;
 	this.member_phone = member_phone;
 	this.logo_path = logo_path;
 	this.logo = logo;
+	this.member_code = member_code;
 	this.competition_date = competition_date;
 	this.latirude = latirude;
 	this.longitude = longitude;
@@ -38,7 +40,6 @@ public CompetitionApplyFormDTO(String team_name, String member_name, String memb
 	this.competition_name = competition_name;
 	this.headcount = headcount;
 	this.ability_name = ability_name;
-	this.member_code = member_code;
 	this.apply_teamcode = apply_teamcode;
 }
 
@@ -80,6 +81,14 @@ public String getLogo() {
 
 public void setLogo(String logo) {
 	this.logo = logo;
+}
+
+public int getMember_code() {
+	return member_code;
+}
+
+public void setMember_code(int member_code) {
+	this.member_code = member_code;
 }
 
 public Timestamp getCompetition_date() {
@@ -144,14 +153,6 @@ public String getAbility_name() {
 
 public void setAbility_name(String ability_name) {
 	this.ability_name = ability_name;
-}
-
-public int getMember_code() {
-	return member_code;
-}
-
-public void setMember_code(int member_code) {
-	this.member_code = member_code;
 }
 
 public int getApply_teamcode() {
