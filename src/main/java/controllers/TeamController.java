@@ -65,7 +65,6 @@ public class TeamController extends HttpServlet {
 			// 팀생성 시 입력값 넘어오는 곳
 			else if(cmd.equals("/create.team")) {
 				int member_code = (int)request.getSession().getAttribute("code");
-				
 				String real_path = request.getServletContext().getRealPath("image/team_img/");
 				System.out.println(real_path);
 				File realPathFile = new File(real_path);

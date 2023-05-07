@@ -44,168 +44,534 @@
                     width: 70px;
                     color: #ffffff;
                 }
+
+
+                #modfiy,
+                #back,
+                #delete {
+                    background-color: green;
+                    border: none;
+                    border-radius: 5px;
+                    margin-bottom: 2%;
+                    padding: 4%;
+                    width: 70px;
+                    color: #ffffff;
+                }
+
+                table * {
+                    border: 1px solid black;
+                }
+
+
+                #pic {
+                    width: 200px;
+                    height: 200px;
+                    border-radius: 100px;
+                }
+                
+                .list_img{
+                	width: 100px;
+                    height: 100px;
+                    border-radius: 50px;
+                }
             </style>
         </head>
 
         <body>
 
-            <form action="/send.competition" method="get" enctype="multipart/form-data">
-                <div class="container-fluid  " style="background-color: whitesmoke;">
 
-                    <div class="row header">
+            <c:choose>
+                <c:when test="${code != form.member_code }">
 
-                        <div class="col-xs-1 col-md-1"></div>
-                        <div class="col-xs-10 col-md-10">
-                            <div class="row">
-                                <div class="col-12" style="border:1px solid black; color:red;">경기 정보</div>
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-xs-5 col-md-5">
-                                            <img class="h-100" src="team_logo.png">
-                                        </div>
-                                        <div class="col-xs-1 col-md-1"></div>
-                                        <div class="col-xs-6 col-md-6">
-                                            <div id="inf" class="row h-100">
-                                                <div class="col-12 h-25"> <input  class="w-100" value="팀명" disabled></div>
-                                                <div class="col-12 h-25">
-                                                    <div class="row h-100">
-                                                        <div class="col-4 "><input class="w-100" value="팀장이름" disabled></div>
-                                                        <div class="col-8 "><input class="w-100" value="팀장번호" disabled></div>
+                    <div calss="container-fluid">
+                        <div class="row header">
+
+                            <div class="col-xs-1 col-md-1"></div>
+                            <div class="col-xs-10 col-md-10">
+                                <div class="row">
+                                    <div class="col-12" style="color:red;">${status[2].name} ${code} ${form.member_code}
+                                    </div>
+
+                                    <div class="col-12" style=" display:none; " id="lat">${form.latirude }</div>
+                                    <div class="col-12" style=" display:none; " id="long">${form.longitude }</div>
+                                    <div class="col-12"><input type="hidden" name="rcode"
+                                            value="${form.registration_code }"></div>
+                                    <div class="col-12"><input type="hidden" name="tcode"
+                                            value="${form.apply_teamcode }"></div>
+                                    <div class="col-12">
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-xs-5 col-md-5" style="padding:1%;">
+                                                <img id="pic" style="border:1px solid black;" class="h-100"
+                                                    src=" ${form.logo_path }${form.logo}">
+                                            </div>
+                                            <div class="col-xs-1 col-md-1"></div>
+                                            <div class="col-xs-6 col-md-6">
+                                                <div id="inf" class="row h-100">
+                                                    <div class="col-12 h-25"> <input class="w-100"
+                                                            value="팀명 : ${form.team_name }" disabled></div>
+                                                    <div class="col-12 h-25">
+                                                        <div class="row h-100">
+                                                            <div class="col-4 "><input class="w-100"
+                                                                    value="팀장 이름 : ${form.member_name }" disabled></div>
+                                                            <div class="col-8 "><input class="w-100"
+                                                                    value="팀장 번호 : ${form.member_phone }" disabled>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-12 h-25"><input class="w-100" value="경기날짜" disabled></div>
-                                                <div class="col-12 h-25"><input class="w-100" value="경기시간" disabled></div>
+                                                    <div class="col-12 h-25"> <input  class="w-100"  value="경기일정 : ${form.competition_date }" disabled>
+                                                    </div>
+                                                    <div class="col-12 h-25" >
+                                                   <input id="place" class="w-100"  disabled>
+                                                     
+                                                    </div>
 
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-xs-1 col-md-1"></div>
+
                         </div>
-                        <div class="col-xs-1 col-md-1"></div>
+                        <br>
+                        <div class="row body">
+                            <div class="col-xs-1 col-md-1"></div>
+                            <div class="col-xs-12 col-md-10">
+                                <div class="row">
 
-                    </div>
-                    <br>
-                    <div class="row body">
-                        <div class="col-xs-1 col-md-1"></div>
-                        <div class="col-xs-12 col-md-10">
-                            <div class="row">
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-6">
+                                                <div id="map" style="width:100%;height:350px;"></div>
 
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-6">
-                                            <div id="map" style="width:100%;height:350px;"></div>
+                                                <script>
+                                                    let lat = document.getElementById('lat').innerHTML; //위도
+                                                    let longi = document.getElementById('long').innerHTML; //경도
 
-                                            <script type="text/javascript"
-                                                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=발급받은 APP KEY를 사용하세요"></script>
-                                            <script>
-                                                var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-                                                    mapOption = {
-                                                        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                                                        level: 5 // 지도의 확대 레벨
-                                                    };
+                                                    console.log(lat);
+                                                    console.log(longi);
+                                                    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                                                        mapOption = {
+                                                            center: new kakao.maps.LatLng(lat, longi), // 지도의 중심좌표
+                                                            level: 5 // 지도의 확대 레벨
+                                                        };
 
-                                                var map = new kakao.maps.Map(mapContainer, mapOption);
+                                                    var map = new kakao.maps.Map(mapContainer, mapOption);
 
-                                                // 마커가 표시될 위치입니다 
-                                                var markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+                                                    // 마커가 표시될 위치입니다 
+                                                    var markerPosition = new kakao.maps.LatLng(lat, longi);
 
-                                                // 마커를 생성합니다
-                                                var marker = new kakao.maps.Marker({
-                                                    position: markerPosition
-                                                });
+                                                    // 마커를 생성합니다
+                                                    var marker = new kakao.maps.Marker({
+                                                        position: markerPosition
+                                                    });
 
-                                                // 마커가 지도 위에 표시되도록 설정합니다
-                                                marker.setMap(map);
+                                                    // 마커가 지도 위에 표시되도록 설정합니다
+                                                    marker.setMap(map);
 
-                                                var iwContent = '<div style="padding:5px;">경기장소 <br><a href="https://map.kakao.com/link/map/경기장소,33.450701,126.570667" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/경기장소,33.450701,126.570667" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-                                                    iwPosition = new kakao.maps.LatLng(33.450701, 126.570667); //인포윈도우 표시 위치입니다
+                                                    var iwContent = '<div style="padding:8px;">경기장소</div>',
+                                                        iwPosition = new kakao.maps.LatLng(lat, longi); //인포윈도우 표시 위치입니다
+                                                    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 
-                                                // 인포윈도우를 생성합니다
-                                                var infowindow = new kakao.maps.InfoWindow({
-                                                    position: iwPosition,
-                                                    content: iwContent
-                                                });
 
-                                                // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-                                                infowindow.open(map, marker); 
-                                            </script>
+
+
+
+                                                    // 인포윈도우를 생성합니다
+                                                    var infowindow = new kakao.maps.InfoWindow({
+                                                        position: iwPosition,
+                                                        content: iwContent,
+                                                        removable: iwRemoveable
+                                                    });
+
+                                                    // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+                                                    infowindow.open(map, marker); 
+                                                </script>
+                                            </div>
+                                            <div class="col-xs-12 col-md-6">
+
+                                                <textarea type="text" class="w-100 h-100" placeholder="소개글 불러오기"
+                                                    readonly>${form.content }</textarea>
+                                            </div>
                                         </div>
-                                        <div class="col-xs-12 col-md-6">
+                                        <br>
 
-                                            <textarea type="text" class="w-100 h-100" placeholder="소개글 불러오기"
-                                                readonly></textarea>
+                                    </div>
+
+
+                                    <div class="col-12">
+                                        <div class="row w-100" style="padding-left: 30px;">
+                                            <div class="col-xs-12 col-md-3"><input class="w-100"
+                                                    value="종목 : ${form.competition_name}" disabled></div>
+                                            <div class="col-xs-12 col-md-3"><input class="w-100"
+                                                    value="인원수 : ${form.headcount}" disabled></div>
+                                            <div class="col-xs-12 col-md-3"><input class="w-100"
+                                                    value="실력 : ${form.ability_name}" disabled></div>
+                                            <div class="col-xs-12 col-md-3">
+
+                                                <select size="1" id="ability" name="ab" class="w-100"
+                                                    style="padding-bottom: 4px;">
+
+                                                    <option selected value="">실력선택</option>
+
+                                                    <c:forEach var="a" items="${ability}">
+                                                        <option value="${a.code}">${a.name}</option>
+
+                                                    </c:forEach>
+
+                                                </select>
+
+
+
+                                            </div>
+
+                                        </div>
+                                        <br>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <textarea id="tx" name="content" style="width:100%; height:200px;"
+                                            placeholder="소개글작성(선택)"></textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-xs-1 col-md-1"></div>
+                        </div>
+
+
+                        <div class="row footer">
+
+
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="row">
+                                            <div class="col-2"></div>
+                                            <div class="col-10">
+                                                <br> <button type="button" id="request"
+                                                    style="float: right;">신청</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <br>
-                                    
+
+
+                                    <div class="col-6">
+                                        <div class="row">
+
+                                            <div class="col-10">
+                                                <br> <button type="button" id="cancel" style="float: left;">취소</button>
+                                            </div>
+                                            <div class="col-2"></div>
+
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+
+                        </div>
+                        <br>
+                    </div>
+
+
+
+                    <script>
+
+                    let lat1 = document.getElementById('lat').innerHTML; //위도
+                    let longi1 = document.getElementById('long').innerHTML; //경도
+                    var place = document.getElementById("place");
+                    
+                    console.log(place);
+                    
+                    var geocoder = new kakao.maps.services.Geocoder();
+
+                    var coord = new kakao.maps.LatLng(lat1, longi1);
+                    var callback = function(result, status) {
+                        if (status === kakao.maps.services.Status.OK) {
+                           
+                        	
+                        	  place.value = "장소 : " + result[0].address.address_name;
+                        }
+                    };
+
+                    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+                    
+                    
+                    
+                    
+
+                        $("#request").on("click", function () {
+
+                            if ($("#ability").val() == "") {
+                                alert("실력을 선택하십시오");
+                                return false;
+
+                            }
+                            else {
+                                location.href = "/apply.competition?status=" + ${ status[2].code } +"&rcode=" + ${ form.registration_code } +"&tcode=" + ${ form.apply_teamcode } +"&ability=" + $("select[name=ab] option:selected").val() + "&content=" + $("#tx").val();
+                                window.close(); //팝업창 닫는거
+
+                            }
+
+                        })
+
+
+                        $("#cancel").on("click", function () {
+                             window.close();
+                        	
+                        })
+                        
+                        
+                        
+
+                    </script>
+                </c:when>
+
+                <c:otherwise>
+                    <div class="container-fluid">
+                        <div class="row header">
+
+                            <div class="col-xs-1 col-md-1"></div>
+                            <div class="col-xs-10 col-md-10">
+                                <div class="row">
+                                    <div class="col-12" style="color:red;">${status[2].name}</div>
+
+                                    <div class="col-12" style=" display:none; " id="lat">${form.latirude }</div>
+                                    <div class="col-12" style=" display:none; " id="long">${form.longitude }</div>
+                                    <div class="col-12"><input name="rcode"
+                                            value="${form.registration_code }"></div>
+                                    <div class="col-12"><input name="tcode"
+                                            value="${form.apply_teamcode }"></div>
+                                    <div class="col-12">
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-xs-5 col-md-5" style="padding:1%;">
+                                                <img id="pic" style="border:1px solid black;" class="h-100"
+                                                    src=" ${form.logo_path }${form.logo}">
+                                            </div>
+                                            <div class="col-xs-1 col-md-1"></div>
+                                            <div class="col-xs-6 col-md-6">
+                                                <div id="inf" class="row h-100">
+                                                    <div class="col-12 h-25"> <input class="w-100"
+                                                            value="팀명 : ${form.team_name }" disabled></div>
+                                                    <div class="col-12 h-25">
+                                                        <div class="row h-100">
+                                                            <div class="col-4 "><input class="w-100"
+                                                                    value="팀장 이름 : ${form.member_name }" disabled></div>
+                                                            <div class="col-8 "><input class="w-100"
+                                                                    value="팀장 번호 : ${form.member_phone }" disabled>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 h-25"><input class="w-100"
+                                                            value="경기 일정 : ${form.competition_date }" disabled></div>
+                                                    <div class="col-12 h-25"><input id="place" class="w-100"  disabled>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-1 col-md-1"></div>
+
+                        </div>
+                        <br>
+                        <div class="row body">
+                            <div class="col-xs-1 col-md-1"></div>
+                            <div class="col-xs-12 col-md-10">
+                                <div class="row">
+
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-6">
+                                                <div id="map" style="width:100%;height:350px;"></div>
+
+                                                <script>
+                                                    let lat = document.getElementById('lat').innerHTML; //위도
+                                                    let longi = document.getElementById('long').innerHTML; //경도
+
+                                                    console.log(lat);
+                                                    console.log(longi);
+                                                    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                                                        mapOption = {
+                                                            center: new kakao.maps.LatLng(lat, longi), // 지도의 중심좌표
+                                                            level: 5 // 지도의 확대 레벨
+                                                        };
+
+                                                    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+                                                    // 마커가 표시될 위치입니다 
+                                                    var markerPosition = new kakao.maps.LatLng(lat, longi);
+
+                                                    // 마커를 생성합니다
+                                                    var marker = new kakao.maps.Marker({
+                                                        position: markerPosition
+                                                    });
+
+                                                    // 마커가 지도 위에 표시되도록 설정합니다
+                                                    marker.setMap(map);
+
+                                                    var iwContent = '<div style="padding:8px;">경기장소</div>',
+                                                        iwPosition = new kakao.maps.LatLng(lat, longi); //인포윈도우 표시 위치입니다
+                                                    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+
+
+
+
+                                                    // 인포윈도우를 생성합니다
+                                                    var infowindow = new kakao.maps.InfoWindow({
+                                                        position: iwPosition,
+                                                        content: iwContent,
+                                                        removable: iwRemoveable
+                                                    });
+
+                                                    // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+                                                    infowindow.open(map, marker); 
+                                                </script>
+                                            </div>
+                                            <div class="col-xs-12 col-md-6">
+
+                                                <textarea type="text" class="w-100 h-100" placeholder="소개글 불러오기"
+                                                    readonly>${form.content }</textarea>
+                                            </div>
+                                        </div>
+                                        <br>
+
+                                    </div>
+
+
+                                    <div class="col-12">
+                                        <div class="row w-100" style="padding-left: 30px;">
+                                            <div class="col-xs-12 col-md-4"><input class="w-100"
+                                                    value="종목 : ${form.competition_name}" disabled></div>
+                                            <div class="col-xs-12 col-md-4"><input class="w-100"
+                                                    value="인원수 : ${form.headcount}" disabled></div>
+                                            <div class="col-xs-12 col-md-4"><input class="w-100"
+                                                    value="실력 : ${form.ability_name}" disabled></div>
+
+
+                                        </div>
+                                        <br>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <table class="w-100" style="border :1px solid black;">
+                                            <tr>
+                                                <td>로고</td>
+                                                <td>팀명</td>
+                                                <td>팀장</td>
+                                                <td>번호</td>
+                                                <td>실력</td>
+                                                <td>수락/거절</td>
+                                                 <td style="display:none";>팀 코드</td>
+                                            </tr>
+
+
+                                            <c:forEach var="m" items="${match}">
+                                                <tr>
+                                                    <td><img class="list_img" src="${m.logo_path}${m.logo}"></td>
+                                                    <td>${m.team_name}</td>
+                                                    <td>${m.member_name}</td>
+                                                    <td>${m.member_phone}</td>
+                                                    <td>${m.ability_name}</td>
+                                                    <td><button style="background-color : blue; color:white ; border-radius: 8px;">수락</button> <button style="background-color :red; color:white ; border-radius: 8px;">거절</button></td>
+                                                     <td style="display:none";>${m.team_code}</td>
+                                                </tr>
+                                            </c:forEach>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-xs-1 col-md-1"></div>
+
+                        </div>
+
+
+                        <div class="row footer">
+
+
+
+                            <div class="col-12 ">
+
+                                <div class="row ">
+
+                                    <div class="col-md-4" style="display: block;">
+                                    </div>
+
+                                    <div class="col-md-4" style="display: block;">
+                                    </div>
+
+                                    <div class=" col-md-4">
+                                        <div class="row">
+
+                                            <div class="col-xs-12 col-md-9">
+                                                <br>
+                                                <div class="row ">
+                                                    <div class=" col-4 "> <button id="modfiy">수정</button>
+                                                    </div>
+                                                    <div class="col-4 "> <button id="delete">삭제</button>
+                                                    </div>
+                                                    <div class="col-4  "> <button id="back">취소</button>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3"> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <br>
+                        
+                        <script>
+
+                        let lat1 = document.getElementById('lat').innerHTML; //위도
+                        let longi1 = document.getElementById('long').innerHTML; //경도
+                        var place = document.getElementById("place");
+                        
+                        console.log(place);
+                        
+                        var geocoder = new kakao.maps.services.Geocoder();
+
+                        var coord = new kakao.maps.LatLng(lat1, longi1);
+                        var callback = function(result, status) {
+                            if (status === kakao.maps.services.Status.OK) {
                                
+                            	
+                            	  place.value = "장소 : " + result[0].address.address_name;
+                            }
+                        };
 
-                                <div class="col-12">
-                                    <div class="row w-100" style="padding-left: 30px;">
-                                        <div class="col-xs-12 col-md-3" ><input class="w-100" value="경기종류" disabled></div>
-                                        <div class="col-xs-12 col-md-3" ><input class="w-100" value="인원수" disabled></div>
-                                        <div class="col-xs-12 col-md-3" ><input class="w-100" value="상중하" disabled></div>
-                                        <div class="col-xs-12 col-md-3" >
-                                            <select size="1" class="w-100" style="padding-bottom: 4px;">
+                        geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+                        
 
-                                                <option selected value="">선택</option>
-                                                <option>1</option>
-
-                                                <select>
-                                        </div>
-
-                                    </div>
-                                    <br>
-                                </div>
-
-                                <div class="col-12">
-                                    <textarea style="width:100%; height:200px;"
-                                        placeholder="소개글작성(선택)"></textarea>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-xs-1 col-md-1"></div>
+                        $("#back").on("click", function () {
+                        	window.close();
+                        })
+                        
+                         $("#delete").on("click", function () {
+                        	 
+                        	 
+                        	location.href="/deleteform.competition?delcode="+${form.registration_code};
+                        	opener.parent.location.reload();
+                        	window.close();
+                        })
+                        
+                        </script>
                     </div>
 
+                </c:otherwise>
 
-                    <div class="row footer">
-
-
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="row">
-                                        <div class="col-2"></div>
-                                        <div class="col-10">
-                                            <br> <button type="submit" id="request" style="float: right;">신청</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-6">
-                                    <div class="row">
-
-                                        <div class="col-10">
-                                            <br> <button type="button" id="cancel" style="float: left;">취소</button>
-                                        </div>
-                                        <div class="col-2"></div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-
-
-
-            </form>
+            </c:choose>
 
         </body>
 
