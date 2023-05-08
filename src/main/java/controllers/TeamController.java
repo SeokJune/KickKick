@@ -26,7 +26,9 @@ import dto.TeamDTO;
 @WebServlet("*.team")
 public class TeamController extends HttpServlet {
 	
-	
+	private String XssCheck(String text) {
+		return text.replaceAll("<script>", "&lt;script");	
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=utf8"); // response의 한글패치
@@ -114,9 +116,15 @@ public class TeamController extends HttpServlet {
 			// 팀 페이지
 			else if(cmd.equals("/view.team")) {
 				int team_code = Integer.parseInt(request.getParameter("team_code"));
+				int member_code = (int)request.getSession().getAttribute("code");
+				
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
 				TeamDTO team_info = dao.team_info(team_code);
+				List member_team_code = dao.team_code(member_code);
+				
 				request.setAttribute("team_info", team_info);
+				request.setAttribute("member_code", member_code);
+				request.setAttribute("member_team_code", member_team_code);
 				request.getRequestDispatcher("/team/team_view.jsp").forward(request, response); 
 			} else if (cmd.equals("/my_team_list.team")) {
 				
