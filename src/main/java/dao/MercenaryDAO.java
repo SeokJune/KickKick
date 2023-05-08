@@ -310,20 +310,6 @@ public class MercenaryDAO {
 		}
 	}
 	
-	// register_list : 해당하는 용병 등록 삭제 (mercenary_application)
-//		public int delete_mercenary_application(int code) throws Exception {
-//			String sql = "delete from mercenary_application where mercenary_registration_code = ?";
-//			try(
-//					Connection con = this.getConnection();
-//					PreparedStatement pstat = con.prepareStatement(sql);){
-//				pstat.setInt(1, code);
-//				
-//				int result = pstat.executeUpdate();
-//				con.commit();
-//				return result;
-//			}
-//		}
-	
 	// register_list : 로그인 ID의 팀 코드와 신청하려는 팀 코드가 같은지 검사
 	public boolean is_apply_same_team(String login_id, int team_code) throws Exception {
 		String sql = "select * from member m "
