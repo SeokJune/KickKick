@@ -89,7 +89,7 @@ div {
 		<div class="row body" style="border-bottom: 1px solid #d2d4d6;">
 			<div class="col-12 pb-4" style="height: auto;min-height:500px;">${board.content}</div>
 			<div class="col text-center">
-				<c:if test="${sessionScope.nickname ne board.member_nickname}">
+				<c:if test="${sessionScope.code ne null and sessionScope.nickname ne board.member_nickname}">
 				<button type="button" class="btn btn-primary">좋아요</button>
 				<button type="button" class="btn btn-danger" id="to_report">신고</button>
 				</c:if>
@@ -335,8 +335,7 @@ div {
 						alert("내용을 입력해주세요.");
 					}
 					else {
-						let reply_box = $("#sample_box").children().clone();
-
+						
 						$.ajax({
 							url: "/insert.reply",
 							type: "post",
@@ -352,20 +351,22 @@ div {
 					$("#reply_count").text("댓글 " + resp.length + "개");
 					$("#replies_box").html("");
 					for (let i = 0; i < resp.length; i++) {
+						let reply_box = $("#sample_box").children().clone();
 						$("#replies_box").append(reply_box);
-						$(".r_code").last().val(resp[i].code);
-						$(".r_nickname").last().text(resp[i].member_nickname);
-						$(".r_date").last().text(calculateTime(resp[i].reg_date));
+						reply_box.find(".r_code").val(resp[i].code);
+						reply_box.find(".r_nickname").text(resp[i].member_nickname);
+						reply_box.find(".r_date").text(calculateTime(resp[i].reg_date));
 						if(resp[i].mod_date){
-							$(".r_date").last().append("(수정됨) · ")
+							reply_box.find(".r_date").append("(수정됨) · ");
 						};
-						$(".r_like").last().text("👍🏻" + resp[i].like_count);
+						reply_box.find(".r_like").text("👍🏻" + resp[i].like_count);
 						if(${sessionScope.code eq null}){
-							$(".right").last().remove()
+							$(".right").last().remove();
 						}
 						else{
+							let session_nickname = "${sessionScope.nickname}";
 							let nickname = resp[i].member_nickname;
-							if(${sessionScope.nickname eq nickname}){
+							if(session_nickname==nickname){
 								$(".reply_report").last().remove();
 							}
 							else{
@@ -373,7 +374,7 @@ div {
 								$(".reply_delete").last().remove();
 							}
 						};
-						$(".r_content").last().text(resp[i].content);
+						reply_box.find(".r_content").text(resp[i].content);
 					}
 				});	
 			};
@@ -434,6 +435,7 @@ div {
 						if(resp==1){
 						reply_box.css("display", "block");
 						reply_box.find(".r_content").html(r_content);
+						reply_box.find(".r_date").append("(수정됨) · ");
 						update_box.css("display", "none");
 						}
 					});

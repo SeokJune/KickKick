@@ -460,7 +460,7 @@ public class CompetitionDAO {
 	}
 
 //	//신청폼에서 수락하기를 눌렀을때
-//		public void accept(String code) throws Exception{
+//		public void accept(String reg_code , String team_code) throws Exception{
 //			String sql = "delete from competition_registration where code = ?";
 //			try(Connection con = this.getConnection();
 //					PreparedStatement pstat = con.prepareStatement(sql);)
