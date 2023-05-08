@@ -42,8 +42,10 @@ public class CompetitionController extends HttpServlet {
 		try {
 			if(cmd.equals("/registration.competition")) { //매칭등록페이지에 출력해줄것들
 
+				int code = (int) request.getSession().getAttribute("code");
+				
 				//팀명 선택
-				List<TeamDTO> teamname = CompetitionDAO.getinstance().teamname();
+				List<TeamDTO> teamname = CompetitionDAO.getinstance().teamname(code);
 				request.setAttribute("teamname", teamname);
 
 				//실력 선택
@@ -187,7 +189,12 @@ public class CompetitionController extends HttpServlet {
 				//로그인할때의 code의 세션값을 가져옴
 				int code = (int) request.getSession().getAttribute("code");
 				request.setAttribute("code", code);
-
+				
+				//로그인한 사람의 code가 가입되어있는 팀들중 하나 선택해서 그 팀의 코드 가져와야함
+				List<TeamDTO> team = CompetitionDAO.getinstance().getteamcode(code);
+				request.setAttribute("team", team);
+				
+				
 				//신청하는 팀의 실력 선택
 				List<AbilityDTO> ability = CompetitionDAO.getinstance().ability();
 				request.setAttribute("ability", ability);
@@ -215,6 +222,7 @@ public class CompetitionController extends HttpServlet {
 				String tcode1 = request.getParameter("tcode");
 				System.out.println(tcode1);
 				int tcode = Integer.parseInt(tcode1);
+				
 
 				String ability1 = request.getParameter("ability");
 				System.out.println(ability1);
@@ -236,7 +244,20 @@ public class CompetitionController extends HttpServlet {
 				System.out.println(delcode);
 
 				CompetitionDAO.getinstance().delete_application(delcode);
+			
 			}
+//			}else if(cmd.equals("/acceptform.competition")) { //신청폼에서 수락하기를 눌렀을때
+//				
+//				String code = request.getParameter("code");
+//				CompetitionDAO.getinstance().accpet(code);
+//				
+//			}else if(cmd.equals("/refuseform.competition")) {//신청폼에서 거절하기를 눌렀을때
+//				
+//			
+//				String code = request.getParameter("code");
+//				CompetitionDAO.getinstance().refuse(code);
+//				
+//			}
 
 
 

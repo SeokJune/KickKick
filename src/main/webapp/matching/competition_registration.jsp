@@ -272,7 +272,7 @@
                                         </div>
 
                                         <div class="col-xs-12 col-md-12" style="padding: 1%;">
-                                            <img id="pic" class="h-100" style="border:1px solid black;" src="/image/competition_img/team_logo.png">
+                                            <img id="pic" style="border:1px solid black;" src="/image/competition_img/upload.png">
                                         </div>
 
                                     </div>

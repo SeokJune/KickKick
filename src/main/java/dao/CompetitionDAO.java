@@ -123,40 +123,44 @@ public class CompetitionDAO {
 		}
 	}
 
-	public List<TeamDTO> teamname() throws Exception{
-		String sql = "select * from team" ;
+	public List<TeamDTO> teamname(int c) throws Exception{
+		String sql = "select * from team where team.member_code = ?" ;
 		try(Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);
-				ResultSet rs = pstat.executeQuery();)
+				PreparedStatement pstat = con.prepareStatement(sql);)
+
 		{
 			List<TeamDTO> teamname = new ArrayList<>();
 
-			while(rs.next()) {
+			pstat.setInt(1, c);
 
-				int code = 	rs.getInt("code");
-				int logo_path_code = rs.getInt("logo_path_code");
-				//				String logo_path = rs.getString("logo_path");
-				//				String logo_name = rs.getString("logo_name");
-				String logo = rs.getString("logo");
-				String name = rs.getString("name");
-				int member_code = rs.getInt("member_code");
-				//				String member_name = rs.getString("member_name");
-				//				String member_phone = rs.getString("member_phone");
-				int hometown_code = rs.getInt("hometown_code");
-				//				String hometown_name = rs.getString("hometown_name");
-				String outline = rs.getString("outline");
-				String content = rs.getString("content");
-				Timestamp reg_date = rs.getTimestamp("reg_date");
-				Timestamp mod_date = rs.getTimestamp("mod_date");
-				Timestamp del_date = rs.getTimestamp("del_date");
+			try(ResultSet rs = pstat.executeQuery(); )
+			{
+				while(rs.next()) {
 
-				TeamDTO dto = new TeamDTO(code,logo_path_code,logo,name,member_code,hometown_code,outline,content,reg_date,mod_date,del_date);
-				teamname.add(dto);
+					int code = 	rs.getInt("code");
+					int logo_path_code = rs.getInt("logo_path_code");
+					//				String logo_path = rs.getString("logo_path");
+					//				String logo_name = rs.getString("logo_name");
+					String logo = rs.getString("logo");
+					String name = rs.getString("name");
+					int member_code = rs.getInt("member_code");
+					//				String member_name = rs.getString("member_name");
+					//				String member_phone = rs.getString("member_phone");
+					int hometown_code = rs.getInt("hometown_code");
+					//				String hometown_name = rs.getString("hometown_name");
+					String outline = rs.getString("outline");
+					String content = rs.getString("content");
+					Timestamp reg_date = rs.getTimestamp("reg_date");
+					Timestamp mod_date = rs.getTimestamp("mod_date");
+					Timestamp del_date = rs.getTimestamp("del_date");
 
+					TeamDTO dto = new TeamDTO(code,logo_path_code,logo,name,member_code,hometown_code,outline,content,reg_date,mod_date,del_date);
+					teamname.add(dto);
+
+				}
+
+				return teamname;
 			}
-
-			return teamname;
-
 		}
 	}
 
@@ -308,7 +312,7 @@ public class CompetitionDAO {
 		}
 	}
 
-	//신청할때 출력해주는 것
+	//신청할때 출력해주는 것 
 	public CompetitionApplyFormDTO show_applyform(String date) throws Exception{
 		String sql = "select tv.name team_name , tv.member_name, tv.member_phone, tv.logo_path, tv.logo , tv.member_code, \r\n"
 				+ "cr.competition_date , cr.latirude, cr.longitude , cr.content, cr.code registration_code,\r\n"
@@ -351,6 +355,33 @@ public class CompetitionDAO {
 		}
 	}
 
+	//신청할때 로그인한사람의 팀코드를 뽑아주는것
+	public List<TeamDTO> getteamcode(int c) throws Exception{
+		String sql = "select code,name from team where team.member_code = ? " ;
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);)
+
+		{
+			pstat.setInt(1, c);
+
+			try(ResultSet rs = pstat.executeQuery(); )
+			{
+				List<TeamDTO> list = new ArrayList<>();
+				
+				while(rs.next()) {
+					int code = 	rs.getInt("code");
+					String name = 	rs.getString("name");
+					TeamDTO dto = new TeamDTO(code,name);
+					list.add(dto);
+
+				}
+
+				return list;
+			}
+		}
+	}
+
+
 	//신청했을떄 db에 들어가는 데이터
 	public void apply(CompetitionApplicationDTO dto) throws Exception{
 		String sql = "insert into competition_application values(competition_application_code.nextval,?,?,?,?,?,sysdate,?,?)";
@@ -388,7 +419,7 @@ public class CompetitionDAO {
 			pstat.setString(1, rcode);
 
 			try( ResultSet rs = pstat.executeQuery(); )
-			
+
 			{
 				List<CompetitionApplicationListDTO> list = new ArrayList<>();
 
@@ -405,9 +436,9 @@ public class CompetitionDAO {
 
 					CompetitionApplicationListDTO dto = new CompetitionApplicationListDTO(logo_path,logo,team_name,member_name,member_phone,ability_name,content,team_code);
 					list.add(dto);
-					
+
 				}
-				
+
 				return list;
 			}
 		}
@@ -427,6 +458,21 @@ public class CompetitionDAO {
 
 		}
 	}
+
+//	//신청폼에서 수락하기를 눌렀을때
+//		public void accept(String code) throws Exception{
+//			String sql = "delete from competition_registration where code = ?";
+//			try(Connection con = this.getConnection();
+//					PreparedStatement pstat = con.prepareStatement(sql);)
+//
+//			{
+//				pstat.setString(1, code);
+//
+//				pstat.executeUpdate();
+//				con.commit();
+//
+//			}
+//		}
 
 
 

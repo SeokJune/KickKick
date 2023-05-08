@@ -68,9 +68,9 @@
                     height: 200px;
                     border-radius: 100px;
                 }
-                
-                .list_img{
-                	width: 100px;
+
+                .list_img {
+                    width: 100px;
                     height: 100px;
                     border-radius: 50px;
                 }
@@ -89,20 +89,27 @@
                             <div class="col-xs-1 col-md-1"></div>
                             <div class="col-xs-10 col-md-10">
                                 <div class="row">
-                                    <div class="col-12" style="color:red;">${status[2].name} ${code} ${form.member_code}
+                                    <div class="col-12" style="color:red; font-size:20px;">${status[2].name}
                                     </div>
 
                                     <div class="col-12" style=" display:none; " id="lat">${form.latirude }</div>
                                     <div class="col-12" style=" display:none; " id="long">${form.longitude }</div>
+
+
                                     <div class="col-12"><input type="hidden" name="rcode"
                                             value="${form.registration_code }"></div>
+
                                     <div class="col-12"><input type="hidden" name="tcode"
                                             value="${form.apply_teamcode }"></div>
+
+
+
+
                                     <div class="col-12">
                                         <br>
                                         <div class="row">
                                             <div class="col-xs-5 col-md-5" style="padding:1%;">
-                                                <img id="pic" style="border:1px solid black;" class="h-100"
+                                                <img id="pic" style="border:1px solid black;"
                                                     src=" ${form.logo_path }${form.logo}">
                                             </div>
                                             <div class="col-xs-1 col-md-1"></div>
@@ -119,11 +126,12 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-12 h-25"> <input  class="w-100"  value="경기일정 : ${form.competition_date }" disabled>
+                                                    <div class="col-12 h-25"> <input class="w-100"
+                                                            value="경기일정 : ${form.competition_date }" disabled>
                                                     </div>
-                                                    <div class="col-12 h-25" >
-                                                   <input id="place" class="w-100"  disabled>
-                                                     
+                                                    <div class="col-12 h-25">
+                                                        <input id="place" class="w-100" disabled>
+
                                                     </div>
 
                                                 </div>
@@ -232,6 +240,22 @@
                                     </div>
 
                                     <div class="col-12">
+                                        <select size="1" id="team" name="team" class="w-100"
+                                            style="padding-bottom: 4px;">
+
+                                            <option selected value="">팀명선택</option>
+
+                                            <c:forEach var="t" items="${team}">
+                                                <option value="${t.code}">${t.name}</option>
+
+                                            </c:forEach>
+
+                                        </select>
+
+                                    </div>
+
+                                    <div class="col-12">
+                                        <br>
                                         <textarea id="tx" name="content" style="width:100%; height:200px;"
                                             placeholder="소개글작성(선택)"></textarea>
                                     </div>
@@ -279,28 +303,28 @@
 
                     <script>
 
-                    let lat1 = document.getElementById('lat').innerHTML; //위도
-                    let longi1 = document.getElementById('long').innerHTML; //경도
-                    var place = document.getElementById("place");
-                    
-                    console.log(place);
-                    
-                    var geocoder = new kakao.maps.services.Geocoder();
+                        let lat1 = document.getElementById('lat').innerHTML; //위도
+                        let longi1 = document.getElementById('long').innerHTML; //경도
+                        var place = document.getElementById("place");
 
-                    var coord = new kakao.maps.LatLng(lat1, longi1);
-                    var callback = function(result, status) {
-                        if (status === kakao.maps.services.Status.OK) {
-                           
-                        	
-                        	  place.value = "장소 : " + result[0].address.address_name;
-                        }
-                    };
+                        console.log(place);
 
-                    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-                    
-                    
-                    
-                    
+                        var geocoder = new kakao.maps.services.Geocoder();
+
+                        var coord = new kakao.maps.LatLng(lat1, longi1);
+                        var callback = function (result, status) {
+                            if (status === kakao.maps.services.Status.OK) {
+
+
+                                place.value = "장소 : " + result[0].address.address_name;
+                            }
+                        };
+
+                        geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+
+
+
+
 
                         $("#request").on("click", function () {
 
@@ -308,9 +332,12 @@
                                 alert("실력을 선택하십시오");
                                 return false;
 
+                            } else if ($("#team").val() == "") {
+                                alert("팀명을 선택하십시오");
+                                return false;
                             }
                             else {
-                                location.href = "/apply.competition?status=" + ${ status[2].code } +"&rcode=" + ${ form.registration_code } +"&tcode=" + ${ form.apply_teamcode } +"&ability=" + $("select[name=ab] option:selected").val() + "&content=" + $("#tx").val();
+                                location.href = "/apply.competition?status=" + ${ status[2].code } +"&rcode=" + ${ form.registration_code } + "&tcode=" + $("select[name=team] option:selected").val() + "&ability=" + $("select[name=ab] option:selected").val() + "&content=" + $("#tx").val();
                                 window.close(); //팝업창 닫는거
 
                             }
@@ -319,12 +346,12 @@
 
 
                         $("#cancel").on("click", function () {
-                             window.close();
-                        	
+                            window.close();
+
                         })
-                        
-                        
-                        
+
+
+
 
                     </script>
                 </c:when>
@@ -336,19 +363,20 @@
                             <div class="col-xs-1 col-md-1"></div>
                             <div class="col-xs-10 col-md-10">
                                 <div class="row">
-                                    <div class="col-12" style="color:red;">${status[2].name}</div>
+                                    <div class="col-12" style="color:red; font-size:20px; ">${status[2].name}</div>
 
                                     <div class="col-12" style=" display:none; " id="lat">${form.latirude }</div>
                                     <div class="col-12" style=" display:none; " id="long">${form.longitude }</div>
-                                    <div class="col-12"><input name="rcode"
+                                    <div class="col-12"><input type="hidden" name="rcode"
                                             value="${form.registration_code }"></div>
-                                    <div class="col-12"><input name="tcode"
+
+                                    <div class="col-12"><input type="hidden" name="tcode"
                                             value="${form.apply_teamcode }"></div>
                                     <div class="col-12">
                                         <br>
                                         <div class="row">
                                             <div class="col-xs-5 col-md-5" style="padding:1%;">
-                                                <img id="pic" style="border:1px solid black;" class="h-100"
+                                                <img id="pic" style="border:1px solid black;"
                                                     src=" ${form.logo_path }${form.logo}">
                                             </div>
                                             <div class="col-xs-1 col-md-1"></div>
@@ -367,7 +395,7 @@
                                                     </div>
                                                     <div class="col-12 h-25"><input class="w-100"
                                                             value="경기 일정 : ${form.competition_date }" disabled></div>
-                                                    <div class="col-12 h-25"><input id="place" class="w-100"  disabled>
+                                                    <div class="col-12 h-25"><input id="place" class="w-100" disabled>
                                                     </div>
 
                                                 </div>
@@ -468,7 +496,7 @@
                                                 <td>번호</td>
                                                 <td>실력</td>
                                                 <td>수락/거절</td>
-                                                 <td style="display:none";>팀 코드</td>
+                                                <td>팀 코드</td>
                                             </tr>
 
 
@@ -479,8 +507,13 @@
                                                     <td>${m.member_name}</td>
                                                     <td>${m.member_phone}</td>
                                                     <td>${m.ability_name}</td>
-                                                    <td><button style="background-color : blue; color:white ; border-radius: 8px;">수락</button> <button style="background-color :red; color:white ; border-radius: 8px;">거절</button></td>
-                                                     <td style="display:none";>${m.team_code}</td>
+                                                    <td>
+                                                        <button class="accept"
+                                                            style="background-color : blue; color:white ; border-radius: 8px;">수락</button>
+                                                        <button class="refuse"
+                                                            style="background-color :red; color:white ; border-radius: 8px;">거절</button>
+                                                    </td>
+                                                    <td class="t">${m.team_code}</td>
                                                 </tr>
                                             </c:forEach>
                                         </table>
@@ -513,11 +546,12 @@
                                             <div class="col-xs-12 col-md-9">
                                                 <br>
                                                 <div class="row ">
-                                                    <div class=" col-4 "> <button id="modfiy">수정</button>
+
+                                                    <div class="col-6 "> <button id="delete"
+                                                            style="float:right;">삭제</button>
                                                     </div>
-                                                    <div class="col-4 "> <button id="delete">삭제</button>
-                                                    </div>
-                                                    <div class="col-4  "> <button id="back">취소</button>
+                                                    <div class="col-6  "> <button id="back"
+                                                            style="float:left;">닫기</button>
                                                     </div>
 
 
@@ -531,41 +565,52 @@
 
                         </div>
                         <br>
-                        
+
                         <script>
 
-                        let lat1 = document.getElementById('lat').innerHTML; //위도
-                        let longi1 = document.getElementById('long').innerHTML; //경도
-                        var place = document.getElementById("place");
-                        
-                        console.log(place);
-                        
-                        var geocoder = new kakao.maps.services.Geocoder();
+                            let lat1 = document.getElementById('lat').innerHTML; //위도
+                            let longi1 = document.getElementById('long').innerHTML; //경도
+                            var place = document.getElementById("place");
 
-                        var coord = new kakao.maps.LatLng(lat1, longi1);
-                        var callback = function(result, status) {
-                            if (status === kakao.maps.services.Status.OK) {
-                               
-                            	
-                            	  place.value = "장소 : " + result[0].address.address_name;
-                            }
-                        };
+                            console.log(place);
 
-                        geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-                        
+                            var geocoder = new kakao.maps.services.Geocoder();
 
-                        $("#back").on("click", function () {
-                        	window.close();
-                        })
-                        
-                         $("#delete").on("click", function () {
-                        	 
-                        	 
-                        	location.href="/deleteform.competition?delcode="+${form.registration_code};
-                        	opener.parent.location.reload();
-                        	window.close();
-                        })
-                        
+                            var coord = new kakao.maps.LatLng(lat1, longi1);
+                            var callback = function (result, status) {
+                                if (status === kakao.maps.services.Status.OK) {
+
+
+                                    place.value = "장소 : " + result[0].address.address_name;
+                                }
+                            };
+
+                            geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+
+
+                            $("#back").on("click", function () {
+                                window.close();
+                            })
+
+                            $("#delete").on("click", function () {
+
+
+                                location.href = "/deleteform.competition?delcode=" + ${ form.registration_code };
+                                opener.parent.location.reload();
+                                window.close();
+                            })
+
+                            $(".accept").on("click", function () {
+
+                               let code =  $(this).parent().next().html();
+                               location.href = "/acceptform.competition?team_code="+code;
+                                   
+                            })
+
+                            $(".refuse").on("click", function () {
+                            	let code =  $(this).parent().next().html();
+                                location.href = "/refuseform.competition?team_code="+code;
+                            })
                         </script>
                     </div>
 
