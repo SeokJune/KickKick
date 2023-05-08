@@ -247,17 +247,19 @@ public class CompetitionController extends HttpServlet {
 			
 			}
 //			}else if(cmd.equals("/acceptform.competition")) { //신청폼에서 수락하기를 눌렀을때
-//				
-//				String code = request.getParameter("code");
-//				CompetitionDAO.getinstance().accpet(code);
-//				
-//			}else if(cmd.equals("/refuseform.competition")) {//신청폼에서 거절하기를 눌렀을때
-//				
+//			String status_cdoe = request.getParameter("status_code"); //
+//			String reg_code = request.getParameter("reg_code"); //해당글의 코드 
+//			String team_code = request.getParameter("team_code"); //해당 팀의 코드
+//			CompetitionDAO.getinstance().accpet(reg_code,team_code);
 //			
-//				String code = request.getParameter("code");
-//				CompetitionDAO.getinstance().refuse(code);
-//				
-//			}
+//		}else if(cmd.equals("/refuseform.competition")) {//신청폼에서 거절하기를 눌렀을때
+//			
+//		
+//			String reg_code = request.getParameter("reg_code");
+//			String team_code = request.getParameter("team_code");
+//			CompetitionDAO.getinstance().refuse(reg_code,team_code);
+//			
+//		}
 
 
 

@@ -364,6 +364,7 @@
                             <div class="col-xs-10 col-md-10">
                                 <div class="row">
                                     <div class="col-12" style="color:red; font-size:20px; ">${status[2].name}</div>
+              
 
                                     <div class="col-12" style=" display:none; " id="lat">${form.latirude }</div>
                                     <div class="col-12" style=" display:none; " id="long">${form.longitude }</div>
@@ -603,13 +604,13 @@
                             $(".accept").on("click", function () {
 
                                let code =  $(this).parent().next().html();
-                               location.href = "/acceptform.competition?team_code="+code;
+                               location.href = "/acceptform.competition?team_code="+code+"&reg_code="+${form.registration_code }+"&status_code"+${status[3].code};
                                    
                             })
 
                             $(".refuse").on("click", function () {
                             	let code =  $(this).parent().next().html();
-                                location.href = "/refuseform.competition?team_code="+code;
+                                location.href = "/refuseform.competition?team_code="+code+"&reg_code="+${form.registration_code }+"&status_code"+${status[4].code};
                             })
                         </script>
                     </div>
