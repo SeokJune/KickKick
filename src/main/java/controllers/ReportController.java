@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import commons.Settings;
 import dao.BoardDAO;
 import dao.ReplyDAO;
 import dao.ReportDAO;
@@ -78,7 +80,41 @@ public class ReportController extends HttpServlet {
 			else if(cmd.equals("/list.report")) {
 				//selectAll
 				
-				response.sendRedirect("/report/report_list.jsp?cpage=1");
+				//현재 페이지 설정
+				int current_page = Integer.parseInt(request.getParameter("cpage"));
+				request.setAttribute("cpage", current_page);
+				
+				//검색 옵션 설정(wide)
+				String wide_option = request.getParameter("wide_option");
+				if(wide_option==null) {
+					wide_option="target";
+				}
+				request.setAttribute("wide_option", wide_option);
+				
+				//검색 옵션(narrow) 설정
+				String narrow_option = request.getParameter("narrow_option");
+				if(narrow_option==null) {
+					narrow_option="id";
+				}
+				request.setAttribute("narrow_option", narrow_option);
+				
+				//검색어 설정
+				String search_word = request.getParameter("search_word");
+				if(search_word==null) {
+					search_word="";
+				}
+				request.setAttribute("search_word", search_word);
+				
+				//페이지네이션 설정
+				String page_navi = report_dao.get_page_navi(current_page,wide_option,narrow_option,search_word);
+				int start = current_page*Settings.BOARD_RECORD_COUNT_PER_PAGE-(Settings.BOARD_RECORD_COUNT_PER_PAGE-1);
+				int end = current_page*Settings.BOARD_RECORD_COUNT_PER_PAGE;
+//				List<BoardDTO> list = report_dao.select_list(start,end,wide_option,narrow_option,search_word);
+
+//				request.setAttribute("list", list);
+				request.setAttribute("navi", page_navi);
+
+				request.getRequestDispatcher("/report/report_list.jsp").forward(request, response);
 			}
 			else if(cmd.equals("/select.report")) {
 				//select

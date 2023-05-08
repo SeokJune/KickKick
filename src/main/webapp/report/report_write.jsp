@@ -120,7 +120,7 @@
 						reason_select=$(this).val();
 					}
 				});
-				$("#report").on("click",funciton(){
+				$("#report").on("click",function(){
 					if(confirm("신고하시겠습니까?")){
 						$.ajax({
 							url:"/insert.report",
