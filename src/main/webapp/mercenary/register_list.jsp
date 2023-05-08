@@ -62,7 +62,7 @@ td {
 
 <body>
 	<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
-	<h2 class="mb-5" style="text-align:center;">용병 등록 리스트</h2>
+		<h2 class="mb-5" style="text-align: center;">용병 등록 리스트</h2>
 		<div class="table-responsive">
 			<table class="table">
 				<thead>
@@ -118,11 +118,36 @@ td {
 								</c:otherwise>
 							</c:choose>
 							<td>${i.headcount}명</td>
-							<td>
-								<button type="button" class="btn btn-primary btn-sm" onclick="valid_same_team(${i.code},${i.team_code});valid_apply(${i.code},${i.competition_result_code})">신청</button>
+							<td align="center">
+							<c:choose>
+								<c:when test="${login_id.equals(i.leader_id)}">
+									<button type="button" class="btn btn-primary btn-sm">수정</button>
+									<button type="button" class="btn btn-primary btn-sm" onclick="delete_mercenary_register(${i.code})">삭제</button>
+								</c:when>
+								<c:otherwise>
+									<button type="button" class="btn btn-primary btn-sm"
+									onclick="valid_same_team(${i.code},${i.team_code});valid_apply(${i.code},${i.competition_result_code})">신청</button>
+								</c:otherwise>
+							</c:choose>
 							</td>
 						</tr>
 					</c:forEach>
+					<tr height="20">
+						<td align="center" colspan="7">${navi}</td>
+					</tr>
+					<tr>
+						<td align="center" colspan="7">
+							<form action="/to_register_list.mercenary">
+								<input type="hidden" name="cpage" value="1">
+								
+								<select name="searchOption">
+									<option value='team_name'>팀명</option>
+								</select>
+								<input type="text" name="searchWord" style="width: 300px" placeholder="검색해주세요">
+								<button class="btn btn-primary btn-sm">검색</button>
+							</form>
+						</td>
+					</tr>
 					<tr>
 						<td colspan=7 align=center><a href="/index.jsp"><input
 								type="button" value="뒤로가기" class="btn btn-primary"></a></td>
@@ -132,6 +157,30 @@ td {
 		</div>
 	</div>
 	<script>
+	// 수정 버튼 눌렀을 때
+	function modify_mercenary_register(code){
+		
+	}
+	
+	// 삭제 버튼 눌렀을 때
+	function delete_mercenary_register(code){
+		$.ajax({
+			url:"/delete_mercenary_register_ajax.mercenary",
+			async: false,
+			type:"post",
+			dataType: "json",
+			data:{
+				code:code
+			}
+		}).done(function(resp) {
+			console.log(resp);
+			if(resp == 1){
+				alert("삭제 완료!");
+				location.reload();
+			}
+		})
+	}
+	
 	var flag = true;
 	
 	// 로그인 ID의 팀 코드와 신청하려는 팀 코드가 같은지 검사
@@ -179,6 +228,8 @@ td {
 			}
 		})
 	}
+	
+	
 	</script>
 </body>
 </html>

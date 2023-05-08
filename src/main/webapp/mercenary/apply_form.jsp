@@ -191,7 +191,7 @@
 			<div class="footer">
 				<div class="col-xl-12 col-md-12 col-xs-12 text-center">
 					<a><input type="submit" value="신청" class="btn btn-primary"></a>
-					<a href="/to_register_list.mercenary"><input type="button"
+					<a href="/to_register_list.mercenary?cpage=1"><input type="button"
 						value="취소" class="btn btn-primary"></a>
 				</div>
 			</div>

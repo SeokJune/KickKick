@@ -8,7 +8,7 @@ public class DateCalculationUtils {
 	
 	public static String date_format_timestamp(Timestamp writeDate) {
 	      
-		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd a HH:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("yy년 MM월 dd일 HH:mm");
 		String strDate = sdf.format(writeDate);
 		
 		return strDate;
@@ -22,7 +22,7 @@ public class DateCalculationUtils {
 		Timestamp t = Timestamp.valueOf(writeDate);
 		
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd a HH:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("yy년 MM월 dd일 HH:mm");
 		String strDate = sdf.format(t);
 		
 		return strDate;

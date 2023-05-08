@@ -14,9 +14,11 @@ private Timestamp competition_date;
 private int status_code;
 private String status_name;
 private String kind_name;
-public CompetitionListDTO() {} ;
-public CompetitionListDTO(String team_name, String member_name, String member_phone, String logo_path, String logo, double latirude, double longitude,
-		Timestamp competition_date, int status_code, String status_name, String kind_name) {
+private int code;
+public CompetitionListDTO() {}
+public CompetitionListDTO(String team_name, String member_name, String member_phone, String logo_path, String logo,
+		double latirude, double longitude, Timestamp competition_date, int status_code, String status_name,
+		String kind_name, int code) {
 	super();
 	this.team_name = team_name;
 	this.member_name = member_name;
@@ -29,6 +31,7 @@ public CompetitionListDTO(String team_name, String member_name, String member_ph
 	this.status_code = status_code;
 	this.status_name = status_name;
 	this.kind_name = kind_name;
+	this.code = code;
 }
 public String getTeam_name() {
 	return team_name;
@@ -96,6 +99,11 @@ public String getKind_name() {
 public void setKind_name(String kind_name) {
 	this.kind_name = kind_name;
 }
-
+public int getCode() {
+	return code;
+}
+public void setCode(int code) {
+	this.code = code;
+} ;
 
 }

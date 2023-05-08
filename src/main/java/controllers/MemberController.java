@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import com.google.gson.Gson;
 import commons.EncryptionUtils;
 import commons.SensUtils;
 import dao.MemberDAO;
+import dto.CompetitionDTO;
 import dto.MemberDTO;
 
 @WebServlet("*.member")

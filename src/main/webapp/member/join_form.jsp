@@ -24,8 +24,7 @@
 	font-family: 'NanumSquareNeoBold';
 }
 
-html,
-body {
+html, body {
 	background-color: #76b852;
 }
 
@@ -198,8 +197,8 @@ label {
 								<div class="row input">
 									<div class="col-12">
 										<input type="password" class="password form-control rounded" aria-label="password" aria-describedby="password" id="member_pw" name="member_pw" maxlength="20" />
-										<div class="valid-feedback" style="font-size:x-small;">Good</div>
-										<div class="invalid-feedback" style="font-size:x-small;">Wrong</div>
+										<div class="valid-feedback" style="font-size: x-small;">Good</div>
+										<div class="invalid-feedback" style="font-size: x-small;">Wrong</div>
 									</div>
 								</div>
 								<!-- 아이디 중복 & 정규식 확인 메세지 -->
@@ -235,8 +234,8 @@ label {
 								<div class="row input">
 									<div class="col-12">
 										<input type="password" class="password_check form-control rounded mt-1" aria-label="password" aria-describedby="password_check" id="password_check" maxlength="20" />
-										<div class="valid-feedback" style="font-size:x-small;">Good</div>
-										<div class="invalid-feedback" style="font-size:x-small;">Wrong</div>
+										<div class="valid-feedback" style="font-size: x-small;">Good</div>
+										<div class="invalid-feedback" style="font-size: x-small;">Wrong</div>
 									</div>
 								</div>
 							</div>
