@@ -195,6 +195,7 @@ div {
 							</div>
 						</div>
 					</div>
+					<c:set var="doneLoop" value="true"/>
 				</c:when>
 				
 				
@@ -231,6 +232,7 @@ div {
 							</div>
 						</div>
 					</div>
+					<c:set var="doneLoop" value="true"/>
 					</c:when>
 					
 					<c:otherwise>
@@ -266,10 +268,11 @@ div {
 							</div>
 						</div>
 					</div>
-					</c:otherwise>
-					
-				</c:choose>
-				</c:forEach> --%>
+					<c:set var="doneLoop" value="true"/>
+				</c:otherwise>
+			</c:choose>
+			</c:if>
+		</c:forEach> 
 				
 				
 				
