@@ -164,7 +164,7 @@
 									<a href="/" class="nav_a link-dark d-inline-flex text-decoration-none rounded">문의하기</a>
 								</li>
 								<li>
-									<a href="/list.report?cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">신고내역</a>
+									<a href="/list.report?b_c=1003&cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">신고내역</a>
 								</li>
 							</ul>
 						</div>
