@@ -121,8 +121,8 @@ td {
 							<td align="center">
 							<c:choose>
 								<c:when test="${login_id.equals(i.leader_id)}">
-									<button type="button" class="btn btn-primary btn-sm">수정</button>
-									<button type="button" class="btn btn-primary btn-sm" onclick="delete_mercenary_register(${i.code})">삭제</button>
+									<a href="/to_register_modify_form.mercenary?code=${i.code}"><input type="button" class="btn btn-outline-primary btn-sm" value="수정"></a>
+									<button type="button" class="btn btn-outline-primary btn-sm" onclick="delete_mercenary_register(${i.code})">삭제</button>
 								</c:when>
 								<c:otherwise>
 									<button type="button" class="btn btn-primary btn-sm"
