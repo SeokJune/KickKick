@@ -87,79 +87,10 @@ div {
 		<div class="row team_info2">
 			<div class="col-md-2 col-xl-2"></div>
 			
-				<c:choose>
-				<c:when test="${team_info.member_code == member_code}">
-					<div class="col-md-8 col-xl-8">
-						<div class="row">
-								<ul class="nav nav-tabs" style="text-align: center; padding-left: 6px; padding-right: 6px;">
-									<li class="col-3 nav-item"><a class="nav-link active"
-										data-toggle="tab" href="#team_introduce">팀소개</a></li>
-									<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
-										href="#recode">전적</a></li>
-									<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
-										href="#game_schedule">경기일정</a></li>
-									<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
-										href="#community">커뮤니티</a></li>
-								</ul>
-						</div>
-						
-						<div class="row">
-							<div class="col-12 tab-content" id="team_info">
-								<div class="row tab-pane fade show active" id="team_introduce">
-									<div class="col-12">${team_info.outline} << 간략소개글</div>
-									<div class="col-12">${team_info.content} << 소개글</div>
-								</div>
-								<div class="row tab-pane fade" id="recode">
-									<p>전적</p>
-								</div>
-								<div class="row tab-pane fade" id="game_schedule">
-									<p>게임 스케줄</p>
-								</div>
-								<div class="row tab-pane fade" id="community">
-									<p>커뮤니티</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<div class="col-md-8 col-xl-8">
-						<div class="row">
-								<ul class="nav nav-tabs" style="text-align: center; padding-left: 6px; padding-right: 6px;">
-									<li class="col-3 nav-item"><a class="nav-link active"
-										data-toggle="tab" href="#team_introduce">팀소개</a></li>
-									<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
-										href="#recode">전적</a></li>
-									<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
-										href="#game_schedule">경기일정</a></li>
-									<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
-										href="#community">가입신청</a></li>
-								</ul>
-						</div>
-						
-						<div class="row">
-							<div class="col-12 tab-content" id="team_info">
-								<div class="row tab-pane fade show active" id="team_introduce">
-									<div class="col-12">${team_info.outline} << 간략소개글</div>
-									<div class="col-12">${team_info.content} << 소개글</div>
-								</div>
-								<div class="row tab-pane fade" id="recode">
-									<p>전적</p>
-								</div>
-								<div class="row tab-pane fade" id="game_schedule">
-									<p>게임 스케줄</p>
-								</div>
-								<div class="row tab-pane fade" id="community">
-									<p>가입신청</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</c:otherwise>
-		</c:choose>
-		
-		
-			<%-- <c:forEach var="i" items="${member_team_code}" varStatus="loop">
+			
+		<c:set var="doneLoop" value="false"/>
+		<c:forEach var="i" items="${member_team_code}">
+		<c:if test="${not doneLoop}">
 			<c:choose>
 				<c:when test="${team_info.member_code == member_code}">
 					<c:set var="breakLoop" value="true"/>
