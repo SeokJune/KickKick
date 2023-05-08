@@ -47,6 +47,7 @@ div {
 </style>
 </head>
 <body>
+
 	<form id="form" action="/to_mercenary_register.mercenary" method="post">
 		<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
 		<h2 class="mb-5" style="text-align:center;">용병 등록</h2>
