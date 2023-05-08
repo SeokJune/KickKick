@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import commons.Settings;
 import dao.MercenaryDAO;
 import dto.ApplyDTO;
 import dto.CompetitionDTO;
@@ -36,9 +37,25 @@ public class MercenaryController extends HttpServlet {
 				
 			}else if(cmd.equals("/to_register_list.mercenary")) {
 				// 등록된 용병 보는 리스트로
-				List<RegisterInfoDTO> register_list = MercenaryDAO.getInstance().select_register_list();
+				// 세션에서 로그인 아이디 받아올 수 있도록 수정
+				String login_id = "agji12";
 				
+				MercenaryDAO dao = MercenaryDAO.getInstance();
+				
+				String searchOption = request.getParameter("searchOption") == null ? "team_name" : request.getParameter("searchOption");
+				String searchWord = request.getParameter("searchWord") == null ? "" : request.getParameter("searchWord");
+				int currentPage = Integer.parseInt(request.getParameter("cpage"));
+				
+				int start = currentPage * Settings.BOARD_RECORD_COUNT_PER_PAGE - (Settings.BOARD_RECORD_COUNT_PER_PAGE-1);
+				int end = currentPage * Settings.BOARD_RECORD_COUNT_PER_PAGE;
+				String pageNavi = dao.getPageNavi(currentPage, searchOption, searchWord);
+				List<RegisterInfoDTO> register_list = MercenaryDAO.getInstance().select_register_list(start ,end, searchOption, searchWord);
+				
+				
+				request.setAttribute("login_id", login_id);
+				request.getSession().setAttribute("ctPage", currentPage);
 				request.setAttribute("register_list", register_list);
+				request.setAttribute("navi", pageNavi);
 				request.getRequestDispatcher("/mercenary/register_list.jsp").forward(request, response);
 				
 			}else if(cmd.equals("/to_apply_form.mercenary")) {
@@ -90,7 +107,7 @@ public class MercenaryController extends HttpServlet {
 				int ability_code = Integer.parseInt(request.getParameter("ability")); 
 				int people_count = Integer.parseInt(request.getParameter("people_count"));
 
-				RegisterInfoDTO r = new RegisterInfoDTO(0,competition_registration_code,team_code,ability_code,people_count,2101,null,0,0,null);
+				RegisterInfoDTO r = new RegisterInfoDTO(0,competition_registration_code,team_code,ability_code,people_count,2101,null,0,0,null,null);
 				
 				int result = MercenaryDAO.getInstance().insert_register_mercenary(r);
 				if(result>0) {
@@ -158,6 +175,26 @@ public class MercenaryController extends HttpServlet {
 				List<ApplyDTO> apply_list = MercenaryDAO.getInstance().select_apply_list(new ApplyDTO(team_code,competition_registration_code));
 				
 				String resp = g.toJson(apply_list);
+				response.getWriter().append(resp);
+				
+			}else if(cmd.equals("/apply_modify_status_ajax.mercenary")) {
+				// 수락, 거절 버튼에 따른 status 수정
+				String status = request.getParameter("status");
+				int mercenary_application_code = Integer.parseInt(request.getParameter("mercenary_application_code"));
+				
+				int result = MercenaryDAO.getInstance().modify_apply_list_status(status, mercenary_application_code);
+				
+				String resp = g.toJson(result);
+				response.getWriter().append(resp);
+				
+			}else if(cmd.equals("/delete_mercenary_register_ajax.mercenary")) {
+				
+				int code = Integer.parseInt(request.getParameter("code"));
+				
+				int result = MercenaryDAO.getInstance().delete_mercenary_registration(code);
+				// int result2 = MercenaryDAO.getInstance().delete_mercenary_application(code);
+				
+				String resp = g.toJson(result);
 				response.getWriter().append(resp);
 				
 			}
