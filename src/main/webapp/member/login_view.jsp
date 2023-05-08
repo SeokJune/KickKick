@@ -361,6 +361,9 @@ html, body {
 					<h3 id="search_id"></h3>
 					<h3>이제 진짜 진짜 얼마 안남았어요!</h3>
 				</div>
+				<div class="text-center">
+					<p id="search_id2"></p>
+				</div>
 				<div class="row d-flex justify-content-center">
 					<div class="col-12 col-md-6 mb-1">
 						<div class="input-group d-flex">
@@ -577,6 +580,7 @@ html, body {
 							$("#to_phone_authentication_fadeIn").hide();
 							$("#to_change_pw_fadeIn").fadeIn();
 							$("#search_id").text(resp.search_id + " 님!");
+							$("#search_id2").text("아이디는 "+resp.search_id + " 입니다");
 						} else {
 							alert("인증번호를 다시 입력해주세요");
 							$("#phone_auth_code").val("");

@@ -107,7 +107,7 @@
 						<h3>팀 가입하러 가볼까요?</h3>
 					</div>
 					<div class="col-12">
-						<button class="btn btn-primary btn-lg">가입 하러가기</button>
+						<button class="btn btn-primary btn-lg" id="btn_team_list">가입 하러가기</button>
 					</div>
 				</div>
 			</c:if>
@@ -170,5 +170,10 @@
 			</c:if>
 		</div>
 	</main>
+	<script type="text/javascript">
+		$("#btn_team_list").on("click",function(){
+			location.href="/list.team?cpage=1";
+		});
+	</script>
 </body>
 </html>
