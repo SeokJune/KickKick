@@ -250,10 +250,50 @@ public class MercenaryDAO {
 		}
 	}
 	
+	// register_modify_form : 용병 등록 수정하는 폼 정보 가져오기
+	public ApplyDTO select_register_modify_form(int mercenary_registration_code) throws Exception {
+		String sql = "select mrv.code, mrv.logo_path,mrv.logo, mrv.team_name, mrv.member_name, mrv.member_phone, mrlv.latirude, mrlv.longitude, "
+				+ "mrlv.competition_date, mrlv.competition_kind_name, mrlv.headcount "
+				+ "from mercenary_registration_view mrv "
+				+ "join mer_reg_list_view mrlv on mrv.competition_result_code = mrlv.competition_registration_code "
+				+ "where code=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1,mercenary_registration_code);
+			try(ResultSet rs = pstat.executeQuery();){
+				rs.next();
+				int code = rs.getInt("code");
+				String logo_path = rs.getString("logo_path");
+				String logo = rs.getString("logo");
+				String team_name = rs.getString("team_name");
+				String member_name = rs.getString("member_name");
+				String member_phone = rs.getString("member_phone");
+				String competition_kind_name = rs.getString("competition_kind_name");
+				int competition_kind_headcount = rs.getInt("headcount");
+				double latirude = rs.getDouble("latirude");
+				double longitude = rs.getDouble("longitude");
+				Timestamp competition_date = rs.getTimestamp("competition_date");
+				
+				return new ApplyDTO(code,logo_path,logo,team_name,member_name,member_phone,competition_kind_name,competition_kind_headcount,latirude,longitude,competition_date);
+			}
+		}
+	}
+	
 	// register_list : 해당하는 용병 등록 수정
-	public int modify_mercenary_register() throws Exception {
+	public int modify_mercenary_register(int code, int ability_code, int people_count) throws Exception {
+		String sql = "update mercenary_registration set ability_code=?,headcount=? where code=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1, ability_code);
+			pstat.setInt(2, people_count);
+			pstat.setInt(3, code);
 			
-		return 1;
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
 	}
 	
 	// register_list : 해당하는 용병 등록 삭제 (mercenary_registration)
@@ -271,18 +311,18 @@ public class MercenaryDAO {
 	}
 	
 	// register_list : 해당하는 용병 등록 삭제 (mercenary_application)
-		public int delete_mercenary_application(int code) throws Exception {
-			String sql = "delete from mercenary_application where mercenary_registration_code = ?";
-			try(
-					Connection con = this.getConnection();
-					PreparedStatement pstat = con.prepareStatement(sql);){
-				pstat.setInt(1, code);
-				
-				int result = pstat.executeUpdate();
-				con.commit();
-				return result;
-			}
-		}
+//		public int delete_mercenary_application(int code) throws Exception {
+//			String sql = "delete from mercenary_application where mercenary_registration_code = ?";
+//			try(
+//					Connection con = this.getConnection();
+//					PreparedStatement pstat = con.prepareStatement(sql);){
+//				pstat.setInt(1, code);
+//				
+//				int result = pstat.executeUpdate();
+//				con.commit();
+//				return result;
+//			}
+//		}
 	
 	// register_list : 로그인 ID의 팀 코드와 신청하려는 팀 코드가 같은지 검사
 	public boolean is_apply_same_team(String login_id, int team_code) throws Exception {
