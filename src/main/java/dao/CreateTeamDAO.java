@@ -37,7 +37,7 @@ public class CreateTeamDAO {
 		return ds.getConnection();
 	}
 
-
+	// 팀 생성 시 연고지 목록 가져오기
 	public List<HometownDTO> select_hometown() throws Exception {
 		String sql = "select * from hometown";
 		try(Connection con = this.getConnection();
@@ -58,7 +58,7 @@ public class CreateTeamDAO {
 			return arr;
 		}
 	}
-
+	// 팀 생성 시 정보 insert
 	public int insert_team(TeamDTO dto) throws Exception {
 		String sql = "insert into team values(team_code.nextval,?,?,?,?,?,?,?,sysdate,null,null)"; 
 		try(Connection con = this.getConnection();
@@ -81,7 +81,7 @@ public class CreateTeamDAO {
 		}
 
 	}
-
+	// 팀명 중복 검사
 	public boolean team_name_exist(String team_name) throws Exception {
 		String sql = "select * from team where name=?";
 
@@ -163,7 +163,7 @@ public class CreateTeamDAO {
 	//			return arr;
 	//		}
 	//	}
-
+	// 생성된 팀의 리스트 출력
 	public List<TeamDTO> select_team(int start, int end) throws Exception{
 		String sql = "select * from\r\n"
 				+ "(select team_view.*, row_number() over(order by code desc) rn \r\n"
@@ -207,7 +207,7 @@ public class CreateTeamDAO {
 	}
 	
 	
-
+	// 팀 페이지에 보여질 팀의 정보 
 	public TeamDTO team_info(int team_code) throws Exception {
 		String sql = "select * from team_view where code = ?"; 
 		try(Connection con = this.getConnection();
@@ -244,7 +244,7 @@ public class CreateTeamDAO {
 			}
 		}
 	}
-
+	// 팀 리스트에서 팀명으로 검색
 	public List<TeamDTO> search_team_name(String team_name) throws Exception {
 		String sql = "select * from team_view where name like ? "; 
 		try(Connection con = this.getConnection();
@@ -281,6 +281,25 @@ public class CreateTeamDAO {
 									member_name, form_date, hometown_code,  hometown_name, outline,
 									content, reg_date, mod_date, del_date);
 					list.add(dto);
+				}
+				return list;
+			}
+		}
+	}
+	
+	// 로그인한 사람의 team_code가 팀 페이지의 code와 일치 할 때 (즉 팀원일 때) 보이는 팀 페이지
+	public List<Integer> team_code(int member_code) throws Exception {
+		String sql = "select team_code from team_member where member_code = ?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			pstat.setInt(1, member_code);
+			
+			try(ResultSet rs = pstat.executeQuery();) {
+				
+				List<Integer> list = new ArrayList();
+				while(rs.next()) {
+					int team_code = rs.getInt("team_code");
+					list.add(team_code);
 				}
 				return list;
 			}

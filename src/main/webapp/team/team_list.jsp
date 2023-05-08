@@ -11,6 +11,7 @@
 	rel="stylesheet"
 	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
 	crossorigin="anonymous">
+	<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
@@ -29,8 +30,9 @@ div {
 	font-family: 'NanumSquareNeoBold';
 }
 
-.container-fluid {
+.cf {
 	background-color: whitesmoke;
+	padding-top : 90px;
 }
 
 .gate_header {
@@ -79,7 +81,9 @@ a {
 </head>
 
 <body>
-	<div class="container-fluid">
+<c:import url="/commons/gnb.jsp">
+</c:import>
+	<div class="container-fluid cf">
 
 		<div class="row search">
 			<div class="col-md-4"></div>

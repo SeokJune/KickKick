@@ -28,7 +28,6 @@
  	margin: 0;
  	padding: 0;
 	box-sizing: border-box;
-	border: 1px solid black;
 }
 div {
 	font-family: 'NanumSquareNeoBold';
@@ -37,8 +36,10 @@ input {
 	border-radius: 5px;
 	box-shadow: 5px 2px 3px;
 }
-.container-fluid{
+
+.cf{
 	background: whitesmoke;
+
 }
 
 #logo {
@@ -107,8 +108,9 @@ input {
 </head>
 
 <body>
+
 	<form action="/create.team" id="frm" method="post" enctype="multipart/form-data">
-		<div class="container-fluid">
+		<div class="container-fluid cf">
 			<div class="row body">
 				<div class="col-12 col-md-2"></div>
 
