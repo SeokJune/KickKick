@@ -192,20 +192,20 @@ td {
 						}
 					}).done(function(resp) {
 				$("#table_body").empty();
-				document.getElementById("apply_list").value = resp;
-				console.log(resp.length);
+				// document.getElementById("apply_list").value = resp;
 				
 				for(var i=0;i < resp.length;i++){
 				var row;
 					row += '<tr id='+ i +'>';
 					row += '<th scope="row">' + '</th>';
 					row += '<td>' + resp[i].member_name + '</td>';
+					// ros += '<input type="hidden" value=' + resp[i].mercenary_application_code + ' readonly>';
 					row += '<td>';
 					row += '<div class="col-12 col-md-12 col-xl-12">' + '<textarea class="form-control" name="contents" id="contents" readonly>'
 					+ resp[i].content + '</textarea>' + '</div>';
 					row += '</td>';		
 					row += '<td>';
-					row += '<button class="btn btn-primary">' + '수락' + '</button>'
+					row += '<button class="btn btn-primary" onclick="apply_accept('+ i + ',' + resp[i].mercenary_application_code +')">' + '수락' + '</button>'
 					row += '&nbsp;&nbsp;';
 					row += '<button class="btn btn-primary">' + '거절' + '</button>'
 					row += '</td>';		
@@ -229,13 +229,39 @@ td {
 		}
 		
 		// 수락 버튼 눌렀을 때
-		function apply_accept() {
-			
+		function apply_accept(tr_num, mercenary_application_code) {
+			console.log("accept");
+			$.ajax({
+				url:"/apply_modify_status_ajax.mercenary",
+				async: false,
+				type:"post",
+				dataType: "json",
+				data:{
+					status:"accept",
+					mercenary_application_code:mercenary_application_code
+				}
+			}).done(function(resp) {
+				console.log("수락 완료");
+				$("#"+ tr_num).empty();
+			})
 		}
 		
 		// 거절 버튼 눌렀을 때
-		function apply_refuse() {
-			
+		function apply_refuse(tr_num, mercenary_application_code) {
+			console.log("refuse");
+			$.ajax({
+				url:"/apply_modify_status_ajax.mercenary",
+				async: false,
+				type:"post",
+				dataType: "json",
+				data:{
+					status:"refuse",
+					mercenary_application_code:mercenary_application_code
+				}
+			}).done(function(resp) {
+				console.log("거절 완료");
+				$("#"+ tr_num).empty();
+			})
 		}
 		
 	</script>
