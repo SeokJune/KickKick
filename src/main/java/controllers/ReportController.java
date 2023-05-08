@@ -75,6 +75,16 @@ public class ReportController extends HttpServlet {
 					response.getWriter().append(""+result);
 				}
 			}
+			else if(cmd.equals("/list.report")) {
+				//selectAll
+				
+				response.sendRedirect("/report/report_list.jsp?cpage=1");
+			}
+			else if(cmd.equals("/select.report")) {
+				//select
+				
+				response.sendRedirect("/report/report_view.jsp");
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 			response.sendRedirect("/error.jsp");
