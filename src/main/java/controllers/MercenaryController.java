@@ -192,10 +192,20 @@ public class MercenaryController extends HttpServlet {
 				
 			}else if(cmd.equals("/apply_modify_status_ajax.mercenary")) {
 				// 수락, 거절 버튼에 따른 status 수정
+				MercenaryDAO dao = MercenaryDAO.getInstance();
+				
 				String status = request.getParameter("status");
 				int mercenary_application_code = Integer.parseInt(request.getParameter("mercenary_application_code"));
+				int mercenary_registration_code = Integer.parseInt(request.getParameter("mercenary_registration_code"));
+				int headcount = Integer.parseInt(request.getParameter("headcount"));
 				
-				int result = MercenaryDAO.getInstance().modify_apply_list_status(status, mercenary_application_code);
+				int count = dao.count_apply_accept(mercenary_registration_code);
+				int result = 0;
+				if(count < headcount) {
+					result = dao.modify_apply_list_status(status, mercenary_application_code);
+				}else {
+					result = 2;
+				}
 				
 				String resp = g.toJson(result);
 				response.getWriter().append(resp);

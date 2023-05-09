@@ -29,7 +29,7 @@
 	rel="stylesheet">
 
 <!-- gbn css -->
-<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
+<link href="/css/gbn.css" rel="stylesheet" type="text/css">
 <!-- kakao api -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a47338e87e3d914e6d508799cd4f4e17&libraries=services"></script>
@@ -40,7 +40,6 @@
 
 .container {
 	width: 70%;
-	margin-top: 150px;
 }
 
 .table {
@@ -67,8 +66,6 @@ td {
 </style>
 </head>
 <body>
-<c:import url="/commons/gnb.jsp">
-	</c:import>
 	<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
 		<h2 class="mb-5" style="text-align: center;">용병 신청 리스트</h2>
 		<div class="row team1">
@@ -195,27 +192,27 @@ td {
 						}
 					}).done(function(resp) {
 				$("#table_body").empty();
-				// document.getElementById("apply_list").value = resp;
-				
-				for(var i=0;i < resp.length;i++){
+
 				var row;
+				for(var i=0;i < resp.length;i++){
 					row += '<tr id='+ i +'>';
 					row += '<th scope="row">' + '</th>';
 					row += '<td>' + resp[i].member_name + '</td>';
-					// ros += '<input type="hidden" value=' + resp[i].mercenary_application_code + ' readonly>';
+					// ros += '<input type="hidden" value=' + resp[i].mercenary_registration_code + ' readonly>';
 					row += '<td>';
 					row += '<div class="col-12 col-md-12 col-xl-12">' + '<textarea class="form-control" name="contents" id="contents" readonly>'
 					+ resp[i].content + '</textarea>' + '</div>';
 					row += '</td>';		
 					row += '<td>';
-					row += '<button class="btn btn-primary" onclick="apply_accept('+ i + ',' + resp[i].mercenary_application_code +')">' + '수락' + '</button>'
+					row += '<button class="btn btn-primary" onclick="apply_accept('+ i + ',' + resp[i].mercenary_application_code + ',' 
+							+ resp[i].code + ',' + resp[i].headcount + ')">' + '수락' + '</button>'
 					row += '&nbsp;&nbsp;';
-					row += '<button class="btn btn-primary">' + '거절' + '</button>'
+					row += '<button class="btn btn-primary" onclick="apply_refuse('+ i + ',' + resp[i].mercenary_application_code +')">' + '거절' + '</button>'
 					row += '</td>';		
 					row += '</tr>';
 					
-					$("#table_body").append(row);
 				}
+				$("#table_body").append(row);
 				
 			});
 		});
@@ -232,7 +229,7 @@ td {
 		}
 		
 		// 수락 버튼 눌렀을 때
-		function apply_accept(tr_num, mercenary_application_code) {
+		function apply_accept(tr_num, mercenary_application_code,mercenary_registration_code,headcount) {
 			console.log("accept");
 			$.ajax({
 				url:"/apply_modify_status_ajax.mercenary",
@@ -241,11 +238,20 @@ td {
 				dataType: "json",
 				data:{
 					status:"accept",
-					mercenary_application_code:mercenary_application_code
+					mercenary_application_code:mercenary_application_code,
+					mercenary_registration_code:mercenary_registration_code,
+					headcount:headcount
 				}
 			}).done(function(resp) {
-				console.log("수락 완료");
-				$("#"+ tr_num).empty();
+				if(resp == 1){ // count < headcount
+					console.log("수락 완료");
+					$("#"+ tr_num).empty();
+					
+				}else if(resp == 2){
+					alert("용병 인원수를 초과하셨습니다!");
+					// 모두 거절하기 할까?
+				}
+				
 			})
 		}
 		

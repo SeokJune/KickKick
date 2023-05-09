@@ -57,7 +57,7 @@ public class MercenaryDAO {
 					String member_name = rs.getString("member_name");
 					String member_phone = rs.getString("member_phone");
 
-					list.add(new TeamDTO(code,logo_path,logo,name,member_name,member_phone));
+					list.add(new TeamDTO(logo_path,logo,code,name,member_name,member_phone));
 				}
 				return list;
 			}
@@ -396,7 +396,7 @@ public class MercenaryDAO {
 	// apply_list : 용병 신청 리스트 출력
 	public List<ApplyDTO> select_apply_list(ApplyDTO d) throws Exception {
 		String sql = "select ma.code, ma.mercenary_registration_code,(select name from member where code = ma.member_code) mer_name, "
-				+ "ma.content, mrv.team_code, cv.competition_registration_code, cv.competition_date "
+				+ "ma.content, mrv.team_code, mrv.headcount, cv.competition_registration_code, cv.competition_date "
 				+ "from mercenary_application ma "
 				+ "join mercenary_registration_view mrv on ma.mercenary_registration_code = mrv.code "
 				+ "join competition_view cv on mrv.competition_result_code = cv.competition_registration_code "
@@ -411,15 +411,30 @@ public class MercenaryDAO {
 				while(rs.next()) {
 					int mercenary_registration_code = rs.getInt("mercenary_registration_code");
 					int team_code = rs.getInt("team_code");
+					int headcount = rs.getInt("headcount");
 					String member_name = rs.getString("mer_name");
 					Timestamp competition_date = rs.getTimestamp("competition_date");
 					String content = rs.getString("content");
 					int competition_registration_code = rs.getInt("competition_registration_code");
 					int mercenary_application_code = rs.getInt("code");
 
-					list.add(new ApplyDTO(mercenary_registration_code,team_code,member_name,competition_date,content,competition_registration_code,mercenary_application_code));
+					list.add(new ApplyDTO(mercenary_registration_code,team_code,member_name,headcount,competition_date,content,competition_registration_code,mercenary_application_code));
 				}
 				return list;
+			}
+		}
+	}
+	
+	// apply_list : 수락한 사람 수 계산
+	public int count_apply_accept(int mercenary_registration_code) throws Exception {
+		String sql = "select count(*) from mercenary_application where mercenary_registration_code=? and status_code=2202";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);){
+			pstat.setInt(1, mercenary_registration_code);
+			try(ResultSet rs = pstat.executeQuery();){
+				rs.next();
+				return rs.getInt(1);
 			}
 		}
 	}

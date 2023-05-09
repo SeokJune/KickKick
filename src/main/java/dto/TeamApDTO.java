@@ -6,6 +6,8 @@ public class TeamApDTO {
 	private int code;
 	private int team_code;
 	private int member_code;
+	private String nickname;
+	private String phone;
 	private String content;
 	private int status_code;
 	private Timestamp reg_date;
@@ -28,6 +30,16 @@ public class TeamApDTO {
 		this.mod_date = mod_date;
 		this.del_date = del_date;
 	}
+	public TeamApDTO(int code, int team_code, int member_code, String nickname, String phone, String content, int status_code) {
+		super();
+		this.code = code;
+		this.team_code = team_code;
+		this.member_code = member_code;
+		this.nickname = nickname;
+		this.phone = phone;
+		this.content = content;
+		this.status_code = status_code;
+	}
 	
 	public int getCode() {
 		return code;
@@ -46,6 +58,18 @@ public class TeamApDTO {
 	}
 	public void setMember_code(int member_code) {
 		this.member_code = member_code;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	public String getContent() {
 		return content;
@@ -77,6 +101,7 @@ public class TeamApDTO {
 	public void setDel_date(Timestamp del_date) {
 		this.del_date = del_date;
 	}
+	
 	
 	
 	

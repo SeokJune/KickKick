@@ -320,26 +320,55 @@ public class CreateTeamDAO {
 				return result;
 		}
 	}
-	// 팀 가입 대기 코드
-//	public <StatusDTO> join_wait() throws Exception {
-//		String sql = "select * from status where code = 1001";
-//		try(Connection con = this.getConnection();
-//				PreparedStatement pstat = con.prepareStatement(sql);
-//				ResultSet rs = pstat.executeQuery();) {
-//
-//			
-//				rs.next();
-//				int code = rs.getInt("code");
-//				String name = rs.getString("name");
-//				Timestamp reg_date = rs.getTimestamp("reg_date");
-//				Timestamp mod_date = rs.getTimestamp("mod_date");
-//				Timestamp del_date = rs.getTimestamp("del_date");
-//
-//				StatusDTO dto = new StatusDTO(code, name, reg_date, mod_date, del_date);	
-//
-//				return dto;
-//		}
-//	}
+	// 팀 가입신청한 회원 목록 뽑아오기 (팀장만 보기)
+	public List<TeamApDTO> join_wait(int team_code1) throws Exception {
+		String sql = "select t.code, t.team_code, t.member_code, m.nickname, m.phone, t.content, t.status_code\r\n"
+				+ "from team_join_apply t join member m on t.member_code = m.code\r\n"
+				+ "where t.team_code = ?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			
+			pstat.setInt(1, team_code1);			
+			ResultSet rs = pstat.executeQuery(); {
+				
+				List<TeamApDTO> arr = new ArrayList<>();
+				while(rs.next()) {
+					int code = rs.getInt("code");
+					int team_code = rs.getInt("team_code");
+					int member_code = rs.getInt("member_code");
+					String nickname = rs.getString("nickname");
+					String phone = rs.getString("phone");
+					String content = rs.getString("content");
+					int status_code = rs.getInt("status_code");
+					
+					TeamApDTO dto = new TeamApDTO(code, team_code, member_code, nickname, phone, content, status_code);
+					arr.add(dto);
+				}
+				return arr;
+			}
+			
+				
+		}
+	}
+	// 현재 로그인한 사람의 status 가져오기(팀신청을 한 사람인지 확인하기 위해서)
+	public int member_status(int member_code1, int team_code1) throws Exception {
+		String sql = "select status_code from team_join_apply where member_code = ? and team_code = ?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+			
+			pstat.setInt(1, member_code1);
+			pstat.setInt(2, team_code1);
+			ResultSet rs = pstat.executeQuery(); {
+				
+				int status_code = 0;
+				
+					if(rs.next()) {
+						status_code = rs.getInt("status_code");
+					}
+				return status_code;	
+			}	
+		}
+	}
 	
 	
 
