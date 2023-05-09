@@ -113,10 +113,10 @@ label {
 		<div class="row" id="lnb">
 			<ul class="nav nav-tabs">
 				<li class="nav-item">
-					<button class="nav-link text-dark" aria-current="page" id="my_team" onclick="location.href='/'">내 팀</button>
+					<button class="nav-link text-dark" aria-current="page" id="my_team" onclick="location.href='/my_team_list.team'">내 팀</button>
 				</li>
 				<li class="nav-item">
-					<button class="nav-link text-dark" aria-current="page" id="my_comp" onclick="location.href='/my_team_list.team'">내 경기</button>
+					<button class="nav-link text-dark" aria-current="page" id="my_comp" onclick="location.href='/''">내 경기</button>
 				</li>
 				<li class="nav-item">
 					<button class="nav-link text-dark active" aria-current="page" id="my_info" onclick="location.href='/my_profile.membe'">내 정보</button>
@@ -452,8 +452,8 @@ label {
 			} else {
 				$("#edit_pw_fadeIn").hide();
 				$("#edit_pw_btn").text("비밀번호 변경");
-				$("#member_confirm_pw").val("${profile.pw}");
-				$("#member_new_pw").val("").removeAttr("required").removeAttr("disabled");
+				$("#member_confirm_pw").removeAttr("required");
+				$("#member_new_pw").val("").removeAttr("required");
 			}
 		});
 		
@@ -492,7 +492,7 @@ label {
 				}
 			}).done(function(resp){
 				if(resp){
-					$("#member_confirm_pw").attr("readonly","true");
+					$("#member_confirm_pw").attr("disabled","true");
 					$("#member_new_pw").removeAttr("disabled").attr("required","true");
 					$("#confirm_pw").html("확인 완료").attr("disabled","true")
 					 confirm_pw = true;
@@ -617,40 +617,7 @@ label {
 			});
 		});
 				
-		// PW 일치 검사
-		addEventListener("DOMContentLoaded", (event) => {
-			const password = document.getElementById("password_check");
-			const passwordAlert = document.getElementById("password-alert");
-			const requirements = document.querySelectorAll(".requirements");
-			
-			password.addEventListener("focus", () => {
-				if (!password.classList.contains("is-valid")) {
-					password.classList.add("is-invalid");
-				}
-			});
-			requirements.forEach((element) => element.classList.add("wrong"));
-			
-			password.addEventListener("input", () => {
-				let value = password.value;
-				if (value == document.getElementById("member_new_pw").value) {
-					password.classList.remove("is-invalid");
-					password.classList.add("is-valid");
-					
-					requirements.forEach((element) => {
-						element.classList.remove("wrong");
-						element.classList.add("good");
-					});
-					passwordAlert.classList.remove("alert-warning");
-					passwordAlert.classList.add("alert-success");
-				}
-			});
-			
-			password.addEventListener("blur", () => {
-				if (password.value == "") {
-					password.classList.remove("is-invalid");
-				}
-			});
-        });
+		
 		
 		//전화번호 중복 체크
 		let phone_valid = true;

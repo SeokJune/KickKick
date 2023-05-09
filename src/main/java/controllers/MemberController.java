@@ -142,10 +142,10 @@ public class MemberController extends HttpServlet {
 				request.getRequestDispatcher("/member/my_profile.jsp").forward(request, response);
 			} else if (cmd.equals("/modify_member_profile.member")) {
 				String member_id = (String) request.getSession().getAttribute("id");
-				String member_confirm_pw = request.getParameter("member_confirm_pw");
+				String member_confirm_pw = dao.select_member(member_id).getPw();
 				String member_new_pw = request.getParameter("member_new_pw");
 				String member_pw = "";
-				if (member_new_pw != "") {
+				if ((member_new_pw != "" && member_new_pw != null ) {
 					member_pw = EncryptionUtils.sha512(member_new_pw);
 				} else {
 					member_pw = member_confirm_pw;
@@ -162,7 +162,7 @@ public class MemberController extends HttpServlet {
 				int result = dao.modify_member(dto);
 
 				if (result > 0) {
-					response.sendRedirect("/my_profile.member?member_id=" + member_id);
+					response.sendRedirect("/my_profile.member");
 				} else {
 					response.sendRedirect("/error.html");
 				}
