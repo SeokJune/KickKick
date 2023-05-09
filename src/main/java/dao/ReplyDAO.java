@@ -11,6 +11,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import commons.XSSUtils;
 import dto.ReplyDTO;
 
 public class ReplyDAO {
@@ -101,7 +102,7 @@ public class ReplyDAO {
 				PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setInt(1, dto.getBoard_code());
 			pstat.setInt(2, dto.getMember_code());
-			pstat.setString(3, dto.getContent());
+			pstat.setString(3, XSSUtils.xssFilter(dto.getContent()));
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
@@ -123,7 +124,7 @@ public class ReplyDAO {
 		String sql = "update reply_"+board_table_name+" set content=?, mod_date=sysdate where code=?";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql)){
-			pstat.setString(1, dto.getContent());
+			pstat.setString(1, XSSUtils.xssFilter(dto.getContent()));
 			pstat.setInt(2, dto.getCode());
 			int result = pstat.executeUpdate();
 			con.commit();
