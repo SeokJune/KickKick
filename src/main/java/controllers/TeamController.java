@@ -20,6 +20,7 @@ import dao.MemberDAO;
 import dao.TeamDAO;
 import dto.HometownDTO;
 import dto.MemberDTO;
+import dto.TeamApDTO;
 import dto.TeamDTO;
 
 
@@ -115,6 +116,7 @@ public class TeamController extends HttpServlet {
 			}
 			// 팀 페이지
 			else if(cmd.equals("/view.team")) {
+				int status = request.getParameter("status")==null?1 : Integer.parseInt(request.getParameter("status"));
 				int team_code = Integer.parseInt(request.getParameter("team_code"));
 				int member_code = (int)request.getSession().getAttribute("code");
 				
@@ -125,6 +127,7 @@ public class TeamController extends HttpServlet {
 				request.setAttribute("team_info", team_info);
 				request.setAttribute("member_code", member_code);
 				request.setAttribute("member_team_code", member_team_code);
+				request.setAttribute("status", status);
 				request.getRequestDispatcher("/team/team_view.jsp").forward(request, response); 
 			} else if (cmd.equals("/my_team_list.team")) {
 				
@@ -158,6 +161,20 @@ public class TeamController extends HttpServlet {
 				String resp = g.toJson(team_info);
 				System.out.println(resp);
 				response.getWriter().append(resp);	
+			}
+			// 팀 가입신청을 한 사람의 입력정보 받기
+			else if(cmd.equals("/ap_member.team")) {
+				int member_code = (int) request.getSession().getAttribute("code");
+				int team_code = Integer.parseInt(request.getParameter("team_code"));
+				String ap_input = request.getParameter("ap_input");
+				TeamApDTO dto = new TeamApDTO(0,team_code,member_code,ap_input,1001,null,null,null);
+				
+				CreateTeamDAO dao = CreateTeamDAO.getInstance();
+				dao.insert_ap(dto);
+				
+				response.sendRedirect("/view.team?team_code="+team_code+"&code="+member_code+"&status="+1001); 
+				
+				
 			}
 		}
 		catch(Exception e) {
