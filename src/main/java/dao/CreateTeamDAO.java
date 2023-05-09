@@ -13,8 +13,8 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import commons.Settings;
-import dto.BoardDTO;
 import dto.HometownDTO;
+import dto.TeamApDTO;
 import dto.TeamDTO;
 
 public class CreateTeamDAO {
@@ -305,6 +305,43 @@ public class CreateTeamDAO {
 			}
 		}
 	}
+	// 가입 신청한 사람의 입력 정보 담기
+	public int insert_ap(TeamApDTO dto) throws Exception {
+		String sql = "insert into team_join_apply values(team_join_apply_code.nextval,?,?,?,1001,sysdate,null,null)"; 
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);) {
+
+				pstat.setInt(1, dto.getTeam_code());
+				pstat.setInt(2, dto.getMember_code());
+				pstat.setString(3, dto.getContent());
+				int result = pstat.executeUpdate();
+				con.commit();
+				
+				return result;
+		}
+	}
+	// 팀 가입 대기 코드
+//	public <StatusDTO> join_wait() throws Exception {
+//		String sql = "select * from status where code = 1001";
+//		try(Connection con = this.getConnection();
+//				PreparedStatement pstat = con.prepareStatement(sql);
+//				ResultSet rs = pstat.executeQuery();) {
+//
+//			
+//				rs.next();
+//				int code = rs.getInt("code");
+//				String name = rs.getString("name");
+//				Timestamp reg_date = rs.getTimestamp("reg_date");
+//				Timestamp mod_date = rs.getTimestamp("mod_date");
+//				Timestamp del_date = rs.getTimestamp("del_date");
+//
+//				StatusDTO dto = new StatusDTO(code, name, reg_date, mod_date, del_date);	
+//
+//				return dto;
+//		}
+//	}
+	
+	
 
 
 	private int get_recode_count() throws Exception {

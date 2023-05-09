@@ -29,7 +29,7 @@
 	rel="stylesheet">
 
 <!-- gbn css -->
-<link href="/css/gbn.css" rel="stylesheet" type="text/css">
+<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
 <!-- kakao api -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a47338e87e3d914e6d508799cd4f4e17&libraries=services"></script>
@@ -40,6 +40,7 @@
 
 .container {
 	width: 70%;
+	margin-top: 150px;
 }
 
 .header>div {
@@ -56,6 +57,8 @@
 </style>
 </head>
 <body>
+<c:import url="/commons/gnb.jsp">
+	</c:import>
 	<form action="/to_mercenary_apply.mercenary" method="post">
 		<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
 			<h2 class="mb-5" style="text-align: center;">용병 신청</h2>
@@ -191,7 +194,7 @@
 			<div class="footer">
 				<div class="col-xl-12 col-md-12 col-xs-12 text-center">
 					<a><input type="submit" value="신청" class="btn btn-primary"></a>
-					<a href="/to_register_list.mercenary?cpage=1"><input type="button"
+					<a href="/to_register_list.mercenary?cpage=${ctPage}"><input type="button"
 						value="취소" class="btn btn-primary"></a>
 				</div>
 			</div>
