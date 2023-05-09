@@ -105,7 +105,7 @@
 };
 
 $("#cancel").on("click",function(){
-	location.href="/list.report?cpage=${cpage}";
+	location.href="/list.report?b_c=1003&cpage=1";
 });
 	</script>
 </body>

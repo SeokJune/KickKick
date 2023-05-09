@@ -170,20 +170,23 @@
 										class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭
 											등록</a></li>
 								</c:if>
-								<li><a href="/list.competition"
-									class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭
-										신청</a></li>
+								<li>
+									<a href="/list.competition" class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭 신청</a>
+								</li>
+								<li>
+									<a href="/to_register_list.mercenary?cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병 신청</a>
+								</li>
 								<c:if test="${sessionScope.nickname != null}">
-									<li class="login"><a href="/to_register_form.mercenary"
-										class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병
-											등록</a></li>
+									<li class="login">
+										<a href="/to_register_form.mercenary" class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병 등록(팀장)</a>
+									</li>
+									<li class="login">
+										<a href="/to_apply_list.mercenary" class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병 신청 리스트(팀장)</a>
+									</li>
 								</c:if>
-								<li><a href="/to_register_list.mercenary?cpage=1"
-									class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병
-										신청</a></li>
-								<li><a href="#"
-									class="nav_a link-dark d-inline-flex text-decoration-none rounded">시설
-										검색</a></li>
+								<li>
+									<a href="#" class="nav_a link-dark d-inline-flex text-decoration-none rounded">시설 검색</a>
+								</li>
 							</ul>
 						</div></li>
 					<!-- 구분선 -->
@@ -199,8 +202,13 @@
 								<li><a href="/"
 									class="nav_a link-dark d-inline-flex text-decoration-none rounded">문의하기</a>
 								</li>
+<<<<<<< HEAD
 								<li><a href="/list.report?cpage=1"
 									class="nav_a link-dark d-inline-flex text-decoration-none rounded">신고내역</a>
+=======
+								<li>
+									<a href="/list.report?b_c=1003&cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">신고내역</a>
+>>>>>>> 63d7cb45ee634af20be662ed863c6feb7b2f4f56
 								</li>
 							</ul>
 						</div></li>

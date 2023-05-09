@@ -80,6 +80,10 @@ public class ReportController extends HttpServlet {
 			else if(cmd.equals("/list.report")) {
 				//selectAll
 				
+				//게시판 종류 설정
+				int b_c = Integer.parseInt(request.getParameter("b_c"));
+				request.setAttribute("b_c", b_c);
+				
 				//현재 페이지 설정
 				int current_page = Integer.parseInt(request.getParameter("cpage"));
 				request.setAttribute("cpage", current_page);
@@ -87,14 +91,14 @@ public class ReportController extends HttpServlet {
 				//검색 옵션 설정(wide)
 				String wide_option = request.getParameter("wide_option");
 				if(wide_option==null) {
-					wide_option="target";
+					wide_option="신고대상";
 				}
 				request.setAttribute("wide_option", wide_option);
 				
 				//검색 옵션(narrow) 설정
 				String narrow_option = request.getParameter("narrow_option");
 				if(narrow_option==null) {
-					narrow_option="id";
+					narrow_option="아이디";
 				}
 				request.setAttribute("narrow_option", narrow_option);
 				
@@ -106,14 +110,15 @@ public class ReportController extends HttpServlet {
 				request.setAttribute("search_word", search_word);
 				
 				//페이지네이션 설정
-				String page_navi = report_dao.get_page_navi(current_page,wide_option,narrow_option,search_word);
+				String page_navi = report_dao.get_page_navi(b_c,current_page,wide_option,narrow_option,search_word);
 				int start = current_page*Settings.BOARD_RECORD_COUNT_PER_PAGE-(Settings.BOARD_RECORD_COUNT_PER_PAGE-1);
 				int end = current_page*Settings.BOARD_RECORD_COUNT_PER_PAGE;
-//				List<BoardDTO> list = report_dao.select_list(start,end,wide_option,narrow_option,search_word);
+				List<ReportDTO> list = report_dao.select_report_list(b_c,start,end,wide_option,narrow_option,search_word);
 
-//				request.setAttribute("list", list);
+				request.setAttribute("list", list);
 				request.setAttribute("navi", page_navi);
 
+				System.out.println(list);
 				request.getRequestDispatcher("/report/report_list.jsp").forward(request, response);
 			}
 			else if(cmd.equals("/select.report")) {
