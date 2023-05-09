@@ -312,6 +312,62 @@ public class CompetitionDAO {
 		}
 	}
 
+
+
+	//리스트에 출력 -검색 - 등록 관련
+	public List<CompetitionListDTO> search(String searching) throws Exception{
+		String sql = "select tv.name team_name,\r\n"
+				+ "tv.member_name,\r\n"
+				+ "tv.member_phone,\r\n"
+				+ "tv.logo_path,\r\n"
+				+ "tv.logo,\r\n"
+				+ "cr.latirude,\r\n"
+				+ "cr.longitude,\r\n"
+				+ "cr.competition_date,\r\n"
+				+ "cr.STATUS_CODE,\r\n"
+				+ "st.name status_name,\r\n"
+				+ "ck.name kind_name , cr.code \r\n"
+				+ "from \r\n"
+				+ "competition_registration cr join team_view tv on (cr.team_code=tv.code)\r\n"
+				+ "join status st on (cr.status_code = st.code)\r\n"
+				+ "join competition_kind ck on (cr.competition_kind_code = ck.code)\r\n"
+				+ "where cr.status_code = 1101 and cr.competition_date >= sysdate and tv.name like ? ";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);)
+
+		{
+			pstat.setString(1,"%"+searching+"%");
+
+			try(ResultSet rs = pstat.executeQuery();){
+
+
+				List<CompetitionListDTO> list = new ArrayList<>();
+
+				while(rs.next()) {
+					String team_name = 	rs.getString("team_name");
+					String member_name = rs.getString("member_name");
+					String member_phone = rs.getString("member_phone");
+					String logo_path = rs.getString("logo_path");
+					String logo = rs.getString("logo");
+					double latirude = rs.getDouble("latirude");
+					double longitude = rs.getDouble("longitude");
+					Timestamp competition_date = rs.getTimestamp("competition_date");
+					int status_code = rs.getInt("status_code");
+					String status_name = rs.getString("status_name");
+					String kind_name = rs.getString("kind_name");
+					int code = rs.getInt("code");
+
+					CompetitionListDTO dto = new CompetitionListDTO(team_name,member_name,member_phone,logo_path,logo,latirude,longitude,competition_date,status_code,status_name,kind_name,code);
+					list.add(dto);
+				}
+				
+				return list;
+			}
+		}
+	}
+
+
+
 	//신청할때 출력해주는 것 
 	public CompetitionApplyFormDTO show_applyform(String date) throws Exception{
 		String sql = "select tv.name team_name , tv.member_name, tv.member_phone, tv.logo_path, tv.logo , tv.member_code, \r\n"
@@ -367,7 +423,7 @@ public class CompetitionDAO {
 			try(ResultSet rs = pstat.executeQuery(); )
 			{
 				List<TeamDTO> list = new ArrayList<>();
-				
+
 				while(rs.next()) {
 					int code = 	rs.getInt("code");
 					String name = 	rs.getString("name");
@@ -459,20 +515,39 @@ public class CompetitionDAO {
 		}
 	}
 
-//	//신청폼에서 수락하기를 눌렀을때
-//		public void accept(String reg_code , String team_code) throws Exception{
-//			String sql = "delete from competition_registration where code = ?";
-//			try(Connection con = this.getConnection();
-//					PreparedStatement pstat = con.prepareStatement(sql);)
-//
-//			{
-//				pstat.setString(1, code);
-//
-//				pstat.executeUpdate();
-//				con.commit();
-//
-//			}
-//		}
+	//신청폼에서 수락하기를 눌렀을때
+	public void accept(String status_code ,String reg_code , String team_code) throws Exception{
+		String sql = "update competition_application set status_code= ? where competition_application.team_code = ? and competition_application.competition_registration_code = ?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);)
+
+		{
+			pstat.setString(1, status_code);
+			pstat.setString(2, team_code);
+			pstat.setString(3, reg_code);
+
+			pstat.executeUpdate();
+			con.commit();
+
+		}
+	}
+
+	//신청폼에서 거절하기를 눌렀을때
+	public void refuse(String status_code ,String reg_code , String team_code) throws Exception{
+		String sql = "update competition_application set status_code= ? where competition_application.team_code = ? and competition_application.competition_registration_code = ?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);)
+
+		{
+			pstat.setString(1, status_code);
+			pstat.setString(2, team_code);
+			pstat.setString(3, reg_code);
+
+			pstat.executeUpdate();
+			con.commit();
+
+		}
+	}
 
 
 

@@ -604,13 +604,13 @@
                             $(".accept").on("click", function () {
 
                                let code =  $(this).parent().next().html();
-                               location.href = "/acceptform.competition?team_code="+code+"&reg_code="+${form.registration_code }+"&status_code"+${status[3].code};
+                               location.href = "/acceptform.competition?team_code="+code+"&reg_code="+${form.registration_code }+"&status_code="+${status[3].code};
                                    
                             })
 
                             $(".refuse").on("click", function () {
                             	let code =  $(this).parent().next().html();
-                                location.href = "/refuseform.competition?team_code="+code+"&reg_code="+${form.registration_code }+"&status_code"+${status[4].code};
+                                location.href = "/refuseform.competition?team_code="+code+"&reg_code="+${form.registration_code }+"&status_code="+${status[4].code};
                             })
                         </script>
                     </div>

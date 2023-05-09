@@ -43,6 +43,7 @@
         </head>
 
         <body>
+        <form action="/search.competition"  method="get" >
             <div class="container-fluid" style="background-color: whitesmoke;">
 
                 <div class="row header">
@@ -72,8 +73,8 @@
 
                             <div class="col-xs-8 col-md-8">
                                 <div class="row h-100">
-                                    <input class="col-10 h-100" type="text" placeholder="팀명 검색">
-                                    <button class="col-2 h-100" type="button">
+                                    <input  name="searching" class="col-10 h-100" type="text" placeholder="팀명 검색">
+                                    <button id="search" class="col-2 h-100" >
                                         <i class="fa-solid fa-magnifying-glass"></i>
                                     </button>
                                 </div>
@@ -181,7 +182,94 @@
                            
                         </c:forEach>
 
+                        <c:forEach var="r" items="${result}">
+                            <div class="row">
+                                <div class="col-xs-1 col-md-1"></div>
 
+
+                                <div class="col-xs-10 col-md-10 applywindow"
+                                    style="border: 1px solid black; border-radius: 5px;">
+
+
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-1">
+                                            <div class="row">
+                                                <div class="col-12"
+                                                    style="color:red; font-weight:bold ; font-size: 14px;">
+                                                    ${r.kind_name}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-md-3" style="border: 1px solid black; padding: 1% ;">
+                                            <img src="${r.logo_path}${r.logo}" id="pic" style="border:1px solid black;" class="h-100">
+                                        </div>
+
+                                        <div class="col-xs-12 col-md-7">
+
+
+                                            <div class="row h-100">
+                                                <div class="col-12 h-25 tname"  style="border: 1px solid black; padding: 2%;">
+                                                    팀명: ${r.team_name}</div>
+                                                <div class="col-12 h-25">
+                                                    <div class="row h-100">
+                                                        <div class="col-4 h-100"
+                                                            style="border: 1px solid black; padding: 2%;">
+                                                            팀장 이름: ${r.member_name}</div>
+                                                        <div class="col-8 h-100"
+                                                            style="border: 1px solid black; padding: 2%;">
+                                                             번호: ${r.member_phone}</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="place col-12 h-25"
+                                                    style="border: 1px solid black; padding: 2%;">
+                                                </div>
+                                                
+                                                 <div class="code col-12 h-25" style="display:none" >
+                                                    ${r.code }
+                                                </div>
+                                                
+                                                <div class="col-12 h-25">
+                                                    <div class="row h-100">
+                                                        <div class="lat col-3"
+                                                            style="border: 1px solid black; padding: 2%; display: none;">
+                                                            ${r.latirude}</div>
+                                                        <div class="lng col-3"
+                                                            style="border: 1px solid black; padding: 2%; display: none;">
+                                                            ${r.longitude}</div>
+
+
+
+                                                        <div class="col-6 h-100"
+                                                            style="border: 1px solid black; padding: 2%;">
+                                                            경기상태: ${r.status_name}</div>
+                                                        <div class="col-6 h-100"
+                                                            style="border: 1px solid black; padding: 2%;">
+                                                            경기일정: ${r.competition_date}</div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="date col-12 " style="display:none" >${r.competition_date}</div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-xs-12 col-md-1 "></div>
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+
+                                <div class="col-xs-1 col-md-1"></div>
+                            </div>
+                            <br>
+                           
+                        </c:forEach>
 
                     </div>
 
@@ -235,10 +323,15 @@
                 		   "","width=900px, height=600px");
                  })
             
-                    
+                
+                 
+               
+                 
             </script>
             
             </div>
+            
+            </form>
 
            
 
