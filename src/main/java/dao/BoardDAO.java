@@ -12,9 +12,9 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import commons.Settings;
+import commons.XSSUtils;
 import dto.BoardDTO;
 import dto.BoardHeadlineDTO;
-import dto.ReplyDTO;
 
 public class BoardDAO {
 	private BoardDAO() {}
@@ -199,8 +199,8 @@ public class BoardDAO {
 					int code = rs.getInt("code");
 					int board_kind_code = rs.getInt("board_kind_code");
 					String board_headline_name = rs.getString("board_headline_name");
-					String title = rs.getString("title");
-					String content = rs.getString("content");
+					String title = XSSUtils.xssDecoding(rs.getString("title"));
+					String content = XSSUtils.xssDecoding(rs.getString("content"));
 					String member_nickname = rs.getString("member_nickname");
 					int view_count = rs.getInt("view_count");
 					int like_count = rs.getInt("like_count");
@@ -234,8 +234,8 @@ public class BoardDAO {
 					result.setCode(rs.getInt("code"));
 					result.setBoard_kind_code(rs.getInt("board_kind_code"));
 					result.setBoard_headline_name(rs.getString("board_headline_name"));
-					result.setTitle(rs.getString("title"));
-					result.setContent(rs.getString("content"));
+					result.setTitle(XSSUtils.xssDecoding(rs.getString("title")));
+					result.setContent(XSSUtils.xssDecoding(rs.getString("content")));
 					result.setMember_nickname(rs.getString("member_nickname"));
 					result.setView_count(rs.getInt("view_count"));
 					result.setLike_count(rs.getInt("like_count"));
@@ -296,8 +296,8 @@ public class BoardDAO {
 				pstat.setInt(1, dto.getBoard_kind_code());
 				pstat.setInt(2, dto.getBoard_headline_code());
 				pstat.setInt(3, dto.getMember_code());
-				pstat.setString(4, dto.getTitle());
-				pstat.setString(5, dto.getContent());
+				pstat.setString(4, XSSUtils.xssFilter(dto.getTitle()));
+				pstat.setString(5, XSSUtils.xssFilter(dto.getContent()));
 				int result = pstat.executeUpdate();
 				con.commit();
 				return result;
@@ -309,8 +309,8 @@ public class BoardDAO {
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setString(1, dto.getBoard_headline_name());
-			pstat.setString(2, dto.getTitle());
-			pstat.setString(3, dto.getContent());
+			pstat.setString(2, XSSUtils.xssFilter(dto.getTitle()));
+			pstat.setString(3, XSSUtils.xssFilter(dto.getContent()));
 			pstat.setInt(4, dto.getCode());
 			int result = pstat.executeUpdate();
 			con.commit();

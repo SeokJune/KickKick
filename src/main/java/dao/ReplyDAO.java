@@ -11,6 +11,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import commons.XSSUtils;
 import dto.ReplyDTO;
 
 public class ReplyDAO {
@@ -45,7 +46,7 @@ public class ReplyDAO {
 					int code = rs.getInt("code");
 					board_code = rs.getInt("board_code");
 					String member_nickname = rs.getString("member_nickname");
-					String content = rs.getString("content");
+					String content = XSSUtils.xssDecoding(rs.getString("content"));
 					int like_count = rs.getInt("like_count");
 					Timestamp reg_date = rs.getTimestamp("reg_date");
 					Timestamp mod_date = rs.getTimestamp("mod_date");
@@ -84,7 +85,7 @@ public class ReplyDAO {
 					result.setCode(rs.getInt("code"));
 					result.setBoard_code(rs.getInt("board_code"));
 					result.setMember_nickname(rs.getString("member_nickname"));
-					result.setContent(rs.getString("content"));
+					result.setContent(XSSUtils.xssDecoding(rs.getString("content")));
 					result.setLike_count(rs.getInt("like_count"));
 					result.setReg_date(rs.getTimestamp("reg_date"));
 					result.setMod_date(rs.getTimestamp("mod_date"));
@@ -101,7 +102,7 @@ public class ReplyDAO {
 				PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setInt(1, dto.getBoard_code());
 			pstat.setInt(2, dto.getMember_code());
-			pstat.setString(3, dto.getContent());
+			pstat.setString(3, XSSUtils.xssFilter(dto.getContent()));
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
@@ -123,7 +124,7 @@ public class ReplyDAO {
 		String sql = "update reply_"+board_table_name+" set content=?, mod_date=sysdate where code=?";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql)){
-			pstat.setString(1, dto.getContent());
+			pstat.setString(1, XSSUtils.xssFilter(dto.getContent()));
 			pstat.setInt(2, dto.getCode());
 			int result = pstat.executeUpdate();
 			con.commit();
