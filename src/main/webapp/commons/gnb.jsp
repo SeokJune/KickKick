@@ -202,13 +202,8 @@
 								<li><a href="/"
 									class="nav_a link-dark d-inline-flex text-decoration-none rounded">문의하기</a>
 								</li>
-<<<<<<< HEAD
-								<li><a href="/list.report?cpage=1"
-									class="nav_a link-dark d-inline-flex text-decoration-none rounded">신고내역</a>
-=======
 								<li>
 									<a href="/list.report?b_c=1003&cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">신고내역</a>
->>>>>>> 63d7cb45ee634af20be662ed863c6feb7b2f4f56
 								</li>
 							</ul>
 						</div></li>
