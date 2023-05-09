@@ -61,6 +61,10 @@ div {
 #p4 {
 	text-align: center;
 }
+button {
+	color: whitesmoke;
+	background-color: #0d6efd;
+}
 </style>
 </head>
 <body>

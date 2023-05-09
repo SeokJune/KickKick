@@ -71,7 +71,7 @@ a {
 .search_btn {
 	font-weight: 600;
 	color: whitesmoke;
-	background: linear-gradient(to right, #76b852, #3ADF00);
+	background: #0d6efd;
 	border: none;
 	padding: 5px;
 	border-radius: 3px;
