@@ -36,6 +36,11 @@
 <!-- gnb css -->
 <link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
 
+<!-- calender style -->
+<link rel="stylesheet" href="/commons/calender/style.css">
+<!-- calender js -->
+<script src="/commons/calender/main.js"></script>
+
 <style>
 * {
 	font-family: 'NanumSquareNeoBold';
@@ -76,7 +81,6 @@
 	</header>
 	<main style="height: auto !important; margin-top: 100px;">
 		<div class="container-fluid">
-
 			<div class="container">
 				<!-- 광고 -->
 				<div class="row">
@@ -89,15 +93,15 @@
 									<div class="carousel-inner">
 										<div class="carousel-item active">
 											<img src="/image/index_img/soccer-ball-1.jpg"
-												class="d-block w-100" alt="...">
+												class="d-block card-img" alt="...">
 										</div>
 										<div class="carousel-item">
 											<img src="/image/index_img/soccer-ball-2.jpg"
-												class="d-block w-100" alt="...">
+												class="d-block card-img" alt="...">
 										</div>
 										<div class="carousel-item">
 											<img src="/image/index_img/soccer-ball-3.jpg"
-												class="d-block w-100" alt="...">
+												class="d-block card-img" alt="...">
 										</div>
 									</div>
 									<button class="carousel-control-prev" type="button"
@@ -115,7 +119,7 @@
 								</div>
 							</div>
 						</div>
-						<!--팀 랭킹 -->
+						<!--팀 랭킹 큰화면일때 사라짐-->
 						<div class="card mb-4 d-block d-lg-none">
 							<div class="card-body">
 								<h3 class="h6">✨금주의 RANKER✨</h3>
@@ -125,7 +129,7 @@
 						</div>
 					</div>
 					<div class="col-lg-4">
-						<!--팀 랭킹 -->
+						<!--팀 랭킹 작은화면일때 사라짐-->
 						<div class="card mb-4 d-none d-lg-block">
 							<div class="card-body">
 								<h3 class="h6">✨금주의 RANKER✨</h3>
@@ -136,10 +140,76 @@
 						<div class="card mb-4">
 							<!-- 스케쥴 - 미정 -->
 							<!--내 일정 캘린더 나왔으면 좋겠음-->
-							<!-- foreach로 돌리기 -->
-							<img alt="" src="/image/index_img/calender.JPG">
 							<!-- Section: Calender -->
-							<!-- 아니면 캘린더? -->
+							<section class="ftco-section">
+								<div class="container">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="content w-100">
+												<div class="calendar-container">
+													<div class="calendar">
+														<div class="year-header">
+															<span class="left-button fa fa-chevron-left" id="prev">
+															</span> <span class="year" id="label"></span> <span
+																class="right-button fa fa-chevron-right" id="next">
+															</span>
+														</div>
+														<table class="months-table w-100">
+															<tbody>
+																<tr class="months-row">
+																	<td class="month">1월</td>
+																	<td class="month">2월</td>
+																	<td class="month">3월</td>
+																	<td class="month">4월</td>
+																	<td class="month">5월</td>
+																	<td class="month">6월</td>
+																	<td class="month">7월</td>
+																	<td class="month">8월</td>
+																	<td class="month">9월</td>
+																	<td class="month">10월</td>
+																	<td class="month">11월</td>
+																	<td class="month">12월</td>
+																</tr>
+															</tbody>
+														</table>
+
+														<table class="days-table w-100">
+															<td class="day">월</td>
+															<td class="day">화</td>
+															<td class="day">수</td>
+															<td class="day">목</td>
+															<td class="day">금</td>
+															<td class="day">토</td>
+															<td class="day">일</td>
+														</table>
+														<div class="frame">
+															<table class="dates-table w-100">
+																<tbody class="tbody">
+																</tbody>
+															</table>
+														</div>
+														<button class="button" id="add-button">일정보기</button>
+													</div>
+												</div>
+												<div class="events-container"></div>
+												<div class="dialog" id="dialog">
+													<h2 class="dialog-header">일정 나올 예정</h2>
+													<form class="form" id="form">
+														<div class="form-container" align="center">
+															<input class="input" type="text" id="name" maxlength="36">
+															<label class="form-label" id="valueFromMyButton"
+																for="count">Number of people to invite</label> 
+															<input class="input" type="number" id="count" min="0" max="1000000" maxlength="7"> 
+															<input type="button" value="닫기" class="button" id="cancel-button"> 
+															<input type="button" value="OK" class="button button-white" id="ok-button">
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
 							<!-- Section: Calender -->
 						</div>
 					</div>
@@ -147,8 +217,8 @@
 				<div class="row">
 					<!-- 공지사항 게시판 -->
 					<div class="card mb-4">
-						<div class="card-body">
-							<!--  -->
+						<div class="card-body text-center">
+							<p>공지사항 게시판이 나올 예정입니다</p>
 						</div>
 					</div>
 				</div>

@@ -180,7 +180,7 @@ public class MemberDAO {
 				while (rs.next()) {
 					result.setCode(rs.getInt("code"));
 					result.setNick_name(rs.getString("nickname"));
-					;
+					result.setAuthority_grade_code(rs.getInt("authority_grade_code"));
 				}
 			}
 			return result;
@@ -235,7 +235,7 @@ public class MemberDAO {
 				+ "where \r\n"
 				+ "(REGISTRATION_TEAM_CODE IN (SELECT TEAM_CODE FROM TEAM_MEMBER WHERE MEMBER_CODE = ?) OR\r\n"
 				+ "APPLICATION_TEAM_CODE IN (SELECT TEAM_CODE FROM TEAM_MEMBER WHERE MEMBER_CODE = ?)) \r\n"
-				+ "and STATUS_CODE = 1301;";
+				+ "and STATUS_CODE = 1301";
 		try(Connection con = this.getConnection();
 			PreparedStatement pstat = con.prepareStatement(sql);){
 			pstat.setInt(1,member_code);
