@@ -82,6 +82,12 @@ div {
 					<c:when test="${board_kind_name=='공지사항'}">
 						전체 공지사항 게시판 입니다
 					</c:when>
+					<c:when test="${board_kind_name=='자유게시판'}">
+						누구나 자유롭게 의견을 나누세요!
+					</c:when>
+					<c:when test="${board_kind_name=='홍보게시판'}">
+						이곳에서 팀원을 모집해 보세요!
+					</c:when>
 					<c:otherwise>
 						게시판 설명글을 적어주세요
 					</c:otherwise>

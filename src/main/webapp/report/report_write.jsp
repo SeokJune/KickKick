@@ -32,7 +32,6 @@
 					overflow: hidden;
 					white-space: nowrap;
 					text-overflow: ellipsis;
-
 				}
 
 			</style>
@@ -42,7 +41,7 @@
 
 
 			<div class="container">
-				<form>
+				<form action="/insert.report" method="post">
 					<div class="row header" style="border-bottom:1px solid #d2d4d6">
 						<div class="col-12 text-center" id="title">
 							<h2 style="font-family: 'NanumSquareNeoExtraBold';">신고하기</h2>
@@ -53,7 +52,9 @@
 						<div class="col-12 target_box">
 							<h4>신고 대상</h4>
 							<div class="row contents_box p-0 m-1" style="border:1px solid #d2d4d6">
-								<input type="hidden" value="${target.code}" name="target_code">
+								<input type="hidden" value="${b_c}" id="b_c">
+								<input type="hidden" value="${target.code}" id="target_code">
+								<input type="hidden" value="${type}" id="type">
 								<div class="col-12">작성자 : ${target.member_nickname}</div>
 								<div class="col-12" id="content_box">내용 : ${target.content}</div>
 							</div>
@@ -62,36 +63,36 @@
 							<h4>신고 사유</h4>
 							<ul class="list-group">
 								<li class="list-group-item">
-									<input class="form-check-input me-1" type="radio" name="report_kind" value="1001"
+									<input class="form-check-input me-1 report_kind" type="radio" name="report_kind" value="1001"
 										id="firstRadio" checked>
 									<label class="form-check-label" for="firstRadio">스팸홍보/도배글입니다.</label>
 								</li>
 								<li class="list-group-item">
-									<input class="form-check-input me-1" type="radio" name="report_kind" value="1002"
+									<input class="form-check-input me-1 report_kind" type="radio" name="report_kind" value="1002"
 										id="secondRadio">
 									<label class="form-check-label" for="secondRadio">불법정보를 포함하고 있습니다.</label>
 								</li>
 								<li class="list-group-item">
-									<input class="form-check-input me-1" type="radio" name="report_kind" value="1003"
+									<input class="form-check-input me-1 report_kind" type="radio" name="report_kind" value="1003"
 										id="thirdRadio">
 									<label class="form-check-label" for="thirdRadio">음란물입니다.</label>
 								</li>
 								<li class="list-group-item">
-									<input class="form-check-input me-1" type="radio" name="report_kind" value="1004"
+									<input class="form-check-input me-1 report_kind" type="radio" name="report_kind" value="1004"
 										id="fourthRadio">
 									<label class="form-check-label" for="fourthRadio">불쾌한 표현이 있습니다.</label>
 								</li>
 								<li class="list-group-item">
-									<input class="form-check-input me-1" type="radio" name="report_kind" value="1005"
+									<input class="form-check-input me-1 report_kind" type="radio" name="report_kind" value="1005"
 										id="thirdRadio">
 									<label class="form-check-label" for="fifthRadio">개인정보가 노출되었습니다.</label>
 								</li>
 								<li class="list-group-item">
-									<input class="form-check-input me-1" type="radio" name="report_kind" value="1006"
+									<input class="form-check-input me-1 report_kind" type="radio" name="report_kind" value="1006"
 										id="thirdRadio">
 									<label class="form-check-label" for="sixthRadio">기타</label>
 									<div class="row">
-									<input type="text" name="detail" placeholder="신고사유를 입력해주세요" id="detail">
+									<input type="text" name="detail" placeholder="신고사유를 입력해주세요" id="detail" disabled>
 									</div>
 								</li>
 							</ul>
@@ -108,12 +109,36 @@
 				</form>
 			</div>
 			<script>
-				$(".form-check-input").on("click",function(){
-					if($(this).val()=="1006"){
-						$("#detail").disabled = false;
+				let reason_select;
+				$(".report_kind").on("change",function(){
+					if($(this).val()==1006){
+						$("#detail").attr("disabled",false);
+						reason_select=$(this).val();
 					}
 					else{
-						$("#detail").disabled = true;
+						$("#detail").attr("disabled",true);
+						reason_select=$(this).val();
+					}
+				});
+				$("#report").on("click",function(){
+					if(confirm("신고하시겠습니까?")){
+						$.ajax({
+							url:"/insert.report",
+							type:"post",
+							dataType:"json",
+							data:{
+								b_c:$("#b_c").val(),
+								target_code:$("#target_code").val(),
+								type:$("#type").val(),
+								report_kind:reason_select,
+								detail:$("#detail").val(),
+							},
+						}).done(function(resp){
+							if(resp==1){
+								alert("신고가 접수되었습니다.");
+								window.close();
+							}
+						});
 					}
 				});
 				$("#cancel").on("click",function(){
