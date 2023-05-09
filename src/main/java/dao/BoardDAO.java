@@ -199,8 +199,8 @@ public class BoardDAO {
 					int code = rs.getInt("code");
 					int board_kind_code = rs.getInt("board_kind_code");
 					String board_headline_name = rs.getString("board_headline_name");
-					String title = XSSUtils.xssDecoding(rs.getString("title"));
-					String content = XSSUtils.xssDecoding(rs.getString("content"));
+					String title = rs.getString("title");
+					String content = rs.getString("content");
 					String member_nickname = rs.getString("member_nickname");
 					int view_count = rs.getInt("view_count");
 					int like_count = rs.getInt("like_count");
@@ -234,8 +234,8 @@ public class BoardDAO {
 					result.setCode(rs.getInt("code"));
 					result.setBoard_kind_code(rs.getInt("board_kind_code"));
 					result.setBoard_headline_name(rs.getString("board_headline_name"));
-					result.setTitle(XSSUtils.xssDecoding(rs.getString("title")));
-					result.setContent(XSSUtils.xssDecoding(rs.getString("content")));
+					result.setTitle(rs.getString("title"));
+					result.setContent(rs.getString("content"));
 					result.setMember_nickname(rs.getString("member_nickname"));
 					result.setView_count(rs.getInt("view_count"));
 					result.setLike_count(rs.getInt("like_count"));

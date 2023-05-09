@@ -46,7 +46,7 @@ public class ReplyDAO {
 					int code = rs.getInt("code");
 					board_code = rs.getInt("board_code");
 					String member_nickname = rs.getString("member_nickname");
-					String content = XSSUtils.xssDecoding(rs.getString("content"));
+					String content = rs.getString("content");
 					int like_count = rs.getInt("like_count");
 					Timestamp reg_date = rs.getTimestamp("reg_date");
 					Timestamp mod_date = rs.getTimestamp("mod_date");
@@ -85,7 +85,7 @@ public class ReplyDAO {
 					result.setCode(rs.getInt("code"));
 					result.setBoard_code(rs.getInt("board_code"));
 					result.setMember_nickname(rs.getString("member_nickname"));
-					result.setContent(XSSUtils.xssDecoding(rs.getString("content")));
+					result.setContent(rs.getString("content"));
 					result.setLike_count(rs.getInt("like_count"));
 					result.setReg_date(rs.getTimestamp("reg_date"));
 					result.setMod_date(rs.getTimestamp("mod_date"));

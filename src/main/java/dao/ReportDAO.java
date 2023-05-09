@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import commons.Settings;
+import commons.XSSUtils;
 import dto.ReportDTO;
 
 public class ReportDAO {
@@ -39,7 +40,7 @@ public class ReportDAO {
 			pstat.setInt(3, dto.getBoard_code());
 			pstat.setInt(4, dto.getReply_code());
 			pstat.setInt(5, dto.getReport_kind_code());
-			pstat.setString(6, dto.getContent());
+			pstat.setString(6, XSSUtils.xssFilter(dto.getContent()));
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
