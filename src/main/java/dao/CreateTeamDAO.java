@@ -322,7 +322,9 @@ public class CreateTeamDAO {
 	}
 	// 팀 가입신청한 회원 목록 뽑아오기 (팀장만 보기)
 	public List<TeamApDTO> join_wait(int team_code1) throws Exception {
-		String sql = "select * from team_join_apply where team_code = ?";
+		String sql = "select t.code, t.team_code, t.member_code, m.nickname, m.phone, t.content, t.status_code\r\n"
+				+ "from team_join_apply t join member m on t.member_code = m.code\r\n"
+				+ "where t.team_code = ?";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
 			
@@ -334,13 +336,12 @@ public class CreateTeamDAO {
 					int code = rs.getInt("code");
 					int team_code = rs.getInt("team_code");
 					int member_code = rs.getInt("member_code");
+					String nickname = rs.getString("nickname");
+					String phone = rs.getString("phone");
 					String content = rs.getString("content");
 					int status_code = rs.getInt("status_code");
-					Timestamp reg_date = rs.getTimestamp("reg_date");
-					Timestamp mod_date = rs.getTimestamp("mod_date");
-					Timestamp del_date = rs.getTimestamp("del_date");
 					
-					TeamApDTO dto = new TeamApDTO(code, team_code, member_code, content, status_code, reg_date, mod_date, del_date);
+					TeamApDTO dto = new TeamApDTO(code, team_code, member_code, nickname, phone, content, status_code);
 					arr.add(dto);
 				}
 				return arr;
@@ -365,9 +366,7 @@ public class CreateTeamDAO {
 						status_code = rs.getInt("status_code");
 					}
 				return status_code;	
-			}
-			
-				
+			}	
 		}
 	}
 	

@@ -133,9 +133,7 @@ public class TeamController extends HttpServlet {
 				List team_ap = dao.join_wait(team_code);
 				// 로그인한 사람의 status 정보(승인대기, 수락, 거절)
 				int member_status = dao.member_status(member_code, team_code);
-				System.out.println("멤버코드 : " + member_code);
-				System.out.println("팀코드 : " + team_code);
-				System.out.println(member_status);
+				
 				
 				request.setAttribute("team_info", team_info);
 				request.setAttribute("member_code", member_code);
