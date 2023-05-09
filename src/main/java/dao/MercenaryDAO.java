@@ -57,7 +57,7 @@ public class MercenaryDAO {
 					String member_name = rs.getString("member_name");
 					String member_phone = rs.getString("member_phone");
 
-					list.add(new TeamDTO(code,logo_path,logo,name,member_name,member_phone));
+					list.add(new TeamDTO(logo_path,logo,code,name,member_name,member_phone));
 				}
 				return list;
 			}
