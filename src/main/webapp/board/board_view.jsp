@@ -67,6 +67,12 @@ div {
 .dropdown-menu>li {
 	cursor: pointer;
 }
+.r_content{
+	height:auto;
+}
+.reply_like{
+
+}
 </style>
 <!-- gbn css -->
 <link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
@@ -90,7 +96,7 @@ div {
 			<div class="col-12 pb-4" style="height: auto;min-height:500px;">${board.content}</div>
 			<div class="col text-center">
 				<c:if test="${sessionScope.code ne null and sessionScope.nickname ne board.member_nickname}">
-				<button type="button" class="btn btn-primary">좋아요</button>
+				<button type="button" class="btn btn-primary" id="board_like">좋아요</button>
 				<button type="button" class="btn btn-danger" id="to_report">신고</button>
 				</c:if>
 			</div>
@@ -125,7 +131,8 @@ div {
 									<small>답글달기</small>
 								</div>
 								<div class="p-0" style="margin-right: 5px">
-									<small>👍추천</small>
+								<button type="button" class="btn btn-primary btn-sm reply_like"><small>👍추천</small></button>
+									
 								</div>
 								<div class="btn-group p-0">
 									<button class="btn btn-secondary btn-sm dropdown-toggle"
@@ -189,7 +196,7 @@ div {
 									<small>답글달기</small>
 								</div>
 								<div class="p-0" style="margin-right: 5px">
-									<small>👍추천</small>
+									<button type="button" class="btn btn-primary btn-sm reply_like"><small>👍추천</small></button>
 								</div>
 								<div class="btn-group p-0">
 									<button class="btn btn-secondary btn-sm dropdown-toggle"
