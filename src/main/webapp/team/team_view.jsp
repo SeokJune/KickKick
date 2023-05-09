@@ -58,7 +58,9 @@ div {
 	height: 150px;
 	
 } 
-
+#p4 {
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -136,7 +138,25 @@ div {
 											<p>커뮤니티</p>
 										</div>
 										<div class="row tab-pane fade" id="application">
-											<p>받은 신청</p>
+											<div id="p4" class="col-12">
+												<div class="row">
+													<div class="col-3">신청자</div>
+													<div class="col-5">소개글</div>
+													<div class="col-4">수락/거절</div>
+												</div>
+												
+												<c:forEach var="ap" items="${team_ap}">
+												<hr>
+													<div class="row">
+														<div class="col-3">${ap.member_code}</div>
+														<div class="col-5">${ap.content}</div>
+														<div class="col-2" style="text-align: right;"><button>수락</button></div>
+														<div class="col-2" style="text-align: left;"><button>거절</button></div>
+													</div>
+												<hr>
+												</c:forEach>
+												
+											</div>
 										</div>
 									</div>
 								</div>
@@ -211,7 +231,7 @@ div {
 										<div class="row tab-pane fade" id="community">
 										
 										<c:choose>
-											<c:when test="${status==1001}">
+											<c:when test="${member_status==1001}">
 												<div class="col-12" style="text-align: center;">신청 대기중 입니다.</div>
 											</c:when>
 											<c:otherwise>
@@ -224,13 +244,13 @@ div {
 													<form action="/ap_member.team" id="frm">
 														<div class="row">
 															<div class="col-1"></div>
-															<div class="col-10"><textarea id="ap_input" name="ap_input"></textarea></div>
+															<div class="col-10"><textarea id="ap_input" name="ap_input" placeholder="30자 이하..."></textarea></div>
 															<div class="col-1"></div>
 															<input type="hidden" value="${team_info.code}" name="team_code">
 														</div>
 														<div class="row">
 															<div class="col-4"></div>
-															<div class="col-4"><button id="ap_btn">신청하기</button></div>
+															<div class="col-4"><button>신청하기</button></div>
 															<div class="col-4"></div>
 														</div>
 													</form>
@@ -253,6 +273,27 @@ div {
 	</div>
 	
 	<script>
+	// 팀 가입 신청하기 눌렀을 때 유효성 검사
+
+		$("#frm").on("submit", function() {
+			let ap_input = $("#ap_input");
+			console.log(ap_input);
+			false;
+			/* let ap_input_regex = /^.{0,30}$/;
+			
+			if(ap_input.val() == "") {
+				alert("소개글을 입력하세요.");
+				return false;
+				ap_input.focus;
+			}
+			else if(ap_input_regex.test(ap_input.val().trim()) == false;) {
+				alert("30자 이하로 입력하세요.");
+				return false;
+				ap_input.focus;
+			} */
+		})
+	
+		// 브라우저 크기 별 style 값 다르게 주기
 		 $(window).on("load", function() {
 			 const bodySize = parseInt($(".container-fluid").css("width"));
 			 if(bodySize<768) {
@@ -284,6 +325,7 @@ div {
 			}
 		}) 
 		
+	
 	</script>
 </body>
 </html>
