@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +44,9 @@ div {
 					<th scope="row"></th>
 					<td>${i.code}</td>
 					<td>${i.name}</td>
-					<td><a href="javascript:set_team('${i.code}','${i.logo_path}','${i.logo}','${i.name}','${i.member_name}','${i.member_phone}')">
+					<td>
+					<!-- <a href="javascript:set_team('${i.code}','${fn:escapeXml(i.logo_path)}','${i.logo}','${i.name}','${i.member_name}','${i.member_phone}')"> -->
+					<a href="javascript:set_team('${i.code}','${i.name}','${i.member_name}','${i.member_phone}')">
 					<button id="use" class="btn btn-primary btn-sm">선택</button></a></td>
 				</tr>
 
@@ -56,10 +59,16 @@ div {
 		</tbody>
 	</table>
 	<script>
+	/*
 		function set_team(c,lp,l,n,mn,mp){
 			opener.set_team_info(c,lp,l,n,mn,mp);
 			window.close();
 		}
+	*/
+	function set_team(c,n,mn,mp){
+		opener.set_team_info(c,1,1,n,mn,mp);
+		window.close();
+	}
 		$("#close").on("click", function() {
 			window.close(); // 팝업창을 닫음
 		})

@@ -16,6 +16,7 @@ public class ApplyDTO {
 	private int competition_kind_code;
 	private String competition_kind_name;
 	private int competition_kind_headcount;
+	private int headcount;
 	private double latirude;
 	private double longitude;
 	private Timestamp competition_date;
@@ -43,18 +44,20 @@ public class ApplyDTO {
 		this.content = content;
 	}
 	
-	public ApplyDTO(int code, int team_code, String member_name, Timestamp competition_date, String content,
-			int competition_registration_code, int mercenary_application_code) {
+	// apply_list
+	public ApplyDTO(int code, int team_code, String member_name, int headcount, Timestamp competition_date,
+			String content, int competition_registration_code, int mercenary_application_code) {
 		super();
 		this.code = code;
 		this.team_code = team_code;
 		this.member_name = member_name;
+		this.headcount = headcount;
 		this.competition_date = competition_date;
 		this.content = content;
 		this.competition_registration_code = competition_registration_code;
 		this.mercenary_application_code = mercenary_application_code;
 	}
-	
+
 	// register_modify_form
 	public ApplyDTO(int code, String logo_path, String logo, String team_name, String member_name, String member_phone,
 			String competition_kind_name, int competition_kind_headcount, double latirude, double longitude,
@@ -200,6 +203,14 @@ public class ApplyDTO {
 		this.competition_kind_headcount = competition_kind_headcount;
 	}
 	
+	public int getHeadcount() {
+		return headcount;
+	}
+
+	public void setHeadcount(int headcount) {
+		this.headcount = headcount;
+	}
+
 	public double getLatirude() {
 		return latirude;
 	}

@@ -148,13 +148,13 @@
 									class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀
 										목록보기</a></li>
 								<c:if test="${sessionScope.nickname != null}">
-									<li class="login"><a href="#"
-										class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내
-											팀 게시판으로</a></li>
+									<li class="login">
+										<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀 게시판으로(미완성)</a>
+									</li>
 								</c:if>
-								<li><a href="#"
-									class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀
-										랭킹 보기</a></li>
+								<li>
+									<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 랭킹 보기(미완성)</a>
+								</li>
 							</ul>
 						</div></li>
 					<!-- 매치메이킹 카테고리 -->
@@ -199,8 +199,8 @@
 							aria-expanded="false">운영진에게</button>
 						<div class="collapse" id="account-collapse">
 							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-								<li><a href="/"
-									class="nav_a link-dark d-inline-flex text-decoration-none rounded">문의하기</a>
+								<li>
+									<a href="/list.inquire?b_c=1005&cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">문의하기</a>
 								</li>
 								<li>
 									<a href="/list.report?b_c=1003&cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">신고내역</a>
