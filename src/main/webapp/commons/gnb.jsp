@@ -149,11 +149,11 @@
 										목록보기</a></li>
 								<c:if test="${sessionScope.nickname != null}">
 									<li class="login">
-										<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀 게시판으로(미완성)</a>
+										<a href="javascript:alert('미구현 상태입니다.ㅠㅠ');" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀 게시판으로</a>
 									</li>
 								</c:if>
 								<li>
-									<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 랭킹 보기(미완성)</a>
+									<a href="javascript:alert('미구현 상태입니다.ㅠㅠ');" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 랭킹 보기</a>
 								</li>
 							</ul>
 						</div></li>
@@ -171,7 +171,7 @@
 											등록</a></li>
 								</c:if>
 								<li>
-									<a href="/list.competition" class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭 신청</a>
+									<a href="/list.competition?cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭 신청</a>
 								</li>
 								<li>
 									<a href="/to_register_list.mercenary?cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병 신청</a>

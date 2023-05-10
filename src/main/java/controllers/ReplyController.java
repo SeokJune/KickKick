@@ -79,6 +79,29 @@ public class ReplyController extends HttpServlet {
 				if(result>0) {
 					response.getWriter().append(""+result);			}
 			}
+			else if(cmd.equals("/like.reply")) {
+				//게시판 종류 설정
+				int b_c = Integer.parseInt(request.getParameter("b_c"));
+				String board_kind_name = bdao.select_board_name(b_c);
+				request.setAttribute("board_kind_name", board_kind_name);
+				String board_table_name="";
+				if(board_kind_name.equals("공지사항")) {
+					board_table_name="ANNOUNCEMENT";
+				}
+				else if(board_kind_name.equals("자유게시판")) {
+					board_table_name="FREE";
+				}
+				else if(board_kind_name.equals("홍보게시판")) {
+					board_table_name="PROMOTION";
+				}
+				//댓글 코드 get
+				int code = Integer.parseInt(request.getParameter("code"));
+				int result = rdao.like_reply(board_table_name,code);
+				if(result>0) {
+					int like_count = rdao.select_like_count(board_table_name, code);
+					response.getWriter().append(like_count+"");
+				}
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 			response.sendRedirect("/error.jsp");

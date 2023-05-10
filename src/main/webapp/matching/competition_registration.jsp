@@ -888,10 +888,11 @@
                         type: "get",
                         data: {
                             teamname: name
-                        }	//dao,dto때문에
+                        },	//dao,dto때문에 
+                        dataType: "json"
 
                     }).done(function (resp) { 	//append가 있을떄 done으로 가게된다
-                        resp = JSON.parse(resp); //integer.parseint의 
+                        //integer.parseint의 
                         $("#t1").val("팀명 : " + resp[0]);
                         $("#t2").val("팀장 이름 : " + resp[1]);
                         $("#t3").val("팀장 번호 : " + resp[2]);
