@@ -370,10 +370,10 @@ font-family:'NanumSquareNeoBold';
 
                                     <div class="col-12" style=" display:none; " id="lat">${form.latirude }</div>
                                     <div class="col-12" style=" display:none; " id="long">${form.longitude }</div>
-                                    <div class="col-12"><input  name="rcode"
+                                    <div class="col-12"><input style="display:none;"  name="rcode"
                                             value="${form.registration_code }"></div>
 
-                                    <div class="col-12"><input  name="tcode"
+                                    <div class="col-12"><input style="display:none;" name="tcode"
                                             value="${form.apply_teamcode }"></div>
                                     <div class="col-12">
                                         <br>
