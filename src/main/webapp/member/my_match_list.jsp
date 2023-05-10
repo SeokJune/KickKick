@@ -50,7 +50,6 @@ html, body {
 <!-- contents CSS -->
 <style type="text/css">
 main {
-<<<<<<< HEAD
    height: max-content;
 }
 
@@ -71,28 +70,6 @@ main {
 .nav-link {
    font-family: 'NanumSquareNeoExtraBold';
    font-size: large;
-=======
-	height: max-content;
-}
-
-.my_match_container {
-	height: max-content;
-}
-
-.match_list_container {
-	min-width: 478px;
-	padding: 6%;
-	margin-bottom: 5%;
-	position: relative;
-	background-color: whitesmoke;
-	box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0
-		rgba(0, 0, 0, 0.19);
-}
-
-.nav-link {
-	font-family: 'NanumSquareNeoExtraBold';
-	font-size: large;
->>>>>>> 63d7cb45ee634af20be662ed863c6feb7b2f4f56
 }
 /*-------------------------------------------------------------------------*/
 .search {
@@ -126,7 +103,6 @@ main {
 }
 /*---------------------------------------------------------------------------*/
 .my_team, .other_team {
-<<<<<<< HEAD
    font-family: 'NanumSquareNeoExtraBold';
 }
 
@@ -137,18 +113,6 @@ main {
 img {
    height: 50px;
    width: 50px;
-=======
-	font-family: 'NanumSquareNeoExtraBold';
-}
-
-.match {
-	height: max-content;
-}
-
-img {
-	height: 50px;
-	width: 50px;
->>>>>>> 63d7cb45ee634af20be662ed863c6feb7b2f4f56
 }
 </style>
 
