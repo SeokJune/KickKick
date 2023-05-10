@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="commons.XSSUtils" %>
 <!DOCTYPE html>
 <html>
 
@@ -128,7 +129,7 @@ div {
 							</div>
 							<div class="right d-flex p-0">
 								<div class="p-0" style="margin-right: 5px">
-									<small>답글달기</small>
+									<button type="button" class="btn btn-secondary btn-sm reply_add"><small>답글달기</small></button>
 								</div>
 								<div class="p-0" style="margin-right: 5px">
 								<button type="button" class="btn btn-primary btn-sm reply_like"><small>👍추천</small></button>
@@ -217,7 +218,7 @@ div {
 							</div>
 							</c:if>
 						</div>
-						<div class="col-12 r_content">${reply.content}</div>
+						<div class="col-12 r_content">${XSSUtils.xssFilter(reply.content)}</div>
 					</div>
 					<div class="row r_update_box" style="display: none;">
 						<input type="hidden" class="r_code" value="${reply.code}">
@@ -337,6 +338,15 @@ div {
 					return msg;
 				};
 
+				function ConvertSystemSourcetoHtml(str){
+					 str = str.replace(/</g,"&lt;");
+					 str = str.replace(/>/g,"&gt;");
+					 str = str.replace(/\"/g,"&quot;");
+					 str = str.replace(/\'/g,"&#39;");
+					 str = str.replace(/\n/g,"<br />");
+					 return str;
+					}
+				
 				$("#reply_submit").on("click", function () {
 					if ($("#input_reply").val().trim() == "") {
 						alert("내용을 입력해주세요.");
@@ -346,13 +356,14 @@ div {
 						$.ajax({
 							url: "/insert.reply",
 							type: "post",
-							dataType: "json",
+							dataType: "html",
 							data: {
 								b_c: ${ b_c },
-							code: ${ board.code },
-							content: $("#input_reply").val(),
+								code: ${ board.code },
+								content: $("#input_reply").val(),
 							},
 				}).done(function (resp) {
+					resp = JSON.parse(resp);
 					console.log(resp);
 					$("#input_reply").val("");
 					$("#reply_count").text("댓글 " + resp.length + "개");
@@ -381,7 +392,9 @@ div {
 								$(".reply_delete").last().remove();
 							}
 						};
-						reply_box.find(".r_content").text(resp[i].content);
+						var content = resp[i].content;
+						content = ConvertSystemSourcetoHtml(content);
+						reply_box.find(".r_content").html(content);
 					}
 				});	
 			};
@@ -413,8 +426,11 @@ div {
 				});
 
 				$("#replies_box").on("click", ".reply_update", function () {
+					let content = $(this).closest(".reply_box").find(".r_content").html();
 					$(this).closest(".reply_box").css("display", "none");
 					$(this).closest(".reply_box").next(".r_update_box").css("display", "block");
+					$(this).closest(".reply_box").next(".r_update_box").find(".r_update_content").val(content);
+					
 				});
 
 				$("#replies_box").on("click", ".r_update_cancel", function () {
@@ -470,7 +486,7 @@ div {
 					});
 				});
 				
-				$(".reply_like").on("click",function(){
+				$("#replies_box").on("click", ".reply_like", function () {
 					let reply_code = $(this).closest(".reply_box").find(".r_code").val();
 					let like_box = $(this).closest(".reply_box").find(".r_like");
 					$.ajax({
@@ -486,7 +502,7 @@ div {
 					})
 				});
 				
-				$(".reply_add").on("click",function(){
+				$("#replies_box").on("click", ".reply_add", function () {
 					alert("미구현 기능입니다.");
 				});
 			</script>
