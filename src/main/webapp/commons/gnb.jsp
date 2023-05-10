@@ -166,9 +166,11 @@
 								<li>
 									<a href="/list.inquire?b_c=1005&cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">문의하기</a>
 								</li>
+								<c:if test="${sessionScope.auth_grade ne null}">
 								<li>
 									<a href="/list.report?b_c=1003&cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">신고내역</a>
 								</li>
+								</c:if>
 							</ul>
 						</div>
 					</li>

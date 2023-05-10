@@ -102,7 +102,7 @@ public class ReplyDAO {
 				PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setInt(1, dto.getBoard_code());
 			pstat.setInt(2, dto.getMember_code());
-			pstat.setString(3, XSSUtils.xssFilter(dto.getContent()));
+			pstat.setString(3, dto.getContent());
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
