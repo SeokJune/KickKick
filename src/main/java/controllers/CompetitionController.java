@@ -74,7 +74,7 @@ public class CompetitionController extends HttpServlet {
 				int currentpage = Integer.parseInt(request.getParameter("cpage"));
 				request.getSession().setAttribute("ucpage", currentpage); //리스트 페이지 초기설정 (1페이지로)
 
-				int start= (currentpage* Settings.BOARD_RECORD_COUNT_PER_PAGE)-(Settings.BOARD_RECORD_COUNT_PER_PAGE -1 );
+				int start= (currentpage* Settings.BOARD_RECORD_COUNT_PER_PAGE)-(Settings.BOARD_RECORD_COUNT_PER_PAGE - 1 );
 				int end = currentpage*Settings.BOARD_NAVI_COUNT_PER_PAGE;
 				System.out.println(start);
 				System.out.println(end);
@@ -97,16 +97,16 @@ public class CompetitionController extends HttpServlet {
 
 			}else if(cmd.equals("/search.competition")) { //리스트페이지에서 검색버튼 불렀을때
 
-				
-				
+
+
 				String searching = 	request.getParameter("searching");
 				System.out.println(searching);
 
 				if(searching != null && !searching.equals("") ) {
 					List<CompetitionListDTO> result = CompetitionDAO.getinstance().search(searching);
 					System.out.println(result);
-				
-					
+
+
 					if(result.size() == 0) { //검색한결과가 없으면 처음화면으로
 						response.sendRedirect("/list.competition?cpage=1");
 					}else {
@@ -246,8 +246,8 @@ public class CompetitionController extends HttpServlet {
 				request.getRequestDispatcher("/matching/competition_application.jsp").forward(request, response);
 
 			}else if(cmd.equals("/apply.competition")){ //신청하기를 눌렀을때 db에 넣는것
-				
-				
+
+
 				String status1 = request.getParameter("status");
 				System.out.println(status1);
 				int status = Integer.parseInt(status1);
@@ -284,22 +284,38 @@ public class CompetitionController extends HttpServlet {
 
 
 			}else if(cmd.equals("/acceptform.competition")) { //신청폼에서 수락하기를 눌렀을때
-				
-		
-				String reg_code = request.getParameter("reg_code"); //해당글의 코드 
-				String team_code = request.getParameter("team_code"); //해당 팀의 코드
-			
 
-				CompetitionDAO.getinstance().accept1(reg_code,team_code); //수락된건 1202
+
+				String reg_code1 = request.getParameter("reg_code"); //해당글의 코드 
+				String team_code1 = request.getParameter("team_code"); //해당 팀의 코드
+		
+		
+				
+				int reg_code = Integer.parseInt(reg_code1);
+				int team_code = Integer.parseInt(team_code1);
+			
+				int result =CompetitionDAO.getinstance().accept1(reg_code,team_code); //수락된건 1202
+				
+				System.out.println(result);
+	
 				CompetitionDAO.getinstance().accept2(reg_code,team_code); //수락되고 난 나머지는 1203
 			
+
 			}else if(cmd.equals("/refuseform.competition")) {//신청폼에서 거절하기를 눌렀을때
 
-				String reg_code = request.getParameter("reg_code"); //해당글의 코드 
-				System.out.println(reg_code);
-				String team_code = request.getParameter("team_code"); //해당 팀의 코드
-				System.out.println(team_code);
-				CompetitionDAO.getinstance().refuse(team_code,reg_code);
+				String reg_code1 = request.getParameter("reg_code"); //해당글의 코드 
+			
+				String team_code1 = request.getParameter("team_code"); //해당 팀의 코드
+			
+				int reg_code = Integer.parseInt(reg_code1);
+				int team_code = Integer.parseInt(team_code1);
+				
+				System.out.println(reg_code1);
+				System.out.println(team_code1);
+
+				
+				int result = CompetitionDAO.getinstance().refuse(team_code,reg_code);
+				System.out.println(result);
 
 			}
 

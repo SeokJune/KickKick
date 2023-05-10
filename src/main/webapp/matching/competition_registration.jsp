@@ -24,8 +24,10 @@
             <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
             <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-
-
+<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+<!-- awesome font -icon--->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <style>
                 * {
                     box-sizing: border-box;
@@ -33,8 +35,12 @@
                     text-align: center;
                 }
 
+div{
+font-family:'NanumSquareNeoBold';
+}
+
                 #request,#cancel{
-                        background-color: green;
+                        background-color:#0d6efd;
                         border:none;
                         border-radius: 5px;
                         padding:1%;
@@ -232,13 +238,17 @@
                 	height:200px;
                 	border-radius: 100px;
                 }
+                #cf {
+                	padding-top: 120px;
+                }
             </style>
         </head>
 
         <body>
-
-            <form action="/send.competition" method="get" enctype="multipart/form-data">
-                <div class="container-fluid  " style="background-color: whitesmoke;">
+<c:import url="/commons/gnb.jsp">
+	</c:import>
+            <form  action="/send.competition" method="get" enctype="multipart/form-data">
+                <div id="cf" class="container-fluid  " style="background-color: whitesmoke;">
                     <div class="row header">
 
                         <div class="col-xs-12 col-md-6">
@@ -249,7 +259,7 @@
                                 <div class="col-xs-12 col-md-2">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12 " >
-                                     		<input type="hidden" name="status" style="width:100%" value="${status[0].code}">
+                                     		<input type="hidden" name="status" style="width:100%;" value="${status[0].code}">
                                      	</div>
                                        
                                     </div>
@@ -257,7 +267,7 @@
 
                                 <div class="col-xs-12 col-md-8">
                                     <div class="row h-100">
-                                        <div class="col-xs-12 col-md-12">
+                                        <div class="col-xs-12 col-md-12" >
 
                                             <select size="1" id="tn" name="teamname" class="w-75 h-100 ajax_team_name" style="padding: 2%;">
                                                 <option selected value="">팀명선택</option>
@@ -270,6 +280,7 @@
                                             </select>
 
                                         </div>
+                                       
 
                                         <div class="col-xs-12 col-md-12" style="padding: 1%;">
                                             <img id="pic" style="border:1px solid black;" src="/image/competition_img/upload.png">

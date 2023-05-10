@@ -472,60 +472,61 @@ public class CompetitionDAO {
 	}
 
 	//신청폼에서 수락하기를 눌렀을때
-	public void accept1(String reg_code , String team_code) throws Exception{
-		String sql = "update competition_application set status_code = 1202 where COMPETITION_REGISTRATION_CODE = ? and team_code = ?";
+	public int accept1(int reg_code , int team_code) throws Exception{
+		String sql = "update competition_application set status_code =1202 where COMPETITION_REGISTRATION_CODE = ? and team_code = ?";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);)
 
 		{
-			pstat.setString(1, reg_code);
-			pstat.setString(2, team_code);
+			pstat.setInt(1, reg_code);
+			pstat.setInt(2, team_code);
+
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+
+	}
+
+	//신청폼에서 수락되고 나머지
+	public void accept2(int reg_code , int team_code) throws Exception{
+		String sql = "update competition_application set status_code = 1203 where COMPETITION_REGISTRATION_CODE = ? and team_code != ? ";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);)
+
+		{
+			pstat.setInt(1, reg_code);
+			pstat.setInt(2, team_code);
 
 			pstat.executeUpdate();
 			con.commit();
 
 		}
 	}
-	
-	//신청폼에서 수락되고 나머지
-		public void accept2(String reg_code , String team_code) throws Exception{
-			String sql = "update competition_application set status_code = 1203 where COMPETITION_REGISTRATION_CODE = ? and team_code != ? ";
-			try(Connection con = this.getConnection();
-					PreparedStatement pstat = con.prepareStatement(sql);)
 
-			{
-				pstat.setString(1, reg_code);
-				pstat.setString(2, team_code);
 
-				pstat.executeUpdate();
-				con.commit();
-
-			}
-		}
-	
-	
 
 	//신청폼에서 거절하기를 눌렀을때
-	public void refuse(String reg_code , String team_code) throws Exception{
-		String sql = "update competition_application set status_code = 1203 where COMPETITION_REGISTRATION_CODE = ? and team_code = ?";
+	public int refuse(int team_code , int reg_code) throws Exception{
+		String sql = "update competition_application set status_code =1203 where COMPETITION_REGISTRATION_CODE = ? and team_code = ?";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);)
 
 		{
-		
-			pstat.setString(1, reg_code);
-			pstat.setString(2, team_code);
 
-			pstat.executeUpdate();
+			pstat.setInt(1, reg_code);
+			pstat.setInt(2, team_code);
+
+			int result = pstat.executeUpdate();
 			con.commit();
-
+			return result;
 		}
 	}
 
 	//게시판 페이지 기능 -1
 	private int getRecordCount() throws Exception{
 
-		String sql = "select count (*) from competition_registration";
+		String sql = "select count (*) from competition_registration  cr where cr.competition_date >= sysdate";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
 				ResultSet rs = pstat.executeQuery()) {
@@ -630,7 +631,7 @@ public class CompetitionDAO {
 		String sql = "select tv.name team_name, tv.member_name, tv.member_phone,tv.logo_path,\r\n"
 				+ "tv.logo, cr.latirude, cr.longitude, cr.competition_date, cr.STATUS_CODE,\r\n"
 				+ "st.name status_name, ck.name kind_name , cr.code\r\n"
-				+ "from(select competition_registration.* , row_number() over(order by code desc) rn from competition_registration ) cr\r\n"
+				+ "from(select competition_registration.* , row_number() over(order by competition_date desc) rn from competition_registration ) cr\r\n"
 				+ "join team_view tv on (cr.team_code=tv.code)\r\n"
 				+ "join status st on (cr.status_code = st.code)\r\n"
 				+ "join competition_kind ck on (cr.competition_kind_code = ck.code)\r\n"
@@ -671,7 +672,7 @@ public class CompetitionDAO {
 			}
 
 		}
-	
+
 	}
 
 	//게시판 페이지 기능 -3

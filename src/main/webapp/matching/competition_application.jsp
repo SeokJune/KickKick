@@ -25,19 +25,20 @@
 
             <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
-
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+<!-- awesome font -icon--->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <style>
                 * {
                     box-sizing: border-box;
-
+font-family:'NanumSquareNeoBold';
                     text-align: center;
                 }
 
 
-
                 #request,
                 #cancel {
-                    background-color: green;
+                    background-color: #0d6efd;
                     border: none;
                     border-radius: 5px;
                     padding: 1%;
@@ -49,7 +50,7 @@
                 #modfiy,
                 #back,
                 #delete {
-                    background-color: green;
+                    background-color: #0d6efd;
                     border: none;
                     border-radius: 5px;
                     margin-bottom: 2%;
@@ -338,6 +339,7 @@
                             }
                             else {
                                 location.href = "/apply.competition?status=" + ${ status[2].code } +"&rcode=" + ${ form.registration_code } + "&tcode=" + $("select[name=team] option:selected").val() + "&ability=" + $("select[name=ab] option:selected").val() + "&content=" + $("#tx").val();
+                               alert("신청되었습니다");
                                 window.close(); //팝업창 닫는거
 
                             }
@@ -497,7 +499,7 @@
                                                 <td>번호</td>
                                                 <td>실력</td>
                                                 <td>수락/거절</td>
-                                                <td>팀 코드</td>
+                                                <td style="display:none;">팀 코드</td>
                                             </tr>
 
 
@@ -514,7 +516,7 @@
                                                         <button class="refuse"
                                                             style="background-color :red; color:white ; border-radius: 8px;">거절</button>
                                                     </td>
-                                                    <td class="t">${m.team_code}</td>
+                                                    <td class="t" style="display:none;">${m.team_code}</td>
                                                 </tr>
                                             </c:forEach>
                                         </table>
@@ -603,19 +605,30 @@
 
                             $(".accept").on("click", function () {
 
-                            	let l = $(this).parent().next().text();
-                   console.log(l);
-
+                            	let team_code = $(this).parent().next().text();
+                            	let reg_code = ${form.registration_code };
+                            	console.log(team_code);
+                            	console.log(reg_code);
+                            	 location.href = "/acceptform.competition?team_code="+team_code+"&reg_code="+reg_code;
+                          alert("수락되었습니다");
+                          window.location.reload();
+                            
                             })
 
                             $(".refuse").on("click", function () {
-                            	let team_code =  $(this).parent().parent().find(".t").text();
-                            	
-                                location.href = "/refuseform.competition?team_code="+team_code+"&reg_code="+${form.registration_code };
-                                alert("거절되었습니다");
-                                window.location.reload();
-                            
+                            	let team_code = $(this).parent().next().text();
+                            	let reg_code = ${form.registration_code };
+                            	console.log(team_code);
+                            	console.log(reg_code);
+                            	 location.href = "/refuseform.competition?team_code="+team_code+"&reg_code="+reg_code;
+                            	  alert("거절되었습니다"); 
+                            	  window.location.reload();
                             })
+                            
+                            
+                       /*        location.href = "/refuseform.competition?team_code="+team_code+"&reg_code="+${form.registration_code };
+                                alert("거절되었습니다");
+                                window.location.reload(); */
                         </script>
                     </div>
 
