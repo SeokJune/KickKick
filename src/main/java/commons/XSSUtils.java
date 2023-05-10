@@ -27,9 +27,9 @@ public class XSSUtils {
 		String result = "";
 
 		result = str;
+		result = result.replaceAll("[&]", "&amp;");
 		result = result.replaceAll("[<]", "&lt;");
 		result = result.replaceAll("[>]", "&gt;");
-		result = result.replaceAll("[&]", "&amp;");
 		result = result.replaceAll("[']", "&#x27;");
 		result = result.replaceAll("[\"]", "&quot;");
 		result = result.replaceAll("[(]", "&#40;");

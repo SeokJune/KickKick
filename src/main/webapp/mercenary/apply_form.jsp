@@ -64,7 +64,7 @@
 			<h2 class="mb-5" style="text-align: center;">용병 신청</h2>
 			<div class="row header">
 				<div class="col-xs-12 col-md-4 col-xl-4 text-center">
-					<img src="../image/${apply_info.logo_path}/${apply_info.logo}" class="mb-3"
+					<img src="../${apply_info.logo_path}${apply_info.logo}" class="mb-3"
 						style="width: 100px; height: 100px; border-radius: 40px;">
 					</div>
 				<div class="col-xs-12 col-md-8 col-xl-8">

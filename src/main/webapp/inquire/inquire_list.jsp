@@ -85,7 +85,7 @@ div {
 						<input type="hidden" class="code" value="${inquire.code}">
 						<div class="col-12">
 						<div class="col title_box pb-0">
-							<span class="status">[${inquire.status_name}] </span><span class="inquire_kind"> ${inquire.report_kind_name}</span>
+							<span class="status">[${inquire.status_name}] </span><span class="inquire_kind"> [${inquire.report_kind_name}]</span>
 							<span class="nickname" style="font-size: small;">${inquire.member_nickname}</span> · <span class="date" style="font-size: small;">${inquire.calculated_date}</span>
 						</div>
 						<div class="col content pt-0">${inquire.content}</div>

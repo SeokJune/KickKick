@@ -29,7 +29,7 @@
 	rel="stylesheet">
 
 <!-- gbn css -->
-<link href="/css/gbn.css" rel="stylesheet" type="text/css">
+<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
 <!-- kakao api -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a47338e87e3d914e6d508799cd4f4e17&libraries=services"></script>
@@ -40,6 +40,7 @@
 
 .container {
 	width: 70%;
+	margin-top: 150px;
 }
 
 .table {
@@ -66,6 +67,8 @@ td {
 </style>
 </head>
 <body>
+<c:import url="/commons/gnb.jsp">
+	</c:import>
 	<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
 		<h2 class="mb-5" style="text-align: center;">용병 신청 리스트</h2>
 		<div class="row team1">

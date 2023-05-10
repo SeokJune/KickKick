@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import commons.Settings;
+import commons.XSSUtils;
 import dto.InquireDTO;
 
 public class InquireDAO {
@@ -36,7 +37,7 @@ public class InquireDAO {
 				PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setInt(1, dto.getMember_code());
 			pstat.setInt(2, dto.getReport_kind_code());
-			pstat.setString(3, dto.getContent());
+			pstat.setString(3, XSSUtils.xssFilter(dto.getContent()));
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
