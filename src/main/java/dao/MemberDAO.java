@@ -235,7 +235,7 @@ public class MemberDAO {
 				+ "where \r\n"
 				+ "(REGISTRATION_TEAM_CODE IN (SELECT TEAM_CODE FROM TEAM_MEMBER WHERE MEMBER_CODE = ?) OR\r\n"
 				+ "APPLICATION_TEAM_CODE IN (SELECT TEAM_CODE FROM TEAM_MEMBER WHERE MEMBER_CODE = ?)) \r\n"
-				+ "and STATUS_CODE = 1301";
+				+ "and STATUS_CODE = 1301 order by competition_date";
 		try(Connection con = this.getConnection();
 			PreparedStatement pstat = con.prepareStatement(sql);){
 			pstat.setInt(1,member_code);

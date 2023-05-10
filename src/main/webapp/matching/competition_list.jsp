@@ -24,15 +24,20 @@
                 integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
                 crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
-
+<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+<!-- awesome font -icon--->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
             <style>
                 * {
-
+font-family:'NanumSquareNeoBold';
                     box-sizing: border-box;
                     text-align: center;
                 }
+                
+            
+
 
                 .pic {
                     width: 200px;
@@ -40,13 +45,19 @@
                     border-radius: 100px;
                 }
                 
+                 #cf {
+                	padding-top: 120px;
+                }
               
             </style>
         </head>
 
         <body>
+        	<c:import url="/commons/gnb.jsp">
+	</c:import>
+        
             <form id="frm" action="/search.competition" method="get">
-                <div class="container-fluid" style="background-color: whitesmoke;">
+                <div id="cf" class="container-fluid" style="background-color: whitesmoke;">
 
                     <div class="row header">
 
@@ -206,8 +217,8 @@
                                             </div>
                                             <div class="col-xs-12 col-md-3"
                                                 style="border: 1px solid black; padding: 1% ;">
-                                                <img src="${r.logo_path}${r.logo}" id="pic"
-                                                    style="border:1px solid black;" class="h-100">
+                                                <img src="${r.logo_path}${r.logo}" class="pic"
+                                                    style="border:1px solid black;" >
                                             </div>
 
                                             <div class="col-xs-12 col-md-7">
@@ -327,6 +338,8 @@
                                 $(this).css("border", "solid 3px navy");
                                 window.open("/applyform.competition?date=" + $(this).find(".date").text() + "&code=" + $(this).find(".code").text(),
                                     "", "width=900px, height=600px");
+                                
+                         
                             })
 
 
