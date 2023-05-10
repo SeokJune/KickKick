@@ -136,7 +136,7 @@
 									</li>
 								</c:if>
 								<li>
-									<a href="/list.competition" class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭 신청</a>
+									<a href="/list.competition?cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭 신청</a>
 								</li>
 								<li>
 									<a href="/to_register_list.mercenary?cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병 신청</a>
