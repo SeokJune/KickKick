@@ -18,7 +18,7 @@
 <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
 
 <!-- gbn css -->
-<link href="/css/gbn.css" rel="stylesheet" type="text/css">
+<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
 <!-- awesome font -icon--->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- kakao api -->
@@ -31,6 +31,7 @@ div {
 
 .container{
 	width: 70%;
+	margin-top: 150px;
 }
 
 .team2>div {
@@ -47,7 +48,9 @@ div {
 </style>
 </head>
 <body>
-
+<c:import url="/commons/gnb.jsp">
+	</c:import>
+	
 	<form id="form" action="/to_mercenary_register.mercenary" method="post">
 		<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
 		<h2 class="mb-5" style="text-align:center;">용병 등록</h2>
@@ -281,7 +284,7 @@ div {
 				"click",
 				function() {
 					window.open("/team_check.mercenary", "",
-							"width=350px,height=250px");
+							"width=500px,height=300px");
 				})
 		$("#match_select").on(
 				"click",

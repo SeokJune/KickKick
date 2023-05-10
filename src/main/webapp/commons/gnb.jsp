@@ -115,11 +115,11 @@
 								</li>
 								<c:if test="${sessionScope.nickname != null}">
 									<li class="login">
-										<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀 게시판으로</a>
+										<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀 게시판으로(미완성)</a>
 									</li>
 								</c:if>
 								<li>
-									<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 랭킹 보기</a>
+									<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 랭킹 보기(미완성)</a>
 								</li>
 							</ul>
 						</div>
@@ -138,14 +138,17 @@
 								<li>
 									<a href="/list.competition?cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭 신청</a>
 								</li>
-								<c:if test="${sessionScope.nickname != null}">
-									<li class="login">
-										<a href="/to_register_form.mercenary" class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병 등록</a>
-									</li>
-								</c:if>
 								<li>
 									<a href="/to_register_list.mercenary?cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병 신청</a>
 								</li>
+								<c:if test="${sessionScope.nickname != null}">
+									<li class="login">
+										<a href="/to_register_form.mercenary" class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병 등록(팀장)</a>
+									</li>
+									<li class="login">
+										<a href="/to_apply_list.mercenary" class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병 신청 리스트(팀장)</a>
+									</li>
+								</c:if>
 								<li>
 									<a href="#" class="nav_a link-dark d-inline-flex text-decoration-none rounded">시설 검색</a>
 								</li>
@@ -161,10 +164,10 @@
 						<div class="collapse" id="account-collapse">
 							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 								<li>
-									<a href="/" class="nav_a link-dark d-inline-flex text-decoration-none rounded">문의하기</a>
+									<a href="/list.inquire?b_c=1005&cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">문의하기</a>
 								</li>
 								<li>
-									<a href="/list.report?cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">신고내역</a>
+									<a href="/list.report?b_c=1003&cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">신고내역</a>
 								</li>
 							</ul>
 						</div>

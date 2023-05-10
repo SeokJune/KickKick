@@ -20,6 +20,7 @@ import dao.MemberDAO;
 import dao.TeamDAO;
 import dto.HometownDTO;
 import dto.MemberDTO;
+import dto.TeamApDTO;
 import dto.TeamDTO;
 
 
@@ -86,6 +87,10 @@ public class TeamController extends HttpServlet {
 				String outline = multi.getParameter("outline");
 				String content = multi.getParameter("content");
 				
+				team_name = XssCheck(team_name);
+				outline = XssCheck(outline);
+				content = XssCheck(content);
+				
 				File target = new File(real_path + "\\" + sysname);
 				target.renameTo(new File(real_path + "\\" + team_name + ".png"));
 				
@@ -114,17 +119,27 @@ public class TeamController extends HttpServlet {
 				request.getRequestDispatcher("/team/team_list.jsp").forward(request, response); 
 			}
 			// 팀 페이지
-			else if(cmd.equals("/view.team")) {
+			else if(cmd.equals("/view.team")) {			
+				// 팀가입 신청 상태정보
 				int team_code = Integer.parseInt(request.getParameter("team_code"));
 				int member_code = (int)request.getSession().getAttribute("code");
 				
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
+				// 팀코드를 이용하여 접속한 팀 페이지의 정보 뽑아오기
 				TeamDTO team_info = dao.team_info(team_code);
+				// 로그인한 사람이 가입한 팀의 팀코드 뽑아오기
 				List member_team_code = dao.team_code(member_code);
+				// 받은 팀 가입신청 리스트
+				List team_ap = dao.join_wait(team_code);
+				// 로그인한 사람의 status 정보(승인대기, 수락, 거절)
+				int member_status = dao.member_status(member_code, team_code);
+				
 				
 				request.setAttribute("team_info", team_info);
 				request.setAttribute("member_code", member_code);
 				request.setAttribute("member_team_code", member_team_code);
+				request.setAttribute("team_ap", team_ap);
+				request.setAttribute("member_status", member_status);
 				request.getRequestDispatcher("/team/team_view.jsp").forward(request, response); 
 			} else if (cmd.equals("/my_team_list.team")) {
 				
@@ -158,6 +173,23 @@ public class TeamController extends HttpServlet {
 				String resp = g.toJson(team_info);
 				System.out.println(resp);
 				response.getWriter().append(resp);	
+			}
+			// 팀 가입신청을 한 사람의 입력정보 받기
+			else if(cmd.equals("/ap_member.team")) {
+				
+				int member_code = (int) request.getSession().getAttribute("code");
+				int team_code = Integer.parseInt(request.getParameter("team_code"));
+				String ap_input = request.getParameter("ap_input");
+				ap_input = XssCheck(ap_input);
+				
+				TeamApDTO dto = new TeamApDTO(0,team_code,member_code,ap_input,1001,null,null,null);
+				
+				CreateTeamDAO dao = CreateTeamDAO.getInstance();
+				dao.insert_ap(dto);
+				
+				response.sendRedirect("/view.team?team_code="+team_code+"&code="+member_code); 
+				
+				
 			}
 		}
 		catch(Exception e) {

@@ -116,10 +116,10 @@ label {
 					<button class="nav-link text-dark" aria-current="page" id="my_team" onclick="location.href='/my_team_list.team'">내 팀</button>
 				</li>
 				<li class="nav-item">
-					<button class="nav-link text-dark" aria-current="page" id="my_comp" onclick="location.href='/''">내 경기</button>
+					<button class="nav-link text-dark" aria-current="page" id="my_comp" onclick="location.href='/my_match_list.member''">내 경기</button>
 				</li>
 				<li class="nav-item">
-					<button class="nav-link text-dark active" aria-current="page" id="my_info" onclick="location.href='/my_profile.membe'">내 정보</button>
+					<button class="nav-link text-dark active" aria-current="page" id="my_info" onclick="location.href='/my_profile.member'">내 정보</button>
 				</li>
 			</ul>
 		</div>

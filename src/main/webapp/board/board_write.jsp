@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Post Writing</title>
+<title>KickKick</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -62,7 +62,7 @@ div {
 	</c:import>
 
 	<div class="container">
-		<form class="row g-3" action="/insert.board" method="post">
+		<form class="row g-3" action="/insert.board" method="post" id="formID">
 			<div class="row header">
 				<div class="col-12" style="padding-top: 50px">
 					<h2>글쓰기</h2>
@@ -174,6 +174,7 @@ div {
 						opt.innerHTML = d[x];
 						target.appendChild(opt);
 					}
+					
 				};
 
 				
@@ -225,10 +226,6 @@ div {
 					});
 				
 				$("#post").on("click",function(){
-					console.log($("#board").val());
-					console.log($("#headline").val());
-					console.log($("#title").val());
-					console.log($(".ck-content").html());
 					if($("#board").val()==""||$("#headline").val()==""||$("#title").val()==""||$(".ck-content").html()==""){
 						alert("내용을 모두 입력해주세요.");
 						return false;

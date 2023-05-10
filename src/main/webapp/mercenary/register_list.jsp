@@ -29,7 +29,7 @@
 	rel="stylesheet">
 
 <!-- gbn css -->
-<link href="/css/gbn.css" rel="stylesheet" type="text/css">
+<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
 <!-- kakao api -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a47338e87e3d914e6d508799cd4f4e17&libraries=services"></script>
@@ -41,6 +41,7 @@
 .container {
 	width: 70%;
 	overflow-x: auto;
+	margin-top: 150px;
 }
 
 .table {
@@ -61,6 +62,8 @@ td {
 </head>
 
 <body>
+<c:import url="/commons/gnb.jsp">
+	</c:import>
 	<div class="container fluid shadow p-3 mb-5 bg-body-tertiary rounded">
 		<h2 class="mb-5" style="text-align: center;">용병 등록 리스트</h2>
 		<div class="table-responsive">
@@ -121,12 +124,12 @@ td {
 							<td align="center">
 							<c:choose>
 								<c:when test="${login_id.equals(i.leader_id)}">
-									<a href="/to_register_modify_form.mercenary?code=${i.code}"><input type="button" class="btn btn-outline-primary btn-sm" value="수정"></a>
+									<a href="/to_register_modify_form.mercenary?code=${i.code}&ctPage=${ctPage}"><input type="button" class="btn btn-outline-primary btn-sm" value="수정"></a>
 									<button type="button" class="btn btn-outline-primary btn-sm" onclick="delete_mercenary_register(${i.code})">삭제</button>
 								</c:when>
 								<c:otherwise>
 									<button type="button" class="btn btn-primary btn-sm"
-									onclick="valid_same_team(${i.code},${i.team_code});valid_apply(${i.code},${i.competition_result_code})">신청</button>
+									onclick="valid_same_team(${i.code},${i.team_code});valid_apply(${i.code},${i.competition_result_code},${ctPage})">신청</button>
 								</c:otherwise>
 							</c:choose>
 							</td>
@@ -205,7 +208,7 @@ td {
 	}
 	
 	// 로그인 ID의 팀 코드와 신청하려는 팀 코드가 같은지 검사
-	function valid_apply(code,competition_result_code){
+	function valid_apply(code,competition_result_code,ctPage){
 		if(!flag){
 			return false;
 		}
@@ -224,7 +227,7 @@ td {
 				location.reload();
 				return false;
 			}else{
-				window.location.href = "/to_apply_form.mercenary?code="+code;
+				window.location.href = "/to_apply_form.mercenary?code="+code+"&cpage="+ctPage;
 			}
 		})
 	}

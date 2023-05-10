@@ -12,9 +12,9 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import commons.Settings;
+import commons.XSSUtils;
 import dto.BoardDTO;
 import dto.BoardHeadlineDTO;
-import dto.ReplyDTO;
 
 public class BoardDAO {
 	private BoardDAO() {}
@@ -296,8 +296,8 @@ public class BoardDAO {
 				pstat.setInt(1, dto.getBoard_kind_code());
 				pstat.setInt(2, dto.getBoard_headline_code());
 				pstat.setInt(3, dto.getMember_code());
-				pstat.setString(4, dto.getTitle());
-				pstat.setString(5, dto.getContent());
+				pstat.setString(4, XSSUtils.xssFilter(dto.getTitle()));
+				pstat.setString(5, XSSUtils.xssFilter(dto.getContent()));
 				int result = pstat.executeUpdate();
 				con.commit();
 				return result;
@@ -309,8 +309,8 @@ public class BoardDAO {
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setString(1, dto.getBoard_headline_name());
-			pstat.setString(2, dto.getTitle());
-			pstat.setString(3, dto.getContent());
+			pstat.setString(2, XSSUtils.xssFilter(dto.getTitle()));
+			pstat.setString(3, XSSUtils.xssFilter(dto.getContent()));
 			pstat.setInt(4, dto.getCode());
 			int result = pstat.executeUpdate();
 			con.commit();
