@@ -9,6 +9,10 @@
 <title>KickKick</title>
 <!-- JQuery-->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- calender style -->
+<link rel="stylesheet" href="/commons/calender/style.css">
+<!-- calender js -->
+<script src="/commons/calender/main.js"></script>
 <!-- Bootstrap - CSS only -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
@@ -35,11 +39,6 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- gnb css -->
 <link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
-
-<!-- calender style -->
-<link rel="stylesheet" href="/commons/calender/style.css">
-<!-- calender js -->
-<script src="/commons/calender/main.js"></script>
 
 <style>
 * {
