@@ -318,25 +318,25 @@ public class CompetitionController extends HttpServlet {
 //			
 //		}	
 			// 캘린더에 띄울 날짜별 매칭된 경기수
-			else if(cmd.equals("/count_game.competition")) {
-				String year = (request.getParameter("year")).substring(2);
-				String month = request.getParameter("month");
-				if(month.length() == 1) {
-					month = 0 + month;
-				}
-				String day = request.getParameter("day");
-				if(day.length() == 1) {
-					day = 0 + day;
-				}
-				String date = year + "/" + month + "/" + day;
-				List<CompetitionDTO> game_list = CompetitionDAO.getinstance().match_game_list(date);
-				
-				Gson g = new Gson();
-				String dto_game_list = g.toJson(game_list);
-				JsonObject resp = new JsonObject();
-				resp.addProperty("events", dto_game_list);
-				response.getWriter().append(resp.toString());
-			}
+//			else if(cmd.equals("/count_game.competition")) {
+//				String year = (request.getParameter("year")).substring(2);
+//				String month = request.getParameter("month");
+//				if(month.length() == 1) {
+//					month = 0 + month;
+//				}
+//				String day = request.getParameter("day");
+//				if(day.length() == 1) {
+//					day = 0 + day;
+//				}
+//				String date = year + "/" + month + "/" + day;
+//				List<CompetitionDTO> game_list = CompetitionDAO.getinstance().match_game_list(date);
+//				
+//				Gson g = new Gson();
+//				String dto_game_list = g.toJson(game_list);
+//				JsonObject resp = new JsonObject();
+//				resp.addProperty("events", dto_game_list);
+//				response.getWriter().append(resp.toString());
+//			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
