@@ -23,6 +23,11 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
 	rel="stylesheet">
+<!-- awesome font -icon--->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- Font 기본 : {font-family: 'NanumSquareNeoBold'}-->
 <link
 	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
@@ -64,7 +69,7 @@
 			<h2 class="mb-5" style="text-align: center;">용병 신청</h2>
 			<div class="row header">
 				<div class="col-xs-12 col-md-4 col-xl-4 text-center">
-					<img src="../image/${apply_info.logo_path}/${apply_info.logo}" class="mb-3"
+					<img src="../${apply_info.logo_path}${apply_info.logo}" class="mb-3"
 						style="width: 100px; height: 100px; border-radius: 40px;">
 					</div>
 				<div class="col-xs-12 col-md-8 col-xl-8">

@@ -25,19 +25,20 @@
 
             <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
-
+<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+<!-- awesome font -icon--->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <style>
                 * {
                     box-sizing: border-box;
-
+font-family:'NanumSquareNeoBold';
                     text-align: center;
                 }
 
 
-
                 #request,
                 #cancel {
-                    background-color: green;
+                    background-color: #0d6efd;
                     border: none;
                     border-radius: 5px;
                     padding: 1%;
@@ -49,7 +50,7 @@
                 #modfiy,
                 #back,
                 #delete {
-                    background-color: green;
+                    background-color: #0d6efd;
                     border: none;
                     border-radius: 5px;
                     margin-bottom: 2%;
@@ -338,6 +339,7 @@
                             }
                             else {
                                 location.href = "/apply.competition?status=" + ${ status[2].code } +"&rcode=" + ${ form.registration_code } + "&tcode=" + $("select[name=team] option:selected").val() + "&ability=" + $("select[name=ab] option:selected").val() + "&content=" + $("#tx").val();
+                               alert("신청되었습니다");
                                 window.close(); //팝업창 닫는거
 
                             }
@@ -368,10 +370,10 @@
 
                                     <div class="col-12" style=" display:none; " id="lat">${form.latirude }</div>
                                     <div class="col-12" style=" display:none; " id="long">${form.longitude }</div>
-                                    <div class="col-12"><input type="hidden" name="rcode"
+                                    <div class="col-12"><input style="display:none;"  name="rcode"
                                             value="${form.registration_code }"></div>
 
-                                    <div class="col-12"><input type="hidden" name="tcode"
+                                    <div class="col-12"><input style="display:none;" name="tcode"
                                             value="${form.apply_teamcode }"></div>
                                     <div class="col-12">
                                         <br>
@@ -497,7 +499,7 @@
                                                 <td>번호</td>
                                                 <td>실력</td>
                                                 <td>수락/거절</td>
-                                                <td>팀 코드</td>
+                                                <td style="display:none;">팀 코드</td>
                                             </tr>
 
 
@@ -514,7 +516,7 @@
                                                         <button class="refuse"
                                                             style="background-color :red; color:white ; border-radius: 8px;">거절</button>
                                                     </td>
-                                                    <td class="t">${m.team_code}</td>
+                                                    <td class="t" style="display:none;">${m.team_code}</td>
                                                 </tr>
                                             </c:forEach>
                                         </table>
@@ -597,21 +599,39 @@
 
 
                                 location.href = "/deleteform.competition?delcode=" + ${ form.registration_code };
-                                opener.parent.location.reload();
+                                opener.parent.location.href = "/list.competition?cpage=1";
                                 window.close();
                             })
 
                             $(".accept").on("click", function () {
 
-                               let code =  $(this).parent().next().html();
-                               location.href = "/acceptform.competition?team_code="+code+"&reg_code="+${form.registration_code }+"&status_code"+${status[3].code};
-                                   
+                            	let team_code = $(this).parent().next().text(); //신청한 팀의 코드
+                            	let reg_code = ${form.registration_code }; //registration_code
+                            	let reg_team_code = ${form.apply_teamcode };  //글을 등록한 팀의 코드
+                            	console.log(team_code);
+                            	console.log(reg_code);
+                            	console.log(reg_team_code);
+                            	 location.href = "/acceptform.competition?team_code="+team_code+"&reg_code="+reg_code+"&reg_team_code="+reg_team_code;
+                          alert("수락되었습니다");
+                          window.close();
+                            
                             })
 
                             $(".refuse").on("click", function () {
-                            	let code =  $(this).parent().next().html();
-                                location.href = "/refuseform.competition?team_code="+code+"&reg_code="+${form.registration_code }+"&status_code"+${status[4].code};
+                            	let team_code = $(this).parent().next().text(); //신청한 팀의 코드
+                            	let reg_code = ${form.registration_code }; //registration_code
+                            	
+                            	console.log(team_code);
+                            	console.log(reg_code);
+                            	 location.href = "/refuseform.competition?team_code="+team_code+"&reg_code="+reg_code;
+                            	  alert("거절되었습니다"); 
+                            	  window.location.reload();
                             })
+                            
+                            
+                       /*        location.href = "/refuseform.competition?team_code="+team_code+"&reg_code="+${form.registration_code };
+                                alert("거절되었습니다");
+                                window.location.reload(); */
                         </script>
                     </div>
 

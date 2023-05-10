@@ -328,4 +328,51 @@ public class BoardDAO {
 			return result;
 		}
 	}
+	
+	public int like_post(String board_table_name,int code) throws Exception{
+		String sql = "update board_"+board_table_name+" set like_count = like_count+1 where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
+	
+	public int select_like_count(String board_table_name,int code) throws Exception{
+		String sql = "select like_count from board_"+board_table_name+" where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			try(ResultSet rs = pstat.executeQuery()){
+				rs.next();
+				return rs.getInt("like_count");
+			}
+		}
+	}
+	
+	public List<BoardDTO> select_index_list() throws Exception{
+		String sql = "select * from (select t.*, row_number() over(order by reg_date desc) rnk from (select b.code, b.board_kind_code, h.name board_headline_name, b.title, b.content, m.code member_code, m.nickname member_nickname, b.view_count, b.like_count, r.*, b.reg_date, b.mod_date from board_announcement b left join (select board_announcement_code board_announcement_code,count(code) reply_count from reply_announcement group by board_announcement_code) r on b.code=r.board_announcement_code join (select code, id, nickname from member) m on b.member_code=m.code join (select code, name from board_headline) h on b.board_headline_code=h.code) t ) where rnk between 1 and 5";			
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				ResultSet rs = pstat.executeQuery()){
+			List<BoardDTO> result = new ArrayList<>();
+			while(rs.next()) {
+				int code = rs.getInt("code");
+				int board_kind_code = rs.getInt("board_kind_code");
+				String board_headline_name = rs.getString("board_headline_name");
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				String member_nickname = rs.getString("member_nickname");
+				int view_count = rs.getInt("view_count");
+				int like_count = rs.getInt("like_count");
+				int reply_count = rs.getInt("reply_count");
+				Timestamp reg_date = rs.getTimestamp("reg_date");
+				Timestamp mod_date = rs.getTimestamp("mod_date");
+				result.add(new BoardDTO(code,board_kind_code,board_headline_name,title,content,member_nickname,view_count,like_count,reply_count,reg_date,mod_date));
+			}
+			return result;
+		}
+	}
 }

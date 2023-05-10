@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="commons.XSSUtils" %>
 <!DOCTYPE html>
 <html>
 
@@ -67,6 +68,12 @@ div {
 .dropdown-menu>li {
 	cursor: pointer;
 }
+.r_content{
+	height:auto;
+}
+.reply_like{
+
+}
 </style>
 <!-- gbn css -->
 <link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
@@ -83,14 +90,14 @@ div {
 			</div>
 			<div class="col-12">${board.member_nickname}
 				· ${board.calculated_date}<c:if test="${board.mod_date ne null}">(수정됨)</c:if> · 👀 ${board.view_count} · <span
-					class="badge rounded-pill text-bg-success">👍🏻${board.like_count}</span>
+					class="badge rounded-pill text-bg-success" id="like">👍🏻${board.like_count}</span>
 			</div>
 		</div>
 		<div class="row body" style="border-bottom: 1px solid #d2d4d6;">
 			<div class="col-12 pb-4" style="height: auto;min-height:500px;">${board.content}</div>
 			<div class="col text-center">
 				<c:if test="${sessionScope.code ne null and sessionScope.nickname ne board.member_nickname}">
-				<button type="button" class="btn btn-primary">좋아요</button>
+				<button type="button" class="btn btn-primary" id="board_like">좋아요</button>
 				<button type="button" class="btn btn-danger" id="to_report">신고</button>
 				</c:if>
 			</div>
@@ -122,10 +129,11 @@ div {
 							</div>
 							<div class="right d-flex p-0">
 								<div class="p-0" style="margin-right: 5px">
-									<small>답글달기</small>
+									<button type="button" class="btn btn-secondary btn-sm reply_add"><small>답글달기</small></button>
 								</div>
 								<div class="p-0" style="margin-right: 5px">
-									<small>👍추천</small>
+								<button type="button" class="btn btn-primary btn-sm reply_like"><small>👍추천</small></button>
+									
 								</div>
 								<div class="btn-group p-0">
 									<button class="btn btn-secondary btn-sm dropdown-toggle"
@@ -186,10 +194,10 @@ div {
 							<c:if test="${sessionScope.code ne null}">
 							<div class="right d-flex p-0">
 								<div class="p-0" style="margin-right: 5px">
-									<small>답글달기</small>
+									<button type="button" class="btn btn-secondary btn-sm reply_add"><small>답글달기</small></button>
 								</div>
 								<div class="p-0" style="margin-right: 5px">
-									<small>👍추천</small>
+									<button type="button" class="btn btn-primary btn-sm reply_like"><small>👍추천</small></button>
 								</div>
 								<div class="btn-group p-0">
 									<button class="btn btn-secondary btn-sm dropdown-toggle"
@@ -210,7 +218,7 @@ div {
 							</div>
 							</c:if>
 						</div>
-						<div class="col-12 r_content">${reply.content}</div>
+						<div class="col-12 r_content">${XSSUtils.xssFilter(reply.content)}</div>
 					</div>
 					<div class="row r_update_box" style="display: none;">
 						<input type="hidden" class="r_code" value="${reply.code}">
@@ -330,6 +338,15 @@ div {
 					return msg;
 				};
 
+				function ConvertSystemSourcetoHtml(str){
+					 str = str.replace(/</g,"&lt;");
+					 str = str.replace(/>/g,"&gt;");
+					 str = str.replace(/\"/g,"&quot;");
+					 str = str.replace(/\'/g,"&#39;");
+					 str = str.replace(/\n/g,"<br />");
+					 return str;
+					}
+				
 				$("#reply_submit").on("click", function () {
 					if ($("#input_reply").val().trim() == "") {
 						alert("내용을 입력해주세요.");
@@ -339,13 +356,14 @@ div {
 						$.ajax({
 							url: "/insert.reply",
 							type: "post",
-							dataType: "json",
+							dataType: "html",
 							data: {
 								b_c: ${ b_c },
-							code: ${ board.code },
-							content: $("#input_reply").val(),
+								code: ${ board.code },
+								content: $("#input_reply").val(),
 							},
 				}).done(function (resp) {
+					resp = JSON.parse(resp);
 					console.log(resp);
 					$("#input_reply").val("");
 					$("#reply_count").text("댓글 " + resp.length + "개");
@@ -374,7 +392,9 @@ div {
 								$(".reply_delete").last().remove();
 							}
 						};
-						reply_box.find(".r_content").text(resp[i].content);
+						var content = resp[i].content;
+						content = ConvertSystemSourcetoHtml(content);
+						reply_box.find(".r_content").html(content);
 					}
 				});	
 			};
@@ -406,8 +426,11 @@ div {
 				});
 
 				$("#replies_box").on("click", ".reply_update", function () {
+					let content = $(this).closest(".reply_box").find(".r_content").html();
 					$(this).closest(".reply_box").css("display", "none");
 					$(this).closest(".reply_box").next(".r_update_box").css("display", "block");
+					$(this).closest(".reply_box").next(".r_update_box").find(".r_update_content").val(content);
+					
 				});
 
 				$("#replies_box").on("click", ".r_update_cancel", function () {
@@ -447,6 +470,40 @@ div {
 				$("#replies_box").on("click", ".reply_report", function () {
 					let r_code = $(this).closest(".reply_box").find(".r_code").val();
 					window.open("/to_report_form.report?b_c=${b_c}&reply_code="+r_code,"","width=500px,height=750px");
+				});
+				
+				$("#board_like").on("click",function(){
+					$.ajax({
+						url:"/like.board",
+						type:"post",
+						data:{
+							b_c:${b_c},
+							code:${board.code},
+						},
+						dataType:"json",
+					}).done(function(resp){
+						$("#like").text("👍🏻"+resp);
+					});
+				});
+				
+				$("#replies_box").on("click", ".reply_like", function () {
+					let reply_code = $(this).closest(".reply_box").find(".r_code").val();
+					let like_box = $(this).closest(".reply_box").find(".r_like");
+					$.ajax({
+						url:"/like.reply",
+						type:"post",
+						data:{
+							b_c:${b_c},
+							code:reply_code,
+						},
+						dataType:"json",
+					}).done(function(resp){
+						like_box.text("👍🏻"+resp);
+					})
+				});
+				
+				$("#replies_box").on("click", ".reply_add", function () {
+					alert("미구현 기능입니다.");
 				});
 			</script>
 </body>

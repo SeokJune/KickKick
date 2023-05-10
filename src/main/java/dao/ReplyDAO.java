@@ -102,7 +102,7 @@ public class ReplyDAO {
 				PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setInt(1, dto.getBoard_code());
 			pstat.setInt(2, dto.getMember_code());
-			pstat.setString(3, XSSUtils.xssFilter(dto.getContent()));
+			pstat.setString(3, dto.getContent());
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
@@ -124,11 +124,34 @@ public class ReplyDAO {
 		String sql = "update reply_"+board_table_name+" set content=?, mod_date=sysdate where code=?";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql)){
-			pstat.setString(1, XSSUtils.xssFilter(dto.getContent()));
+			pstat.setString(1, dto.getContent());
 			pstat.setInt(2, dto.getCode());
 			int result = pstat.executeUpdate();
 			con.commit();
 			return result;
+		}
+	}
+	
+	public int like_reply(String board_table_name,int code) throws Exception{
+		String sql = "update reply_"+board_table_name+" set like_count = like_count+1 where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
+	
+	public int select_like_count(String board_table_name,int code) throws Exception{
+		String sql = "select like_count from reply_"+board_table_name+" where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			try(ResultSet rs = pstat.executeQuery()){
+				rs.next();
+				return rs.getInt("like_count");
+			}
 		}
 	}
 }

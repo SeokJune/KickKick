@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -50,69 +50,73 @@ html, body {
 <!-- contents CSS -->
 <style type="text/css">
 main {
-	height: max-content;
+   height: max-content;
 }
 
 .my_match_container {
-	height: max-content;
+   height: max-content;
 }
 
 .match_list_container {
-	min-width: 478px;
-	padding: 6%;
-	margin-bottom: 5%;
-	position: relative;
-	background-color: whitesmoke;
-	box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0
-		rgba(0, 0, 0, 0.19);
+   min-width: 478px;
+   padding: 6%;
+   margin-bottom: 5%;
+   position: relative;
+   background-color: whitesmoke;
+   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0
+      rgba(0, 0, 0, 0.19);
 }
 
 .nav-link {
-	font-family: 'NanumSquareNeoExtraBold';
-	font-size: large;
+   font-family: 'NanumSquareNeoExtraBold';
+   font-size: large;
 }
 /*-------------------------------------------------------------------------*/
 .search {
-	position: relative;
-	box-shadow: 0 0 40px rgba(51, 51, 51, .1);
+   position: relative;
+   box-shadow: 0 0 40px rgba(51, 51, 51, .1);
 }
 
 .search input {
-	height: 60px;
-	text-indent: 25px;
-	border: 2px solid #d6d4d4;
+   height: 60px;
+   text-indent: 25px;
+   border: 2px solid #d6d4d4;
 }
 
 .search input:focus {
-	box-shadow: none;
-	border: 2px solid blue;
+   box-shadow: none;
+   border: 2px solid blue;
 }
 
 .search .fa-search {
-	position: absolute;
-	top: 20px;
-	left: 16px;
+   position: absolute;
+   top: 20px;
+   left: 16px;
 }
 
 .search button {
-	position: absolute;
-	top: 5px;
-	right: 5px;
-	height: 50px;
-	width: 110px;
+   position: absolute;
+   top: 5px;
+   right: 5px;
+   height: 50px;
+   width: 110px;
 }
 /*---------------------------------------------------------------------------*/
 .my_team, .other_team {
-	font-family: 'NanumSquareNeoExtraBold';
+   font-family: 'NanumSquareNeoExtraBold';
+}
+
+.vs{
+	width:10%;
 }
 
 .match {
-	height: max-content;
+   height: max-content;
 }
 
 img {
-	height: 50px;
-	width: 50px;
+   height: 50px;
+   width: 50px;
 }
 </style>
 
@@ -142,7 +146,7 @@ img {
 			</ul>
 
 			<div class="container match_list_container h-100">
-
+			<!-- 1.경기일정 없을 때 -->
 				<c:if test="${fn:length(match_list) == 0}">
 					<div class="col-12 col-w-100 p-2 mt-3 ">
 						<div class="card top-100 start-50 translate-middle">
@@ -153,7 +157,7 @@ img {
 					</div>
 				</c:if>
 
-
+			<!-- 2.경기일정 있을 때 -->
 				<c:if test="${fn:length(match_list) != 0}">
 
 					<div
@@ -171,30 +175,44 @@ img {
 					<div class="row match position-relative">
 
 						<c:forEach var="m" items="${match_list}">
+							<jsp:useBean id="now" class="java.util.Date" />
+							<fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="now_time" scope="request" />
+							<fmt:parseNumber value="${m.competition_date.time / (1000*60*60*24)}" integerOnly="true" var="match_time" scope="request" />
+							
 							<div class="col-12 col-w-80 col-lg-6 col-md-w-50 p-2 ">
 								<div class="card top-50 start-50 translate-middle">
 									<div class="card-header">
 										<span> 
-											<fmt:formatDate pattern="yyyy년 MM월 dd일 a hh:mm" value="${m.competition_date}" />
+											<fmt:formatDate value="${m.competition_date}" type="both" pattern="yyyy년 MM월 dd일 '('E')' HH:mm"/>
 										</span>
+										<span class="position-absolute top-0 end-0 p-2">${match_time - now_time}일 전 </span>
 									</div>
 									<div class="card-body text-center">
-										<h5 class="card-title">
-											<span class="my_team fs-4">${m.registration_team_name}</span>
-											<span class="vs fs-6"> &ensp; VS &ensp; </span> <span
-												class="other_team fs-4">${m.application_team_name}</span>
-										</h5>
+										<div class="card-text">
+											<div class="my_team d-inline-block text-end">
+												<span class="fs-4">${m.registration_team_name}</span>
+											</div>
+											<div class="vs d-inline-block text-center">
+												<span class="fs-6">&ensp;VS&ensp;</span> 
+											</div>
+											<div class="other_team d-inline-block text-start">
+												<span class="fs-4">${m.application_team_name}</span>
+											</div>
+										</div>
+									</div>
+									<div class="card-footer text-center">
+    									<span>
+											⚽&nbsp;${m.competition_kind_name}&emsp;|&emsp;<i class="fa-solid fa-users fs-5"></i>&ensp;${m.competition_kind_headcount}
+										</span>
 									</div>
 								</div>
 							</div>
 						</c:forEach>
 					</div>
-
 				</c:if>
 
 			</div>
 		</div>
-
 	</main>
 
 </body>

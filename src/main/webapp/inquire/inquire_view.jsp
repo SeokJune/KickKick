@@ -51,13 +51,14 @@ div {
 			</div>
 		</div>
 		<div class="row body" style="border-bottom: 1px solid #d2d4d6;">
-			<div class="col-12 pb-4" style="height: auto;min-height:500px;">
+			<div class="col-12 pb-4" style="height: auto;min-height:400px;">
 			<i class="icons fa-solid fa-q fs-1" style="color: #198754;"></i>
 				${inquire.content}
 			</div>
 			<div class="col text-center">
-				<!-- c:if sessionScope.auth_grade ne null -->
+				<c:if test="${sessionScope.auth_grade ne null}">
 				<button type="button" class="btn btn-primary">답변등록</button>
+				</c:if>
 			</div>
 			<c:if test="${sessionScope.nickname eq inquire.member_nickname}">
 			<div class="col-12 gap-2 d-flex justify-content-end">

@@ -158,12 +158,22 @@ div {
 				</div>
 			</form>
 		</div>
-		<c:if test="${sessionScope.code ne null}">
+		<c:choose>
+		<c:when test="${(b_c eq 1003 || b_c eq 1004) && sessionScope.code ne null}">
 			<div class="col-12 d-grid justify-content-end">
 				<a class="btn btn-primary"
 					href="/to_write_form.board?b_n=${board_kind_name}" role="button">글쓰기</a>
 			</div>
-		</c:if>
+		</c:when>
+		<c:when test="${b_c eq 1002 && sessionScope.code ne null && sessionScope.auth_grade ne null}">
+			<div class="col-12 d-grid justify-content-end">
+				<a class="btn btn-primary"
+					href="/to_write_form.board?b_n=${board_kind_name}" role="button">글쓰기</a>
+			</div>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+		</c:choose>
 	</div>
 	<script type="text/javascript">
 	window.onload = function(){
