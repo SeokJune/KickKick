@@ -597,20 +597,24 @@
 
 
                                 location.href = "/deleteform.competition?delcode=" + ${ form.registration_code };
-                                opener.parent.location.reload();
+                                opener.parent.location.href = "/list.competition?cpage=1";
                                 window.close();
                             })
 
                             $(".accept").on("click", function () {
 
-                               let code =  $(this).parent().next().html();
-                               location.href = "/acceptform.competition?team_code="+code+"&reg_code="+${form.registration_code }+"&status_code="+${status[3].code};
-                                   
+                            	let l = $(this).parent().next().text();
+                   console.log(l);
+
                             })
 
                             $(".refuse").on("click", function () {
-                            	let code =  $(this).parent().next().html();
-                                location.href = "/refuseform.competition?team_code="+code+"&reg_code="+${form.registration_code }+"&status_code="+${status[4].code};
+                            	let team_code =  $(this).parent().parent().find(".t").text();
+                            	
+                                location.href = "/refuseform.competition?team_code="+team_code+"&reg_code="+${form.registration_code };
+                                alert("거절되었습니다");
+                                window.location.reload();
+                            
                             })
                         </script>
                     </div>

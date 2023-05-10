@@ -145,7 +145,7 @@ public class MemberController extends HttpServlet {
 				String member_confirm_pw = dao.select_member(member_id).getPw();
 				String member_new_pw = request.getParameter("member_new_pw");
 				String member_pw = "";
-				if ((member_new_pw != "" && member_new_pw != null ) {
+				if ((member_new_pw != "" && member_new_pw != null )) {
 					member_pw = EncryptionUtils.sha512(member_new_pw);
 				} else {
 					member_pw = member_confirm_pw;

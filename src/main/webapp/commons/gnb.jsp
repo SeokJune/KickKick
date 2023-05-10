@@ -136,7 +136,7 @@
 									</li>
 								</c:if>
 								<li>
-									<a href="/list.competition" class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭 신청</a>
+									<a href="/list.competition?cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭 신청</a>
 								</li>
 								<c:if test="${sessionScope.nickname != null}">
 									<li class="login">
