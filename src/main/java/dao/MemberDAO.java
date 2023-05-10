@@ -172,7 +172,7 @@ public class MemberDAO {
 	}
 
 	public MemberDTO get_info_by_id(String id) throws Exception {
-		String sql = "select code, nickname from member where id = ?";
+		String sql = "select code, nickname , authority_grade_code from member where id = ?";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, id);
 			MemberDTO result = new MemberDTO();
@@ -180,7 +180,7 @@ public class MemberDAO {
 				while (rs.next()) {
 					result.setCode(rs.getInt("code"));
 					result.setNick_name(rs.getString("nickname"));
-					;
+					result.setAuthority_grade_code(rs.getInt("authority_grade_code"));
 				}
 			}
 			return result;

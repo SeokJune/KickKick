@@ -16,6 +16,7 @@ import dto.AbilityDTO;
 import dto.CompetitionApplicationDTO;
 import dto.CompetitionApplicationListDTO;
 import dto.CompetitionApplyFormDTO;
+import dto.CompetitionDTO;
 import dto.CompetitionKindDTO;
 import dto.CompetitionListDTO;
 import dto.CompetitionRegistrationDTO;
@@ -25,42 +26,41 @@ import dto.TeamDTO;
 
 public class CompetitionDAO {
 
-	private CompetitionDAO() {};
+	private CompetitionDAO() {
+	};
 
-	private static CompetitionDAO instance= null;
+	private static CompetitionDAO instance = null;
 
 	public synchronized static CompetitionDAO getinstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new CompetitionDAO();
 		}
 		return instance;
 	}
 
-	private Connection getConnection() throws Exception{
+	private Connection getConnection() throws Exception {
 		Context iCtx = new InitialContext();
 
-		DataSource ds = (DataSource)iCtx.lookup("java:/comp/env/jdbc/ora");
+		DataSource ds = (DataSource) iCtx.lookup("java:/comp/env/jdbc/ora");
 		return ds.getConnection();
 	}
 
-
-	public List<AbilityDTO> ability() throws Exception{
-		String sql = "select * from ability" ;
-		try(Connection con = this.getConnection();
+	public List<AbilityDTO> ability() throws Exception {
+		String sql = "select * from ability";
+		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
-				ResultSet rs = pstat.executeQuery();)
-		{
+				ResultSet rs = pstat.executeQuery();) {
 			List<AbilityDTO> ability = new ArrayList<>();
 
-			while(rs.next()) {
+			while (rs.next()) {
 
-				int code = 	rs.getInt("code");
+				int code = rs.getInt("code");
 				String name = rs.getString("name");
 				Timestamp reg_date = rs.getTimestamp("reg_date");
 				Timestamp mod_date = rs.getTimestamp("mod_date");
 				Timestamp del_date = rs.getTimestamp("del_date");
 
-				AbilityDTO dto = new AbilityDTO(code,name,reg_date,mod_date,del_date);
+				AbilityDTO dto = new AbilityDTO(code, name, reg_date, mod_date, del_date);
 				ability.add(dto);
 
 			}
@@ -70,25 +70,23 @@ public class CompetitionDAO {
 		}
 	}
 
-
-	public List<CompetitionKindDTO> kind() throws Exception{
-		String sql = "select * from competition_kind" ;
-		try(Connection con = this.getConnection();
+	public List<CompetitionKindDTO> kind() throws Exception {
+		String sql = "select * from competition_kind";
+		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
-				ResultSet rs = pstat.executeQuery();)
-		{
+				ResultSet rs = pstat.executeQuery();) {
 			List<CompetitionKindDTO> kind = new ArrayList<>();
 
-			while(rs.next()) {
+			while (rs.next()) {
 
-				int code = 	rs.getInt("code");
+				int code = rs.getInt("code");
 				String name = rs.getString("name");
 				int headcount = rs.getInt("headcount");
 				Timestamp reg_date = rs.getTimestamp("reg_date");
 				Timestamp mod_date = rs.getTimestamp("mod_date");
 				Timestamp del_date = rs.getTimestamp("del_date");
 
-				CompetitionKindDTO dto = new CompetitionKindDTO(code,name,headcount,reg_date,mod_date,del_date);
+				CompetitionKindDTO dto = new CompetitionKindDTO(code, name, headcount, reg_date, mod_date, del_date);
 				kind.add(dto);
 
 			}
@@ -98,23 +96,22 @@ public class CompetitionDAO {
 		}
 	}
 
-	public List<HometownDTO> hometown() throws Exception{
-		String sql = "select * from hometown" ;
-		try(Connection con = this.getConnection();
+	public List<HometownDTO> hometown() throws Exception {
+		String sql = "select * from hometown";
+		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
-				ResultSet rs = pstat.executeQuery();)
-		{
+				ResultSet rs = pstat.executeQuery();) {
 			List<HometownDTO> place = new ArrayList<>();
 
-			while(rs.next()) {
+			while (rs.next()) {
 
-				int code = 	rs.getInt("code");
+				int code = rs.getInt("code");
 				String name = rs.getString("name");
 				Timestamp reg_date = rs.getTimestamp("reg_date");
 				Timestamp mod_date = rs.getTimestamp("mod_date");
 				Timestamp del_date = rs.getTimestamp("del_date");
 
-				HometownDTO dto = new HometownDTO(code,name,reg_date,mod_date,del_date);
+				HometownDTO dto = new HometownDTO(code, name, reg_date, mod_date, del_date);
 				place.add(dto);
 
 			}
@@ -124,38 +121,37 @@ public class CompetitionDAO {
 		}
 	}
 
-	public List<TeamDTO> teamname(int c) throws Exception{
-		String sql = "select * from team where team.member_code = ?" ;
-		try(Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);)
+	public List<TeamDTO> teamname(int c) throws Exception {
+		String sql = "select * from team where team.member_code = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);)
 
 		{
 			List<TeamDTO> teamname = new ArrayList<>();
 
 			pstat.setInt(1, c);
 
-			try(ResultSet rs = pstat.executeQuery(); )
-			{
-				while(rs.next()) {
+			try (ResultSet rs = pstat.executeQuery();) {
+				while (rs.next()) {
 
-					int code = 	rs.getInt("code");
+					int code = rs.getInt("code");
 					int logo_path_code = rs.getInt("logo_path_code");
-					//				String logo_path = rs.getString("logo_path");
-					//				String logo_name = rs.getString("logo_name");
+					// String logo_path = rs.getString("logo_path");
+					// String logo_name = rs.getString("logo_name");
 					String logo = rs.getString("logo");
 					String name = rs.getString("name");
 					int member_code = rs.getInt("member_code");
-					//				String member_name = rs.getString("member_name");
-					//				String member_phone = rs.getString("member_phone");
+					// String member_name = rs.getString("member_name");
+					// String member_phone = rs.getString("member_phone");
 					int hometown_code = rs.getInt("hometown_code");
-					//				String hometown_name = rs.getString("hometown_name");
+					// String hometown_name = rs.getString("hometown_name");
 					String outline = rs.getString("outline");
 					String content = rs.getString("content");
 					Timestamp reg_date = rs.getTimestamp("reg_date");
 					Timestamp mod_date = rs.getTimestamp("mod_date");
 					Timestamp del_date = rs.getTimestamp("del_date");
 
-					TeamDTO dto = new TeamDTO(code,logo_path_code,logo,name,member_code,hometown_code,outline,content,reg_date,mod_date,del_date);
+					TeamDTO dto = new TeamDTO(code, logo_path_code, logo, name, member_code, hometown_code, outline,
+							content, reg_date, mod_date, del_date);
 					teamname.add(dto);
 
 				}
@@ -165,26 +161,22 @@ public class CompetitionDAO {
 		}
 	}
 
-	//비동기
-	public TeamDTO team(String t) throws Exception{
-		String sql = "select * from team_view where code = ?" ;
-		try(Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);)
-		{
+	// 비동기
+	public TeamDTO team(String t) throws Exception {
+		String sql = "select * from team_view where code = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, t);
 
-			try(ResultSet rs = pstat.executeQuery();){
-
-
+			try (ResultSet rs = pstat.executeQuery();) {
 
 				rs.next();
 
-				int code = 	rs.getInt("code");
+				int code = rs.getInt("code");
 				int logo_path_code = rs.getInt("logo_path_code");
-				String logo_path = rs.getString("logo_path"); //로고 이미 이름 전까지 
+				String logo_path = rs.getString("logo_path"); // 로고 이미 이름 전까지
 
-				String logo_name = rs.getString("logo_name"); 
-				String logo = rs.getString("logo"); //사진 이름
+				String logo_name = rs.getString("logo_name");
+				String logo = rs.getString("logo"); // 사진 이름
 				String name = rs.getString("name");
 				int member_code = rs.getInt("member_code");
 				String member_name = rs.getString("member_name");
@@ -197,41 +189,33 @@ public class CompetitionDAO {
 				Timestamp mod_date = rs.getTimestamp("mod_date");
 				Timestamp del_date = rs.getTimestamp("del_date");
 
-				TeamDTO team = new TeamDTO(code,logo_path_code,logo_path,logo_name,logo,name,member_code,member_name,member_phone,hometown_code,hometown_name,outline,content,reg_date,mod_date,del_date);
+				TeamDTO team = new TeamDTO(code, logo_path_code, logo_path, logo_name, logo, name, member_code,
+						member_name, member_phone, hometown_code, hometown_name, outline, content, reg_date, mod_date,
+						del_date);
 
 				return team;
-
-
-
 
 			}
 		}
 
-
 	}
 
-
-
-
-
-
-	public List<StatusDTO> status() throws Exception{
-		String sql = "select * from status" ;
-		try(Connection con = this.getConnection();
+	public List<StatusDTO> status() throws Exception {
+		String sql = "select * from status";
+		try (Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);
-				ResultSet rs = pstat.executeQuery();)
-		{
+				ResultSet rs = pstat.executeQuery();) {
 			List<StatusDTO> status = new ArrayList<>();
 
-			while(rs.next()) {
+			while (rs.next()) {
 
-				int code = 	rs.getInt("code");
+				int code = rs.getInt("code");
 				String name = rs.getString("name");
 				Timestamp reg_date = rs.getTimestamp("reg_date");
 				Timestamp mod_date = rs.getTimestamp("mod_date");
 				Timestamp del_date = rs.getTimestamp("del_date");
 
-				StatusDTO dto = new StatusDTO(code,name,reg_date,mod_date,del_date);
+				StatusDTO dto = new StatusDTO(code, name, reg_date, mod_date, del_date);
 				status.add(dto);
 
 			}
@@ -241,19 +225,17 @@ public class CompetitionDAO {
 		}
 	}
 
-
-	public void insertreg(CompetitionRegistrationDTO dto) throws Exception{
+	public void insertreg(CompetitionRegistrationDTO dto) throws Exception {
 		String sql = "insert into competition_registration values(competition_registration_code.nextval,?,?,?,?,?,?,?,?,sysdate,?,?)";
 
-		try(Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);)
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);)
 
 		{
 
 			pstat.setInt(1, dto.getTeam_code());
 			pstat.setInt(2, dto.getCompetition_kind_code());
 			pstat.setDouble(3, dto.getLatirude());
-			pstat.setDouble(4,dto.getLongitude());
+			pstat.setDouble(4, dto.getLongitude());
 			pstat.setTimestamp(5, dto.getCompetition_date());
 			pstat.setInt(6, dto.getAbility_code());
 			pstat.setString(7, dto.getContent());
@@ -266,9 +248,6 @@ public class CompetitionDAO {
 
 		}
 	}
-
-
-
 
 	//리스트에 출력 -검색 - 등록 관련
 	public List<CompetitionListDTO> search(String searching) throws Exception{
@@ -331,21 +310,18 @@ public class CompetitionDAO {
 				+ "ck.name competition_name , t.code apply_teamcode , ck.headcount , ab.name ability_name\r\n"
 				+ "from competition_registration cr join  team_view tv on (cr.team_code=tv.code)\r\n"
 				+ "join competition_kind ck on (cr.competition_kind_code = ck.code)\r\n"
-				+ "join ability ab on (cr.ability_code = ab.code)\r\n"
-				+ "join team t on (cr.team_code= t.code)\r\n"
-				+ "where cr.competition_date >= sysdate and cr.competition_date = ?" ;
-		try(Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);)
+				+ "join ability ab on (cr.ability_code = ab.code)\r\n" + "join team t on (cr.team_code= t.code)\r\n"
+				+ "where cr.competition_date >= sysdate and cr.competition_date = ?";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);)
 
 		{
 			pstat.setString(1, date);
 
-			try(ResultSet rs = pstat.executeQuery();){
-
+			try (ResultSet rs = pstat.executeQuery();) {
 
 				rs.next();
 
-				String team_name = 	rs.getString("team_name");
+				String team_name = rs.getString("team_name");
 				String member_name = rs.getString("member_name");
 				String member_phone = rs.getString("member_phone");
 				String logo_path = rs.getString("logo_path");
@@ -361,23 +337,23 @@ public class CompetitionDAO {
 				String ability_name = rs.getString("ability_name");
 				int apply_teamcode = rs.getInt("apply_teamcode");
 
-				CompetitionApplyFormDTO dto = new CompetitionApplyFormDTO(team_name,member_name,member_phone,logo_path,logo,member_code, competition_date,latirude,longitude,content,registration_code,competition_name,headcount,ability_name,apply_teamcode);
+				CompetitionApplyFormDTO dto = new CompetitionApplyFormDTO(team_name, member_name, member_phone,
+						logo_path, logo, member_code, competition_date, latirude, longitude, content, registration_code,
+						competition_name, headcount, ability_name, apply_teamcode);
 				return dto;
 			}
 		}
 	}
 
-	//신청할때 로그인한사람의 팀코드를 뽑아주는것
-	public List<TeamDTO> getteamcode(int c) throws Exception{
-		String sql = "select code,name from team where team.member_code = ? " ;
-		try(Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);)
+	// 신청할때 로그인한사람의 팀코드를 뽑아주는것
+	public List<TeamDTO> getteamcode(int c) throws Exception {
+		String sql = "select code,name from team where team.member_code = ? ";
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);)
 
 		{
 			pstat.setInt(1, c);
 
-			try(ResultSet rs = pstat.executeQuery(); )
-			{
+			try (ResultSet rs = pstat.executeQuery();) {
 				List<TeamDTO> list = new ArrayList<>();
 
 				while(rs.next()) {
@@ -393,19 +369,17 @@ public class CompetitionDAO {
 		}
 	}
 
-
-	//신청했을떄 db에 들어가는 데이터
-	public void apply(CompetitionApplicationDTO dto) throws Exception{
+	// 신청했을떄 db에 들어가는 데이터
+	public void apply(CompetitionApplicationDTO dto) throws Exception {
 		String sql = "insert into competition_application values(competition_application_code.nextval,?,?,?,?,?,sysdate,?,?)";
 
-		try(Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);)
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);)
 
 		{
 
 			pstat.setInt(1, dto.getCompetition_registration_code());
 			pstat.setInt(2, dto.getTeam_code());
-			pstat.setInt(3,dto.getAbility_code());
+			pstat.setInt(3, dto.getAbility_code());
 			pstat.setString(4, dto.getContent());
 			pstat.setInt(5, dto.getStatus_code());
 			pstat.setTimestamp(6, dto.getMod_date());
@@ -417,36 +391,35 @@ public class CompetitionDAO {
 		}
 	}
 
-
-	//로그인한 사람이랑 글쓴 사람이 같을떄 리스트에 출력 - 신청받아주거나 거절하거나
-	public List<CompetitionApplicationListDTO> selectmatch(String rcode) throws Exception{
+	// 로그인한 사람이랑 글쓴 사람이 같을떄 리스트에 출력 - 신청받아주거나 거절하거나
+	public List<CompetitionApplicationListDTO> selectmatch(String rcode) throws Exception {
 		String sql = "select tv.logo_path , tv.logo , tv.name team_name , tv.member_name , tv.member_phone, ab.name ability_name , ca.content, ca.team_code\r\n"
 				+ "from competition_application ca join team_view tv on (ca.team_code = tv.code)\r\n"
 				+ "join ability ab on (ca.ability_code = ab.code) where ca.competition_registration_code = ? ";
-		try(Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);)
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);)
 
 		{
 
 			pstat.setString(1, rcode);
 
-			try( ResultSet rs = pstat.executeQuery(); )
+			try (ResultSet rs = pstat.executeQuery();)
 
 			{
 				List<CompetitionApplicationListDTO> list = new ArrayList<>();
 
-				while(rs.next()) {
+				while (rs.next()) {
 
-					String logo_path = 	rs.getString("logo_path");
-					String logo = 	rs.getString("logo");
-					String team_name = 	rs.getString("team_name");
-					String member_name = 	rs.getString("member_name");
-					String member_phone = 	rs.getString("member_phone");
-					String ability_name = 	rs.getString("ability_name");
-					String content = 	rs.getString("content");
-					int team_code = 	rs.getInt("team_code");
+					String logo_path = rs.getString("logo_path");
+					String logo = rs.getString("logo");
+					String team_name = rs.getString("team_name");
+					String member_name = rs.getString("member_name");
+					String member_phone = rs.getString("member_phone");
+					String ability_name = rs.getString("ability_name");
+					String content = rs.getString("content");
+					int team_code = rs.getInt("team_code");
 
-					CompetitionApplicationListDTO dto = new CompetitionApplicationListDTO(logo_path,logo,team_name,member_name,member_phone,ability_name,content,team_code);
+					CompetitionApplicationListDTO dto = new CompetitionApplicationListDTO(logo_path, logo, team_name,
+							member_name, member_phone, ability_name, content, team_code);
 					list.add(dto);
 
 				}
@@ -456,11 +429,10 @@ public class CompetitionDAO {
 		}
 	}
 
-	//로그인한 사람이랑 글쓴 사람이 같을떄 리스트에서의 삭제하기를 눌렀을때
-	public void delete_application(String delcode) throws Exception{
+	// 로그인한 사람이랑 글쓴 사람이 같을떄 리스트에서의 삭제하기를 눌렀을때
+	public void delete_application(String delcode) throws Exception {
 		String sql = "delete from competition_registration where code = ?";
-		try(Connection con = this.getConnection();
-				PreparedStatement pstat = con.prepareStatement(sql);)
+		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);)
 
 		{
 			pstat.setString(1, delcode);
@@ -733,8 +705,4 @@ public class CompetitionDAO {
 		}
 		return sb.toString() ;
 	}
-
-
-
-
-}
+	}

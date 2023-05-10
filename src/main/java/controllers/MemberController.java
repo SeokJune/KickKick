@@ -45,8 +45,12 @@ public class MemberController extends HttpServlet {
 				MemberDTO info = dao.get_info_by_id(id);
 				request.getSession().setAttribute("code", info.getCode());
 				request.getSession().setAttribute("nickname", info.getNick_name());
-
 				request.getSession().setAttribute("id", id);
+				int auth_grade = info.getAuthority_grade_code();
+				if(auth_grade <= 1004 && auth_grade >= 1002) {
+					request.getSession().setAttribute("auth_grade", auth_grade);
+				}
+				
 
 				response.sendRedirect("/");
 			} else if (cmd.equals("/phone_auth.member")) { // 전화번호 중복 확인 및 인증번호 문자 발송 [login_view.jsp & join_form.jsp]
@@ -145,6 +149,7 @@ public class MemberController extends HttpServlet {
 				String member_confirm_pw = dao.select_member(member_id).getPw();
 				String member_new_pw = request.getParameter("member_new_pw");
 				String member_pw = "";
+
 				if ((member_new_pw != "" && member_new_pw != null )) {
 					member_pw = EncryptionUtils.sha512(member_new_pw);
 				} else {
@@ -186,12 +191,12 @@ public class MemberController extends HttpServlet {
 				} else {
 					response.sendRedirect("/error.html");
 				}
-			}else if(cmd.equals("/my_match_list.member")) {		
-				int member_code = (int)request.getSession().getAttribute("code");
+			} else if (cmd.equals("/my_match_list.member")) {
+				int member_code = (int) request.getSession().getAttribute("code");
 				List<CompetitionDTO> match_list = dao.my_match_list(member_code);
 				request.setAttribute("match_list", match_list);
 				request.getRequestDispatcher("/member/my_match_list.jsp").forward(request, response);
-				
+
 			} else {
 				response.sendRedirect("/error.html");
 			}
