@@ -235,11 +235,6 @@ div {
 	text-align: center;
 }
 
-#pagination a {
-	display: inline-block;
-	margin-right: 10px;
-}
-
 #pagination .on {
 	font-weight: bold;
 	cursor: default;
@@ -251,21 +246,14 @@ div {
 	height: 200px;
 	border-radius: 100px;
 }
-
-#cf {
-	padding-top: 120px;
-}
 </style>
 </head>
 
 <body>
-	<header> </header>
-	<c:import url="/commons/gnb.jsp">
-	</c:import>
+
 	<form action="/send.competition" method="get"
 		enctype="multipart/form-data">
-		<div id="cf" class="container-fluid  "
-			style="background-color: whitesmoke;">
+		<div class="container-fluid  " style="background-color: whitesmoke;">
 			<div class="row header">
 
 				<div class="col-xs-12 col-md-6">
@@ -832,6 +820,14 @@ div {
 									<br>
 									<div class="row">
 
+										<<<<<<< HEAD =======
+										<div class="col-10">
+											<br>
+											<button type="button" id="cancel" onclick="location.href='/'"
+												style="float: left;">취소</button>
+										</div>
+										<div class="col-2"></div>
+										>>>>>>> 06f7d58fb490529efc468285c20a78aa9dc39232
 
 										<div class="col-4">
 
@@ -998,6 +994,7 @@ div {
                       })
                       
 
+                   
                    //    else if (year.innerHTML == "" || month.innerHTML == "" || day.innerHTML == "") {
                    //    alert("날짜를 선택하십시오!");
                    //    return false; }

@@ -23,6 +23,11 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
 	rel="stylesheet">
+<!-- awesome font -icon--->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+	integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- Font 기본 : {font-family: 'NanumSquareNeoBold'}-->
 <link
 	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
@@ -123,7 +128,7 @@ td {
 							<td>${i.headcount}명</td>
 							<td align="center">
 							<c:choose>
-								<c:when test="${login_id.equals(i.leader_id)}">
+								<c:when test="${id.equals(i.leader_id)}">
 									<a href="/to_register_modify_form.mercenary?code=${i.code}&ctPage=${ctPage}"><input type="button" class="btn btn-outline-primary btn-sm" value="수정"></a>
 									<button type="button" class="btn btn-outline-primary btn-sm" onclick="delete_mercenary_register(${i.code})">삭제</button>
 								</c:when>
