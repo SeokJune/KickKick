@@ -1,9 +1,8 @@
 package controllers;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import dao.CompetitionDAO;
 import dto.AbilityDTO;
 import dto.CompetitionApplicationDTO;
 import dto.CompetitionApplicationListDTO;
 import dto.CompetitionApplyFormDTO;
+import dto.CompetitionDTO;
 import dto.CompetitionKindDTO;
 import dto.CompetitionListDTO;
 import dto.CompetitionRegistrationDTO;
@@ -259,8 +260,27 @@ public class CompetitionController extends HttpServlet {
 //			String team_code = request.getParameter("team_code");
 //			CompetitionDAO.getinstance().refuse(reg_code,team_code);
 //			
-//		}
-
+//		}	
+			// 캘린더에 띄울 날짜별 매칭된 경기수
+			else if(cmd.equals("/count_game.competition")) {
+				String year = (request.getParameter("year")).substring(2);
+				String month = request.getParameter("month");
+				if(month.length() == 1) {
+					month = 0 + month;
+				}
+				String day = request.getParameter("day");
+				if(day.length() == 1) {
+					day = 0 + day;
+				}
+				String date = year + "/" + month + "/" + day;
+				List<CompetitionDTO> game_list = CompetitionDAO.getinstance().match_game_list(date);
+				
+				Gson g = new Gson();
+				String dto_game_list = g.toJson(game_list);
+				JsonObject resp = new JsonObject();
+				resp.addProperty("events", dto_game_list);
+				response.getWriter().append(resp.toString());
+			}
 
 
 		}catch(Exception e) {

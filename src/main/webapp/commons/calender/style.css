@@ -10448,11 +10448,11 @@ a:hover, a:focus {
 
 .active-month {
 	font-weight: 700;
-	color: #fc7fb2;
+	color: #0d6efd;
 }
 
 .month:hover {
-	color: #fc7fb2;
+	color: #0d6efd;
 }
 
 /*  Dates table */
@@ -10492,8 +10492,8 @@ a:hover, a:focus {
 }
 
 .event-date {
-	border-color: #fc7fb2;
-	background: #fc7fb2;
+	border-color: #0d6efd;
+	background: #0d6efd;
 	color: #fff;
 }
 
