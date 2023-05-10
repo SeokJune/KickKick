@@ -115,11 +115,11 @@
 								</li>
 								<c:if test="${sessionScope.nickname != null}">
 									<li class="login">
-										<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀 게시판으로</a>
+										<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내 팀 게시판으로(미완성)</a>
 									</li>
 								</c:if>
 								<li>
-									<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 랭킹 보기</a>
+									<a href="#" class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">팀 랭킹 보기(미완성)</a>
 								</li>
 							</ul>
 						</div>
