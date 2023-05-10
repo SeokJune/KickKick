@@ -154,7 +154,7 @@ button {
 													</c:when>
 													<c:otherwise>
 														<div class="row">
-														<div class="col-4 col-xl-2">신청자</div>
+														<div class="col-4 col-xl-2">닉네임</div>
 														<div class="col-xl-5 d-none d-xl-block">소개글</div>
 														<div class="col-4 col-xl-3">연락처</div>
 														<div class="col-4 col-xl-2">수락/거절</div>
@@ -165,8 +165,8 @@ button {
 																<div class="col-4 col-xl-2">${ap.nickname}</div>
 																<div class="col-xl-5  d-none d-xl-block">${ap.content}</div>
 																<div class="col-4 col-xl-3">${ap.phone}</div>
-																<div class="col-2 col-xl-1" style="text-align: right;"><button id="btn1">수락</button></div>
-																<div class="col-2 col-xl-1" style="text-align: left;"><button id="btn2">거절</button></div>
+																<div class="col-2 col-xl-1" style="text-align: right;"><button class="true_btn">수락</button></div>
+																<div class="col-2 col-xl-1" style="text-align: left;"><button class="false_btn">거절</button></div>
 															</div>
 														<hr>
 														</c:forEach>
@@ -290,10 +290,10 @@ button {
 	</div>
 	
 	<script>
-		$("#btn1").on("click", function() {
+		$(".true_btn").on("click", function() {
 			alert("미완성...ㅠㅠ");
 		})
-		$("#btn2").on("click", function() {
+		$(".false_btn").on("click", function() {
 			alert("미완성...ㅠㅠ");
 		})
 	

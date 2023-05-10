@@ -766,7 +766,7 @@ html, body {
 					}],
 				});
 
-
+				
 				//카카오 로그인
 				$(".kakao_login").on("click", function loginWithKakao() {
 					// Kakao.Auth.authorize({
