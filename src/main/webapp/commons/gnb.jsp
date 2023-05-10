@@ -100,7 +100,7 @@
 								aria-expanded="true">마이페이지</button>
 							<div class="collapse show" id="home-collapse">
 								<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-									<li class="login"><a href="#"
+									<li class="login"><a href="/my_match_list.member"
 										class="nav_a link-dark link-body-emphasis d-inline-flex text-decoration-none rounded">내
 											활동 관리</a></li>
 									<li class="login"><a href="/my_profile.member"
