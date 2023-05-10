@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import commons.Settings;
 import dao.BoardDAO;
 import dao.ReplyDAO;
@@ -231,6 +233,14 @@ public class BoardController extends HttpServlet {
 					int like_count = bdao.select_like_count(board_table_name, code);
 					response.getWriter().append(like_count+"");
 				}
+			}
+			else if(cmd.equals("/index.board")) {
+				List<BoardDTO> list = bdao.select_index_list();
+				Gson g = new Gson();
+				String resp = g.toJson(list);
+				response.getWriter().append(resp);
+//				request.setAttribute("list", list);
+//				request.getRequestDispatcher("/commons/announce_list.jsp").forward(request, response);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
