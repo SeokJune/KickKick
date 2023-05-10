@@ -370,10 +370,10 @@ font-family:'NanumSquareNeoBold';
 
                                     <div class="col-12" style=" display:none; " id="lat">${form.latirude }</div>
                                     <div class="col-12" style=" display:none; " id="long">${form.longitude }</div>
-                                    <div class="col-12"><input type="hidden" name="rcode"
+                                    <div class="col-12"><input style="display:none;"  name="rcode"
                                             value="${form.registration_code }"></div>
 
-                                    <div class="col-12"><input type="hidden" name="tcode"
+                                    <div class="col-12"><input style="display:none;" name="tcode"
                                             value="${form.apply_teamcode }"></div>
                                     <div class="col-12">
                                         <br>
@@ -605,19 +605,22 @@ font-family:'NanumSquareNeoBold';
 
                             $(".accept").on("click", function () {
 
-                            	let team_code = $(this).parent().next().text();
-                            	let reg_code = ${form.registration_code };
+                            	let team_code = $(this).parent().next().text(); //신청한 팀의 코드
+                            	let reg_code = ${form.registration_code }; //registration_code
+                            	let reg_team_code = ${form.apply_teamcode };  //글을 등록한 팀의 코드
                             	console.log(team_code);
                             	console.log(reg_code);
-                            	 location.href = "/acceptform.competition?team_code="+team_code+"&reg_code="+reg_code;
+                            	console.log(reg_team_code);
+                            	 location.href = "/acceptform.competition?team_code="+team_code+"&reg_code="+reg_code+"&reg_team_code="+reg_team_code;
                           alert("수락되었습니다");
-                          window.location.reload();
+                          window.close();
                             
                             })
 
                             $(".refuse").on("click", function () {
-                            	let team_code = $(this).parent().next().text();
-                            	let reg_code = ${form.registration_code };
+                            	let team_code = $(this).parent().next().text(); //신청한 팀의 코드
+                            	let reg_code = ${form.registration_code }; //registration_code
+                            	
                             	console.log(team_code);
                             	console.log(reg_code);
                             	 location.href = "/refuseform.competition?team_code="+team_code+"&reg_code="+reg_code;

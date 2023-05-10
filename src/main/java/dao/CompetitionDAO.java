@@ -494,6 +494,26 @@ public class CompetitionDAO {
 			return result;
 		}
 	}
+	
+	//competition_result테이블에 들어가는 값
+		public void team_result(int team_code , int reg_code ,int reg_team_code) throws Exception{
+			String sql = "insert into competition_result values (? , ? ,0, ? ,0 ,1301 ,sysdate ,null ,null)";
+			try(Connection con = this.getConnection();
+					PreparedStatement pstat = con.prepareStatement(sql);)
+
+			{
+
+				pstat.setInt(1, reg_code);
+				pstat.setInt(2, reg_team_code);
+				pstat.setInt(3, team_code);
+				
+				int result = pstat.executeUpdate();
+				con.commit();
+				
+			}
+		}
+		
+		
 
 	//게시판 페이지 기능 -1
 	private int getRecordCount() throws Exception{

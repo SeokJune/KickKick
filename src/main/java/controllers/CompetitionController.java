@@ -289,70 +289,75 @@ public class CompetitionController extends HttpServlet {
 
 				String reg_code1 = request.getParameter("reg_code"); //해당글의 코드 
 				String team_code1 = request.getParameter("team_code"); //해당 팀의 코드
-		
-		
-				
+				String reg_team_code1 = request.getParameter("reg_team_code"); //해당글을 올린 팀의 코드
+
+
 				int reg_code = Integer.parseInt(reg_code1);
 				int team_code = Integer.parseInt(team_code1);
-			
-				int result =CompetitionDAO.getinstance().accept1(reg_code,team_code); //수락된건 1202
-				
-				System.out.println(result);
-	
+				int reg_team_code = Integer.parseInt(reg_team_code1);
+
+
+				int result = CompetitionDAO.getinstance().accept1(reg_code,team_code); //수락된건 1202
+
+
+
 				CompetitionDAO.getinstance().accept2(reg_code,team_code); //수락되고 난 나머지는 1203
-			
+
+				CompetitionDAO.getinstance().team_result(team_code, reg_code, reg_team_code); //competition_result테이블에 값 넣어주는것
+				
+				//매칭리스트를 뽑아주는거에 수락된 그 글의 고유번호를 통해 지워야한다
+				response.sendRedirect("/deletelist_competition?reg_code="+reg_code);
+		
+				System.out.println("3");
+				
+				
+				
+				//!!!!!!!!!!!!!!!!!!!!아직 구현 못함 /deletelist_competition!!!!!!!!!!1
+			}else if(cmd.equals("/deletelist_competition")) {// 수락한 팀의글을 리스트에서 지우는거
+				
+				System.out.println("1");
+				String reg_code = request.getParameter("reg_code");
+				System.out.println(reg_code);
+				System.out.println("2");
 
 			}else if(cmd.equals("/refuseform.competition")) {//신청폼에서 거절하기를 눌렀을때
 
 				String reg_code1 = request.getParameter("reg_code"); //해당글의 코드 
-			
+
 				String team_code1 = request.getParameter("team_code"); //해당 팀의 코드
-			
+
 				int reg_code = Integer.parseInt(reg_code1);
 				int team_code = Integer.parseInt(team_code1);
-				
+
 				System.out.println(reg_code1);
 				System.out.println(team_code1);
 
-				
+
 				int result = CompetitionDAO.getinstance().refuse(team_code,reg_code);
 				System.out.println(result);
 
 			}
-//			}else if(cmd.equals("/acceptform.competition")) { //신청폼에서 수락하기를 눌렀을때
-//			String status_cdoe = request.getParameter("status_code"); //
-//			String reg_code = request.getParameter("reg_code"); //해당글의 코드 
-//			String team_code = request.getParameter("team_code"); //해당 팀의 코드
-//			CompetitionDAO.getinstance().accpet(reg_code,team_code);
-//			
-//		}else if(cmd.equals("/refuseform.competition")) {//신청폼에서 거절하기를 눌렀을때
-//			
-//		
-//			String reg_code = request.getParameter("reg_code");
-//			String team_code = request.getParameter("team_code");
-//			CompetitionDAO.getinstance().refuse(reg_code,team_code);
-//			
-//		}	
+			
 			// 캘린더에 띄울 날짜별 매칭된 경기수
-//			else if(cmd.equals("/count_game.competition")) {
-//				String year = (request.getParameter("year")).substring(2);
-//				String month = request.getParameter("month");
-//				if(month.length() == 1) {
-//					month = 0 + month;
-//				}
-//				String day = request.getParameter("day");
-//				if(day.length() == 1) {
-//					day = 0 + day;
-//				}
-//				String date = year + "/" + month + "/" + day;
-//				List<CompetitionDTO> game_list = CompetitionDAO.getinstance().match_game_list(date);
-//				
-//				Gson g = new Gson();
-//				String dto_game_list = g.toJson(game_list);
-//				JsonObject resp = new JsonObject();
-//				resp.addProperty("events", dto_game_list);
-//				response.getWriter().append(resp.toString());
-//			}
+			//			else if(cmd.equals("/count_game.competition")) {
+			//				String year = (request.getParameter("year")).substring(2);
+			//				String month = request.getParameter("month");
+			//				if(month.length() == 1) {
+			//					month = 0 + month;
+			//				}
+			//				String day = request.getParameter("day");
+			//				if(day.length() == 1) {
+			//					day = 0 + day;
+			//				}
+			//				String date = year + "/" + month + "/" + day;
+			//				List<CompetitionDTO> game_list = CompetitionDAO.getinstance().match_game_list(date);
+			//				
+			//				Gson g = new Gson();
+			//				String dto_game_list = g.toJson(game_list);
+			//				JsonObject resp = new JsonObject();
+			//				resp.addProperty("events", dto_game_list);
+			//				response.getWriter().append(resp.toString());
+			//			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
