@@ -117,7 +117,7 @@
 						<button
 							class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
 							data-bs-toggle="collapse" data-bs-target="#dashboard-collapse"
-							aria-expanded="false">전체 제시판</button>
+							aria-expanded="false">전체 게시판</button>
 						<div class="collapse" id="dashboard-collapse">
 							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 								<li><a href="/list.board?b_c=1002&cpage=1"
