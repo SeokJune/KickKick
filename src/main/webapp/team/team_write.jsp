@@ -59,7 +59,7 @@ input {
 	padding: 3px;
 	border-radius: 3px;
 	font-size: 13px;
-	background: linear-gradient(to right, #76b852, #3ADF00);
+	background: #0d6efd;
 }
 #dup_check {
 	font-size: 12px;
@@ -68,7 +68,7 @@ input {
 #create_team {
 	font-weight: 500;
 	color: whitesmoke;
-	background: linear-gradient(to right, #76b852, #3ADF00);
+	background: #0d6efd;
 	border: none;
 	margin-top: 4px;
 	margin-bottom: 4px;
@@ -79,7 +79,7 @@ input {
 #cancel_team {
 	font-weight: 500;
 	color: whitesmoke;
-	background: linear-gradient(to right, #76b852, #3ADF00);
+	background: #0d6efd;
 	border: none;
 	margin-top: 4px;
 	margin-bottom: 4px;
