@@ -10170,7 +10170,7 @@ a:hover, a:focus {
 }
 
 .bg-primary {
-	background: #fc7fb2 !important;
+	background: #0d6efd !important;
 }
 
 .ftco-section {
@@ -10204,7 +10204,7 @@ a:hover, a:focus {
 	height: 500px;
 	position: relative;
 	margin: 20px auto;
-	background: #fc7fb2;
+	background: #0d6efd;
 }
 
 /*  Events display */
@@ -10236,7 +10236,7 @@ a:hover, a:focus {
 	padding: 20px 0;
 	max-width: 100%;
 	display: block;
-	background: #fc7fb2;
+	background: #0d6efd;
 	border: none !important;
 	margin: 20px;
 	color: #fff;
@@ -10252,7 +10252,7 @@ a:hover, a:focus {
 }
 
 .event-count {
-	color: #fc7fb2;
+	color: #0d6efd;
 	text-align: right;
 }
 
@@ -10262,7 +10262,7 @@ a:hover, a:focus {
 }
 
 .event-cancelled {
-	color: #fc7fb2;
+	color: #0d6efd;
 	text-align: right;
 }
 
@@ -10339,7 +10339,7 @@ a:hover, a:focus {
 }
 
 .left-button:hover, .right-button:hover {
-	color: #fc7fb2 !important;
+	color: #0d6efd !important;
 }
 
 .left-button {
@@ -10366,7 +10366,7 @@ a:hover, a:focus {
 	transition: .2s ease all;
 	color: white;
 	border: none;
-	background: #fc7fb2;
+	background: #0d6efd;
 }
 
 .button.button-white {
@@ -10514,7 +10514,7 @@ a:hover, a:focus {
 }
 
 .active-date:before {
-	background: #fc7fb2;
+	background: #0d6efd;
 }
 
 .event-date.active-date {
@@ -10525,7 +10525,7 @@ a:hover, a:focus {
 /* input dialog */
 .dialog {
 	z-index: 5;
-	background: #fc7fb2;
+	background: #0d6efd;
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -10581,5 +10581,5 @@ a:hover, a:focus {
 }
 
 .error-input {
-	border-color: #fc7fb2;
+	border-color: #0d6efd;
 }
