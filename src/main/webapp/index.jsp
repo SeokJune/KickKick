@@ -70,6 +70,12 @@
 	width: 11px;
 	content: "";
 }
+.box{
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 </style>
 </head>
 
@@ -198,10 +204,12 @@
 														<div class="form-container" align="center">
 															<input class="input" type="text" id="name" maxlength="36">
 															<label class="form-label" id="valueFromMyButton"
-																for="count">Number of people to invite</label> 
-															<input class="input" type="number" id="count" min="0" max="1000000" maxlength="7"> 
-															<input type="button" value="닫기" class="button" id="cancel-button"> 
-															<input type="button" value="OK" class="button button-white" id="ok-button">
+																for="count">Number of people to invite</label> <input
+																class="input" type="number" id="count" min="0"
+																max="1000000" maxlength="7"> <input
+																type="button" value="닫기" class="button"
+																id="cancel-button"> <input type="button"
+																value="OK" class="button button-white" id="ok-button">
 														</div>
 													</form>
 												</div>
@@ -217,15 +225,88 @@
 				<div class="row">
 					<!-- 공지사항 게시판 -->
 					<div class="card mb-4">
-						<div class="card-body text-center">
+						<div class="card-body">
 							<p>공지사항 게시판이 나올 예정입니다</p>
+							<div class="list-group" style="border-radius: 0;" id="announce_list">
+							<a href="/select_post.board?b_c=1002&c=&cpage=1" class="list-group-item list-group-item-action p-0 announce" id="sample" style="display:none; border:1px solid #d2d4d6;">
+								<div class="box d-flex justify-content-between p-1">
+									<div class="title_box px-1">
+										<b class="headline">[헤드라인]</b> <b class="title">제목</b>
+										<span class="badge rounded-pill text-bg-light align-self-center p-1 reply">💬댓글수</span>
+									</div>
+									<div class="px-1" style="font-size: small;">
+										<span class="writer">작성자</span> · <span class="reg_date">작성일</span> · 👀 <span class="view">조회수</span> · 
+										<span class="badge rounded-pill text-bg-success like">👍🏻추천수</span>
+									</div>
+								</div>
+							</a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</main>
+	<script>
+	function calculateTime(reg_date) {
+		const SEC = 60;
+		const MIN = 60;
+		const HOUR = 24;
+		const DAY = 30;
+		const MONTH = 12;
 
+		let curTime = new Date();
+		let writeTime = new Date(reg_date);
+		let diffTime = (curTime - writeTime) / 1000;
+
+		let msg = null;
+		if (diffTime < SEC) {
+			// sec
+			msg = Math.ceil(diffTime) + "초전";
+		}
+		else if ((diffTime /= SEC) < MIN) {
+			// min
+			msg = Math.ceil(diffTime) + "분전";
+		}
+		else if ((diffTime /= MIN) < HOUR) {
+			// hour
+			msg = Math.ceil(diffTime) + "시간전";
+		}
+		//				    else if ((diffTime /= HOUR) < DAY) {
+		//				        // day
+		//				        msg = (diffTime ) + "일전";
+		//				    } else if ((diffTime /= DAY) < MONTH) {
+		//				        // day
+		//				        msg = (diffTime ) + "달전";
+		//				    } 
+		else {
+			msg = (writeTime.getFullYear() - 2000) + "/" + (writeTime.getMonth() + 1) + "/" + (writeTime.getDate());
+		}
+		return msg;
+	};
+	
+	window.onload=function(){
+		//location.href="/index.board";
+		$.ajax({
+			url:"/index.board",
+			dataType:"json",
+		}).done(function(resp){
+			for(let i=0;i<resp.length;i++){
+				let list_box = $("#sample").clone().css("display","block").removeAttr("id");
+				$("#announce_list").append(list_box);
+				$(".headline").last().html("["+resp[i].board_headline_name+"]");
+				$(".title").last().html(resp[i].title);
+				$(".reply").last().html("💬"+resp[i].reply_count);
+				$(".writer").last().html(resp[i].member_nickname);
+				$(".reg_date").last().html(calculateTime(resp[i].reg_date));
+				$(".view").last().html(resp[i].view_count);
+				$(".like").last().html("👍🏻"+resp[i].like_count);
+				$(".announce").last().attr("href","/select_post.board?b_c=1002&c="+resp[i].code+"&cpage=1");
+				
+			}
+		});
+	};
+</script>
 </body>
 
 </html>
