@@ -303,17 +303,19 @@ public class CompetitionController extends HttpServlet {
 
 				CompetitionDAO.getinstance().accept2(reg_code,team_code); //수락되고 난 나머지는 1203
 
-				CompetitionDAO.getinstance().team_result(team_code, reg_code, reg_team_code);
+				CompetitionDAO.getinstance().team_result(team_code, reg_code, reg_team_code); //competition_result테이블에 값 넣어주는것
 				
 				//매칭리스트를 뽑아주는거에 수락된 그 글의 고유번호를 통해 지워야한다
+				response.sendRedirect("/deletelist_competition?reg_code="+reg_code);
+		
+				System.out.println("3");
 				
-				request.getRequestDispatcher("/deletelist_competition").forward(request, response);
-
-
 			}else if(cmd.equals("/deletelist_competition")) {// 수락한 팀의글을 리스트에서 지우는거
-
+				
+				System.out.println("1");
 				String reg_code = request.getParameter("reg_code");
 				System.out.println(reg_code);
+				System.out.println("2");
 
 			}else if(cmd.equals("/refuseform.competition")) {//신청폼에서 거절하기를 눌렀을때
 
