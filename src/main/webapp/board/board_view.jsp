@@ -89,7 +89,7 @@ div {
 			</div>
 			<div class="col-12">${board.member_nickname}
 				· ${board.calculated_date}<c:if test="${board.mod_date ne null}">(수정됨)</c:if> · 👀 ${board.view_count} · <span
-					class="badge rounded-pill text-bg-success">👍🏻${board.like_count}</span>
+					class="badge rounded-pill text-bg-success" id="like">👍🏻${board.like_count}</span>
 			</div>
 		</div>
 		<div class="row body" style="border-bottom: 1px solid #d2d4d6;">
@@ -455,6 +455,36 @@ div {
 					let r_code = $(this).closest(".reply_box").find(".r_code").val();
 					window.open("/to_report_form.report?b_c=${b_c}&reply_code="+r_code,"","width=500px,height=750px");
 				});
+				
+				$("#board_like").on("click",function(){
+					$.ajax({
+						url:"/like.board",
+						type:"post",
+						data:{
+							b_c:${b_c},
+							code:${board.code},
+						},
+						dataType:"json",
+					}).done(function(resp){
+						$("#like").text("👍🏻"+resp);
+					});
+				});
+				
+				$(".reply_like").on("click",function(){
+					let reply_code = $(this).closest(".reply_box").find(".r_code").val();
+					let like_box = $(this).closest(".reply_box").find(".r_like");
+					$.ajax({
+						url:"/like.reply",
+						type:"post",
+						data:{
+							b_c:${b_c},
+							code:reply_code,
+						},
+						dataType:"json",
+					}).done(function(resp){
+						like_box.text("👍🏻"+resp);
+					})
+				})
 			</script>
 </body>
 
