@@ -123,7 +123,7 @@ td {
 							<td>${i.headcount}명</td>
 							<td align="center">
 							<c:choose>
-								<c:when test="${login_id.equals(i.leader_id)}">
+								<c:when test="${id.equals(i.leader_id)}">
 									<a href="/to_register_modify_form.mercenary?code=${i.code}&ctPage=${ctPage}"><input type="button" class="btn btn-outline-primary btn-sm" value="수정"></a>
 									<button type="button" class="btn btn-outline-primary btn-sm" onclick="delete_mercenary_register(${i.code})">삭제</button>
 								</c:when>
