@@ -174,7 +174,7 @@
 									<a href="/list.competition?cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">매칭 신청</a>
 								</li>
 								<li>
-									<a href="/to_register_list.mercenary?cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병 신청</a>
+									<a href="/to_register_list.mercenary?cpage=1" class="nav_a link-dark d-inline-flex text-decoration-none rounded">용병 등록 리스트</a>
 								</li>
 								<c:if test="${sessionScope.nickname != null}">
 									<li class="login">
