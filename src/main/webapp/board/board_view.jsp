@@ -193,7 +193,7 @@ div {
 							<c:if test="${sessionScope.code ne null}">
 							<div class="right d-flex p-0">
 								<div class="p-0" style="margin-right: 5px">
-									<small>답글달기</small>
+									<button type="button" class="btn btn-secondary btn-sm reply_add"><small>답글달기</small></button>
 								</div>
 								<div class="p-0" style="margin-right: 5px">
 									<button type="button" class="btn btn-primary btn-sm reply_like"><small>👍추천</small></button>
@@ -484,7 +484,11 @@ div {
 					}).done(function(resp){
 						like_box.text("👍🏻"+resp);
 					})
-				})
+				});
+				
+				$(".reply_add").on("click",function(){
+					alert("미구현 기능입니다.");
+				});
 			</script>
 </body>
 
