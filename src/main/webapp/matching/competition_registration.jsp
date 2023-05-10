@@ -238,17 +238,14 @@ font-family:'NanumSquareNeoBold';
                 	height:200px;
                 	border-radius: 100px;
                 }
-                #cf {
-                	padding-top: 120px;
-                }
+              
             </style>
         </head>
 
         <body>
-<c:import url="/commons/gnb.jsp">
-	</c:import>
+
             <form  action="/send.competition" method="get" enctype="multipart/form-data">
-                <div id="cf" class="container-fluid  " style="background-color: whitesmoke;">
+                <div  class="container-fluid  " style="background-color: whitesmoke;">
                     <div class="row header">
 
                         <div class="col-xs-12 col-md-6">
@@ -864,7 +861,7 @@ font-family:'NanumSquareNeoBold';
                                     <div class="row">
 
                                         <div class="col-10">
-                                            <br> <button type="button" id="cancel" style="float: left;">취소</button>
+                                            <br> <button type="button" id="cancel" onclick="location.href='/'" style="float: left;">취소</button>
                                         </div>
                                         <div class="col-2"></div>
 
@@ -961,6 +958,7 @@ font-family:'NanumSquareNeoBold';
                       })
                       
 
+                   
                    //    else if (year.innerHTML == "" || month.innerHTML == "" || day.innerHTML == "") {
                    //    alert("날짜를 선택하십시오!");
                    //    return false; }

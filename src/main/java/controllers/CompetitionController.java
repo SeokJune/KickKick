@@ -310,6 +310,9 @@ public class CompetitionController extends HttpServlet {
 		
 				System.out.println("3");
 				
+				
+				
+				//!!!!!!!!!!!!!!!!!!!!아직 구현 못함 /deletelist_competition!!!!!!!!!!1
 			}else if(cmd.equals("/deletelist_competition")) {// 수락한 팀의글을 리스트에서 지우는거
 				
 				System.out.println("1");
