@@ -214,7 +214,7 @@ div {
 			console.log(logo);
 
 			var img = document.createElement("img");
-			img.src = "../image/"+logo_path+"/"+logo;
+			img.src = "../"+logo_path+logo;
 			img.width = "100";
 			img.height = "100";
 			
