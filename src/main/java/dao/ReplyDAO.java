@@ -131,4 +131,27 @@ public class ReplyDAO {
 			return result;
 		}
 	}
+	
+	public int like_reply(String board_table_name,int code) throws Exception{
+		String sql = "update reply_"+board_table_name+" set like_count = like_count+1 where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
+	
+	public int select_like_count(String board_table_name,int code) throws Exception{
+		String sql = "select like_count from reply_"+board_table_name+" where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			try(ResultSet rs = pstat.executeQuery()){
+				rs.next();
+				return rs.getInt("like_count");
+			}
+		}
+	}
 }

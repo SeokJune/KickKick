@@ -51,7 +51,7 @@ div {
 			</div>
 		</div>
 		<div class="row body" style="border-bottom: 1px solid #d2d4d6;">
-			<div class="col-12 pb-4" style="height: auto;min-height:500px;">
+			<div class="col-12 pb-4" style="height: auto;min-height:400px;">
 			<i class="icons fa-solid fa-q fs-1" style="color: #198754;"></i>
 				${inquire.content}
 			</div>

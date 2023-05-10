@@ -328,4 +328,27 @@ public class BoardDAO {
 			return result;
 		}
 	}
+	
+	public int like_post(String board_table_name,int code) throws Exception{
+		String sql = "update board_"+board_table_name+" set like_count = like_count+1 where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		}
+	}
+	
+	public int select_like_count(String board_table_name,int code) throws Exception{
+		String sql = "select like_count from board_"+board_table_name+" where code=?";
+		try(Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setInt(1, code);
+			try(ResultSet rs = pstat.executeQuery()){
+				rs.next();
+				return rs.getInt("like_count");
+			}
+		}
+	}
 }
