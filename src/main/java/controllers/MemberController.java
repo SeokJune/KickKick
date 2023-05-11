@@ -166,6 +166,11 @@ public class MemberController extends HttpServlet {
 						member_phone, member_email, null, 0, null, null, null);
 				int result = dao.modify_member(dto);
 
+				// 세션에 있던 닉네임 삭제
+				request.getSession().removeAttribute("nickname");
+				// 세션에 정보 저장 : id, code, 닉네임
+				MemberDTO info = dao.get_info_by_id(member_id);
+				request.getSession().setAttribute("nickname", info.getNick_name());
 				if (result > 0) {
 					response.sendRedirect("/my_profile.member");
 				} else {
