@@ -698,34 +698,44 @@ label {
 				}
 			});
 		});
-		// 생년월일 select option setting - 년 / 일
+		// 생년월일 select option setting - 년 / 월
 		$(document).ready(function () {
 			var now = new Date();
 			var year = now.getFullYear();
 			var mon = (now.getMonth() + 1) > 9 ? '' + (now.getMonth() + 1) : '0' + (now.getMonth() + 1);
 			//년도 selectbox만들기               
 			for (var i = year - 100; i <= year; i++) {
-				$('#member_birth_year').append('<option value="' + i + '">' + i + '</option>');
+				$("#member_birth_year").append('<option value="' + i + '">' + i + '</option>');
 			}
 			$("#member_birth_year>option[value="+ year + "]").attr("selected", "true");
 			// 월별 selectbox 만들기            
 			for (var i = 1; i <= 12; i++) {
 			    var mm = i > 9 ? i : "0" + i;
-			    $('#member_birth_month').append('<option value="' + mm + '">' + mm + '</option>');
+			    $("#member_birth_month").append('<option value="' + mm + '">' + mm + '</option>');
 			}
 			$("#member_birth_month>option[value=" + mon + "]").attr("selected", "true");
-		});
-		// 생년월일 select option setting - 월
-		$("#member_birth_day").on("click", function () {
+			//
 			let last = (new Date($("#member_birth_year").val(), $("#member_birth_month").val() - 0, 0)).getDate();
-			// 월별 selectbox 만들기
-			$('#member_birth_day').html("");
+			// 일별 selectbox 만들기
+			$("#member_birth_day").html("");
 			for (var i = 1; i <= last; i++) {
 			    var dd = i > 9 ? i : "0" + i;
-			    $('#member_birth_day').append('<option value="' + dd + '">' + dd + '</option>');
+			    $("#member_birth_day").append('<option value="' + dd + '">' + dd + '</option>');
 			}
 			$("#member_birth_day>option[value='01']").attr("selected", "true");
 		});
+		// 생년월일 select option setting - 일
+		$("#member_birth_month").on("click", function () {
+			let last = (new Date($("#member_birth_year").val(), $("#member_birth_month").val() - 0, 0)).getDate();
+			// 일별 selectbox 만들기
+			$("#member_birth_day").html("");
+			for (var i = 1; i <= last; i++) {
+			    var dd = i > 9 ? i : "0" + i;
+			    $("#member_birth_day").append('<option value="' + dd + '">' + dd + '</option>');
+			}
+			$("#member_birth_day>option[value='01']").attr("selected", "true");
+		});
+		
 		// 비밀번호 보기
 		$("#view_pw").on("click", function() {
 			let password_field = $("#member_pw");
