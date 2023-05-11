@@ -117,7 +117,7 @@ public class TeamDAO {
 	}
 	
 	public void update_accept(String team_code, String phone) throws Exception {
-		String sql ="update  team_join_apply set status_code = 1002 where member_code = (select code from member where phone  = ?) and team_code = ?;";
+		String sql ="update  team_join_apply set status_code = 1002 where member_code = (select code from member where phone  = ?) and team_code = ?";
 		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
 			pstat.setString(1, phone);
 			pstat.setString(2, team_code);
