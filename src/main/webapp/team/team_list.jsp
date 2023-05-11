@@ -152,12 +152,12 @@ a {
 							<div class="col-12 col-md-8 col-xl-8">
 								<div class="row team_info">
 									<div class="col-4 col-md-2 col-xl-1">
-										<a href="/view.team?team_code=${i.code}"><img
+										<a href="/view.team?team_code=${i.code}" class="team-link"><img
 											src="${i.logo_path}${i.logo}"
 											style="width: 50px; height: 50px; border-radius: 25px"></a>
 									</div>
 									<div class="col-4 col-md-2 col-xl-2">
-										<a href="/view.team?team_code=${i.code}">${i.name}</a>
+										<a href="/view.team?team_code=${i.code}" class="team-link">${i.name}</a>
 									</div>
 									<div class="col-xl-1 d-none d-xl-block">${i.hometown_name}</div>
 									<div class="col-4 col-md-4 col-xl-3">${i.outline}</div>
@@ -265,6 +265,13 @@ a {
 			}
 
 		}) */
+		
+		$(".team-link").on("click",function(){
+		      if(${sessionScope.code eq null}){
+		         alert("로그인이 필요합니다.");
+		         return false;
+		      }
+		 });
 	</script>
 </body>
 
