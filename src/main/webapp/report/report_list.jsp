@@ -57,7 +57,7 @@ div {
 			<div class="col-12">
 				신고된 유저 목록
 			</div>
-			<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+			<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="board_radio">
   				<input type="radio" class="btn-check" name="b_c" id="btnradio1" autocomplete="off" value="1003" checked>
   				<label class="btn btn-outline-primary" for="btnradio1">자유게시판</label>
 
@@ -107,6 +107,7 @@ div {
 		<div class="row footer pb-4">
 			<form class="d-flex p-0" action="/list.report" method="post">
 				<div class="col-3 p-1">
+					<input type="hidden" name="b_c" value="1003">
 					<input type="hidden" name="cpage" value="1"> 
 					<select
 						class="form-select search_option" aria-label=".form-select-sm example"
@@ -136,7 +137,32 @@ div {
 		</div>
 	</div>
 	<script type="text/javascript">
+	window.onload = function(){
+		
+		$("#wide_option").val("${wide_option}").prop("selected",true);
+		
+		var 신고대상 = ['아이디','닉네임'];
+		var 신고사유 = ['스팸홍보/도배','불법정보','음란물','불쾌한표현','개인정보노출','기타'];
+		var 상세설명 = ['상세설명'];
 
+		var target = document.getElementById("narrow_option");
+
+		if($("#wide_option").val()=="신고대상")  {var d =  신고대상;$("#search_word").attr("disabled",false);}
+		else if($("#wide_option").val()=="신고사유") {var d = 신고사유;$("#search_word").attr("disabled",true);}
+		else if($("#wide_option").val()=="상세설명") {var d = 상세설명;$("#search_word").attr("disabled",false);}
+
+		target.options.length = 0;
+
+		for (x in d) {
+			var opt = document.createElement("option");
+			opt.value = d[x];
+			opt.innerHTML = d[x];
+			target.appendChild(opt);
+		}
+		
+		$("#narrow_option").val("${narrow_option}").prop("selected",true);
+		$("#search_word").val("${search_word}");
+	};
 	
 	function selectOptionChange(e) {
 			var 신고대상 = ['아이디','닉네임'];
@@ -145,7 +171,7 @@ div {
 
 		var target = document.getElementById("narrow_option");
 
-		if(e.value=="신고대상")  {var d =  신고대상;$("#search_word").attr("disabled",false);}
+		if(e.value=="신고대상")  {var d = 신고대상;$("#search_word").attr("disabled",false);}
 		else if(e.value=="신고사유") {var d = 신고사유;$("#search_word").attr("disabled",true);}
 		else if(e.value=="상세설명") {var d = 상세설명;$("#search_word").attr("disabled",false);}
 
@@ -158,7 +184,6 @@ div {
 			target.appendChild(opt);
 		}
 	};
-	
 	
 	</script>
 </body>

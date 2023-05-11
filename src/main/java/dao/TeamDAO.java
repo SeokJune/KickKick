@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class TeamDAO {
 
 	// 내 팀 리스트 가져오기
 	public List<TeamDTO> my_team_list(int member_code) throws Exception {
+		System.out.println(member_code);
 		String sql = "select \r\n"
 				+ "l.path as logo_path,\r\n"
 				+ "t.logo,\r\n"
@@ -54,6 +56,7 @@ public class TeamDAO {
 					String logo_path = rs.getString("logo_path");
 					String logo = rs.getString("logo");
 					String team_name = rs.getString("team_name");
+					System.out.println(team_name);
 					String hometown_name = rs.getString("hometown_name");
 					String leader = rs.getString("leader");
 					int team_code = rs.getInt("team_code");
@@ -100,6 +103,26 @@ public class TeamDAO {
 				return list;
 			}
 
+		}
+	}
+	
+	public void accept(String team_code, String phone) throws Exception{
+		String sql ="insert into team_member values(?,(select code from member where phone  = ?),1002,sysdate,null,null)";
+		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setString(1, team_code);
+			pstat.setString(2, phone);
+			pstat.executeUpdate();
+			con.commit();
+		}
+	}
+	
+	public void update_accept(String team_code, String phone) throws Exception {
+		String sql ="update  team_join_apply set status_code = 1002 where member_code = (select code from member where phone  = ?) and team_code = ?";
+		try(Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql)){
+			pstat.setString(1, phone);
+			pstat.setString(2, team_code);
+			pstat.executeUpdate();
+			con.commit();
 		}
 	}
 

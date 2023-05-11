@@ -29,6 +29,9 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
 	rel="stylesheet">
 <style>
+body{
+	background: #f8f9fd;
+}
 div {
 	/* border: 1px solid black; */
 	padding: 10px;

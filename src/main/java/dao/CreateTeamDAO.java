@@ -324,7 +324,7 @@ public class CreateTeamDAO {
 	public List<TeamApDTO> join_wait(int team_code1) throws Exception {
 		String sql = "select t.code, t.team_code, t.member_code, m.nickname, m.phone, t.content, t.status_code\r\n"
 				+ "from team_join_apply t join member m on t.member_code = m.code\r\n"
-				+ "where t.team_code = ?";
+				+ "where t.team_code = ? and status_code = 1001";
 		try(Connection con = this.getConnection();
 				PreparedStatement pstat = con.prepareStatement(sql);) {
 			
