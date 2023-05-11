@@ -79,6 +79,7 @@ public class ReportDAO {
 			}
 			try(ResultSet rs = pstat.executeQuery()){
 				rs.next();
+				System.out.println(rs.getInt(1));
 				return rs.getInt(1);
 			}
 		}
@@ -181,7 +182,18 @@ public class ReportDAO {
 				List<ReportDTO> result = new ArrayList<>();
 				try(ResultSet rs = pstat.executeQuery()){
 					while(rs.next()) {
-
+						int code = rs.getInt("code");
+						int board_kind_code = rs.getInt("board_kind_code");
+						int board_code = rs.getInt("board_code");
+						int reply_code = rs.getInt("reply_code");
+						String status = rs.getString("status");
+						String report_kind = rs.getString("report_kind");
+						String content = rs.getString("content");
+						String member_nickname = rs.getString("member_nickname");
+						Timestamp reg_date = rs.getTimestamp("reg_date");
+						String board_content = rs.getString("board_content");
+						String reply_content = rs.getString("reply_content");
+						result.add(new ReportDTO(code, member_nickname, board_kind_code, board_code, board_content, reply_content, reply_code, report_kind, content, status, reg_date));
 					}
 					return result;
 				}
