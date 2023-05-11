@@ -245,7 +245,11 @@ font-family:'NanumSquareNeoBold';
         <body>
 
             <form  action="/send.competition" method="get" enctype="multipart/form-data">
+               
+               
                 <div  class="container-fluid  " style="background-color: whitesmoke;">
+                    
+                   
                     <div class="row header">
 
                         <div class="col-xs-12 col-md-6">
@@ -263,6 +267,7 @@ font-family:'NanumSquareNeoBold';
                                 </div>
 
                                 <div class="col-xs-12 col-md-8">
+                                <br>
                                     <div class="row h-100">
                                         <div class="col-xs-12 col-md-12" >
 
@@ -280,6 +285,7 @@ font-family:'NanumSquareNeoBold';
                                        
 
                                         <div class="col-xs-12 col-md-12" style="padding: 1%;">
+                                           <br>
                                             <img id="pic" style="border:1px solid black;" src="/image/competition_img/upload.png">
                                         </div>
 
@@ -299,6 +305,7 @@ font-family:'NanumSquareNeoBold';
                                 <div class="col-xs-12 col-md-2"></div>
 
                                 <div class="col-xs-12 col-md-8">
+                                <br>
                                     <div class="row h-100" >
 
 

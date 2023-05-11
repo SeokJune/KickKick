@@ -393,6 +393,7 @@ public class CompetitionDAO {
 
 	// 로그인한 사람이랑 글쓴 사람이 같을떄 리스트에 출력 - 신청받아주거나 거절하거나
 	public List<CompetitionApplicationListDTO> selectmatch(String rcode) throws Exception {
+		System.out.println(rcode);
 		String sql = "select tv.logo_path , tv.logo , tv.name team_name , tv.member_name , tv.member_phone, ab.name ability_name , ca.content, ca.team_code\r\n"
 				+ "from competition_application ca join team_view tv on (ca.team_code = tv.code)\r\n"
 				+ "join ability ab on (ca.ability_code = ab.code) where ca.competition_registration_code = ? ";
@@ -423,7 +424,7 @@ public class CompetitionDAO {
 					list.add(dto);
 
 				}
-
+				System.out.println(list);
 				return list;
 			}
 		}
@@ -638,7 +639,7 @@ public class CompetitionDAO {
 		String sql = "select tv.name team_name, tv.member_name, tv.member_phone,tv.logo_path,\r\n"
 				+ "tv.logo, cr.latirude, cr.longitude, cr.competition_date, cr.STATUS_CODE,\r\n"
 				+ "st.name status_name, ck.name kind_name , cr.code\r\n"
-				+ "from(select competition_registration.* , row_number() over(order by competition_date desc) rn from competition_registration ) cr\r\n"
+				+ "from(select competition_registration.* , row_number() over(order by reg_date desc) rn from competition_registration ) cr\r\n"
 				+ "join team_view tv on (cr.team_code=tv.code)\r\n"
 				+ "join status st on (cr.status_code = st.code)\r\n"
 				+ "join competition_kind ck on (cr.competition_kind_code = ck.code)\r\n"
