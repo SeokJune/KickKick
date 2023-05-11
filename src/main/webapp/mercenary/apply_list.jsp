@@ -252,7 +252,7 @@ td {
 				}
 			}).done(function(resp) {
 				if(resp == 1){ // count < headcount
-					console.log("수락 완료");
+					alert("신청이 수락되었습니다");
 					$("#"+ tr_num).empty();
 					
 				}else if(resp == 2){
@@ -276,7 +276,7 @@ td {
 					mercenary_application_code:mercenary_application_code
 				}
 			}).done(function(resp) {
-				console.log("거절 완료");
+				alert("신청이 거절되었습니다");
 				$("#"+ tr_num).empty();
 			})
 		}
