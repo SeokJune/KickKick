@@ -613,6 +613,7 @@ font-family:'NanumSquareNeoBold';
                             	console.log(reg_team_code);
                             	 location.href = "/acceptform.competition?team_code="+team_code+"&reg_code="+reg_code+"&reg_team_code="+reg_team_code;
                           alert("수락되었습니다");
+                          opener.parent.location.reload();
                           window.close();
                             
                             })
@@ -625,6 +626,7 @@ font-family:'NanumSquareNeoBold';
                             	console.log(reg_code);
                             	 location.href = "/refuseform.competition?team_code="+team_code+"&reg_code="+reg_code;
                             	  alert("거절되었습니다"); 
+                            	  
                             	  window.location.reload();
                             })
                             

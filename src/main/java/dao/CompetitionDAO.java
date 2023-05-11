@@ -476,7 +476,22 @@ public class CompetitionDAO {
 		}
 	}
 
+	//신청폼에서 수락하기를 눌렀을때 리스트에서 안보이게 status_code를 1102번으로 바꾸기
+		public int list_delete(int reg_code) throws Exception{
+			String sql = "update competition_registration set status_code =1102 where code = ? ";
+			try(Connection con = this.getConnection();
+					PreparedStatement pstat = con.prepareStatement(sql);)
 
+			{
+				pstat.setInt(1, reg_code);
+			
+
+				int result = pstat.executeUpdate();
+				con.commit();
+				return result;
+			}
+
+		}
 
 	//신청폼에서 거절하기를 눌렀을때
 	public int refuse(int team_code , int reg_code) throws Exception{
