@@ -105,7 +105,7 @@ button {
 			
 			
 		<c:set var="doneLoop" value="false"/>
-			<c:forEach var="i" items="${member_team_code}">
+			<c:forEach var="i" begin="1" end="5" step="1">
 				<c:if test="${not doneLoop}">
 					<c:choose>
 					
