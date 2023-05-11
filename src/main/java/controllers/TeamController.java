@@ -122,7 +122,7 @@ public class TeamController extends HttpServlet {
 			else if(cmd.equals("/view.team")) {			
 				// 팀가입 신청 상태정보
 				int team_code = Integer.parseInt(request.getParameter("team_code"));
-				int member_code = (int)request.getSession().getAttribute("code");
+				int member_code = request.getSession().getAttribute("code")==null?1 : (int)request.getSession().getAttribute("code");
 				
 				CreateTeamDAO dao = CreateTeamDAO.getInstance();
 				// 팀코드를 이용하여 접속한 팀 페이지의 정보 뽑아오기

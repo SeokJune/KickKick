@@ -115,8 +115,8 @@ button {
 
 
 			<c:set var="doneLoop" value="false" />
-			<c:forEach var="i" begin="1" end="5" step="1">
-				<c:if test="${not doneLoop}">
+			
+				
 					<c:choose>
 
 						<c:when test="${team_info.member_code == member_code}">
@@ -198,7 +198,45 @@ button {
 							<c:set var="doneLoop" value="true" />
 						</c:when>
 
+						<c:when test="${member_code == 1}">
+										<div class="col-md-8 col-xl-8">
+											<div class="row">
+												<ul class="nav nav-tabs" style="text-align: center; padding-left: 6px; padding-right: 6px;">
+													<li class="col-3 nav-item"><a class="nav-link active"
+														data-toggle="tab" href="#team_introduce">팀소개</a></li>
+													<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
+														href="#recode">전적</a></li>
+													<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
+														href="#game_schedule">경기일정</a></li>
+													<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
+														href="#community">게시판</a></li>
+												</ul>
+											</div>
+									
+											<div class="row">
+												<div class="col-12 tab-content" id="team_info">
+													<div class="row tab-pane fade show active" id="team_introduce">
+														<div class="col-12">${team_info.outline}</div>
+														<div class="col-12">${team_info.content}</div>
+													</div>
+													<div class="row tab-pane fade" id="recode">
+														<p>미완성</p>
+													</div>
+													<div class="row tab-pane fade" id="game_schedule">
+														<p>미완성</p>
+													</div>
+													<div class="row tab-pane fade" id="community">
+														<p>미완성</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</c:when>
 
+						<c:otherwise>
+						<c:forEach var="i" items="${member_team_code}">
+						<c:if test="${not doneLoop}">
+						<c:choose>
 						<c:when test="${i == team_info.code}">
 							<div class="col-md-8 col-xl-8">
 								<div class="row">
@@ -308,9 +346,13 @@ button {
 							</div>
 							<c:set var="doneLoop" value="true" />
 						</c:otherwise>
+						</c:choose>
+						</c:if>
+						</c:forEach>
+						</c:otherwise>
 					</c:choose>
-				</c:if>
-			</c:forEach>
+				
+			
 
 			<div class="col-md-2 col-xl-2"></div>
 		</div>
