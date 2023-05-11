@@ -140,6 +140,7 @@ public class TeamController extends HttpServlet {
 				request.setAttribute("member_team_code", member_team_code);
 				request.setAttribute("team_ap", team_ap);
 				request.setAttribute("member_status", member_status);
+				request.setAttribute("team_code", team_code);
 				request.getRequestDispatcher("/team/team_view.jsp").forward(request, response); 
 			} else if (cmd.equals("/my_team_list.team")) {
 				
@@ -190,7 +191,16 @@ public class TeamController extends HttpServlet {
 				response.sendRedirect("/view.team?team_code="+team_code+"&code="+member_code); 
 				
 				
+			}			
+			//팀 가입 신청 승인
+			else if(cmd.equals("/accept.team")) {
+				String team_code = request.getParameter("team_code");
+				String phone = request.getParameter("phone");
+				
+				TeamDAO.getInstance().accept(team_code, phone);
+				TeamDAO.getInstance().update_accept(team_code, phone);
 			}
+
 		}
 		catch(Exception e) {
 			e.printStackTrace();
