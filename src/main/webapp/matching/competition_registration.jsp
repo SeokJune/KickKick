@@ -31,7 +31,7 @@
             <style>
                 * {
                     box-sizing: border-box;
-				
+            
                     text-align: center;
                 }
 
@@ -234,9 +234,9 @@ font-family:'NanumSquareNeoBold';
                     color: #777;
                 }
                 #pic {
-                	width: 200px;
-                	height:200px;
-                	border-radius: 100px;
+                   width: 200px;
+                   height:200px;
+                   border-radius: 100px;
                 }
               
             </style>
@@ -256,8 +256,8 @@ font-family:'NanumSquareNeoBold';
                                 <div class="col-xs-12 col-md-2">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12 " >
-                                     		<input type="hidden" name="status" style="width:100%;" value="${status[0].code}">
-                                     	</div>
+                                           <input type="hidden" name="status" style="width:100%;" value="${status[0].code}">
+                                        </div>
                                        
                                     </div>
                                 </div>
@@ -362,29 +362,29 @@ font-family:'NanumSquareNeoBold';
 
                                             <script>
                                             
-                                            	$(function(){
-                                            		$(window).keydown(function(event){
-                                            		    if(event.keyCode == 13) {
-                                            		      event.preventDefault();
-                                            		      return false;
-                                            		    }
-                                            		});
+                                               $(function(){
+                                                  $(window).keydown(function(event){
+                                                      if(event.keyCode == 13) {
+                                                        event.preventDefault();
+                                                        return false;
+                                                      }
+                                                  });
                                           
-                                            	})
-                                            	
-                                            	$(function(){
-                                            		$("#keyword").on("keyup",function(e){
-                                            	
-                                            			if(e.keyCode == 13){
-                                            				searchPlaces(); 
-                                                    		return false;
-                                            			}
-                                            	
-                                            		})
-                                            	})
-                                            	
-                                            	
-                                            	
+                                               })
+                                               
+                                               $(function(){
+                                                  $("#keyword").on("keyup",function(e){
+                                               
+                                                     if(e.keyCode == 13){
+                                                        searchPlaces(); 
+                                                          return false;
+                                                     }
+                                               
+                                                  })
+                                               })
+                                               
+                                               
+                                               
                                                 // 마커를 담을 배열입니다
                                                 var markers = [];
 
@@ -705,7 +705,7 @@ font-family:'NanumSquareNeoBold';
                                                         <div class="col-7">
                                                             <select size="3" id="hour" name="hour" class="w-75 ">
 
-																<option selected value="">---선택---</option>
+                                                <option selected value="">---선택---</option>
                                                                 <option value="06">오전 6:00시</option>
                                                                 <option value="07">오전 7:00시</option>
                                                                 <option value="08">오전 8:00시</option>
@@ -741,7 +741,7 @@ font-family:'NanumSquareNeoBold';
                                                         <div class="col-7">
                                                             <select size="3" id="minute" name="minute" class="w-75 ">
 
-															<option selected value="">---선택---</option>
+                                             <option selected value="">---선택---</option>
                                                                 <option value="10">10분</option>
                                                                 <option value="20">20분</option>
                                                                 <option value="30">30분</option>
@@ -896,10 +896,10 @@ font-family:'NanumSquareNeoBold';
                         type: "get",
                         data: {
                             teamname: name
-                        },	//dao,dto때문에 
+                        },   //dao,dto때문에 
                         dataType: "json"
 
-                    }).done(function (resp) { 	//append가 있을떄 done으로 가게된다
+                    }).done(function (resp) {    //append가 있을떄 done으로 가게된다
                         //integer.parseint의 
                         $("#t1").val("팀명 : " + resp[0]);
                         $("#t2").val("팀장 이름 : " + resp[1]);
@@ -951,9 +951,9 @@ font-family:'NanumSquareNeoBold';
                               alert("실력을 선택하십시오!");
                               return false;
                           }else if($("#clickLatlng").val()== ""){
-                          	 alert("지도에 최종 결정지인곳에 맵핀을 찍어주세요");
-                          	return false;
-                     	  }
+                              alert("지도에 최종 결정지인곳에 맵핀을 찍어주세요");
+                             return false;
+                          }
                           
                       })
                       
