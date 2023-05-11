@@ -109,12 +109,17 @@ public class ReportController extends HttpServlet {
 				}
 				request.setAttribute("search_word", search_word);
 				
+				
+				
 				//페이지네이션 설정
 				String page_navi = report_dao.get_page_navi(b_c,current_page,wide_option,narrow_option,search_word);
 				int start = current_page*Settings.BOARD_RECORD_COUNT_PER_PAGE-(Settings.BOARD_RECORD_COUNT_PER_PAGE-1);
 				int end = current_page*Settings.BOARD_RECORD_COUNT_PER_PAGE;
 				List<ReportDTO> list = report_dao.select_report_list(b_c,start,end,wide_option,narrow_option,search_word);
-
+				
+				System.out.println("wide:"+wide_option);
+				System.out.println("narrow:"+narrow_option);
+				System.out.println("word:"+search_word);
 				request.setAttribute("list", list);
 				request.setAttribute("navi", page_navi);
 
