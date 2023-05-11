@@ -151,9 +151,7 @@ font-family:'NanumSquareNeoBold';
                                                         style="border: 1px solid black; padding: 2%;">
                                                     </div>
 
-                                                    <div class="code col-12 h-25" style="display:none">
-                                                        ${l.code }
-                                                    </div>
+                                                    <div class="code col-12 h-25" style="display:none">${l.code }</div>
 
                                                     <div class="col-12 h-25">
                                                         <div class="row h-100">
@@ -244,9 +242,7 @@ font-family:'NanumSquareNeoBold';
                                                         style="border: 1px solid black; padding: 2%;">
                                                     </div>
 
-                                                    <div class="code col-12 h-25" style="display:none">
-                                                        ${r.code }
-                                                    </div>
+                                                    <div class="code col-12 h-25" >${r.code }</div>
 
                                                     <div class="col-12 h-25">
                                                         <div class="row h-100">

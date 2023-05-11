@@ -25,13 +25,15 @@
 
             <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
-<link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
-<!-- awesome font -icon--->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+            <!-- awesome font -icon--->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+                integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
             <style>
                 * {
                     box-sizing: border-box;
-font-family:'NanumSquareNeoBold';
+                    font-family: 'NanumSquareNeoBold';
                     text-align: center;
                 }
 
@@ -144,7 +146,7 @@ font-family:'NanumSquareNeoBold';
                             <div class="col-xs-1 col-md-1"></div>
 
                         </div>
-                        <br>
+
                         <div class="row body">
                             <div class="col-xs-1 col-md-1"></div>
                             <div class="col-xs-12 col-md-10">
@@ -153,6 +155,7 @@ font-family:'NanumSquareNeoBold';
                                     <div class="col-12">
                                         <div class="row">
                                             <div class="col-xs-12 col-md-6">
+                                                <br>
                                                 <div id="map" style="width:100%;height:350px;"></div>
 
                                                 <script>
@@ -200,9 +203,9 @@ font-family:'NanumSquareNeoBold';
                                                 </script>
                                             </div>
                                             <div class="col-xs-12 col-md-6">
-
-                                                <textarea type="text" class="w-100 h-100" placeholder="소개글 불러오기"
-                                                    readonly>${form.content }</textarea>
+                                                <br>
+                                                <textarea type="text" class="w-100 " style="height: 350px;"
+                                                    placeholder="소개글 불러오기" readonly>${form.content }</textarea>
                                             </div>
                                         </div>
                                         <br>
@@ -339,7 +342,7 @@ font-family:'NanumSquareNeoBold';
                             }
                             else {
                                 location.href = "/apply.competition?status=" + ${ status[2].code } +"&rcode=" + ${ form.registration_code } + "&tcode=" + $("select[name=team] option:selected").val() + "&ability=" + $("select[name=ab] option:selected").val() + "&content=" + $("#tx").val();
-                               alert("신청되었습니다");
+                                alert("신청되었습니다");
                                 window.close(); //팝업창 닫는거
 
                             }
@@ -359,6 +362,7 @@ font-family:'NanumSquareNeoBold';
                 </c:when>
 
                 <c:otherwise>
+
                     <div class="container-fluid">
                         <div class="row header">
 
@@ -366,11 +370,11 @@ font-family:'NanumSquareNeoBold';
                             <div class="col-xs-10 col-md-10">
                                 <div class="row">
                                     <div class="col-12" style="color:red; font-size:20px; ">${status[2].name}</div>
-              
+
 
                                     <div class="col-12" style=" display:none; " id="lat">${form.latirude }</div>
                                     <div class="col-12" style=" display:none; " id="long">${form.longitude }</div>
-                                    <div class="col-12"><input style="display:none;"  name="rcode"
+                                    <div class="col-12"><input style="display:none;" name="rcode"
                                             value="${form.registration_code }"></div>
 
                                     <div class="col-12"><input style="display:none;" name="tcode"
@@ -419,6 +423,7 @@ font-family:'NanumSquareNeoBold';
                                     <div class="col-12">
                                         <div class="row">
                                             <div class="col-xs-12 col-md-6">
+                                                <br>
                                                 <div id="map" style="width:100%;height:350px;"></div>
 
                                                 <script>
@@ -466,9 +471,9 @@ font-family:'NanumSquareNeoBold';
                                                 </script>
                                             </div>
                                             <div class="col-xs-12 col-md-6">
-
-                                                <textarea type="text" class="w-100 h-100" placeholder="소개글 불러오기"
-                                                    readonly>${form.content }</textarea>
+                                                <br>
+                                                <textarea type="text" class="w-100 " style="height: 350px;"
+                                                    placeholder="소개글 불러오기" readonly>${form.content }</textarea>
                                             </div>
                                         </div>
                                         <br>
@@ -605,35 +610,35 @@ font-family:'NanumSquareNeoBold';
 
                             $(".accept").on("click", function () {
 
-                            	let team_code = $(this).parent().next().text(); //신청한 팀의 코드
-                            	let reg_code = ${form.registration_code }; //registration_code
-                            	let reg_team_code = ${form.apply_teamcode };  //글을 등록한 팀의 코드
-                            	console.log(team_code);
-                            	console.log(reg_code);
-                            	console.log(reg_team_code);
-                            	 location.href = "/acceptform.competition?team_code="+team_code+"&reg_code="+reg_code+"&reg_team_code="+reg_team_code;
-                          alert("수락되었습니다");
-                          opener.parent.location.reload();
-                          window.close();
-                            
+                                let team_code = $(this).parent().next().text(); //신청한 팀의 코드
+                                let reg_code = ${ form.registration_code }; //registration_code
+                                let reg_team_code = ${ form.apply_teamcode };  //글을 등록한 팀의 코드
+                                console.log(team_code);
+                                console.log(reg_code);
+                                console.log(reg_team_code);
+                                location.href = "/acceptform.competition?team_code=" + team_code + "&reg_code=" + reg_code + "&reg_team_code=" + reg_team_code;
+                                alert("경기가 확정되었습니다 !");
+                                opener.parent.location.reload();
+                                window.close();
+
                             })
 
                             $(".refuse").on("click", function () {
-                            	let team_code = $(this).parent().next().text(); //신청한 팀의 코드
-                            	let reg_code = ${form.registration_code }; //registration_code
-                            	
-                            	console.log(team_code);
-                            	console.log(reg_code);
-                            	 location.href = "/refuseform.competition?team_code="+team_code+"&reg_code="+reg_code;
-                            	  alert("거절되었습니다"); 
-                            	  
-                            	  window.location.reload();
-                            })
-                            
-                            
-                       /*        location.href = "/refuseform.competition?team_code="+team_code+"&reg_code="+${form.registration_code };
+                                let team_code = $(this).parent().next().text(); //신청한 팀의 코드
+                                let reg_code = ${ form.registration_code }; //registration_code
+
+                                console.log(team_code);
+                                console.log(reg_code);
+                                location.href = "/refuseform.competition?team_code=" + team_code + "&reg_code=" + reg_code;
                                 alert("거절되었습니다");
-                                window.location.reload(); */
+
+                                window.location.reload();
+                            })
+
+
+                            /*        location.href = "/refuseform.competition?team_code="+team_code+"&reg_code="+${form.registration_code };
+                                     alert("거절되었습니다");
+                                     window.location.reload(); */
                         </script>
                     </div>
 

@@ -243,7 +243,7 @@ public class CompetitionController extends HttpServlet {
 				List<CompetitionApplicationListDTO> match =	CompetitionDAO.getinstance().selectmatch(rcode);
 				request.setAttribute("match", match);
 
-
+System.out.println(match);
 				request.getRequestDispatcher("/matching/competition_application.jsp").forward(request, response);
 
 			}else if(cmd.equals("/apply.competition")){ //신청하기를 눌렀을때 db에 넣는것
@@ -311,7 +311,7 @@ public class CompetitionController extends HttpServlet {
 				
 				
 				
-				//!!!!!!!!!!!!!!!!!!!!아직 구현 못함 /deletelist_competition!!!!!!!!!!1
+				
 			}else if(cmd.equals("/refuseform.competition")) {//신청폼에서 거절하기를 눌렀을때
 
 				String reg_code1 = request.getParameter("reg_code"); //해당글의 코드 
@@ -342,7 +342,7 @@ public class CompetitionController extends HttpServlet {
 			//					day = 0 + day;
 			//				}
 			//				String date = year + "/" + month + "/" + day;
-			//				List<CompetitionDTO> game_list = CompetitionDAO.getinstance().match_game_list(date);
+			//			List<CompetitionDTO> game_list = CompetitionDAO.getinstance().match_game_list(date);
 			//				
 			//				Gson g = new Gson();
 			//				String dto_game_list = g.toJson(game_list);
