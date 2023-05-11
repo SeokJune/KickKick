@@ -116,7 +116,7 @@ label {
 					<button class="nav-link text-dark" aria-current="page" id="my_team" onclick="location.href='/my_team_list.team'">내 팀</button>
 				</li>
 				<li class="nav-item">
-					<button class="nav-link text-dark" aria-current="page" id="my_comp" onclick="location.href='/my_match_list.member''">내 경기</button>
+					<button class="nav-link text-dark" aria-current="page" id="my_comp" onclick="location.href='/my_match_list.member'">내 경기</button>
 				</li>
 				<li class="nav-item">
 					<button class="nav-link text-dark active" aria-current="page" id="my_info" onclick="location.href='/my_profile.member'">내 정보</button>
@@ -154,6 +154,15 @@ label {
 						<form action="/modify_member_profile.member" method="post" onsubmit="return confirm('프로필을 수정하시겠습니까?');">
 							<!-- 아이디 -->
 							<div class="wrapper">
+								<div class="row insert">
+									<div class="col-10">
+										<div class="row">
+											<div class="col-12">
+												<span class="position-absolute top-0 end-0 p-3" style="font-size: small;">아이디와 이름, 전화번호는 수정 할 수 없습니다!</span>
+											</div>
+										</div>
+									</div>
+								</div>
 								<div class="row label">
 									<div class="col-12">
 										<label for="member_id">아이디</label>
@@ -241,27 +250,28 @@ label {
 							<div class="wrapper">
 								<div class="row label">
 									<div class="col-12">
-										<label">전화번호</label>
+										<label>전화번호</label>
 									</div>
 								</div>
 								<div class="row input">
 									<!-- col-9 col-md-6 w-75 -->
 									<div class="col-12">
-										<input type="text" class="form-control" id="member_phone" name="member_phone" pattern="^0+\d{9,10}$" value="${profile.phone}" minlength="10" maxlength="11" required readonly>
+										<input type="text" class="form-control" id="member_phone" name="member_phone" pattern="^0+\d{9,10}$" value="${profile.phone}" minlength="10" maxlength="11" readonly>
 									</div>
-									<!-- 전화번호 변경 버튼 : 수정하기 버튼 클릭시 보여짐 -->
+									<!--
+									<!-- 전화번호 변경 버튼 : 수정하기 버튼 클릭시 보여짐 
 									<div class="col-3 col-md-2 w-25 mt-1">
 										<button type="button" class="btn btn-outline-secondary btn-sm" id="edit_phone_btn" style="-bs-btn-font-size: .75rem;">변경</button>
 									</div>
 								</div>
-								<!-- 전화번호 중복 메세지 -->
+								<!-- 전화번호 중복 메세지 
 								<div class="row checking px-1 py-1">
 									<div class="col-12">
 										<h9 id="member_phone_checking"></h9>
 									</div>
 								</div>
 							</div>
-							<!-- 인증 번호 -->
+							<!-- 인증 번호 
 							<div class="wrapper" id="veri_code">
 								<div class="row label">
 									<label>인증번호</label>
@@ -270,11 +280,12 @@ label {
 									<div class="col-9 col-md-6 w-75">
 										<input type="text" class="form-control" id="member_pin" name="member_pin">
 									</div>
-									<!-- 인증완료 버튼 -->
+									<!-- 인증완료 버튼 
 									<div class="col-3 col-md-2 w-25 mt-1">
 										<button type="button" class="btn btn-primary btn-sm w-100">인증번호 전송</button>
 									</div>
-								</div>
+								</div> -->
+							</div> 
 							</div>
 							<!-- 생년월일 -->
 							<div class="wrapper">
