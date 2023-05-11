@@ -11,7 +11,7 @@
 	rel="stylesheet"
 	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
 	crossorigin="anonymous">
-	<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
+<link href="/commons/css/gnb.css" rel="stylesheet" type="text/css">
 <link
 	href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css"
 	rel="stylesheet">
@@ -20,10 +20,12 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 	crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <style>
 * {
 	box-sizing: border-box;
@@ -41,26 +43,30 @@ div {
 #team_name {
 	font-size: 30px;
 }
+
 #team_info {
 	background-color: #FFFFFF;
 	border: 5px solid #E6E6E6;
 }
+
 #team_introduce {
 	text-align: center;
 }
+
 #ap {
-	background-color: #D8D8D8; 	
+	background-color: #D8D8D8;
 	text-align: center;
 }
 
 #ap_input {
 	width: 70%;
 	height: 150px;
-	
-} 
+}
+
 #p4 {
 	text-align: center;
 }
+
 button {
 	color: whitesmoke;
 	background-color: #0d6efd;
@@ -68,30 +74,34 @@ button {
 </style>
 </head>
 <body>
-<c:import url="/commons/gnb.jsp">
-</c:import>
+	<c:import url="/commons/gnb.jsp">
+	</c:import>
 
 	<div class="container-fluid cf">
 		<div class="row team_info1">
 			<div class="col-md-1 col-xl-2"></div>
-			
-			<div id="pic" class="col-xs-12 col-md-2 col-xl-1" style="display: flex; justify-content :center; align-items: center;">
+
+			<div id="pic" class="col-xs-12 col-md-2 col-xl-1"
+				style="display: flex; justify-content: center; align-items: center;">
 				<img src="${team_info.logo_path}${team_info.logo}"
 					style="width: 80px; height: 80px; border-radius: 40px;">
 			</div>
-			
-			<div id="info" class="col-xs-12 col-md-9 col-xl-8" style="text-align: center;">
+
+			<div id="info" class="col-xs-12 col-md-9 col-xl-8"
+				style="text-align: center;">
 				<div class="row">
 					<div class="col-12 col-md-3 col-xl-3" id="team_name">${team_info.name}</div>
+					<input type="hidden" value="${team_code}" id="TEAM_code">
 				</div>
 				<div class="row">
-					<div class="col-12 col-md-3 col-xl-3">${team_info.member_name} | ${team_info.hometown_name}</div>
+					<div class="col-12 col-md-3 col-xl-3">${team_info.member_name}
+						| ${team_info.hometown_name}</div>
 				</div>
 				<div class="row">
 					<div class="col-12 col-md-3 col-xl-3">승무패</div>
 				</div>
 			</div>
-			
+
 			<div class="col-xl-1"></div>
 		</div>
 
@@ -102,31 +112,34 @@ button {
 
 		<div class="row team_info2">
 			<div class="col-md-2 col-xl-2"></div>
-			
-			
-		<c:set var="doneLoop" value="false"/>
+
+
+			<c:set var="doneLoop" value="false" />
 			<c:forEach var="i" begin="1" end="5" step="1">
 				<c:if test="${not doneLoop}">
 					<c:choose>
-					
+
 						<c:when test="${team_info.member_code == member_code}">
-							<c:set var="breakLoop" value="true"/>
+							<c:set var="breakLoop" value="true" />
 							<div class="col-md-8 col-xl-8">
 								<div class="row">
-										<ul class="nav nav-tabs" style="text-align: center; padding-left: 6px; padding-right: 6px;">
-											<li class="col-4 col-md-3 col-xl-2 nav-item"><a class="nav-link active"
-												data-toggle="tab" href="#team_introduce">소개</a></li>
-											<li class="col-2 d-none d-xl-block nav-item "><a class="nav-link" data-toggle="tab"
-												href="#recode">전적</a></li>
-											<li class="col-3 col-md-3 col-xl-2 d-none d-md-block nav-item "><a class="nav-link" data-toggle="tab"
-												href="#game_schedule">경기일정</a></li>
-											<li class="col-4 col-md-3 col-xl-3 nav-item"><a class="nav-link" data-toggle="tab"
-												href="#community">커뮤니티</a></li>
-											<li class="col-4 col-md-3 col-xl-3 nav-item "><a class="nav-link" data-toggle="tab"
-												href="#application">받은신청</a></li>
-										</ul>
+									<ul class="nav nav-tabs"
+										style="text-align: center; padding-left: 6px; padding-right: 6px;">
+										<li class="col-4 col-md-3 col-xl-2 nav-item"><a
+											class="nav-link active" data-toggle="tab"
+											href="#team_introduce">소개</a></li>
+										<li class="col-2 d-none d-xl-block nav-item "><a
+											class="nav-link" data-toggle="tab" href="#recode">전적</a></li>
+										<li
+											class="col-3 col-md-3 col-xl-2 d-none d-md-block nav-item "><a
+											class="nav-link" data-toggle="tab" href="#game_schedule">경기일정</a></li>
+										<li class="col-4 col-md-3 col-xl-3 nav-item"><a
+											class="nav-link" data-toggle="tab" href="#community">커뮤니티</a></li>
+										<li class="col-4 col-md-3 col-xl-3 nav-item "><a
+											class="nav-link" data-toggle="tab" href="#application">받은신청</a></li>
+									</ul>
 								</div>
-								
+
 								<div class="row">
 									<div class="col-12 tab-content" id="team_info">
 										<div class="row tab-pane fade show active" id="team_introduce">
@@ -144,31 +157,36 @@ button {
 										</div>
 										<div class="row tab-pane fade" id="application">
 											<div id="p4" class="col-12">
-											<c:choose>
+												<c:choose>
 													<c:when test="${team_ap.size() == 0 }">
 														<hr>
-															<div class="row">
-																<div class="col-12">당신의 팀에 가입하고 싶은 유저가 없네요..ㅠㅠ</div>
-															</div>
+														<div class="row">
+															<div class="col-12">당신의 팀에 가입하고 싶은 유저가 없네요..ㅠㅠ</div>
+														</div>
 														<hr>
 													</c:when>
 													<c:otherwise>
 														<div class="row">
-														<div class="col-4 col-xl-2">닉네임</div>
-														<div class="col-xl-5 d-none d-xl-block">소개글</div>
-														<div class="col-4 col-xl-3">연락처</div>
-														<div class="col-4 col-xl-2">수락/거절</div>
-													</div>
+															<div class="col-4 col-xl-2">닉네임</div>
+															<div class="col-xl-5 d-none d-xl-block">소개글</div>
+															<div class="col-4 col-xl-3">연락처</div>
+															<div class="col-4 col-xl-2">수락/거절</div>
+														</div>
 														<c:forEach var="ap" items="${team_ap}">
-														<hr>
-															<div class="row">
+															<hr>
+															<div class="row apply-team">
 																<div class="col-4 col-xl-2">${ap.nickname}</div>
 																<div class="col-xl-5  d-none d-xl-block">${ap.content}</div>
 																<div class="col-4 col-xl-3">${ap.phone}</div>
-																<div class="col-2 col-xl-1" style="text-align: right;"><button class="true_btn">수락</button></div>
-																<div class="col-2 col-xl-1" style="text-align: left;"><button class="false_btn">거절</button></div>
+																<input type="hidden" value="${ap.phone}" class="phone">
+																<div class="col-2 col-xl-1" style="text-align: right;">
+																	<button class="true_btn">수락</button>
+																</div>
+																<div class="col-2 col-xl-1" style="text-align: left;">
+																	<button class="false_btn">거절</button>
+																</div>
 															</div>
-														<hr>
+															<hr>
 														</c:forEach>
 													</c:otherwise>
 												</c:choose>
@@ -177,25 +195,26 @@ button {
 									</div>
 								</div>
 							</div>
-							<c:set var="doneLoop" value="true"/>
+							<c:set var="doneLoop" value="true" />
 						</c:when>
-						
-						
+
+
 						<c:when test="${i == team_info.code}">
 							<div class="col-md-8 col-xl-8">
 								<div class="row">
-										<ul class="nav nav-tabs" style="text-align: center; padding-left: 6px; padding-right: 6px;">
-											<li class="col-3 nav-item"><a class="nav-link active"
-												data-toggle="tab" href="#team_introduce">팀소개</a></li>
-											<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
-												href="#recode">전적</a></li>
-											<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
-												href="#game_schedule">경기일정</a></li>
-											<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
-												href="#community">팀원</a></li>
-										</ul>
+									<ul class="nav nav-tabs"
+										style="text-align: center; padding-left: 6px; padding-right: 6px;">
+										<li class="col-3 nav-item"><a class="nav-link active"
+											data-toggle="tab" href="#team_introduce">팀소개</a></li>
+										<li class="col-3 nav-item "><a class="nav-link"
+											data-toggle="tab" href="#recode">전적</a></li>
+										<li class="col-3 nav-item "><a class="nav-link"
+											data-toggle="tab" href="#game_schedule">경기일정</a></li>
+										<li class="col-3 nav-item "><a class="nav-link"
+											data-toggle="tab" href="#community">팀원</a></li>
+									</ul>
 								</div>
-								
+
 								<div class="row">
 									<div class="col-12 tab-content" id="team_info">
 										<div class="row tab-pane fade show active" id="team_introduce">
@@ -214,25 +233,26 @@ button {
 									</div>
 								</div>
 							</div>
-							<c:set var="doneLoop" value="true"/>
-							</c:when>
-							
-							
-							<c:otherwise>
-								<div class="col-md-8 col-xl-8">
+							<c:set var="doneLoop" value="true" />
+						</c:when>
+
+
+						<c:otherwise>
+							<div class="col-md-8 col-xl-8">
 								<div class="row">
-										<ul class="nav nav-tabs" style="text-align: center; padding-left: 6px; padding-right: 6px;">
-											<li class="col-3 nav-item"><a class="nav-link active"
-												data-toggle="tab" href="#team_introduce">팀소개</a></li>
-											<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
-												href="#recode">전적</a></li>
-											<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
-												href="#game_schedule">경기일정</a></li>
-											<li class="col-3 nav-item "><a class="nav-link" data-toggle="tab"
-												href="#community">가입신청</a></li>
-										</ul>
+									<ul class="nav nav-tabs"
+										style="text-align: center; padding-left: 6px; padding-right: 6px;">
+										<li class="col-3 nav-item"><a class="nav-link active"
+											data-toggle="tab" href="#team_introduce">팀소개</a></li>
+										<li class="col-3 nav-item "><a class="nav-link"
+											data-toggle="tab" href="#recode">전적</a></li>
+										<li class="col-3 nav-item "><a class="nav-link"
+											data-toggle="tab" href="#game_schedule">경기일정</a></li>
+										<li class="col-3 nav-item "><a class="nav-link"
+											data-toggle="tab" href="#community">가입신청</a></li>
+									</ul>
 								</div>
-								
+
 								<div class="row">
 									<div class="col-12 tab-content" id="team_info">
 										<div class="row tab-pane fade show active" id="team_introduce">
@@ -246,53 +266,72 @@ button {
 											<p>미완성</p>
 										</div>
 										<div class="row tab-pane fade" id="community">
-										
-										<c:choose>
-											<c:when test="${member_status==1001}">
-												<div class="col-12" style="text-align: center;">신청 대기중 입니다.</div>
-											</c:when>
-											<c:otherwise>
-												<div id="ap" class="col-12">
-													<div class="row" id="question">
-														<div class="col-2"></div>
-														<div class="col-2">자기소개</div>
-														<div class="col-8"></div>
+
+											<c:choose>
+												<c:when test="${member_status==1001}">
+													<div class="col-12" style="text-align: center;">신청
+														대기중 입니다.</div>
+												</c:when>
+												<c:otherwise>
+													<div id="ap" class="col-12">
+														<div class="row" id="question">
+															<div class="col-2"></div>
+															<div class="col-2">자기소개</div>
+															<div class="col-8"></div>
+														</div>
+														<form action="/ap_member.team" id="ap_frm">
+															<div class="row">
+																<div class="col-1"></div>
+																<div class="col-10">
+																	<textarea id="ap_input" name="ap_input"
+																		placeholder="30자 이하..."></textarea>
+																</div>
+																<div class="col-1"></div>
+																<input type="hidden" value="${team_info.code}"
+																	name="team_code">
+															</div>
+															<div class="row">
+																<div class="col-4"></div>
+																<div class="col-4">
+																	<button>신청하기</button>
+																</div>
+																<div class="col-4"></div>
+															</div>
+														</form>
 													</div>
-													<form action="/ap_member.team" id="ap_frm">
-														<div class="row">
-															<div class="col-1"></div>
-															<div class="col-10"><textarea id="ap_input" name="ap_input" placeholder="30자 이하..."></textarea></div>
-															<div class="col-1"></div>
-															<input type="hidden" value="${team_info.code}" name="team_code">
-														</div>
-														<div class="row">
-															<div class="col-4"></div>
-															<div class="col-4"><button>신청하기</button></div>
-															<div class="col-4"></div>
-														</div>
-													</form>
-												</div>
-											</c:otherwise>
-										</c:choose>
-											
+												</c:otherwise>
+											</c:choose>
+
 										</div>
 									</div>
 								</div>
 							</div>
-							<c:set var="doneLoop" value="true"/>
+							<c:set var="doneLoop" value="true" />
 						</c:otherwise>
 					</c:choose>
-					</c:if>
-				</c:forEach> 
+				</c:if>
+			</c:forEach>
 
 			<div class="col-md-2 col-xl-2"></div>
 		</div>
 	</div>
-	
+
 	<script>
 		$(".true_btn").on("click", function() {
-			alert("미완성...ㅠㅠ");
-		})
+			var target = $(this).closest(".apply-team");
+			$.ajax({
+				url:"/accept.team",
+				type:"post",
+				data:{
+					team_code: $("#TEAM_code").val(),
+					phone:$(this).closest(".apply-team").find(".phone").val()
+					}
+			}).done(function(){
+				target.remove();
+				alert("승인이 완료 되었습니다");
+			});
+			
+		});
 		$(".false_btn").on("click", function() {
 			alert("미완성...ㅠㅠ");
 		})
